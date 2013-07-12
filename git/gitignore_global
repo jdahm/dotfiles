@@ -1,0 +1,133 @@
+# Linux     taken from: https://github.com/github/gitignore/blob/master/Global/Linux.gitignore
+# ----------------------------------------------------------------------------------------------
+.*
+!.gitignore
+*~
+
+# OSX       taken from: https://github.com/github/gitignore/blob/master/Global/OSX.gitignore
+# ----------------------------------------------------------------------------------------------
+.DS_Store
+# Thumbnails
+._*
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Windows   taken from: https://github.com/github/gitignore/blob/master/Global/Windows.gitignore
+# ----------------------------------------------------------------------------------------------
+# Windows image file caches
+Thumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Emacs     taken from: https://github.com/github/gitignore/blob/master/Global/Emacs.gitignore
+# ----------------------------------------------------------------------------------------------
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+.elc
+auto-save-list
+tramp
+.\#*
+
+# Org-mode
+.org-id-locations
+*_archive
+
+# Vim       taken from: https://github.com/github/gitignore/blob/master/Global/vim.gitignore
+# ----------------------------------------------------------------------------------------------
+.*.sw[a-z]
+*.un~
+Session.vim
+
+# Tags      taken from: https://github.com/github/gitignore/blob/master/Global/Tags.gitignore
+# ----------------------------------------------------------------------------------------------
+# Ignore tags created by etags and ctags
+TAGS
+tags
+
+# Mercurial taken from: https://github.com/github/gitignore/blob/master/Global/Mercurial.gitignore
+# ----------------------------------------------------------------------------------------------
+/.hg/*
+*/.hg/*
+.hgignore
+
+# Eclipse:  taken from: https://github.com/github/gitignore/blob/master/Global/Eclipse.gitignore
+# ----------------------------------------------------------------------------------------------
+*.pydevproject
+.project
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
+.buildpath
+
+# MATLAB    taken from: https://github.com/github/gitignore/blob/master/Global/Matlab.gitignore
+# ----------------------------------------------------------------------------------------------
+# Windows default autosave extension
+*.asv
+
+# OSX / *nix default autosave extension
+*.m~
+
+# Compiled MEX binaries (all platforms)
+*.mex*
+
+# Simulink Code Generation	
+slprj/
+
+# LaTeX     taken from: https://github.com/github/gitignore/blob/master/LaTeX.gitignore
+# ----------------------------------------------------------------------------------------------
+*.acn
+*.acr
+*.alg
+*.aux
+*.bbl
+*.blg
+*.dvi
+*.fdb_latexmk
+*.glg
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
+*.ist
+*.lof
+*.log
+*.lot
+*.maf
+*.mtc
+*.mtc0
+*.nav
+*.nlo
+*.out
+*.pdfsync
+*.ps
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+*.xdy
+*.tdo

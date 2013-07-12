@@ -1,0 +1,15 @@
+[core]
+	excludesfile = ~/.config/git/.gitignore_global
+        editor = e
+[color]
+	diff = auto
+	status = auto
+[alias]
+	oops = commit --all --amend
+	edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
+	add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
+        change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ $`echo $VAR` = \\\"$OLD\\\" ]]; then export $VAR=\\\"$NEW\\\"; fi\" $@; }; f "
+[push]
+	default = simple
+[include]
+	path = ~/.git_identity
