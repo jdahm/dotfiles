@@ -23,6 +23,7 @@ zstyle ':prezto:load' pmodule \
   'completion' \
   'prompt' \
   'syntax-highlighting' \
+  'gnu-utility' \
   'pacman' \
   'history-substring-search' \
   'tmux' \
@@ -55,7 +56,7 @@ zstyle ':prezto:module:prompt' theme 'sorin'
 #
 
 # Set the command prefix on non-GNU systems.
-# zstyle ':prezto:module:gnu-utility' prefix 'g'
+zstyle ':prezto:module:gnu-utility' prefix 'g'
 
 #
 # History Substring Search
