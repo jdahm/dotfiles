@@ -26,7 +26,8 @@ zstyle ':prezto:load' pmodule \
   'pacman' \
   'history-substring-search' \
   'tmux' \
-  'archive'
+  'archive' \
+  'git'
 
 #
 # Editor
