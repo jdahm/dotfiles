@@ -46,13 +46,16 @@ df_ranger()         { link ranger .config/ranger;                           }
 df_user-dirs()      { link user-dirs/user-dirs.dirs .config/user-dirs.dirs; }
 df_termite()        { link termite .config/termite;                         }
 df_screen()         { link screen/screenrc;                                 }
-df_shell()          { link shell/bashrc;                                    }
 
 df_git(){
     link git/gitconfig
     link git
 }
 
+df_shell(){
+    link shell/bashrc
+    link shell/bash_profile
+}
 
 root=$PWD
 dotfiles=($(compgen -A function df_))
