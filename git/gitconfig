@@ -1,6 +1,5 @@
 [core]
 	excludesfile = ~/.config/git/.gitignore_global
-        editor = e
 [color]
 	diff = auto
 	status = auto

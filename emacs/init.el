@@ -39,6 +39,9 @@
 (global-set-key (kbd "C-c i b") 'duplicate-line-or-region)
 (load "duplicate-line-or-region.el")
 (global-set-key (kbd "C-c d") 'duplicate-line-or-region)
+(load "find-alternate-file-with-sudo.el")
+(global-set-key (kbd "C-x C-r") 'find-alternative-file-with-sudo)
 
 ;; Theme
 (load-theme 'tango-dark t)
+

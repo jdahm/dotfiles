@@ -1,0 +1,58 @@
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# display options
+export DISPLAY="${DISPLAY:-:0}"
+export GREP_OPTIONS='--color=auto'
+export LESS="-F -g -R -S -z-4"
+export LESSOPEN='| /usr/bin/env lesspipe.sh %s 2>&-'
+
+# man page colors in less
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+
+# default programs
+export TERMINAL="termite"
+export BROWSER="chromium"
+export EDITOR="e"
+export VISUAL="emacs"
+
+export PATH="$HOME/.local/bin:$PATH"
+
+# colors
+eval $(dircolors -b ~/.dircolors)
+
+# temporary files
+if [[ ! -d "$TMPDIR" ]]; then
+  export TMPDIR="/tmp/$USER"
+  mkdir -p -m 700 "$TMPDIR"
+fi
+
+TMPPREFIX="${TMPDIR%/}/zsh"
+if [[ ! -d "$TMPPREFIX" ]]; then
+  mkdir -p "$TMPPREFIX"
+fi
+
+export HISTCONTROL=ignoredups
+export HISTSIZE=10000
+export HISTFILESIZE=$HISTSIZE
+
+alias ls='ls --color=auto'
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias rm='rm -Iv'
+alias ln='ln -iv'
+
+#PS1='[\u@\h \W]\$ '
+PS1='\[\e[0;32m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[1;37m\]'
+
+[[ -f ~/.bash_local ]] && source ~/.bash_local

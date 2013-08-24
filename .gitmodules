@@ -1,3 +1,0 @@
-[submodule "shell/prezto"]
-	path = shell/prezto
-	url = https://github.com/sorin-ionescu/prezto.git
