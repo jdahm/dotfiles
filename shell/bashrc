@@ -9,7 +9,6 @@
 export DISPLAY="${DISPLAY:-:0}"
 export GREP_OPTIONS='--color=auto'
 export LESS="-F -g -R -S -z-4"
-export LESSOPEN='| /usr/bin/env lesspipe.sh %s 2>&-'
 
 # man page colors in less
 export LESS_TERMCAP_mb=$'\E[01;31m'
