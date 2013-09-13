@@ -5,6 +5,9 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# local config
+[[ -f ~/.bash_local ]] && source ~/.bash_local
+
 # default programs
 export TERMINAL="termite"
 export BROWSER="firefox"
@@ -67,5 +70,3 @@ white=$(tput setaf 7)
 reset=$(tput sgr0)
 PS1='\[$blue\]\u \[$green\]\w \[$white\]$ \[$reset\]'
 
-# local config
-[[ -f ~/.bash_local ]] && source ~/.bash_local
