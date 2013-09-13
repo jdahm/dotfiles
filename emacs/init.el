@@ -3,28 +3,19 @@
 
 (add-to-list 'load-path "~/.emacs.d")
 
-;; create the emacs.d hierarchy
+;; create the local hierarchy
 (make-directory "~/.local/share/emacs" t)
-(make-directory "~/.local/share/emacs/backups" t)
-(make-directory "~/.local/share/emacs/auto-save-files" t)
+(make-directory "~/.local/share/emacs/saves" t)
 
 ;; Emacs internal-customization
 (setq custom-file "~/.local/share/emacs/custom.el")
 (load custom-file 'noerror)
 
-;; Backup placement
-;; Save all tempfiles in $TMPDIR/emacs$UID/                                                        
-(defconst emacs-tmp-dir (format "%s/%s%s/" temporary-file-directory "emacs" (user-uid)))
-(setq backup-directory-alist
-      `((".*" . ,emacs-tmp-dir)))
-(setq auto-save-file-name-transforms
-      `((".*" ,emacs-tmp-dir t)))
-(setq auto-save-list-file-prefix
-      emacs-tmp-dir)
-
 ;; Local customization
 (add-to-list 'load-path "~/.config/emacs")
 (load "~/.config/emacs/init.el" 'noerror)
+
+(setq auto-save-list-file-prefix "~/.local/share/emacs/saves/")
 
 ;; UTF-8
 (setq buffer-file-coding-system 'utf-8-unix)
@@ -45,3 +36,32 @@
 ;; Theme
 (load-theme 'tango-dark t)
 
+;; C-coding style (from kernel coding style guide)
+(defun c-lineup-arglist-tabs-only (ignored)
+  "Line up argument lists by tabs, not spaces"
+  (let* ((anchor (c-langelem-pos c-syntactic-element))
+	 (column (c-langelem-2nd-pos c-syntactic-element))
+	 (offset (- (1+ column) anchor))
+	 (steps (floor offset c-basic-offset)))
+    (* (max steps 1)
+       c-basic-offset)))
+
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            ;; Add kernel style
+            (c-add-style
+             "linux-tabs-only"
+             '("linux" (c-offsets-alist
+                        (arglist-cont-nonempty
+                         c-lineup-gcc-asm-reg
+                         c-lineup-arglist-tabs-only))))))
+
+(add-hook 'c-mode-hook
+          (lambda ()
+            (let ((filename (buffer-file-name)))
+              ;; Enable kernel mode for the appropriate files
+              (when (and filename
+                         (string-match (expand-file-name "~/src/linux-trees")
+                                       filename))
+                (setq indent-tabs-mode t)
+                (c-set-style "linux-tabs-only")))))

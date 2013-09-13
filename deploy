@@ -41,15 +41,14 @@ df_emacs()          { link emacs .emacs.d;                                  }
 df_gtk3()           { link gtk-3.0 .config/gtk-3.0;                         }
 df_ipython()        { link ipython .config/ipython/profile_jdahm;           }
 df_makepkg()        { link makepkg/makepkg.conf;                            }
-df_pam()            { link pam/pam_environment;                             }
 df_ranger()         { link ranger .config/ranger;                           }
 df_user-dirs()      { link user-dirs/user-dirs.dirs .config/user-dirs.dirs; }
 df_termite()        { link termite .config/termite;                         }
 df_screen()         { link screen/screenrc;                                 }
 
 df_git(){
+    link git/gitignore_global ~/.config/git/gitignore_global;
     link git/gitconfig
-    link git
 }
 
 df_shell(){

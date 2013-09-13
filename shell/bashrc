@@ -5,12 +5,20 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# default programs
+export TERMINAL="termite"
+export BROWSER="firefox"
+export EDITOR="vim"
+export VISUAL="emacs"
+export PAGER="less"
+
 # display options
 export DISPLAY="${DISPLAY:-:0}"
-export GREP_OPTIONS='--color=auto'
-export LESS="-F -g -R -S -z-4"
+export GREP_OPTIONS="--color=auto"
+export LESS="-R"
+[ -x /usr/bin/lesspipe.sh ] && eval "$(lesspipe.sh)"
 
-# man page colors in less
+# colors
 export LESS_TERMCAP_mb=$'\E[01;31m'
 export LESS_TERMCAP_md=$'\E[01;31m'
 export LESS_TERMCAP_me=$'\E[0m'
@@ -19,16 +27,25 @@ export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
-# default programs
-export TERMINAL="termite"
-export BROWSER="chromium"
-export EDITOR="e"
-export VISUAL="emacs"
-
-export PATH="$HOME/.local/bin:$PATH"
-
-# colors
 eval $(dircolors -b ~/.dircolors)
+
+# history
+export HISTCONTROL=ignoredups
+export HISTSIZE=10000
+export HISTFILESIZE=$HISTSIZE
+export HISTIGNORE="&:ls:ll:la:l.:pwd:exit:clear"
+
+# shopt options
+shopt -s cdspell        # This will correct minor spelling errors in a cd command.
+shopt -s histappend     # Append to history rather than overwrite
+shopt -s checkwinsize   # Check window after each command
+shopt -s dotglob        # files beginning with . to be returned in the results of path-name expansion.
+ 
+# set options
+set -o noclobber        # prevent overwriting files with cat
+set -o ignoreeof        # stops ctrl+d from logging me out
+
+complete -cf sudo       # Tab complete for sudo
 
 # temporary files
 if [[ ! -d "$TMPDIR" ]]; then
@@ -36,22 +53,19 @@ if [[ ! -d "$TMPDIR" ]]; then
   mkdir -p -m 700 "$TMPDIR"
 fi
 
-TMPPREFIX="${TMPDIR%/}/zsh"
-if [[ ! -d "$TMPPREFIX" ]]; then
-  mkdir -p "$TMPPREFIX"
-fi
+# alias
+alias ls="ls --color=auto"
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -Iv"
+alias ln="ln -iv"
 
-export HISTCONTROL=ignoredups
-export HISTSIZE=10000
-export HISTFILESIZE=$HISTSIZE
+# prompt
+green=$(tput setaf 2)
+blue=$(tput setaf 4)
+white=$(tput setaf 7)
+reset=$(tput sgr0)
+PS1='\[$blue\]\u \[$green\]\w \[$white\]$ \[$reset\]'
 
-alias ls='ls --color=auto'
-alias cp='cp -iv'
-alias mv='mv -iv'
-alias rm='rm -Iv'
-alias ln='ln -iv'
-
-#PS1='[\u@\h \W]\$ '
-PS1='\[\e[0;32m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]\$\[\e[m\] \[\e[1;37m\]'
-
+# local config
 [[ -f ~/.bash_local ]] && source ~/.bash_local

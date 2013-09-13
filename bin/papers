@@ -1,3 +1,0 @@
-#!/bin/sh
-
-PYTHONPATH=$HOME ~/.local/bin/papers.py $@
