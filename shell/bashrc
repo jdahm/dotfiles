@@ -18,7 +18,8 @@ export PAGER="less"
 # display options
 export DISPLAY="${DISPLAY:-:0}"
 export GREP_OPTIONS="--color=auto"
-export LESS="-R"
+export LESS="-R" # color
+export LESSCOLORIZER="pygmentize"
 [ -x /usr/bin/lesspipe.sh ] && eval "$(lesspipe.sh)"
 
 # colors
@@ -63,10 +64,28 @@ alias mv="mv -iv"
 alias rm="rm -Iv"
 alias ln="ln -iv"
 
+# commands
+v()  { v.sh $@; }
+gv() { gv.sh $@; }
+run_hal() { run_hal.bash $@; }
+
+# http://henrik.nyh.se/2008/12/git-dirty-prompt
+# http://www.simplisticcomplexity.com/2008/03/13/...
+# ...show-your-git-branch-name-in-your-prompt/
+#   username@Machine ~/dev/dir[master]$   # clean working directory
+#   username@Machine ~/dev/dir[master*]$  # dirty working directory
+function parse_git_dirty {
+  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
+}
+function parse_git_branch {
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)]/"
+}
+
 # prompt
 green=$(tput setaf 2)
 blue=$(tput setaf 4)
 white=$(tput setaf 7)
 reset=$(tput sgr0)
-PS1='\[$blue\]\u \[$green\]\w \[$white\]$ \[$reset\]'
+#PS1='\[$blue\]\u \[$green\]\w \[$white\]$ \[$reset\]'
+PS1='\[$blue\]\u \[$green\]$(shortdir.bash) $(parse_git_branch)\[$white\]$ \[$reset\]'
 
