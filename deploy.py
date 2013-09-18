@@ -7,14 +7,22 @@ import subprocess as sp
 import shutil
 import fnmatch
 
-def deploy_file(src, dest):
+def deploy_file(src, dest, backup=True):
     #ret = sp.call(["ln", "-s", src, dest])
+    if backup and op.exists(dest):
+        print "Creating backup of %s" % dest
+        shutil.copy(dest, dest+".backup")
+    print "Copying %s -> %s" % (src, dest)
     shutil.copy(src, dest)
 
-def undeploy_file(dest):
+def undeploy_file(dest, backup=True):
     #ret = sp.call(["unlink", dest])
+    if backup and op.exists(dest):
+        print "Creating backup of %s" % dest
+        shutil.copy(dest, dest+".backup")
     try:
         os.remove(dest)
+        print "Removing %s" % dest
     except OSError:
         pass
 
@@ -36,14 +44,14 @@ def deploy_dir(src, reldir, dest, files, excludes):
     for f in files:
         relfile = op.join(reldir, f)
         if all(not fnmatch.fnmatch(relfile, p) for p in excludes):
-            deploy_file(op.join(src, relfile), op.join(dest, relfile))
+            deploy_file(op.join(src, relfile), op.join(dest, relfile), backup=False)
 
 def undeploy_dir(src, reldir, dest, files, excludes):
     destdir = op.abspath(op.join(dest, reldir))
     for f in files:
         relfile = op.join(reldir, f)
         if all(not fnmatch.fnmatch(relfile, p) for p in excludes):
-            undeploy_file(op.join(dest, relfile))
+            undeploy_file(op.join(dest, relfile), backup=False)
     try:
         os.rmdir(op.join(dest, reldir))
     except OSError:
