@@ -7,22 +7,22 @@ import subprocess as sp
 import shutil
 import fnmatch
 
-def deploy_file(src, dest, backup=True):
+def deploy_file(src, dest, verbose=True, backup=True):
     #ret = sp.call(["ln", "-s", src, dest])
     if backup and op.exists(dest):
-        print "Creating backup of %s" % dest
+        if verbose: print "Creating backup of %s" % dest
         shutil.copy(dest, dest+".backup")
-    print "Copying %s -> %s" % (src, dest)
+    if verbose: print "Copying %s -> %s" % (src, dest)
     shutil.copy(src, dest)
 
-def undeploy_file(dest, backup=True):
+def undeploy_file(dest, verbose=True, backup=True):
     #ret = sp.call(["unlink", dest])
     if backup and op.exists(dest):
-        print "Creating backup of %s" % dest
+        if verbose: print "Creating backup of %s" % dest
         shutil.copy(dest, dest+".backup")
     try:
+        if verbose: print "Removing %s" % dest
         os.remove(dest)
-        print "Removing %s" % dest
     except OSError:
         pass
 

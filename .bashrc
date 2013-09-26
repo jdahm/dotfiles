@@ -18,24 +18,25 @@ export PAGER="less"
 export GREP_OPTIONS="--color=auto"
 export LESS="-R" # color
 export LESSCOLORIZER="pygmentize"
-[ -x /usr/bin/lesspipe.sh ] && eval "$(lesspipe.sh)"
+[ -x /usr/bin/lesspipe.sh ] && eval "$(SHELL=/bin/sh lesspipe.sh)"
 
-# colors
-export LESS_TERMCAP_mb=$'\E[01;31m'
-export LESS_TERMCAP_md=$'\E[01;31m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[01;44;33m'
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[01;32m'
+# add color
+if [ -x /usr/bin/dircolors ]; then
+	eval $(dircolors -b ~/.dircolors)
+	alias ls="ls --color=auto"
+	alias grep="grep --color=auto"
+	alias fgrep="fgrep --color=auto"
+	alias egrep="egrep --color=auto"
+fi
 
-hash dircolors 2>/dev/null && eval $(dircolors -b ~/.dircolors)
 
 # history
-export HISTCONTROL=ignoredups
+#export HISTCONTROL=ignoredups
+export HISTCONTROL=ignoreboth
 export HISTSIZE=10000
 export HISTFILESIZE=$HISTSIZE
 export HISTIGNORE="&:ls:ll:la:l.:pwd:exit:clear"
+
 
 # shopt options
 shopt -s cdspell        # This will correct minor spelling errors in a cd command.
@@ -52,18 +53,18 @@ complete -cf sudo       # Tab complete for sudo
 # temporary files
 export TMPDIR="/tmp/$USER"
 if [[ ! -d "$TMPDIR" ]]; then
-  mkdir -p -m 700 "$TMPDIR"
+	mkdir -p -m 700 "$TMPDIR"
 fi
 
 # alias
-alias ls="ls --color=auto"
 alias cp="cp -iv"
 alias mv="mv -iv"
 alias rm="rm -Iv"
 alias ln="ln -iv"
 
-# commands
-
+# MATLAB-like searching
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
 
 # prompt
 green=$(tput setaf 2)
@@ -77,10 +78,10 @@ reset=$(tput sgr0)
 #   username@Machine ~/dev/dir[master]$   # clean working directory
 #   username@Machine ~/dev/dir[master*]$  # dirty working directory
 function parse_git_dirty {
-  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working directory clean" ]] && echo "*"
+	[[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working directory clean" ]] && echo "*"
 }
 function parse_git_branch {
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)]/"
+	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)]/"
 }
 
 #PS1='\[$blue\]\u \[$green\]\w \[$white\]$ \[$reset\]'
