@@ -63,3 +63,10 @@
                                        filename))
                 (setq indent-tabs-mode t)
                 (c-set-style "linux-tabs-only")))))
+
+;; MATLAB/Octave
+(setq auto-mode-alist
+      (append '(("\\.m\\'" . octave-mode)) auto-mode-alist))
+
+(setq user-full-name "Johann Dahm"
+      user-mail-address "johann.dahm@gmail.com")

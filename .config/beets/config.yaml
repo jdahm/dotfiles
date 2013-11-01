@@ -1,0 +1,32 @@
+library: /home/jdahm/Music/Collection/music.blb
+directory: /home/jdahm/Music/Collection
+paths:
+    default: $albumartist/$album%aunique{}/$track-$title
+    singleton: Non-Album/$artist/$title
+    comp: Compilations/$album%aunique{}/$track-$title
+    albumtype:soundtrack: Soundtracks/$album/$track $title
+import:
+    copy: yes
+    write: yes
+    resume: ask
+    quiet_fallback: skip
+    timid: no
+    log: beetslog.txt
+ignore: ._* *~
+plugins: scrub missing bpd
+pluginpath: ~/.local/share/beets/myplugins
+threaded: yes
+color: yes
+replace:
+    '[ ]': _
+    '[\\/]': _
+    '^\.': _
+    '[\x00-\x1f]': _
+    '[<>:"\?\*\|]': _
+    '\.$': _
+    '\s+$': ''
+
+bpd:
+    host: 127.0.0.1
+    port: 6600
+    password: seekrit
