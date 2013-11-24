@@ -93,7 +93,7 @@ function parse_git_branch {
 }
 
 #PS1='\[$blue\]\u \[$green\]\w \[$white\]$ \[$reset\]'
-PS1='\[$blue\]\h \[$green\]$(shortdir.sh) $(parse_git_branch)\[$white\]$ \[$reset\]'
+PS1='\[$blue\]\h \[$green\]$(shortdir) $(parse_git_branch)\[$white\]$ \[$reset\]'
 
 # local config
 [[ -f ~/.bash_local ]] && source ~/.bash_local
