@@ -68,5 +68,11 @@
 (setq auto-mode-alist
       (append '(("\\.m\\'" . octave-mode)) auto-mode-alist))
 
+;; Tabbing
+(setq-default indent-tabs-mode nil)
+(highlight-tabs)
+(highlight-trailing-whitespace)
+
+
 (setq user-full-name "Johann Dahm"
       user-mail-address "johann.dahm@gmail.com")
