@@ -70,9 +70,7 @@
 
 ;; Tabbing
 (setq-default indent-tabs-mode nil)
-(highlight-tabs)
-(highlight-trailing-whitespace)
 
-
+;; me
 (setq user-full-name "Johann Dahm"
       user-mail-address "johann.dahm@gmail.com")
