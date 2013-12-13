@@ -74,6 +74,37 @@ alias ln="ln -iv"
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
 
+pushd()
+{
+  if [ $# -eq 0 ]; then
+    dir="${HOME}"
+  else
+    dir="$1"
+  fi
+
+  builtin pushd "${dir}" > /dev/null
+  echo -n "dirstack: "
+  dirs
+}
+
+pushd_builtin()
+{
+  builtin pushd > /dev/null
+  echo -n "dirstack: "
+  dirs
+}
+
+popd()
+{
+  builtin popd > /dev/null
+  echo -n "dirstack: "
+  dirs
+}
+
+alias cdd='pushd'
+alias back='popd'
+alias flip='pushd_builtin'
+
 # prompt
 green=$(tput setaf 2)
 blue=$(tput setaf 4)
