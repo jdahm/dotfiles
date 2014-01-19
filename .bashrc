@@ -67,7 +67,13 @@ fi
 # alias
 alias cp="cp -iv"
 alias mv="mv -iv"
-alias rm="rm -Iv"
+case "$(uname)" in
+  Linux)
+    alias rm="rm -Iv";;
+  Darwin)
+    alias rm="rm -iv";;
+  *) ;;
+esac
 alias ln="ln -iv"
 
 # MATLAB-like searching
