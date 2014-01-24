@@ -35,21 +35,13 @@
 (load-theme 'tango-dark t)
 
 ;; Tabbing
-(setq-default indent-tabs-mode nil)
+(setq-default indent-tabs-mode t)
 
 ;; C
 (setq c-default-style "linux"
-      c-basic-offset 4
-      tab-width 4
+      c-basic-offset 8
+      tab-width 8
       indent-tabs-mode t)
-
-(defun xflow-c-mode ()
-  "Switch to XFlow C-style"
-  (interactive)
-  (setq c-basic-offset 2
-        c-indent-level 2
-        indent-tabs-mode nil
-        c-default-style "linux"))
 
 ;; MATLAB/Octave
 (setq auto-mode-alist
