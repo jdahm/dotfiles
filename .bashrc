@@ -124,6 +124,9 @@ function parse_git_branch {
 #PS1='\[$blue\]\u \[$green\]\w \[$white\]$ \[$reset\]'
 PS1='\[$blue\]\h \[$green\]$(shortdir) $(parse_git_branch)\[$white\]$ \[$reset\]'
 
+# User-local executables
+export PATH=${HOME}/.local/bin:/usr/local/bin:${PATH}
+
 # local config
 [[ -f ~/.bash_local ]] && source ~/.bash_local
 
