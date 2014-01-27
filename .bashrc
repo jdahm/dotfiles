@@ -5,15 +5,6 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-export PATH=$HOME/.local/bin:$PATH
-
-# default programs
-export TERMINAL="termite"
-export BROWSER="firefox"
-export EDITOR="vim"
-export VISUAL="emacs"
-export PAGER="less"
-
 # display options
 export GREP_OPTIONS="--color=auto"
 export LESS="-R" # color
@@ -53,6 +44,7 @@ shopt -s checkwinsize   # Check window after each command
 shopt -s dotglob        # files beginning with . to be returned in the results of path-name expansion.
  
 # set options
+set -o vi               # vim-like keybindings
 set -o noclobber        # prevent overwriting files with cat
 set -o ignoreeof        # stops ctrl+d from logging me out
 
