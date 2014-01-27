@@ -53,10 +53,14 @@ set wildmode=longest,list
 "{{{Editing
 
 " 'Hard' mode so I learn
-noremap <Up> <NOP>
-noremap <Down> <NOP>
-noremap <Left> <NOP>
-noremap <Right> <NOP>
+noremap <up> <nop>
+noremap <down> <nop>
+noremap <left> <nop>
+noremap <right> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
 
 " use 'jj' instead of <Esc>
 ino jj <esc>
