@@ -1,4 +1,4 @@
-"{{{General
+" General {{{
 
 " Disable vi compatibility-mode
 set nocompatible
@@ -14,9 +14,9 @@ set autoread
 " like <leader>w saves the current file
 let mapleader = ","
 
-"}}}
+" }}}
 
-"{{{User interface
+" User interface {{{
 
 " Show line numbers
 set number
@@ -34,9 +34,9 @@ set scrolloff=2
 " Keep changes to the buffer without writing them when swiching
 set hidden
 
-"}}}
+" }}}
 
-"{{{Searching
+" Searching {{{
 
 " Makes search act like search in modern browsers
 set incsearch
@@ -48,9 +48,9 @@ set smartcase
 " Tab completion of filenames
 set wildmode=longest,list
 
-"}}}
+" }}}
 
-"{{{Editing
+" Editing {{{
 
 " 'Hard' mode so I learn
 noremap <up> <nop>
@@ -86,9 +86,9 @@ set foldlevelstart=1
 " Space opens folds
 nnoremap <Space> za
 
-"}}}
+" }}}
 
-"{{{Backup
+" Backup {{{
 
 " Sets how many lines of history VIM has to remember
 set history=1000
@@ -101,9 +101,9 @@ set backupdir=~/.vim/backup
 " Swap files go here
 set directory=~/.vim/temp
 
-"}}}
+" }}}
 
-"{{{Tabbing and indenting
+" Tabbing and indenting {{{
 
 set autoindent
 set smartindent " indent when
@@ -117,9 +117,9 @@ set shiftwidth=4
 " Formatting paragraphs
 map Q gwip
 
-"}}}
+" }}}
 
-"{{{Plugins
+" Plugins {{{
 
 " Pathogen
 filetype off " Pathogen needs to run before plugin indent on
@@ -132,9 +132,9 @@ let g:ctrlp_map = '<c-p>'
 " Ack
 map <leader>F :Ack<space>
 
-"}}}
+" }}}
 
-"{{{Look and Feel
+" Look and feel {{{
 
 " Always show statusline
 set laststatus=2
@@ -145,31 +145,31 @@ set laststatus=2
 colorscheme solarized
 " Create F5 mapping to toggle colors
 call togglebg#map("<F5>")
- 
+
 " Change the Solarized background to dark or light depending upon the time of
 " day (5 refers to 5AM and 17 to 5PM). Change the background only if it is not
 " already set to the value we want.
 function! SetSolarizedBackground()
-if strftime("%H") >= 5 && strftime("%H") < 17
-if &background != 'light'
-set background=light
-endif
-else
-if &background != 'dark'
-set background=dark
-endif
-endif
+    if strftime("%H") >= 5 && strftime("%H") < 17
+        if &background != 'light'
+            set background=light
+        endif
+    else
+        if &background != 'dark'
+            set background=dark
+        endif
+    endif
 endfunction
- 
+
 " Set background on launch
 call SetSolarizedBackground()
- 
+
 " Every time you save a file, call the function to check the time and change
 " the background (if necessary).
 if has("autocmd")
-autocmd bufwritepost * call SetSolarizedBackground()
+    autocmd bufwritepost * call SetSolarizedBackground()
 endif
 
-"}}}
+" }}}
 
 " vim: set et tw=4 sw=4
