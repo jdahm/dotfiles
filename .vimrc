@@ -73,6 +73,9 @@ set ffs=unix,dos,mac
 set foldmethod=syntax
 set foldlevelstart=1
 
+" Space opens folds
+nnoremap <Space> za
+
 "}}}
 
 "{{{Backup
@@ -126,13 +129,12 @@ map <leader>F :Ack<space>
 " Always show statusline
 set laststatus=2
 
-" Fix for solarized
-let g:solarized_termcolors=256
-
 " Theme
 
 " Set colorscheme to solarized
 colorscheme solarized
+" Create F5 mapping to toggle colors
+call togglebg#map("<F5>")
  
 " Change the Solarized background to dark or light depending upon the time of
 " day (5 refers to 5AM and 17 to 5PM). Change the background only if it is not
