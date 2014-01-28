@@ -102,7 +102,7 @@ PS1='\[$blue\]\h \[$green\]$(shortdir) $(parse_git_branch) $ \[$reset\]'
 
 # Python (pyenv)
 export PYENV_ROOT="$HOME/.pyenv"
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+if which pyenv 2>&1 > /dev/null; then eval "$(pyenv init -)"; fi
 
 # aliases
 alias ipy="ipython"
@@ -110,7 +110,7 @@ alias ipy-gui="ipython qtconsole"
 
 # Ruby (rbenv)
 export RBENV_ROOT="${HOME}/.rbenv"
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+if which rbenv 2>&1 > /dev/null; then eval "$(rbenv init -)"; fi
 
 # Tmux: export 256color
 [ -n "$TMUX" ] && export TERM=screen-256color
