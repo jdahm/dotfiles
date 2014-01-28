@@ -62,10 +62,12 @@ export LESS_TERMCAP_so=$'\E[38;5;246m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[04;38;5;146m'
 
-export LESSOPEN="|/usr/local/bin/lesspipe.sh %s"
+if command -v lesspipe.sh >/dev/null 2>&1; then
+    export LESSOPEN="$(which lesspipe.sh) %s"
+fi
 
 # add color
-if [ -x /usr/bin/dircolors ]; then
+if command -v dircolors >/dev/null 2>&1; then
 	eval $(dircolors -b ~/.dircolors)
 	alias ls="ls --color=auto"
 	alias grep="grep --color=auto"
@@ -102,7 +104,9 @@ PS1='\[$blue\]\h \[$green\]$(shortdir) $(parse_git_branch) $ \[$reset\]'
 
 # Python (pyenv)
 export PYENV_ROOT="$HOME/.pyenv"
-if which pyenv 2>&1 > /dev/null; then eval "$(pyenv init -)"; fi
+if command -v pyenv >/dev/null 2>&1; then
+    eval "$(pyenv init -)";
+fi
 
 # aliases
 alias ipy="ipython"
@@ -110,7 +114,9 @@ alias ipy-gui="ipython qtconsole"
 
 # Ruby (rbenv)
 export RBENV_ROOT="${HOME}/.rbenv"
-if which rbenv 2>&1 > /dev/null; then eval "$(rbenv init -)"; fi
+if command -v rbenv >/dev/null 2>&1; then
+    eval "$(rbenv init -)";
+fi
 
 # Tmux: export 256color
 [ -n "$TMUX" ] && export TERM=screen-256color
