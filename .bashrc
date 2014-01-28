@@ -107,6 +107,7 @@ export PYENV_ROOT="$HOME/.pyenv"
 if command -v pyenv >/dev/null 2>&1; then
     eval "$(pyenv init -)";
 fi
+export PATH=${HOME}/.pyenv/shims:${PATH}
 
 # aliases
 alias ipy="ipython"
@@ -117,6 +118,7 @@ export RBENV_ROOT="${HOME}/.rbenv"
 if command -v rbenv >/dev/null 2>&1; then
     eval "$(rbenv init -)";
 fi
+export PATH=${HOME}/.rbenv/shims:${PATH}
 
 # Tmux: export 256color
 [ -n "$TMUX" ] && export TERM=screen-256color
