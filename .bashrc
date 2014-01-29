@@ -62,12 +62,10 @@ export LESS_TERMCAP_so=$'\E[38;5;246m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[04;38;5;146m'
 
-if command -v lesspipe.sh >/dev/null 2>&1; then
-    export LESSOPEN="$(which lesspipe.sh) %s"
-fi
+export LESSOPEN="|/usr/local/bin/lesspipe.sh %s"
 
 # add color
-if command -v dircolors >/dev/null 2>&1; then
+if [ -x /usr/bin/dircolors ]; then
 	eval $(dircolors -b ~/.dircolors)
 	alias ls="ls --color=auto"
 	alias grep="grep --color=auto"
@@ -104,9 +102,7 @@ PS1='\[$blue\]\h \[$green\]$(shortdir) $(parse_git_branch)$ \[$reset\]'
 
 # Python (pyenv)
 export PYENV_ROOT="$HOME/.pyenv"
-if command -v pyenv >/dev/null 2>&1; then
-    eval "$(pyenv init -)";
-fi
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 export PATH=${HOME}/.pyenv/shims:${PATH}
 
 # aliases
@@ -115,9 +111,7 @@ alias ipy-gui="ipython qtconsole"
 
 # Ruby (rbenv)
 export RBENV_ROOT="${HOME}/.rbenv"
-if command -v rbenv >/dev/null 2>&1; then
-    eval "$(rbenv init -)";
-fi
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 export PATH=${HOME}/.rbenv/shims:${PATH}
 
 # Tmux: export 256color
