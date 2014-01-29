@@ -96,11 +96,11 @@ function parse_git_dirty {
 	[[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working directory clean" ]] && echo "*"
 }
 function parse_git_branch {
-	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)]/"
+	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)]\ /"
 }
 
 #PS1='\[$blue\]\u \[$green\]\w \[$reset\]'
-PS1='\[$blue\]\h \[$green\]$(shortdir) $(parse_git_branch) $ \[$reset\]'
+PS1='\[$blue\]\h \[$green\]$(shortdir) $(parse_git_branch)$ \[$reset\]'
 
 # Python (pyenv)
 export PYENV_ROOT="$HOME/.pyenv"
