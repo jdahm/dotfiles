@@ -96,6 +96,9 @@ set directory=~/.vim/temp
 
 " Tabbing and indenting {{{
 
+" I want spaces, the rest can be dealt with using vim-slueth
+set expandtab
+
 " Formatting paragraphs
 map Q gwip
 
@@ -119,6 +122,9 @@ map <leader>F :Ack<space>
 " Look and feel {{{
 
 " Theme
+
+" Statusline
+set statusline=\ %f%m%r%h%w\ %=%({%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y}%)\ %([%l,%v][%p%%]\ %)
 
 " Set colorscheme to solarized
 colorscheme solarized
