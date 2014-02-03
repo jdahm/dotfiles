@@ -7,9 +7,6 @@ set nocompatible
 filetype plugin on
 filetype indent on
 
-" Set to auto read when a file is changed from the outside
-set autoread
-
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = ","
@@ -38,15 +35,9 @@ set hidden
 
 " Searching {{{
 
-" Makes search act like search in modern browsers
-set incsearch
-
 " Ignoring case is a fun trick
 set ignorecase
 set smartcase
-
-" Tab completion of filenames
-set wildmode=longest,list
 
 " }}}
 
@@ -105,15 +96,6 @@ set directory=~/.vim/temp
 
 " Tabbing and indenting {{{
 
-set autoindent
-set smartindent " indent when
-
-" Use spaces instead of tabs
-" 1 tab == 4 spaces
-set expandtab
-set tabstop=4
-set shiftwidth=4
-
 " Formatting paragraphs
 map Q gwip
 
@@ -135,9 +117,6 @@ map <leader>F :Ack<space>
 " }}}
 
 " Look and feel {{{
-
-" Always show statusline
-set laststatus=2
 
 " Theme
 
