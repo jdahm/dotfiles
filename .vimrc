@@ -123,12 +123,6 @@ call pathogen#incubate()
 call pathogen#helptags() " generate helptags for everything in 'runtimepath'
 filetype plugin indent on
 
-" ctrlp
-let g:ctrlp_map = '<c-p>'
-
-" sneak
-let g:sneak#streak = 1
-
 " }}}
 
 " Look and feel {{{
