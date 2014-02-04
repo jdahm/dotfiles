@@ -44,7 +44,6 @@ set splitbelow
 " Searching {{{
 
 " Ignoring case is a fun trick
-set ignorecase
 set smartcase
 
 " }}}
@@ -126,8 +125,9 @@ filetype plugin indent on
 
 " ctrlp
 let g:ctrlp_map = '<c-p>'
-" Ack
-map <leader>F :Ack<space>
+
+" sneak
+let g:sneak#streak = 1
 
 " }}}
 
@@ -165,6 +165,15 @@ if has("autocmd")
     autocmd bufwritepost * call SetSolarizedBackground()
 endif
 
+" }}}
+
+" Useful stuff {{{
+" Fix tabbing
+function RemoveTabs()
+    1,$s/\t/        /g
+endfunction
+
+command RT call RemoveTabs()
 " }}}
 
 if filereadable(expand("~/.vimrc.local"))
