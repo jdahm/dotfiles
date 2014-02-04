@@ -11,6 +11,11 @@ filetype indent on
 " like <leader>w saves the current file
 let mapleader = ","
 
+" automaticall re-read the file if possible
+if v:version >= 600
+    set autoread
+endif
+
 " }}}
 
 " User interface {{{
@@ -30,6 +35,9 @@ set scrolloff=2
 
 " Keep changes to the buffer without writing them when swiching
 set hidden
+
+" Split windows at bottom
+set splitbelow
 
 " }}}
 
@@ -77,6 +85,10 @@ set foldlevelstart=1
 " Space opens folds
 nnoremap <Space> za
 
+if exists("+spelllang")
+    set spelllang=en_us
+endif
+
 " }}}
 
 " Backup {{{
@@ -121,8 +133,6 @@ map <leader>F :Ack<space>
 
 " Look and feel {{{
 
-" Theme
-
 " Statusline
 set statusline=\ %f%m%r%h%w\ %=%({%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y}%)\ %([%l,%v][%p%%]\ %)
 
@@ -156,5 +166,9 @@ if has("autocmd")
 endif
 
 " }}}
+
+if filereadable(expand("~/.vimrc.local"))
+    source ~/.vimrc.local
+endif
 
 " vim: set et tw=4 sw=4
