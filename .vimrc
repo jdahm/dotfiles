@@ -36,8 +36,10 @@ set scrolloff=2
 " Keep changes to the buffer without writing them when swiching
 set hidden
 
-" Split windows at bottom
+" Split windows horizontally at bottom
 set splitbelow
+" Split windows vertically on right
+set splitright
 
 " }}}
 
