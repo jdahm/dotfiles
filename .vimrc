@@ -1,3 +1,8 @@
+"
+" ~/.vimrc
+" Johann Dahm
+"
+
 " General {{{
 
 " Disable vi compatibility-mode
@@ -62,9 +67,9 @@ inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
 
-" use 'jj' instead of <Esc>
-ino jj <esc>
-cno jj <c-c>
+" use 'jk' instead of <Esc>
+ino jk <esc>
+cno jk <c-c>
 vno v <esc>
 
 " Enable syntax highlighting
@@ -134,9 +139,11 @@ set statusline=\ %f%m%r%h%w\ %=%({%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"
 
 " Set colorscheme to solarized
 colorscheme solarized
+
 " Create F5 mapping to toggle colors
 call togglebg#map("<F5>")
 
+" Not auto-setting right now
 " Change the Solarized background to dark or light depending upon the time of
 " day (5 refers to 5AM and 17 to 5PM). Change the background only if it is not
 " already set to the value we want.
@@ -153,13 +160,13 @@ function! SetSolarizedBackground()
 endfunction
 
 " Set background on launch
-call SetSolarizedBackground()
+" call SetSolarizedBackground()
 
-" Every time you save a file, call the function to check the time and change
-" the background (if necessary).
-if has("autocmd")
-    autocmd bufwritepost * call SetSolarizedBackground()
-endif
+" " Every time you save a file, call the function to check the time and change
+" " the background (if necessary).
+" if has("autocmd")
+"     autocmd bufwritepost * call SetSolarizedBackground()
+" endif
 
 " }}}
 
