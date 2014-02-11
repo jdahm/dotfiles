@@ -3,14 +3,21 @@
 " Johann Dahm
 "
 
+" Plugins {{{
+
+" Pathogen
+filetype off " Pathogen needs to run before plugin indent on
+call pathogen#incubate()
+call pathogen#helptags() " generate helptags for everything in 'runtimepath'
+filetype plugin indent on
+
+" }}}
+
+
 " General {{{
 
 " Disable vi compatibility-mode
 set nocompatible
-
-" Enable filetype plugins
-filetype plugin on
-filetype indent on
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
@@ -46,9 +53,15 @@ set splitbelow
 " Split windows vertically on right
 set splitright
 
+" Shorter messages
+set shortmess=a
+
 " }}}
 
 " Searching {{{
+
+" Set search path for files
+set path=.,,**
 
 " Ignoring case is a fun trick
 set smartcase
@@ -86,7 +99,7 @@ set ffs=unix,dos,mac
 
 " Folding
 set foldmethod=syntax
-set foldlevelstart=1
+" set foldlevelstart=1
 
 " Space opens folds
 nnoremap <Space> za
@@ -114,21 +127,17 @@ set directory=~/.vim/temp
 
 " Tabbing and indenting {{{
 
-" I want spaces, the rest can be dealt with using vim-slueth
-set expandtab
+" Give tabs proper spacing
+set tabstop=8
+
+" Simple indentation via autoindent
+set autoindent
+" For C, use smart indenting
+set cindent
+" For any other language, use the filetype plugins provided by vim
 
 " Formatting paragraphs
 map Q gwip
-
-" }}}
-
-" Plugins {{{
-
-" Pathogen
-filetype off " Pathogen needs to run before plugin indent on
-call pathogen#incubate()
-call pathogen#helptags() " generate helptags for everything in 'runtimepath'
-filetype plugin indent on
 
 " }}}
 
@@ -137,50 +146,28 @@ filetype plugin indent on
 " Statusline
 set statusline=\ %f%m%r%h%w\ %=%({%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y}%)\ %([%l,%v][%p%%]\ %)
 
-" Set colorscheme to solarized
-colorscheme solarized
-
-" Create F5 mapping to toggle colors
-call togglebg#map("<F5>")
-
-" Not auto-setting right now
-" Change the Solarized background to dark or light depending upon the time of
-" day (5 refers to 5AM and 17 to 5PM). Change the background only if it is not
-" already set to the value we want.
-function! SetSolarizedBackground()
-    if strftime("%H") >= 5 && strftime("%H") < 17
-        if &background != 'light'
-            set background=light
-        endif
-    else
-        if &background != 'dark'
-            set background=dark
-        endif
-    endif
-endfunction
-
-" Set background on launch
-" call SetSolarizedBackground()
-
-" " Every time you save a file, call the function to check the time and change
-" " the background (if necessary).
-" if has("autocmd")
-"     autocmd bufwritepost * call SetSolarizedBackground()
-" endif
+" colorscheme
+colorscheme base16-default
 
 " }}}
 
 " Useful stuff {{{
+
 " Fix tabbing
 function RemoveTabs()
     1,$s/\t/        /g
 endfunction
 
 command RT call RemoveTabs()
+
 " }}}
+
+" Local configuration {{{
 
 if filereadable(expand("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
+
+" }}}
 
 " vim: set et tw=4 sw=4

@@ -86,11 +86,6 @@ setopt pushdignoredups
 zle -A .backward-kill-word vi-backward-kill-word
 zle -A .backward-delete-char vi-backward-delete-char
 
-# Colors
-if command -v lesspipe.sh >/dev/null 2>&1; then
-    export LESSOPEN="$(which lesspipe.sh) %s"
-fi
-
 # add color
 if command -v dircolors >/dev/null 2>&1; then
 	eval $(dircolors -b ~/.dircolors)

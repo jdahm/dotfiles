@@ -32,32 +32,28 @@ cursor_shape = block
 # (default if unset: all graphic non-punctuation/space characters)
 #word_chars = -A-Za-z0-9,./?%&#:_=+@~
 
-# Solarized dark color scheme
-
 [colors]
-foreground = #839496
-foreground_bold = #eee8d5
-#foreground_dim = #888888
-background = #002b36
-cursor = #93a1a1
+# base16-default
+color00=#151515
+color01=#ac4142
+color02=#90a959
+color03=#f4bf75
+color04=#6a9fb5
+color05=#aa759f
+color06=#75b5aa
+color07=#d0d0d0
+color08=#505050
+color09=$color01
+color10=$color02
+color11=$color03
+color12=$color04
+color13=$color05
+color14=$color06
+color15=#f5f5f5
+color16=#d28445
+color17=#8f5536
+color18=#202020
+color19=#303030
+color20=#b0b0b0
+color21=#e0e0e0
 
-# if unset, will reverse foreground and background
-#highlight = #839496
-
-# colors from color0 to color254 can be set
-color0 = #073642
-color1 = #dc322f
-color2 = #859900
-color3 = #b58900
-color4 = #268bd2
-color5 = #d33682
-color6 = #2aa198
-color7 = #eee8d5
-color8 = #002b36
-color9 = #cb4b16
-color10 = #586e75
-color11 = #657b83
-color12 = #839496
-color13 = #6c71c4
-color14 = #93a1a1
-color15 = #fdf6e3
