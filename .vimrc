@@ -41,7 +41,7 @@ set novisualbell
 " Enable mouse support in console
 set mouse=a
 
-" Give me some context!
+" Give me some context
 set scrolloff=2
 
 " Keep changes to the buffer without writing them when swiching
@@ -163,7 +163,7 @@ function! <SID>StripTrailingWhitespaces()
     call cursor(l, c)
 endfunction
 
-nnoremap <silent> <F5> :call <SID>StripTrailingWhitespaces()<CR>
+command STW silent! call <SID>StripTrailingWhitespaces()<CR>
 
 " }}}
 
@@ -174,6 +174,8 @@ set statusline=\ %f%m%r%h%w\ %=%({%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"
 
 " Colorscheme
 colorscheme base16-default
+
+map <F5> :let &background = ( &background == "dark"? "light" : "dark" )<CR>
 
 " }}}
 
