@@ -57,10 +57,10 @@ setopt SHARE_HISTORY
 # Aliases
 alias vi="vim"
 
-alias cp="cp -iv"
-alias mv="mv -iv"
-alias rm="rm -Iv"
-alias ln="ln -iv"
+alias cp="cp -i"
+alias mv="mv -i"
+alias rm="rm -I"
+alias ln="ln -i"
 
 alias -s gz=tar -xzvf
 alias -s bz2=tar -xjvf
