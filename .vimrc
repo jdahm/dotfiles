@@ -12,11 +12,6 @@ set nocompatible
 " like <leader>w saves the current file
 let mapleader = ','
 
-" automaticall re-read the file if possible
-if v:version >= 600
-    set autoread
-endif
-
 " }}}
 
 " Plugins {{{
@@ -38,22 +33,25 @@ set number
 set noerrorbells
 set novisualbell
 
-" Enable mouse support in console
-set mouse=a
-
-" Give me some context
-set scrolloff=2
-
 " Keep changes to the buffer without writing them when swiching
 set hidden
 
-" Split windows horizontally at bottom
-set splitbelow
-" Split windows vertically on right
-set splitright
-
 " Shorter messages
 set shortmess=a
+
+" Disable mouse
+set mouse=
+
+if has("gui_running")
+    " Set font
+    set guifont=DejaVu\ Sans\ Mono:h12
+endif
+
+" Changing windows
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
 
 " }}}
 
@@ -132,9 +130,6 @@ set directory=~/.vim/temp
 " Else, use the filetype plugins provided by vim
 set autoindent
 
-" Formatting paragraphs
-map Q gwip
-
 " Set tabstop, softtabstop and shiftwidth to the same value
 command! -nargs=* Stab call Stab()
 function! Stab()
@@ -172,7 +167,7 @@ endfunction
 command RT call RemoveTabs()
 
 " Strip trailing whitespace
-function! <SID>StripTrailingWhitespaces()
+function! StripTrailingWhitespaces()
     " Preparation: save last search, and cursor position.
     let _s=@/
     let l = line(".")
@@ -184,7 +179,7 @@ function! <SID>StripTrailingWhitespaces()
     call cursor(l, c)
 endfunction
 
-command STW silent! call <SID>StripTrailingWhitespaces()<CR>
+command STW silent! call StripTrailingWhitespaces()<CR>
 
 " }}}
 
@@ -194,7 +189,7 @@ command STW silent! call <SID>StripTrailingWhitespaces()<CR>
 set statusline=\ %f%m%r%h%w\ %=%({%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y}%)\ %([%l,%v][%p%%]\ %)
 
 " Colorscheme
-colorscheme base16-default
+colorscheme base16-tomorrow
 
 map <F5> :let &background = ( &background == "dark"? "light" : "dark" )<CR>
 

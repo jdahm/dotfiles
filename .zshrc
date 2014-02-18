@@ -56,7 +56,6 @@ setopt SHARE_HISTORY
 
 # Aliases
 alias vi="vim"
-alias :q="exit"
 
 alias cp="cp -iv"
 alias mv="mv -iv"
@@ -100,20 +99,20 @@ autoload colors
 colors
 
 _git_repo_name() {
-   gittopdir=$(git rev-parse --git-dir 2> /dev/null)
-   if [[ "foo$gittopdir" == "foo.git" ]]; then
-      echo `basename $(pwd)`
-   elif [[ "foo$gittopdir" != "foo" ]]; then
-      echo `dirname $gittopdir | xargs basename`
-   fi
+    gittopdir=$(git rev-parse --git-dir 2> /dev/null)
+    if [[ "foo$gittopdir" == "foo.git" ]]; then
+        echo `basename $(pwd)`
+    elif [[ "foo$gittopdir" != "foo" ]]; then
+        echo `dirname $gittopdir | xargs basename`
+    fi
 }
 
 _git_branch_name() {
-   git branch 2>/dev/null | awk '/^\*/ { print $2 }'
+    git branch 2>/dev/null | awk '/^\*/ { print $2 }'
 }
 
 _git_is_dirty() {
-   git diff --quiet 2> /dev/null || echo '*'
+    git diff --quiet 2> /dev/null || echo '*'
 }
 
 git_custom_prompt() {
@@ -126,9 +125,9 @@ setopt prompt_subst
 
 # Right side
 function zle-line-init zle-keymap-select {
-    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]% %{$reset_color%}"
-    RPS1="${${KEYMAP/(vicmd|opp)/$VIM_PROMPT}/(main|viins)/} %{$fg_bold[cyan]%} $(git_custom_prompt) %{$reset_color%}"
-    zle reset-prompt
+VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]% %{$reset_color%}"
+RPS1="${${KEYMAP/(vicmd|opp)/$VIM_PROMPT}/(main|viins)/} %{$fg_bold[cyan]%} $(git_custom_prompt) %{$reset_color%}"
+zle reset-prompt
 }
 PS1="%{$fg[yellow]%}[%{$fg[blue]%}%m%{$fg[yellow]%}] [%{$fg[green]%}%c%{$fg[yellow]%}] : %{$reset_color%}"
 
@@ -144,6 +143,60 @@ bindkey -M vicmd '/' history-incremental-search-backward
 ## remap escape key
 bindkey -M viins 'jk' vi-cmd-mode
 
+### jump behind the first word on the cmdline.
+### useful to add options.
+function jump_after_first_word() {
+local words
+words=(${(z)BUFFER})
+
+if (( ${#words} <= 1 )) ; then
+    CURSOR=${#BUFFER}
+else
+    CURSOR=${#${words[1]}}
+fi
+}
+zle -N jump_after_first_word
+
+bindkey -M viins '^x1' jump_after_first_word
+
+# run command line as user root via sudo:
+sudo-command-line() {
+    [[ -z $BUFFER ]] && zle up-history
+    if [[ $BUFFER != sudo\ * ]]; then
+        BUFFER="sudo $BUFFER"
+        CURSOR=$(( CURSOR+5 ))
+    fi
+}
+zle -N sudo-command-line
+
+bindkey -M viins '^xs' sudo-command-line
+
+function ctrl-o
+{
+    emulate -LR zsh
+    local keystr
+    read -k keystr
+    local -r keystr
+    local -ri key=$(( #keystr ))
+    # if (( key==##A )) ; then zle end-of-line
+    # elif (( key==##$ )) ; then zle end-of-line
+    # elif (( key==##I )) ; then zle vi-first-non-blank
+    # elif (( key==##d )) ; then _-vi-delete
+    # elif (( key==##0 )) && [[ -z $NUMERIC ]] ;
+    # then zle beginning-of-line
+    # elif (( key>=##0 && key<=##9 ))
+    # then _-vi-digit-arg $(( key - ##0 )) _-vi-ctrl-o
+    #     #elif (( key==##s )) ; then zle sedsubstitute
+    #     #elif (( key==##= )) ; then zle tailfor
+    # else
+    zle ${${(z)$(bindkey -M vicmd $keystr)}[2]}
+    # fi
+}
+zle -N ctrl-o
+
+bindkey -M viins '^o' ctrl-o
+
+#bindkey -M vicmd ':q' exit-shell
 
 # Python (pyenv)
 export PYENV_ROOT="$HOME/.pyenv"
