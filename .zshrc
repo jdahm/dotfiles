@@ -92,7 +92,7 @@ path=(~/.local/bin $path)
 export VISUAL="vim"
 export PAGER="less"
 # left blank
-export EDITOR=
+export EDITOR="vim"
 
 # Simple prompt
 autoload colors
