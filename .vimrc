@@ -107,6 +107,15 @@ nmap <leader>l :set list!<CR>
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:▸\ ,eol:¬
 
+" Wrapping words for editing text
+command! -nargs=* Wrap set wrap linebreak nolist
+
+" Toggle spell checking on and off with `<leader>s`
+nmap <silent> <leader>s :set spell!<CR>
+
+" Set region to USA English
+set spelllang=en_us
+
 " }}}
 
 " Backup {{{
@@ -164,7 +173,7 @@ function RemoveTabs()
     1,$s/\t/        /g
 endfunction
 
-command RT call RemoveTabs()
+command RT silent! call RemoveTabs()<CR>
 
 " Strip trailing whitespace
 function! StripTrailingWhitespaces()
