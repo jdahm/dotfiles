@@ -8,18 +8,7 @@
     co = checkout
     br = branch
     oops = commit --all --amend
-    edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
-    add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
-    change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ $`echo $VAR` = \\\"$OLD\\\" ]]; then export $VAR=\\\"$NEW\\\"; fi\" $@; }; f "
 [apply]
     whitespace = fix
-[push]
-    default = simple
 [include]
     path = ~/.git_identity
-[merge]
-    tool = diffconflicts
-[mergetool "diffconflicts"]
-    cmd = diffconflicts vim $BASE $LOCAL $REMOTE $MERGED
-    trustExitCode = true
-    keepBackup = false
