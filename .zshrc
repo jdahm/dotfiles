@@ -129,7 +129,7 @@ VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]% %{$reset_color%}"
 RPS1="${${KEYMAP/(vicmd|opp)/$VIM_PROMPT}/(main|viins)/} %{$fg_bold[cyan]%} $(git_custom_prompt) %{$reset_color%}"
 zle reset-prompt
 }
-PS1="%{$fg[yellow]%}[%{$fg[blue]%}%m%{$fg[yellow]%}] [%{$fg[green]%}%c%{$fg[yellow]%}] : %{$reset_color%}"
+PS1="%{$fg[blue]%}%~%{$fg[yellow]%} : %{$reset_color%}"
 
 zle -N zle-line-init
 zle -N zle-keymap-select
