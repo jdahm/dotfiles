@@ -12,3 +12,4 @@
     whitespace = fix
 [include]
     path = ~/.git_identity
+    path = ~/.gitconfig.local
