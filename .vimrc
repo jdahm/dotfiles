@@ -45,6 +45,8 @@ set mouse=
 if has("gui_running")
     " Set font
     set guifont=DejaVu\ Sans\ Mono:h12
+    " Allow mouse here
+    set mouse=a
 endif
 
 " Changing windows
@@ -85,6 +87,12 @@ vno v <esc>
 " Enable syntax highlighting
 syntax enable
 
+" Search highlighting
+set hlsearch
+
+" Remove the highlighting when done
+nnoremap <CR> :noh<CR><CR>
+
 " Backspace behavior
 set backspace=indent,eol,start
 
@@ -94,17 +102,16 @@ set encoding=utf8
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
-" Folding
+" Automatically fold by syntax
 set foldmethod=syntax
-" set foldlevelstart=1
-
-" Space opens folds
+" ... but leave open by default
+set nofoldenable
+" Use space to toggle folds
 nnoremap <Space> za
 
-" Shortcut to rapidly toggle `set list`
+" Shortcut to toggle `set list`
 nmap <leader>l :set list!<CR>
-
-" Use the same symbols as TextMate for tabstops and EOLs
+" ... using the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:▸\ ,eol:¬
 
 " Wrapping words for editing text
@@ -198,7 +205,7 @@ command STW silent! call StripTrailingWhitespaces()<CR>
 set statusline=\ %f%m%r%h%w\ %=%({%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y}%)\ %([%l,%v][%p%%]\ %)
 
 " Colorscheme
-colorscheme base16-tomorrow
+colorscheme base16-default
 
 map <F5> :let &background = ( &background == "dark"? "light" : "dark" )<CR>
 

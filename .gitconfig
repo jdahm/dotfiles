@@ -2,9 +2,11 @@
     excludesfile = ~/.config/git/.gitignore_global
     whitespace = trailing-space,space-before-tab
 [color]
-	diff = auto
-	status = auto
+    diff = auto
+    status = auto
 [alias]
+    co = checkout
+    br = branch
     oops = commit --all --amend
     edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
     add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
@@ -16,8 +18,8 @@
 [include]
     path = ~/.git_identity
 [merge]
-	tool = diffconflicts
+    tool = diffconflicts
 [mergetool "diffconflicts"]
-	cmd = diffconflicts vim $BASE $LOCAL $REMOTE $MERGED
-	trustExitCode = true
-	keepBackup = false
+    cmd = diffconflicts vim $BASE $LOCAL $REMOTE $MERGED
+    trustExitCode = true
+    keepBackup = false
