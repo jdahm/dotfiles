@@ -145,15 +145,15 @@ bindkey -M viins 'jk' vi-cmd-mode
 
 ### jump behind the first word on the cmdline.
 ### useful to add options.
-function jump_after_first_word() {
-local words
-words=(${(z)BUFFER})
+jump_after_first_word() {
+    local words
+    words=(${(z)BUFFER})
 
-if (( ${#words} <= 1 )) ; then
-    CURSOR=${#BUFFER}
-else
-    CURSOR=${#${words[1]}}
-fi
+    if (( ${#words} <= 1 )) ; then
+        CURSOR=${#BUFFER}
+    else
+        CURSOR=${#${words[1]}}
+    fi
 }
 zle -N jump_after_first_word
 
@@ -168,35 +168,21 @@ sudo-command-line() {
     fi
 }
 zle -N sudo-command-line
-
 bindkey -M viins '^xs' sudo-command-line
 
-function ctrl-o
-{
+ctrl-o() {
     emulate -LR zsh
     local keystr
     read -k keystr
     local -r keystr
-    local -ri key=$(( #keystr ))
-    # if (( key==##A )) ; then zle end-of-line
-    # elif (( key==##$ )) ; then zle end-of-line
-    # elif (( key==##I )) ; then zle vi-first-non-blank
-    # elif (( key==##d )) ; then _-vi-delete
-    # elif (( key==##0 )) && [[ -z $NUMERIC ]] ;
-    # then zle beginning-of-line
-    # elif (( key>=##0 && key<=##9 ))
-    # then _-vi-digit-arg $(( key - ##0 )) _-vi-ctrl-o
-    #     #elif (( key==##s )) ; then zle sedsubstitute
-    #     #elif (( key==##= )) ; then zle tailfor
-    # else
     zle ${${(z)$(bindkey -M vicmd $keystr)}[2]}
-    # fi
 }
 zle -N ctrl-o
-
 bindkey -M viins '^o' ctrl-o
 
-#bindkey -M vicmd ':q' exit-shell
+exit-shell() { exit; }
+zle -N exit-shell
+bindkey -M vicmd ':q' exit-shell
 
 # Python (pyenv)
 export PYENV_ROOT="$HOME/.pyenv"
@@ -207,7 +193,6 @@ path=(~/.pyenv/shims $path)
 
 # aliases
 alias ipy="ipython"
-alias ipy-gui="ipython qtconsole"
 
 # Ruby (rbenv)
 export RBENV_ROOT="${HOME}/.rbenv"
@@ -219,3 +204,4 @@ path=(~/.rbenv/shims $path)
 # local config
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
+# vim: et sw=4 sts=4
