@@ -216,9 +216,6 @@ if command -v rbenv >/dev/null 2>&1; then
 fi
 path=(~/.rbenv/shims $path)
 
-# Tmux: export 256color
-[ -n "$TMUX" ] && export TERM=screen-256color
-
 # local config
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
