@@ -1,5 +1,5 @@
 [core]
-    excludesfile = ~/.config/git/.gitignore_global
+    excludesfile = ~/.config/git/gitignore_global
     whitespace = trailing-space,space-before-tab
 [color]
     diff = auto

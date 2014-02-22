@@ -17,10 +17,8 @@ let mapleader = ','
 " Plugins {{{
 
 " Pathogen
-filetype off " Pathogen needs to run before plugin indent on
 call pathogen#incubate()
 call pathogen#helptags() " generate helptags for everything in 'runtimepath'
-filetype plugin indent on
 
 " }}}
 
@@ -39,14 +37,12 @@ set hidden
 " Shorter messages
 set shortmess=a
 
-" Disable mouse
-set mouse=
+" Mouse
+set mouse=a
 
 if has("gui_running")
     " Set font
     set guifont=DejaVu\ Sans\ Mono:h12
-    " Allow mouse here
-    set mouse=a
 endif
 
 " Changing windows
@@ -55,15 +51,24 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+" Re-map redraw!
+map <S-C-l> :redraw!<CR>
+
 " }}}
 
 " Searching {{{
 
-" Set search path for files
-set path=.,,**
-
 " Ignoring case is a fun trick
 set smartcase
+
+" Actions when hitting 'tab' to complete filenames, comma separated list
+set wildmode=longest:full,full
+
+" Search highlighting
+set hlsearch
+
+" Remove the highlighting when done
+nnoremap <CR> :noh<CR>
 
 " }}}
 
@@ -84,21 +89,11 @@ ino jk <esc>
 cno jk <c-c>
 vno v <esc>
 
-" Enable syntax highlighting
-syntax enable
-
-" Search highlighting
-set hlsearch
-
-" Remove the highlighting when done
-nnoremap <CR> :noh<CR><CR>
-
 " Backspace behavior
 set backspace=indent,eol,start
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
-
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
@@ -109,16 +104,11 @@ set nofoldenable
 " Use space to toggle folds
 nnoremap <Space> za
 
-" Shortcut to toggle `set list`
-nmap <leader>l :set list!<CR>
 " ... using the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:▸\ ,eol:¬
 
 " Wrapping words for editing text
 command! -nargs=* Wrap set wrap linebreak nolist
-
-" Toggle spell checking on and off with `<leader>s`
-nmap <silent> <leader>s :set spell!<CR>
 
 " Set region to USA English
 set spelllang=en_us
@@ -130,7 +120,7 @@ set spelllang=en_us
 " Sets how many lines of history VIM has to remember
 set history=1000
 
-" Make backup files
+" Make backups
 set backup
 
 " Backup files go here
@@ -147,7 +137,6 @@ set directory=~/.vim/temp
 set autoindent
 
 " Set tabstop, softtabstop and shiftwidth to the same value
-command! -nargs=* Stab call Stab()
 function! Stab()
     let l:tabstop = 1 * input('set tabstop = softtabstop = shiftwidth = ')
     if l:tabstop > 0
@@ -157,8 +146,8 @@ function! Stab()
     endif
     call SummarizeTabs()
 endfunction
+command! -nargs=* Stab call Stab()
 
-nmap <C-S-Tab> :call SummarizeTabs()<CR>
 function! SummarizeTabs()
     try
         echohl ModeMsg
@@ -174,40 +163,37 @@ function! SummarizeTabs()
         echohl None
     endtry
 endfunction
+command ST silent! call SummarizeTabs()<CR>
 
-" Fix tabbing
-function RemoveTabs()
-    1,$s/\t/        /g
-endfunction
-
-command RT silent! call RemoveTabs()<CR>
-
-" Strip trailing whitespace
-function! StripTrailingWhitespaces()
-    " Preparation: save last search, and cursor position.
-    let _s=@/
-    let l = line(".")
-    let c = col(".")
-    " Do the business:
-    %s/\s\+$//e
-    " Clean up: restore previous search history, and cursor position
-    let @/=_s
-    call cursor(l, c)
-endfunction
-
-command STW silent! call StripTrailingWhitespaces()<CR>
+" Leader shortcuts
+nmap <leader><Tab> :call SummarizeTabs()<CR>
+nnoremap <leader>rtw :%s/\s\+$//e<CR>
+nnoremap <leader>rrt :%s/\t/        /e<CR>
 
 " }}}
 
 " Look and feel {{{
 
+function! GitStatusline()
+    " fugitive#statusline() works but I like this even more
+    if !exists('b:git_dir')
+        return ''
+    endif
+    return '['.fugitive#head(7).']'
+endfunction
+
 " Statusline
-set statusline=\ %f%m%r%h%w\ %=%({%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y}%)\ %([%l,%v][%p%%]\ %)
+set statusline=\ %f                                                               " path to file
+set statusline+=\ %-15.20(%m%r%h%)                                                " modified, read-only, and help flags
+set statusline+=%=                                                                " switch to right side
+set statusline+=\ %{GitStatusline()}                                       " fugitive status
+set statusline+=\ %({%{&ff}\|%{strlen(&fenc)?&fenc:strlen(&enc)?&enc:none}\|%Y}%) " line endings | enc | filetype
+set statusline+=\ %([%l,%v]%)                                                     " line and column number
+set statusline+=\ %p%%                                                            " percent through file
+set statusline+=\ [%n]                                                            " buffer number
 
 " Colorscheme
 colorscheme base16-default
-
-map <F5> :let &background = ( &background == "dark"? "light" : "dark" )<CR>
 
 " }}}
 

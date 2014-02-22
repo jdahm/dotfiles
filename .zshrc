@@ -26,6 +26,9 @@ zstyle ':completion:*' squeeze-slashes true
 zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:kill:*'   force-list always
 
+# z-utils
+autoload -U zargs zmv
+
 # Change directory without typing 'cd'
 setopt autocd
 
@@ -143,8 +146,13 @@ bindkey -M vicmd '/' history-incremental-search-backward
 ## remap escape key
 bindkey -M viins 'jk' vi-cmd-mode
 
-### jump behind the first word on the cmdline.
-### useful to add options.
+## jump to beginning of line
+jump-to-beginning() { CURSOR=0; }
+zle -N jump-to-beginning
+bindkey -M viins '^x0' jump-to-beginning
+bindkey -M viins '^e' jump-to-beginning
+
+## jump behind the first word on the cmdline.
 jump_after_first_word() {
     local words
     words=(${(z)BUFFER})
@@ -156,10 +164,9 @@ jump_after_first_word() {
     fi
 }
 zle -N jump_after_first_word
-
 bindkey -M viins '^x1' jump_after_first_word
 
-# run command line as user root via sudo:
+## run command line as user root via sudo:
 sudo-command-line() {
     [[ -z $BUFFER ]] && zle up-history
     if [[ $BUFFER != sudo\ * ]]; then
@@ -170,16 +177,19 @@ sudo-command-line() {
 zle -N sudo-command-line
 bindkey -M viins '^xs' sudo-command-line
 
+## emulate CTRL-O in zsh
 ctrl-o() {
     emulate -LR zsh
     local keystr
     read -k keystr
     local -r keystr
+    local -ri key=$(( #keystr ))
     zle ${${(z)$(bindkey -M vicmd $keystr)}[2]}
 }
 zle -N ctrl-o
 bindkey -M viins '^o' ctrl-o
 
+## Quick exit
 exit-shell() { exit; }
 zle -N exit-shell
 bindkey -M vicmd ':q' exit-shell
