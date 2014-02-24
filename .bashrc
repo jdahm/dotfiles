@@ -1,5 +1,5 @@
 # bashrc
 # Johann Dahm
 
-source .envrc
+source .profile
 [ -f .envrc ] && source .envrc.local

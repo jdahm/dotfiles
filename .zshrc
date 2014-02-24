@@ -3,8 +3,6 @@
 # Johann Dahm
 #
 
-source .envrc
-
 # Completion
 autoload -Uz compinit
 compinit
