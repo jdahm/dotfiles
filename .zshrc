@@ -3,8 +3,7 @@
 # Johann Dahm
 #
 
-# prefix /usr/local path
-path=(/usr/local/bin $path)
+source .envrc
 
 # Completion
 autoload -Uz compinit
@@ -87,15 +86,6 @@ setopt pushdignoredups
 ## vim-like delete behavior
 zle -A .backward-kill-word vi-backward-kill-word
 zle -A .backward-delete-char vi-backward-delete-char
-
-# User-local executables
-path=(~/.local/bin $path)
-
-# Sane default programs
-export VISUAL="vim"
-export PAGER="less"
-# left blank
-export EDITOR="vim"
 
 # Simple prompt
 autoload colors
@@ -212,6 +202,7 @@ fi
 path=(~/.rbenv/shims $path)
 
 # local config
+[ -f ~/.envrc.local ] && source ~/.envrc.local
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
 # vim: et sw=4 sts=4

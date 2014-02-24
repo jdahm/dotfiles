@@ -51,9 +51,6 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
-" Re-map redraw!
-map <S-C-l> :redraw!<CR>
-
 " }}}
 
 " Searching {{{
@@ -70,6 +67,8 @@ set hlsearch
 " Remove the highlighting when done
 nnoremap <CR> :noh<CR>
 
+nnoremap <silent> n :if v:searchforward <Bar> exe 'normal! n' <Bar> else <Bar> exe 'normal! N' <Bar> endif<CR>
+nnoremap <silent> N :if v:searchforward <Bar> exe 'normal! N' <Bar> else <Bar> exe 'normal! n' <Bar> endif<CR>
 " }}}
 
 " Editing {{{
