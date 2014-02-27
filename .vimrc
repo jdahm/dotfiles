@@ -167,7 +167,7 @@ command ST silent! call SummarizeTabs()<CR>
 " Leader shortcuts
 nmap <leader><Tab> :call SummarizeTabs()<CR>
 nnoremap <leader>rtw :%s/\s\+$//e<CR>
-nnoremap <leader>rrt :%s/\t/        /e<CR>
+nnoremap <leader>rrt :%s/\t/        /ge<CR>
 
 " }}}
 
