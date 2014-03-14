@@ -135,10 +135,10 @@ bindkey -M vicmd '/' history-incremental-search-backward
 bindkey -M viins 'jk' vi-cmd-mode
 
 ## jump to beginning of line
-jump-to-beginning() { CURSOR=0; }
-zle -N jump-to-beginning
-bindkey -M viins '^x0' jump-to-beginning
-bindkey -M viins '^e' jump-to-beginning
+bindkey -M viins '^x0' beginning-of-line
+bindkey -M viins '^a'  beginning-of-line
+bindkey -M viins '^e'  end-of-line
+bindkey -M viins '^k'  kill-line
 
 ## jump behind the first word on the cmdline.
 jump_after_first_word() {

@@ -10,6 +10,10 @@
     oops = commit --all --amend
 [apply]
     whitespace = fix
+[branch]
+    autosetuprebase = always
 [include]
     path = ~/.git_identity
     path = ~/.gitconfig.local
+
+# vim: et sw=4 sts=4
