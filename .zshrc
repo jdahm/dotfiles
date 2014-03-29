@@ -184,23 +184,14 @@ bindkey -M vicmd ':q' exit-shell
 
 # Python (pyenv)
 export PYENV_ROOT="$HOME/.pyenv"
-if command -v pyenv >/dev/null 2>&1; then
-    eval "$(pyenv init -)";
-fi
-path=(~/.pyenv/shims $path)
 
 # aliases
 alias ipy="ipython"
 
 # Ruby (rbenv)
 export RBENV_ROOT="${HOME}/.rbenv"
-if command -v rbenv >/dev/null 2>&1; then
-    eval "$(rbenv init -)";
-fi
-path=(~/.rbenv/shims $path)
 
 # local config
-[ -f ~/.envrc.local ] && source ~/.envrc.local
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
 # vim: et sw=4 sts=4
