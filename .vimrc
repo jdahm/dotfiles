@@ -37,13 +37,8 @@ set hidden
 " Shorter messages
 set shortmess=a
 
-" Mouse
-set mouse=a
-
-if has("gui_running")
-    " Set font
-    set guifont=DejaVu\ Sans\ Mono:h12
-endif
+" Mouse (uncomment below to enable)
+" set mouse=a
 
 " Changing windows
 map <C-h> <C-w>h

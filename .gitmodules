@@ -46,3 +46,9 @@
 [submodule ".vim/bundle/vim-exchange"]
 	path = .vim/bundle/vim-exchange
 	url = git@github.com:tommcdo/vim-exchange.git
+[submodule ".vim/bundle/vim-eunuch"]
+	path = .vim/bundle/vim-eunuch
+	url = git@github.com:tpope/vim-eunuch.git
+[submodule ".vim/bundle/vim-tbone"]
+	path = .vim/bundle/vim-tbone
+	url = git@github.com:tpope/vim-tbone.git

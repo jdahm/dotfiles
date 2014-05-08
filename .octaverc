@@ -1,2 +1,2 @@
-addpath("/home/jdahm/Documents/Octave")
+setenv("GNUTERM","X11")
 format compact
