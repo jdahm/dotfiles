@@ -120,7 +120,7 @@ VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]% %{$reset_color%}"
 RPS1="${${KEYMAP/(vicmd|opp)/$VIM_PROMPT}/(main|viins)/} %{$fg_bold[cyan]%} $(git_custom_prompt) %{$reset_color%}"
 zle reset-prompt
 }
-PS1="%{$fg[blue]%}%~%{$fg[yellow]%} : %{$reset_color%}"
+PS1="%{$fg[blue]%}%1c%{$fg[yellow]%} : %{$reset_color%}"
 
 zle -N zle-line-init
 zle -N zle-keymap-select
@@ -182,14 +182,8 @@ exit-shell() { exit; }
 zle -N exit-shell
 bindkey -M vicmd ':q' exit-shell
 
-# Python (pyenv)
-export PYENV_ROOT="$HOME/.pyenv"
-
 # aliases
 alias ipy="ipython"
-
-# Ruby (rbenv)
-export RBENV_ROOT="${HOME}/.rbenv"
 
 # local config
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
