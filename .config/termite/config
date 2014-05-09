@@ -9,8 +9,8 @@ allow_bold = true
 dynamic_title = true
 urgent_on_bell = true
 clickable_url = true
-font = Monospace 9
-scrollback_lines = 1000
+font = DejaVu Sans Mono 12
+scrollback_lines = 5000
 search_wrap = true
 #icon_name = terminal
 #geometry = 640x480
@@ -35,40 +35,79 @@ cursor_shape = block
 #modify_other_keys = false
 
 [colors]
-foreground = #dcdccc
-foreground_bold = #ffffff
+# ! Base16 Eighties
+# ! Scheme: Chris Kempson (http://chriskempson.com)
+
+# #define base00 #2d2d2d
+# #define base01 #393939
+# #define base02 #515151
+# #define base03 #747369
+# #define base04 #a09f93
+# #define base05 #d3d0c8
+# #define base06 #e8e6df
+# #define base07 #f2f0ec
+# #define base08 #f2777a
+# #define base09 #f99157
+# #define base0A #ffcc66
+# #define base0B #99cc99
+# #define base0C #66cccc
+# #define base0D #6699cc
+# #define base0E #cc99cc
+# #define base0F #d27b53
+
+# *.foreground:   base05
+# *.background:   base00
+# *.cursorColor:  base05
+# *.color0:       base00
+# *.color1:       base08
+# *.color2:       base0B
+# *.color3:       base0A
+# *.color4:       base0D
+# *.color5:       base0E
+# *.color6:       base0C
+# *.color7:       base05
+# *.color8:       base03
+# *.color9:       base09
+# *.color10:      base01
+# *.color11:      base02
+# *.color12:      base04
+# *.color13:      base06
+# *.color14:      base0F
+# *.color15:      base07
+foreground = #d3d0c8
+foreground_bold = #d3d0c8
 #foreground_dim = #888888
-background = #3f3f3f
-#cursor = #dcdccc
+background = #2d2d2d
+cursor = #d3d0c8
 
 # if unset, will reverse foreground and background
-highlight = #2f2f2f
+# highlight = #2f2f2f
 
 # colors from color0 to color254 can be set
-color0 = #3f3f3f
-color1 = #705050
-color2 = #60b48a
-color3 = #dfaf8f
-color4 = #506070
-color5 = #dc8cc3
-color6 = #8cd0d3
-color7 = #dcdccc
-color8 = #709080
-color9 = #dca3a3
-color10 = #c3bf9f
-color11 = #f0dfaf
-color12 = #94bff3
-color13 = #ec93d3
-color14 = #93e0e3
-color15 = #ffffff
+color0 = #2d2d2d
+color1 = #f2777a
+color2 = #99cc99
+color3 = #ffcc66
+color4 = #6699cc
+color5 = #cc99cc
+color6 = #66cccc
+color7 = #d3d0c8
+color8 = #747369
+color9 = #f99157
+color10 = #393939
+color11 = #515151
+color12 = #a09f93
+color13 = #e8e6df
+color14 = #d27b53
+color15 = #f2f0ec
 
 [hints]
-#font = Monospace 12
-#foreground = #dcdccc
-#background = #3f3f3f
-#padding = 2
-#border = #3f3f3f
-#border_width = 0.5
-#roundness = 2.0
+font = DejaVu Sans Mono 12
+foreground = #d3d0c8
+background = #2d2d2d
+padding = 2
+# border = #3f3f3f
+border_width = 0.5
+roundness = 2.0
 
 # vim: ft=dosini cms=#%s
