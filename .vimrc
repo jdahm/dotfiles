@@ -45,6 +45,7 @@ set splitright
 " Window title
 if has('title')
     set title
+    set titleold=""
 endif
 
 " }}}
