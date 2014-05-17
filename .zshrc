@@ -82,41 +82,31 @@ zle -A .backward-delete-char vi-backward-delete-char
 autoload colors
 colors
 
-_git_repo_name() {
-    gittopdir=$(git rev-parse --git-dir 2> /dev/null)
-    if [[ "foo$gittopdir" == "foo.git" ]]; then
-        echo `basename $(pwd)`
-    elif [[ "foo$gittopdir" != "foo" ]]; then
-        echo `dirname $gittopdir | xargs basename`
+_prompt_git_status () {
+  local __git_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+  if [ -n "$__git_branch" ]; then
+    echo -n "%F{cyan}$__git_branch%f"
+    if [ "true" = "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
+      [ -n "$(git status --porcelain --untracked-files=no)" ] && echo -n "%F{red}!%f"
+      [ -n "$(git status --porcelain | grep -m 1 '^??')" ] && echo -n "%F{red}?%f"
     fi
+    echo -n " "
+  fi
 }
 
-_git_branch_name() {
-    git branch 2>/dev/null | awk '/^\*/ { print $2 }'
+_prompt_indicator () {
+  git rev-parse 2>/dev/null && echo -n "±" && return
+  hg root >/dev/null 2>&1 && echo -n "☿" && return
+  svn info >/dev/null 2>&1 && echo -n "⚡" && return
+  echo -n "%(!.√.↪)"
 }
 
-_git_is_dirty() {
-    git diff --quiet 2> /dev/null || echo '*'
+zsh_prompt () {
+    PROMPT="%F{blue}%1c%f $(_prompt_git_status)%F{yellow}$(_prompt_indicator)%f "
 }
 
-git_custom_prompt() {
-    if [ -d .git ] || $(git rev-parse --git-dir > /dev/null 2>&1); then
-        echo "[% $(_git_branch_name)$(_git_is_dirty)]%"
-    fi
-}
-
-setopt prompt_subst
-
-# Right side
-function zle-line-init zle-keymap-select {
-VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]% %{$reset_color%}"
-RPS1="${${KEYMAP/(vicmd|opp)/$VIM_PROMPT}/(main|viins)/} %{$fg_bold[cyan]%} $(git_custom_prompt) %{$reset_color%}"
-zle reset-prompt
-}
-PS1="%{$fg[blue]%}%1c%{$fg[yellow]%} : %{$reset_color%}"
-
-zle -N zle-line-init
-zle -N zle-keymap-select
+autoload -U add-zsh-hook
+add-zsh-hook precmd zsh_prompt
 
 # Vi mode
 bindkey -v
@@ -174,9 +164,6 @@ bindkey -M viins '^o' ctrl-o
 exit-shell() { exit; }
 zle -N exit-shell
 bindkey -M vicmd ':q' exit-shell
-
-# aliases
-alias ipy="ipython"
 
 # local config
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local

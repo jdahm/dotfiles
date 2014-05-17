@@ -19,9 +19,6 @@ call pathogen#helptags() " generate helptags for everything in 'runtimepath'
 
 " User interface {{{
 
-" Show line numbers
-set number
-
 " No annoying sound on errors
 set noerrorbells
 set novisualbell
@@ -30,7 +27,7 @@ set novisualbell
 set hidden
 
 " Shorter messages
-set shortmess=a
+set shortmess=atI
 
 " Mouse (uncomment below to enable)
 " set mouse=a
@@ -40,6 +37,15 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
+
+" Normal window splitting
+set splitbelow
+set splitright
+
+" Window title
+if has('title')
+    set title
+endif
 
 " }}}
 
@@ -78,9 +84,6 @@ ino jk <esc>
 cno jk <c-c>
 vno v <esc>
 
-" Backspace behavior
-set backspace=indent,eol,start
-
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
 " Use Unix as the standard file type
@@ -90,11 +93,10 @@ set ffs=unix,dos,mac
 set foldmethod=syntax
 " ... but leave open by default
 set nofoldenable
+" Default to only top-level folds
+set foldnestmax=1
 " Use space to toggle folds
 nnoremap <Space> za
-
-" ... using the same symbols as TextMate for tabstops and EOLs
-set listchars=tab:▸\ ,eol:¬
 
 " Wrapping words for editing text
 command! -nargs=* Wrap set wrap linebreak nolist
@@ -116,14 +118,15 @@ set backup
 set backupdir=~/.vim/backup
 " Swap files go here
 set directory=~/.vim/temp
+" Undo files go here
+set undodir=~/.vim/undo
 
 " }}}
 
 " Tabbing and indenting {{{
 
-" Simple indentation via autoindent
+" Simple indentation via autoindent (inside vim-sensible)
 " Else, use the filetype plugins provided by vim
-set autoindent
 
 " Set tabstop, softtabstop and shiftwidth to the same value
 function! Stab()
