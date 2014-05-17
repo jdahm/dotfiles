@@ -1,9 +1,8 @@
 [core]
-    excludesfile = ~/.config/git/gitignore_global
+    excludesfile = ~/.config/git/ignore
     whitespace = trailing-space,space-before-tab
 [color]
-    diff = auto
-    status = auto
+    ui = true
 [alias]
     co = checkout
     br = branch
@@ -13,7 +12,7 @@
 [branch]
     autosetuprebase = always
 [include]
-    path = ~/.git_identity
-    path = ~/.gitconfig.local
+    path = ~/.config/git/identity
+    path = ~/.config/git/config
 
 # vim: et sw=4 sts=4

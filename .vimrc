@@ -1,8 +1,3 @@
-"
-" ~/.vimrc
-" Johann Dahm
-"
-
 " General {{{
 
 " Disable vi compatibility-mode

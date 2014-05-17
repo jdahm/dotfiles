@@ -1,8 +1,3 @@
-#
-# ~/.zshrc
-# Johann Dahm
-#
-
 # Completion
 autoload -Uz compinit
 compinit
@@ -55,8 +50,6 @@ setopt HIST_REDUCE_BLANKS
 setopt SHARE_HISTORY
 
 # Aliases
-alias vi="vim"
-
 alias cp="cp -i"
 alias mv="mv -i"
 alias rm="rm -I"
