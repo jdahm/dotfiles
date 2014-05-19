@@ -9,8 +9,6 @@
     oops = commit --all --amend
 [apply]
     whitespace = fix
-[branch]
-    autosetuprebase = always
 [include]
     path = ~/.config/git/identity
     path = ~/.config/git/config
