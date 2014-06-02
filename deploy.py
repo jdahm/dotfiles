@@ -10,7 +10,7 @@ import fnmatch
 def deploy_file(src, dest, verbose=True, backup=True):
     #ret = sp.call(["ln", "-s", src, dest])
     if backup and op.exists(dest):
-        if verbose: print "Creating backup of %s" % dest
+        if verbose: print "Creating backup of {}".format(dest)
         shutil.copy(dest, dest+".backup")
     if verbose: print "Copying %s -> %s" % (src, dest)
     shutil.copy(src, dest)
@@ -18,7 +18,7 @@ def deploy_file(src, dest, verbose=True, backup=True):
 def undeploy_file(dest, verbose=True, backup=True):
     #ret = sp.call(["unlink", dest])
     if backup and op.exists(dest):
-        if verbose: print "Creating backup of %s" % dest
+        if verbose: print "Creating backup of {}".format(dest)
         shutil.copy(dest, dest+".backup")
     try:
         if verbose: print "Removing %s" % dest

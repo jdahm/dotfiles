@@ -5,7 +5,7 @@ set nocompatible
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
-let mapleader = ','
+" let mapleader = ','
 
 " }}}
 
@@ -18,10 +18,6 @@ call pathogen#helptags() " generate helptags for everything in 'runtimepath'
 " }}}
 
 " User interface {{{
-
-" No annoying sound on errors
-set noerrorbells
-set novisualbell
 
 " Keep changes to the buffer without writing them when swiching
 set hidden
@@ -51,9 +47,6 @@ endif
 " }}}
 
 " Searching {{{
-
-" Ignoring case is a fun trick
-set smartcase
 
 " Actions when hitting 'tab' to complete filenames, comma separated list
 set wildmode=longest:full,full
@@ -85,8 +78,9 @@ ino jk <esc>
 cno jk <c-c>
 vno v <esc>
 
-" Set utf8 as standard encoding and en_US as the standard language
-set encoding=utf8
+" Set region to USA English
+set spelllang=en_us
+
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
@@ -102,15 +96,12 @@ nnoremap <Space> za
 " Wrapping words for editing text
 command! -nargs=* Wrap set wrap linebreak nolist
 
-" Set region to USA English
-set spelllang=en_us
-
 " }}}
 
 " Backup {{{
 
 " Sets how many lines of history VIM has to remember
-set history=1000
+set history=5000
 
 " Make backups
 set backup
@@ -119,8 +110,6 @@ set backup
 set backupdir=~/.vim/backup
 " Swap files go here
 set directory=~/.vim/temp
-" Undo files go here
-set undodir=~/.vim/undo
 
 " }}}
 

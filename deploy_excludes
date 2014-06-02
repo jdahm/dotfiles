@@ -1,3 +1,4 @@
-.gitmodules
+.git*
+./.gitmodules
 ./deploy.py
 ./Makefile
