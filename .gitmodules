@@ -31,9 +31,6 @@
 [submodule ".vim/bundle/tabular"]
 	path = .vim/bundle/tabular
 	url = git://github.com/godlygeek/tabular.git
-[submodule ".vim/bundle/vim-endwise"]
-	path = .vim/bundle/vim-endwise
-	url = git@github.com:tpope/vim-endwise.git
 [submodule ".vim/bundle/vim-characterize"]
 	path = .vim/bundle/vim-characterize
 	url = git@github.com:tpope/vim-characterize.git
@@ -52,3 +49,21 @@
 [submodule ".vim/bundle/vim-tbone"]
 	path = .vim/bundle/vim-tbone
 	url = git@github.com:tpope/vim-tbone.git
+[submodule ".vim/bundle/vim-textobj-user"]
+	path = .vim/bundle/vim-textobj-user
+	url = git@github.com:kana/vim-textobj-user.git
+[submodule ".vim/bundle/vim-textobj-entire"]
+	path = .vim/bundle/vim-textobj-entire
+	url = git@github.com:kana/vim-textobj-entire.git
+[submodule ".vim/bundle/vim-textobj-indent"]
+	path = .vim/bundle/vim-textobj-indent
+	url = git@github.com:kana/vim-textobj-indent.git
+[submodule ".vim/bundle/vim-textobj-syntax"]
+	path = .vim/bundle/vim-textobj-syntax
+	url = git@github.com:kana/vim-textobj-syntax.git
+[submodule ".vim/bundle/vim-textobj-line"]
+	path = .vim/bundle/vim-textobj-line
+	url = git@github.com:kana/vim-textobj-line.git
+[submodule ".vim/bundle/vim-projectionist"]
+	path = .vim/bundle/vim-projectionist
+	url = git@github.com:tpope/vim-projectionist.git
