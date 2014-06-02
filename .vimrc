@@ -3,9 +3,8 @@
 " Disable vi compatibility-mode
 set nocompatible
 
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
-" let mapleader = ','
+" Show partial commands
+set showcmd
 
 " }}}
 
@@ -51,9 +50,6 @@ endif
 " Actions when hitting 'tab' to complete filenames, comma separated list
 set wildmode=longest:full,full
 
-" Search highlighting
-set hlsearch
-
 " Remove the highlighting when done
 nnoremap <CR> :noh<CR>
 
@@ -62,6 +58,28 @@ nnoremap <silent> N :if v:searchforward <Bar> exe 'normal! N' <Bar> else <Bar> e
 " }}}
 
 " Editing {{{
+
+" Use Unix as the standard file type
+set ffs=unix,dos,mac
+
+" Wrapping words for editing text
+command! -nargs=* Wrap set wrap linebreak nolist
+
+if has('syntax')
+    " Set region to USA English
+    set spelllang=en_us
+endif
+
+if has('folding')
+    " Automatically fold by syntax
+    set foldmethod=syntax
+    " ... but leave open by default
+    set nofoldenable
+    " Default to only top-level folds
+    set foldnestmax=1
+    " Use space to toggle folds
+    nnoremap <Space> za
+endif
 
 " 'Hard' mode so I learn
 noremap <up> <nop>
@@ -78,24 +96,6 @@ ino jk <esc>
 cno jk <c-c>
 vno v <esc>
 
-" Set region to USA English
-set spelllang=en_us
-
-" Use Unix as the standard file type
-set ffs=unix,dos,mac
-
-" Automatically fold by syntax
-set foldmethod=syntax
-" ... but leave open by default
-set nofoldenable
-" Default to only top-level folds
-set foldnestmax=1
-" Use space to toggle folds
-nnoremap <Space> za
-
-" Wrapping words for editing text
-command! -nargs=* Wrap set wrap linebreak nolist
-
 " }}}
 
 " Backup {{{
@@ -108,8 +108,9 @@ set backup
 
 " Backup files go here
 set backupdir=~/.vim/backup
-" Swap files go here
-set directory=~/.vim/temp
+
+" Disable swap files
+set noswapfile
 
 " }}}
 
