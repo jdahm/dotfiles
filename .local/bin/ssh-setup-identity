@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+files = [
+	'.ssh/config'
+	'.ssh/id_rsa.pub'
+	'.git_identity'
+]
+
+def ssh-copy(file, remote)
+	fullfile = $HOME/file
+	exec "scp #{fullfile} #{remote}/
+end
+
+files.each { |f| ssh-copy f, ARGV[0] }
+
+
