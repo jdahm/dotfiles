@@ -3,3 +3,4 @@
 ./.gitmodules
 ./deploy.py
 ./Makefile
+*Session.vim

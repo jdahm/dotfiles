@@ -3,9 +3,6 @@
 " Disable vi compatibility-mode
 set nocompatible
 
-" Show partial commands
-set showcmd
-
 " }}}
 
 " Plugins {{{
@@ -33,10 +30,6 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
-" Normal window splitting
-set splitbelow
-set splitright
-
 " Window title
 if has('title')
     set title
@@ -58,9 +51,6 @@ nnoremap <silent> N :if v:searchforward <Bar> exe 'normal! N' <Bar> else <Bar> e
 " }}}
 
 " Editing {{{
-
-" Use Unix as the standard file type
-set ffs=unix,dos,mac
 
 " Wrapping words for editing text
 command! -nargs=* Wrap set wrap linebreak nolist
@@ -108,9 +98,6 @@ set backup
 
 " Backup files go here
 set backupdir=~/.vim/backup
-
-" Disable swap files
-set noswapfile
 
 " }}}
 
