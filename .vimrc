@@ -81,9 +81,6 @@ if has('folding')
     nnoremap <Space> za
 endif
 
-" Don't add two spaces between joins
-set nojoinspaces
-
 " 'Hard' mode so I learn
 noremap <up> <nop>
 noremap <down> <nop>
