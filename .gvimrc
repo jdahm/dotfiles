@@ -1,5 +1,3 @@
-" Set font
-set guifont=DejaVuSansMono:h14
 " Colorscheme, in terminal vim this isn't necessary
 silent! colorscheme base16-eighties
 
@@ -11,3 +9,7 @@ set mouse=a
 set guioptions+=c
 " Disable toolbar
 set guioptions-=T
+
+if filereadable(expand("~/.gvimrc.local"))
+    source ~/.gvimrc.local
+endif
