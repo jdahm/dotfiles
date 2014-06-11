@@ -32,7 +32,7 @@ tramp
 .*.sw[a-z]
 *.un~
 Session.vim
-.projections.vim
+.projections.json
 
 # Python
 __pycache__/
