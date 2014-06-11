@@ -1,12 +1,4 @@
-# Linux     taken from: https://github.com/github/gitignore/blob/master/Global/Linux.gitignore
-# ----------------------------------------------------------------------------------------------
-# .*
-# !.gitignore
-*~
-config.mk
-
-# OSX       taken from: https://github.com/github/gitignore/blob/master/Global/OSX.gitignore
-# ----------------------------------------------------------------------------------------------
+# OSX
 .DS_Store
 # Thumbnails
 ._*
@@ -14,16 +6,16 @@ config.mk
 .Spotlight-V100
 .Trashes
 
-# Windows   taken from: https://github.com/github/gitignore/blob/master/Global/Windows.gitignore
-# ----------------------------------------------------------------------------------------------
+# Windows
 # Windows image file caches
 Thumbs.db
-
 # Folder config file
 Desktop.ini
 
-# Emacs     taken from: https://github.com/github/gitignore/blob/master/Global/Emacs.gitignore
-# ----------------------------------------------------------------------------------------------
+# GNU Make
+config.mk
+
+# Emacs
 *~
 \#*\#
 /.emacs.desktop
@@ -32,31 +24,30 @@ Desktop.ini
 auto-save-list
 tramp
 .\#*
-
 # Org-mode
 .org-id-locations
 *_archive
 
-# Vim       taken from: https://github.com/github/gitignore/blob/master/Global/vim.gitignore
-# ----------------------------------------------------------------------------------------------
+# Vim
 .*.sw[a-z]
 *.un~
 Session.vim
+.projections.vim
 
-# Tags      taken from: https://github.com/github/gitignore/blob/master/Global/Tags.gitignore
-# ----------------------------------------------------------------------------------------------
-# Ignore tags created by etags and ctags
+# Python
+__pycache__/
+*.pyc
+
+# Tags
 TAGS
 tags
 
-# Mercurial taken from: https://github.com/github/gitignore/blob/master/Global/Mercurial.gitignore
-# ----------------------------------------------------------------------------------------------
+# Mercurial
 /.hg/*
 */.hg/*
 .hgignore
 
-# Eclipse:  taken from: https://github.com/github/gitignore/blob/master/Global/Eclipse.gitignore
-# ----------------------------------------------------------------------------------------------
+# Eclipse
 *.pydevproject
 .project
 .metadata
@@ -84,22 +75,17 @@ local.properties
 # PDT-specific
 .buildpath
 
-# MATLAB    taken from: https://github.com/github/gitignore/blob/master/Global/Matlab.gitignore
-# ----------------------------------------------------------------------------------------------
+# MATLAB
 # Windows default autosave extension
 *.asv
-
 # OSX / *nix default autosave extension
 *.m~
-
 # Compiled MEX binaries (all platforms)
 *.mex*
-
 # Simulink Code Generation	
 slprj/
 
-# LaTeX     taken from: https://github.com/github/gitignore/blob/master/LaTeX.gitignore
-# ----------------------------------------------------------------------------------------------
+# LaTeX
 *.acn
 *.acr
 *.alg
