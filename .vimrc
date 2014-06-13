@@ -1,28 +1,28 @@
-" General {{{
-
 " Disable vi compatibility-mode
 set nocompatible
 
-" }}}
+" Load plugins via pathogen
+filetype plugin off
+call pathogen#infect() " Load plugins in ~/.vim/bundle
+call pathogen#helptags() " Generate helptags for all plugins
 
-" Plugins {{{
-
-" Pathogen
-call pathogen#incubate()
-call pathogen#helptags() " generate helptags for everything in 'runtimepath'
-
-" }}}
-
-" User interface {{{
-
-" Keep changes to the buffer without writing them when swiching
+" Allow modified buffers to become hidden
 set hidden
 
-" Shorter messages
-set shortmess=atI
+" Make backups
+set backup
 
-" Mouse (uncomment below to enable)
-" set mouse=a
+" Backup files go here
+set backupdir=~/.vim/backup
+
+" Sets how many lines of history Vim has to remember
+set history=5000
+
+" Actions when hitting 'tab' to complete filenames, comma separated list
+set wildmode=longest:full,full
+
+" Colorscheme
+colorscheme base16-default
 
 " Changing windows
 map <C-h> <C-w>h
@@ -30,30 +30,17 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+" Use 'jk' instead of <esc> in insert and command line mode
+ino jk <esc>
+cno jk <c-c>
+" Use 'v' instead of <esc> in visual mode
+vno v <esc>
+
 " Window title
 if has('title')
     set title
     set titleold=""
 endif
-
-" }}}
-
-" Searching {{{
-
-" Actions when hitting 'tab' to complete filenames, comma separated list
-set wildmode=longest:full,full
-
-" Remove the highlighting when done
-nnoremap <CR> :noh<CR>
-
-nnoremap <silent> n :if v:searchforward <Bar> exe 'normal! n' <Bar> else <Bar> exe 'normal! N' <Bar> endif<CR>
-nnoremap <silent> N :if v:searchforward <Bar> exe 'normal! N' <Bar> else <Bar> exe 'normal! n' <Bar> endif<CR>
-" }}}
-
-" Editing {{{
-
-" Wrapping words for editing text
-command! -nargs=* Wrap set wrap linebreak nolist
 
 if has('syntax')
     " Set region to USA English
@@ -71,7 +58,7 @@ if has('folding')
     nnoremap <Space> za
 endif
 
-" 'Hard' mode so I learn
+" 'Hard' mode
 noremap <up> <nop>
 noremap <down> <nop>
 noremap <left> <nop>
@@ -81,96 +68,15 @@ inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
 
-" use 'jk' instead of <Esc>
-ino jk <esc>
-cno jk <c-c>
-vno v <esc>
-
-" }}}
-
-" Backup {{{
-
-" Sets how many lines of history VIM has to remember
-set history=5000
-
-" Make backups
-set backup
-
-" Backup files go here
-set backupdir=~/.vim/backup
-
-" }}}
-
-" Tabbing and indenting {{{
-
-" Simple indentation via autoindent (inside vim-sensible)
-" Else, use the filetype plugins provided by vim
-
-" Set tabstop, softtabstop and shiftwidth to the same value
-function! Stab()
-    let l:tabstop = 1 * input('set tabstop = softtabstop = shiftwidth = ')
-    if l:tabstop > 0
-        let &l:sts = l:tabstop
-        let &l:ts  = l:tabstop
-        let &l:sw  = l:tabstop
-    endif
-    call SummarizeTabs()
-endfunction
-command! -nargs=* Stab call Stab()
-
-function! SummarizeTabs()
-    try
-        echohl ModeMsg
-        echon 'tabstop='.&l:ts
-        echon ' shiftwidth='.&l:sw
-        echon ' softtabstop='.&l:sts
-        if &l:et
-            echon ' expandtab'
-        else
-            echon ' noexpandtab'
-        endif
-    finally
-        echohl None
-    endtry
-endfunction
-command ST silent! call SummarizeTabs()<CR>
-
-" Leader shortcuts
-nmap <leader><Tab> :call SummarizeTabs()<CR>
+" Remove trailing whitespace
 nnoremap <leader>rtw :%s/\s\+$//e<CR>
+" Remove real tabs
 nnoremap <leader>rrt :%s/\t/        /ge<CR>
 
-" }}}
+" Load config files
+runtime! config/*.vim
 
-" Look and feel {{{
-
-function! GitStatusline()
-    " fugitive#statusline() works but I like this even more
-    if !exists('b:git_dir')
-        return ''
-    endif
-    return '['.fugitive#head(7).']'
-endfunction
-
-" Statusline
-set statusline=\ %f                                                               " path to file
-set statusline+=\ %-15.20(%m%r%h%)                                                " modified, read-only, and help flags
-set statusline+=%=                                                                " switch to right side
-set statusline+=\ %{GitStatusline()}                                       " fugitive status
-set statusline+=\ %({%{&ff}\|%{strlen(&fenc)?&fenc:strlen(&enc)?&enc:none}\|%Y}%) " line endings | enc | filetype
-set statusline+=\ %([%l,%v]%)                                                     " line and column number
-set statusline+=\ %p%%                                                            " percent through file
-set statusline+=\ [%n]                                                            " buffer number
-
-" Colorscheme
-colorscheme base16-default
-
-" }}}
-
-" Local configuration {{{
-
+" Local config
 if filereadable(expand("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
-
-" }}}
