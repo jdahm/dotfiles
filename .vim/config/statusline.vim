@@ -15,7 +15,7 @@ function! MyStatusLine()
 
     " Right status
     let l:s .= s:git_branch()
-    let l:s .= '%{argc()>0?("   A[".(argc()<10?repeat("-",argidx()).(expand("%")==argv(argidx())?"+":"~").repeat("-",argc()-argidx()-1):(argidx()+1)."/".argc())."]"):""}'
+    let l:s .= '%{argc()>0?("   A[".(argc()<10?repeat("-",argidx()).(argidx()<argc()?(expand("%")==argv(argidx())?"+":"~").repeat("-",argc()-argidx()-1):""):(argidx()<argc()?(argidx()+1)."/":"").argc())."]"):""}'
     let l:s .= '  '
     let l:s .= '%-14.(%l,%c%V%) '
     let l:s .= '%P'
