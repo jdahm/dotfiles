@@ -9,6 +9,9 @@ call pathogen#helptags() " Generate helptags for all plugins
 " Allow modified buffers to become hidden
 set hidden
 
+" Truncate long lines and skip startup message
+set shortmess=tI
+
 " Make backups
 set backup
 
