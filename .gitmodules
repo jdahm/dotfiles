@@ -28,9 +28,6 @@
 [submodule ".vim/bundle/vim-vinegar"]
 	path = .vim/bundle/vim-vinegar
 	url = git@github.com:tpope/vim-vinegar.git
-[submodule ".vim/bundle/tabular"]
-	path = .vim/bundle/tabular
-	url = git://github.com/godlygeek/tabular.git
 [submodule ".vim/bundle/vim-characterize"]
 	path = .vim/bundle/vim-characterize
 	url = git@github.com:tpope/vim-characterize.git
@@ -46,9 +43,6 @@
 [submodule ".vim/bundle/vim-eunuch"]
 	path = .vim/bundle/vim-eunuch
 	url = git@github.com:tpope/vim-eunuch.git
-[submodule ".vim/bundle/vim-tbone"]
-	path = .vim/bundle/vim-tbone
-	url = git@github.com:tpope/vim-tbone.git
 [submodule ".vim/bundle/vim-textobj-user"]
 	path = .vim/bundle/vim-textobj-user
 	url = git@github.com:kana/vim-textobj-user.git
@@ -79,3 +73,6 @@
 [submodule ".vim/bundle/vim-afterimage"]
 	path = .vim/bundle/vim-afterimage
 	url = git@github.com:tpope/vim-afterimage.git
+[submodule ".vim/bundle/vim-lion"]
+	path = .vim/bundle/vim-lion
+	url = https://github.com/tommcdo/vim-lion.git
