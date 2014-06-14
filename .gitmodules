@@ -76,3 +76,12 @@
 [submodule ".vim/bundle/vim-lion"]
 	path = .vim/bundle/vim-lion
 	url = https://github.com/tommcdo/vim-lion.git
+[submodule ".vim/bundle/vim-kangaroo"]
+	path = .vim/bundle/vim-kangaroo
+	url = git@github.com:tommcdo/vim-kangaroo.git
+[submodule ".vim/bundle/vim-nowchangethat"]
+	path = .vim/bundle/vim-nowchangethat
+	url = git@github.com:tommcdo/vim-nowchangethat.git
+[submodule ".vim/bundle/vim-ninja-feet"]
+	path = .vim/bundle/vim-ninja-feet
+	url = git@github.com:tommcdo/vim-ninja-feet.git
