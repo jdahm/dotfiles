@@ -1,3 +1,5 @@
+" Tabbing
+
 " Summarize tab config
 function! tabbing#summarize_tabs()
     try

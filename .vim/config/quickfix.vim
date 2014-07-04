@@ -1,3 +1,6 @@
+" Quickfix
+
+" Grep quickly through the quickfix list to quickly find specific locations
 function! quickfix#grep_quickfix(pat)
     let all = getqflist()
     for d in all

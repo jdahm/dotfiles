@@ -1,3 +1,5 @@
+" Statusline
+
 " Source
 "   - https://github.com/tommcdo/vimfiles/blob/master/config/statusline.vim
 
