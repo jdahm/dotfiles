@@ -67,9 +67,6 @@
 [submodule ".vim/bundle/vim-textobj-comment"]
 	path = .vim/bundle/vim-textobj-comment
 	url = https://github.com/glts/vim-textobj-comment.git
-[submodule ".vim/bundle/vim-rsi"]
-	path = .vim/bundle/vim-rsi
-	url = git@github.com:tpope/vim-rsi.git
 [submodule ".vim/bundle/vim-afterimage"]
 	path = .vim/bundle/vim-afterimage
 	url = git@github.com:tpope/vim-afterimage.git
