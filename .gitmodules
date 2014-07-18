@@ -82,3 +82,6 @@
 [submodule ".vim/bundle/vim-ninja-feet"]
 	path = .vim/bundle/vim-ninja-feet
 	url = git@github.com:tommcdo/vim-ninja-feet.git
+[submodule ".vim/bundle/vim-express"]
+	path = .vim/bundle/vim-express
+	url = git@github.com:tommcdo/vim-express.git
