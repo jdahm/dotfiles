@@ -1,5 +1,8 @@
 " Sensible options for a modern Vim setup
 
+" Set default encoding
+set encoding=utf-8
+
 " Use 'jk' instead of <esc> in insert and command line mode
 ino jk <esc>
 cno jk <c-c>
