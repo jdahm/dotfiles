@@ -1,2 +1,2 @@
 " Colorscheme
-colorscheme solarized
+colorscheme base16-default
