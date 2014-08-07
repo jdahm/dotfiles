@@ -13,7 +13,7 @@ bindkey -M viins 'jk' vi-cmd-mode
 
 # Jump/kill line
 bindkey -M viins '^x0' beginning-of-line
-bindkey -M viins '^a'  beginning-of-line
+bindkey -M viins '^\'  beginning-of-line
 bindkey -M viins '^e'  end-of-line
 bindkey -M viins '^k'  kill-line
 
