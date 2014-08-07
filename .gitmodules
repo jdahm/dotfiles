@@ -85,3 +85,6 @@
 [submodule ".vim/bundle/base16-vim"]
 	path = .vim/bundle/base16-vim
 	url = git@github.com:chriskempson/base16-vim.git
+[submodule ".vim/bundle/vim-scriptease"]
+	path = .vim/bundle/vim-scriptease
+	url = https://github.com/tpope/vim-scriptease.git
