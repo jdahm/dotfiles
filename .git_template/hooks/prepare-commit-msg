@@ -8,14 +8,14 @@ then
     echo "${COMMITS}" >> $1
     echo "#" >> $1
 fi
-TODO_added=$(git diff HEAD | awk_git_todo_added.awk)
+TODO_added=$(git diff HEAD | awk_git_todo_added)
 if [ -n "$TODO_added" ]; then
     echo "# TODO messages added" >> $1
     echo "# -------------------" >> $1
     IFS=$'\n'; for t in $TODO_added; do echo "# * $t" >> $1; done;
     echo "#" >> $1
 fi
-TODO_removed=$(git diff HEAD | awk_git_todo_removed.awk)
+TODO_removed=$(git diff HEAD | awk_git_todo_removed)
 if [ -n "$TODO_removed" ]; then
     echo "# TODO messages removed" >> $1
     echo "# ---------------------" >> $1
