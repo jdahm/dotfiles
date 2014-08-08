@@ -12,9 +12,6 @@ Thumbs.db
 # Folder config file
 Desktop.ini
 
-# GNU Make
-config.mk
-
 # Emacs
 *~
 \#*\#
