@@ -1,4 +1,3 @@
-#!/usr/bin/awk -F'\n' -f
 {
 	for(i=0; i<NF; i++){
 		if( match($i,/\+\+\+ b\//) > 0 ){
