@@ -6,12 +6,6 @@ cno jk <c-c>
 " Use 'v' instead of <esc> in visual mode
 vno v <esc>
 
-" Changing splits
-map <C-Left>  <C-w>h
-map <C-Down>  <C-w>j
-map <C-Up>    <C-w>k
-map <C-Right> <C-w>l
-
 " Allow modified buffers to become hidden
 set hidden
 
