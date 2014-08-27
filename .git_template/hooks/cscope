@@ -1,0 +1,6 @@
+#!/bin/sh
+
+mkdir .git/cscope_lock 2>/dev/null || exit 0
+trap "rmdir .git/cscope_lock; rm -f .git/cscope.out.$$" EXIT
+cscope -b -q -f .git/cscope.out.$$
+mv .git/cscope.out.$$ .git/cscope.out

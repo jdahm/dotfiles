@@ -1,6 +1,11 @@
 " Whitespace
 
 " Remove trailing whitespace
-nnoremap <leader>rtw :%s/\s\+$//e<CR>
-" Remove real tabs
-nnoremap <leader>rrt :%s/\t/        /ge<CR>
+function! whitespace#delete_trailing_whitespace()
+    let line = line(".")
+    let col = col(".")
+    %s/\s\+$//e
+    call cursor(line, col)
+endfunction
+command! DeleteTrailingWhitespace call whitespace#delete_trailing_whitespace()
+
