@@ -4,8 +4,6 @@
 set tags^=.git/tags
 
 if has('cscope')
-    set cscopetag cscopeverbose
-
     if has('quickfix')
         set cscopequickfix=s-,c-,d-,i-,t-,e-
     endif
@@ -16,11 +14,12 @@ if has('cscope')
         cscope add $CSCOPE_DB
     endif
 
+    set cscopetag cscopeverbose
+
     cnoreabbrev csa cs add
     cnoreabbrev csf cs find
     cnoreabbrev csk cs kill
     cnoreabbrev csr cs reset
     cnoreabbrev css cs show
     cnoreabbrev csh cs help
-
 endif
