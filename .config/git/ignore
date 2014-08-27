@@ -39,6 +39,10 @@ __pycache__/
 TAGS
 tags
 
+# CScope
+cscope.files
+cscope.out
+
 # Mercurial
 /.hg/*
 */.hg/*
