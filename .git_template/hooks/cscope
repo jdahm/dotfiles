@@ -8,7 +8,6 @@ cscope -b -q -f $basename.$$
 for f in ${basename}.$$*; do
 	if [[ "$f" =~ "${basename}".[[:digit:]]+\.(.*) ]]; then
 		ext=${BASH_REMATCH[1]}
-		echo $ext
 		mv "$f" .git/cscope.out.$ext
 	fi
 done
