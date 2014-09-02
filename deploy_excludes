@@ -4,3 +4,4 @@
 ./deploy.py
 ./Makefile
 *Session.vim
+cscope.files
