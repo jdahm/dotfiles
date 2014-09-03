@@ -91,3 +91,9 @@
 [submodule ".vim/bundle/vim-qargs"]
 	path = .vim/bundle/vim-qargs
 	url = git@github.com:nelstrom/vim-qargs.git
+[submodule ".vim/bundle/vim-fireplace"]
+	path = .vim/bundle/vim-fireplace
+	url = git@github.com:tpope/vim-fireplace.git
+[submodule ".vim/bundle/vim-leiningen"]
+	path = .vim/bundle/vim-leiningen
+	url = git@github.com:tpope/vim-leiningen.git
