@@ -2,7 +2,6 @@
 source ~/.zsh/completion.zsh
 source ~/.zsh/prompt.zsh
 source ~/.zsh/aliases.zsh
-source ~/.zsh/vim.zsh
 source ~/.zsh/util.zsh
 source ~/.zsh/history.zsh
 
