@@ -7,3 +7,4 @@ export PAGER="less"
 export LESS="-F -R -X"
 export EDITOR="vim"
 
+[ -f ~/.profile.local ] && source ~/.profile.local
