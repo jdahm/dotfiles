@@ -11,6 +11,9 @@ autoload -Uz zcalc
 autoload -Uz zmv
 autoload -Uz age
 
+# Emacs-like keybindings
+bindkey -e
+
 # Extended glob
 setopt extended_glob
 
