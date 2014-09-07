@@ -1,7 +1,7 @@
 *.git
 *.git/*
 ./.gitmodules
-./deploy.py
+./deploy
 ./Makefile
 *Session.vim
 cscope.files
