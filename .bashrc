@@ -6,7 +6,14 @@
 
 # Prompt
 prompt_err() {
-    if test "$?" -eq 0; then PS1='\[\e[1;34m\]\W\[\e[m\] > '; else PS1='\[\e[1;34m\]\W\[\e[m\] \[\e[0;31m\][$?]\[\e[m\] > '; fi
+    local Reset='\e[0m'
+    local Blue='\e[0;34m'
+    local Red='\e[0;31m'
+    if test "$?" -eq 0; then
+	    PS1="\[${Blue}\]\W\[${Reset}\] > "
+    else
+	    PS1="\[${Blue}\]\W\[${Reset}\] [\[\Red\]\?\[${Reset}\]] > "
+    fi
 }
 
 PROMPT_COMMAND=prompt_err
