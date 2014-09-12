@@ -1,12 +1,17 @@
 [global_config]
 focus = system
 
+[keybindings]
+
 [profiles]
 [[default]]
-font = DejaVu Sans Mono 10
-foreground_color = "#d3d0c8"
-background_color = "#2d2d2d"
 palette = "#2d2d2d:#f2777a:#99cc99:#ffcc66:#6699cc:#cc99cc:#66cccc:#d3d0c8:#747369:#f99157:#393939:#515151:#a09f93:#e8e6df:#d27b53:#f2f0ec"
-scrollback_lines = "10000"
-cursor_blink = True
+scrollbar_position = hidden
+cursor_color = "#898989"
+foreground_color = "#d3d0c8"
 show_titlebar = False
+background_color = "#2d2d2d"
+scrollback_infinite = True
+
+[layouts]
+[plugins]
