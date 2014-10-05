@@ -34,5 +34,13 @@ shopt -s cdspell
 shopt -s cmdhist
 shopt -s extglob
 
+# History
+# Source: http://blog.sanctum.geek.nz/better-bash-history/
+shopt -s histappend
+HISTCONTROL=ignoreboth
+HISTIGNORE='ls:bg:fg:history'
+HISTTIMEFORMAT='%F %T '
+shopt -s cmdhist
+
 # Local config
 [ -f ~/.bashrc.local ] && . ~/.bashrc.local
