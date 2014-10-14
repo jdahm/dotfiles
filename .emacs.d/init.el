@@ -308,9 +308,8 @@ Call a second time to restore the original window configuration."
 
 
 ;;; Colors/Theme
-
-;; Load this early to reduce window flicker
-(load-theme 'tango-dark t)
+(when (>= emacs-major-version 24)
+  (load-theme 'tango-dark t))
 
 
 ;;; Package manager
