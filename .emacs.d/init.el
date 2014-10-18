@@ -194,6 +194,10 @@ Call a second time to restore the original window configuration."
 
 ;;; Navigation
 
+;; Better buffer names
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
+
 ;; Better window navigation
 (require 'windmove)
 (windmove-default-keybindings)
