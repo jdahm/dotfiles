@@ -194,6 +194,10 @@ Call a second time to restore the original window configuration."
 
 ;;; Navigation
 
+;; Better window navigation
+(require 'windmove)
+(windmove-default-keybindings)
+
 ;; Remember cursor position in each file
 (require 'saveplace)
 (setq save-place-file (concat emacs-persistence-directory
