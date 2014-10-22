@@ -4,8 +4,8 @@
 
 ;; Personal info
 (setq
- user-full-name "Johann Dahm"              ; name
- user-mail-address "johann.dahm@gmail.com" ; email
+ user-full-name "Johann Dahm"               ; name
+ user-mail-address "johann.dahm@gmail.com"  ; email
  )
 
 ;; Turn off scrollbar, toolbar, etc. early in startup to avoid window width weirdness
@@ -38,7 +38,6 @@
 (global-set-key (kbd "C-c C-w") 'whitespace-mode)
 (global-set-key (kbd "C-c t")   'my-tab-width)
 
-(global-set-key (kbd "C-h C-o") 'occur)
 (global-set-key (kbd "C-h TAB") 'my-indent-whole-buffer)
 (global-set-key (kbd "C-h C-m") 'discover-my-major)
 (global-set-key (kbd "C-h C-z") 'projectile-find-file)
@@ -131,22 +130,22 @@ Call a second time to restore the original window configuration."
   (scroll-down 1))
 
 (defun my-toggle-show-trailing-whitespace ()
-  "Toggle show-trailing-whitespace between t and nil"
+  "Toggle show-trailing-whitespace between t and nil."
   (interactive)
   (setq show-trailing-whitespace (not show-trailing-whitespace))
   (setq-default indicate-empty-lines (not indicate-empty-lines))
   (redraw-display))
+
+(defun my-kill-buffer ()
+  "Kills current buffer without asking for buffer name."
+  (interactive)
+  (kill-buffer (buffer-name)))
 
 ;; Switch to last buffer without having to press return.
 (defun my-prev-buffer ()
   "Switch to previous buffer."
   (interactive)
   (switch-to-buffer (other-buffer)))
-
-(defun my-kill-buffer ()
-  "Kill current buffer without confirmation (unless modified)."
-  (interactive)
-  (kill-buffer (current-buffer)))
 
 (defun my-tab-width ()
   "Cycle tab-width between values 2, 4, and 8."
@@ -272,21 +271,6 @@ Call a second time to restore the original window configuration."
 
 
 
-;; Python settings
-(setq
- python-shell-interpreter "ipython"
- python-shell-interpreter-args ""
- python-shell-prompt-regexp "In \\[[0-9]+\\]: "
- python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
- python-shell-completion-setup-code
- "from IPython.core.completerlib import module_completion"
- python-shell-completion-module-string-code
- "';'.join(module_completion('''%s'''))\n"
- python-shell-completion-string-code
- "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
-
-
-
 ;;; Octave
 
 ;; Treat .m files as octave (not objective-C)
@@ -323,46 +307,40 @@ Call a second time to restore the original window configuration."
 ;;; Package manager
 
 (defvar my-packages
-  '(discover-my-major
-    guru-mode
-    magit
-    markdown-mode
+  '(markdown-mode
     clojure-mode
     d-mode
     haskell-mode
-    ag
     projectile
+    magit
+    discover-my-major
+    guru-mode
     ))
 
 (when (>= emacs-major-version 24)
-       (require 'package)
-       (add-to-list 'package-archives
-                    '("melpa" . "http://melpa.milkbox.net/packages/"))
-       (package-initialize)
-       (when (not package-archive-contents)
-         (package-refresh-contents))
-       (dolist (p my-packages)
-         (when (not (package-installed-p p))
-           (package-install p)))
+  (require 'package)
+  (add-to-list 'package-archives
+               '("melpa" . "http://melpa.milkbox.net/packages/"))
+  (package-initialize)
+  (when (not package-archive-contents)
+    (package-refresh-contents))
+  (dolist (p my-packages)
+    (when (not (package-installed-p p))
+      (package-install p)))
 
   ;;; Guru-mode
-       ;; Use in programming modes
-       (add-hook 'prog-mode-hook 'guru-mode)
+  ;; Use in programming modes
+  (add-hook 'prog-mode-hook 'guru-mode)
 
   ;;; Markdown
-       ;; Treat .md files as markdown
-       (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
-       (setq-default markdown-indent-on-enter nil)
+  ;; Treat .md files as markdown
+  (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+  (setq-default markdown-indent-on-enter nil)
 
   ;;; Projectile
-       (projectile-global-mode)
-       (setq projectile-mode-line '(:eval (format " Proj[%s]" (projectile-project-name))))
+  (projectile-global-mode)
+  (setq projectile-mode-line '(:eval (format " Proj[%s]" (projectile-project-name))))
 
   ;;; Magit
-       ;; Open in full window
-       (setq magit-status-buffer-switch-function 'switch-to-buffer))
-
-
-
-
-
+  ;; Open in full window
+  (setq magit-status-buffer-switch-function 'switch-to-buffer))
