@@ -164,6 +164,13 @@ Call a second time to restore the original window configuration."
       (back-to-indentation)
     (beginning-of-line)))
 
+(defun sudo-save-buffer ()
+  "Saves a buffer to file using sudo via TRAMP."
+  (interactive)
+  (if (not buffer-file-name)
+      (write-file (concat "/sudo:root@localhost:" (read-string "File: ")))
+    (write-file (concat "/sudo:root@localhost:" buffer-file-name))))
+
 
 
 ;;; General settings
