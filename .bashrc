@@ -38,7 +38,7 @@ shopt -s extglob
 # Source: http://blog.sanctum.geek.nz/better-bash-history/
 shopt -s histappend
 HISTCONTROL=ignoreboth
-HISTIGNORE='ls:bg:fg:history'
+HISTIGNORE='bg:fg:history'
 HISTTIMEFORMAT='%F %T '
 shopt -s cmdhist
 
