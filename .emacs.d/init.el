@@ -186,9 +186,6 @@ Call a second time to restore the original window configuration."
 ;; Switch 'yes' or 'no' questions to 'y' or 'n'
 (fset 'yes-or-no-p 'y-or-n-p)
 
-;; Auto revert buffers when changed on disk
-(global-auto-revert-mode 1)
-
 (setq
  sentence-end-double-space nil          ; sentences end with single space
  confirm-nonexistent-file-or-buffer nil ; don't confirm the creation of files
