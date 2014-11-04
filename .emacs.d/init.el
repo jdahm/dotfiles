@@ -46,20 +46,17 @@
 (global-set-key (kbd "C-x C-u") 'my-url-insert-file-contents)
 (global-set-key (kbd "C-x k")   'my-kill-buffer)
 (global-set-key (kbd "C-x C-q") 'toggle-read-only)
-(global-set-key (kbd "C-x p")   'pop-to-mark-command)
 (global-set-key (kbd "C-x g")   'magit-status)
 
-(global-set-key (kbd "M-9") 'my-switch-to-minibuffer-window)
-
-(global-set-key (kbd "<M-up>")   'gcm-scroll-up)
-(global-set-key (kbd "<M-down>") 'gcm-scroll-down)
+(global-set-key (kbd "M-up")   (lambda () (interactive) (scroll-up 1)))
+(global-set-key (kbd "M-down") (lambda () (interactive) (scroll-down 1)))
+(global-set-key (kbd "M-9")    'my-switch-to-minibuffer-window)
 
 (global-set-key (kbd "<f6>") 'my-prev-buffer)
 (global-set-key (kbd "<f7>") 'my-split-window)
 (global-set-key (kbd "<f8>") 'my-toggle-window-split)
 
 (define-key emacs-lisp-mode-map (kbd "M-.") 'find-function-at-point)
-
 
 
 ;;; Functions
@@ -76,6 +73,7 @@
   (url-insert-file-contents url))
 
 (defun my-indent-whole-buffer ()
+  "Indent entire buffer."
   (interactive)
   (indent-region (point-min) (point-max)))
 
@@ -121,14 +119,6 @@ Call a second time to restore the original window configuration."
           (select-window first-win)
           (if this-win-2nd (other-window 1))))))
 
-(defun gcm-scroll-down ()
-  (interactive)
-  (scroll-up 1))
-
-(defun gcm-scroll-up ()
-  (interactive)
-  (scroll-down 1))
-
 (defun my-toggle-show-trailing-whitespace ()
   "Toggle show-trailing-whitespace between t and nil."
   (interactive)
@@ -141,7 +131,6 @@ Call a second time to restore the original window configuration."
   (interactive)
   (kill-buffer (buffer-name)))
 
-;; Switch to last buffer without having to press return.
 (defun my-prev-buffer ()
   "Switch to previous buffer."
   (interactive)
@@ -172,7 +161,6 @@ Call a second time to restore the original window configuration."
     (write-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
 
-
 ;;; General settings
 
 ;; Save backup files to dedicated folder
@@ -192,7 +180,6 @@ Call a second time to restore the original window configuration."
  inhibit-startup-screen t               ; don't show the startup screen
  initial-scratch-message nil            ; don't show message in the scratch buffer
  )
-
 
 
 ;;; Navigation
@@ -216,10 +203,6 @@ Call a second time to restore the original window configuration."
 (setq savehist-file (concat emacs-persistence-directory
                             "saved-history"))
 (savehist-mode 1)
-
-;; Non-nil means repeating C-SPC after popping mark pops it again
-(setq set-mark-command-repeat-pop t)
-
 
 
 ;;; Org-mode
@@ -251,11 +234,10 @@ Call a second time to restore the original window configuration."
    (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")))
 
 
-
 ;;; Programming
 
 ;; Show matching parens
-(show-paren-mode)
+(show-paren-mode t)
 
 ;; Useful to see the column number
 (setq column-number-mode t)
@@ -268,11 +250,13 @@ Call a second time to restore the original window configuration."
  fill-column 80        ; Default fill column
  )
 
+
+;;; C
+
 ;; Indent switch cases
 (add-hook 'c-mode-common-hook
           (lambda ()
             (c-set-offset 'case-label '+)))
-
 
 
 ;;; Octave
@@ -290,7 +274,6 @@ Call a second time to restore the original window configuration."
                 (font-lock-mode 1))))
 
 
-
 ;;; OS X
 
 (when (eq system-type 'darwin)
@@ -302,10 +285,9 @@ Call a second time to restore the original window configuration."
   (setq mouse-wheel-scroll-amount '(1 ((control)))))
 
 
-
 ;;; Colors/Theme
 (when (>= emacs-major-version 24)
-  (load-theme 'tango-dark t))
+  (load-theme 'wombat t))
 
 
 ;;; Package manager
