@@ -44,7 +44,6 @@
 (global-set-key (kbd "C-h z")   'projectile-ag)
 
 (global-set-key (kbd "C-x C-u") 'my-url-insert-file-contents)
-(global-set-key (kbd "C-x k")   'my-kill-buffer)
 (global-set-key (kbd "C-x C-q") 'toggle-read-only)
 (global-set-key (kbd "C-x g")   'magit-status)
 
@@ -125,11 +124,6 @@ Call a second time to restore the original window configuration."
   (setq show-trailing-whitespace (not show-trailing-whitespace))
   (setq-default indicate-empty-lines (not indicate-empty-lines))
   (redraw-display))
-
-(defun my-kill-buffer ()
-  "Kills current buffer without asking for buffer name."
-  (interactive)
-  (kill-buffer (buffer-name)))
 
 (defun my-prev-buffer ()
   "Switch to previous buffer."
