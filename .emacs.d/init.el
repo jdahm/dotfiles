@@ -48,8 +48,8 @@
 (global-set-key (kbd "C-x C-q") 'toggle-read-only)
 (global-set-key (kbd "C-x g")   'magit-status)
 
-(global-set-key (kbd "M-up")   (lambda () (interactive) (scroll-up 1)))
-(global-set-key (kbd "M-down") (lambda () (interactive) (scroll-down 1)))
+(global-set-key (kbd "M-<up>")   (lambda () (interactive) (scroll-up 1)))
+(global-set-key (kbd "M-<down>") (lambda () (interactive) (scroll-down 1)))
 (global-set-key (kbd "M-9")    'my-switch-to-minibuffer-window)
 
 (global-set-key (kbd "<f6>") 'my-prev-buffer)
