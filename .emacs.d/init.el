@@ -204,6 +204,8 @@ Call a second time to restore the original window configuration."
                             "saved-history"))
 (savehist-mode 1)
 
+;; Keep popping mark on repeated C-<SPC>
+(setq set-mark-command-repeat-pop t)
 
 ;;; Org-mode
 
@@ -249,7 +251,6 @@ Call a second time to restore the original window configuration."
  c-basic-offset 2      ; "tab" with in c-related modes
  fill-column 80        ; Default fill column
  )
-
 
 ;;; C
 
