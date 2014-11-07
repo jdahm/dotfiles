@@ -8,11 +8,15 @@
  user-mail-address "johann.dahm@gmail.com"  ; email
  )
 
-;; Turn off scrollbar, toolbar, etc. early in startup to avoid window width weirdness
+;; Turn off scrollbar, toolbar, etc. early for graphical mode in startup to
+;; avoid window width weirdness
 (when (display-graphic-p)
   (scroll-bar-mode -1)  ; disable the scroll bar
   (tool-bar-mode -1)    ; disable the awful toolbar
   (tooltip-mode -1)     ; disable tool tips
+  )
+(unless (display-graphic-p)
+  (menu-bar-mode -1)    ; disable menu bar mode in terminal
   )
 
 ;; Local customization file
@@ -54,6 +58,7 @@
 (global-set-key (kbd "<f6>") 'my-prev-buffer)
 (global-set-key (kbd "<f7>") 'my-split-window)
 (global-set-key (kbd "<f8>") 'my-toggle-window-split)
+(global-set-key (kbd "<f9>") 'toggle-menu-bar-mode-from-frame)
 
 (define-key emacs-lisp-mode-map (kbd "M-.") 'find-function-at-point)
 
