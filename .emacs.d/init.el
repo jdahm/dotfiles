@@ -4,16 +4,15 @@
 
 ;; Personal info
 (setq
- user-full-name "Johann Dahm"               ; name
- user-mail-address "johann.dahm@gmail.com"  ; email
+ user-full-name    "Johann Dahm"        ; name
+ user-mail-address "jdahm@fastmail.com" ; email
  )
 
 ;; Turn off scrollbar, toolbar, etc. early for graphical mode in startup to
 ;; avoid window width weirdness
 (when (display-graphic-p)
-  (scroll-bar-mode -1)  ; disable the scroll bar
-  (tool-bar-mode -1)    ; disable the awful toolbar
-  (tooltip-mode -1)     ; disable tool tips
+  (scroll-bar-mode -1)   ; disable the scroll bar
+  (tool-bar-mode -1)     ; disable the awful toolbar
   )
 (unless (display-graphic-p)
   (menu-bar-mode -1)    ; disable menu bar mode in terminal
@@ -25,8 +24,6 @@
 
 
 ;;; Keys
-
-(global-set-key (kbd "C-a") 'my-beginning-of-line)
 
 (global-set-key (kbd "C-c q")   'auto-fill-mode)
 (global-set-key (kbd "C-c s")   'shell)
@@ -171,7 +168,7 @@ Call a second time to restore the original window configuration."
   (make-directory emacs-persistence-directory t))
 
 ;; Switch 'yes' or 'no' questions to 'y' or 'n'
-(fset 'yes-or-no-p 'y-or-n-p)
+(defalias 'yes-or-no-p 'y-or-n-p)
 
 (setq
  sentence-end-double-space nil          ; sentences end with single space
@@ -179,6 +176,7 @@ Call a second time to restore the original window configuration."
  inhibit-startup-screen t               ; don't show the startup screen
  initial-scratch-message nil            ; don't show message in the scratch buffer
  )
+
 
 
 ;;; Navigation
