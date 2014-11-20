@@ -3,6 +3,7 @@
 
 # Source global bashrc
 [ -f /etc/bashrc ] && . /etc/bashrc
+[ -f /etc/bash.bashrc ] && . /etc/bash.bashrc
 
 # Prompt
 prompt_err() {
