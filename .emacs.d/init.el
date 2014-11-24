@@ -60,12 +60,6 @@
   (setq browse-url-browser-function 'browse-url-default-macosx-browser))
 
 
-;; C
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (c-set-offset 'case-label '+)))
-
-
 ;; Octave
 
 ;; Treat .m files as octave (not objective-C)
@@ -143,14 +137,11 @@
       flycheck
       projectile
       magit
-      guru-mode
+      flx-ido
       ))
   (dolist (p my-packages)
     (when (not (package-installed-p p))
       (package-install p)))
-
-  ;; Guru-mode
-  (add-hook 'prog-mode-hook 'guru-mode)
 
   ;; Markdown
   (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
@@ -158,6 +149,7 @@
 
   ;; Projectile
   (projectile-global-mode)
+  (setq projectile-completion-system 'ido)
   (setq projectile-enable-caching t)
   (setq projectile-mode-line '(:eval (format " Proj[%s]" (projectile-project-name))))
   (add-to-list 'projectile-globally-ignored-files ".DS_Store")
@@ -167,11 +159,20 @@
   (global-set-key (kbd "C-c g")   'magit-status)
   (global-set-key (kbd "C-c l")   'magit-log)
 
-  ;;; Flycheck
+  ;; Flycheck
   (global-set-key (kbd "C-c f")   'flycheck-mode)
 
   ;; Org-mode setup
-  (with-eval-after-load "org" (require 'setup-org)))
+  (with-eval-after-load "org" (require 'setup-org))
+
+  ;; Ido
+  (require 'flx-ido)
+  (ido-mode 1)
+  (ido-everywhere 1)
+  (flx-ido-mode 1)
+  ;; disable ido faces to see flx highlights.
+  (setq ido-enable-flex-matching t)
+  (setq ido-use-faces nil))
 
 (provide 'init)
 

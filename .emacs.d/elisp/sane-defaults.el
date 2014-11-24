@@ -4,10 +4,10 @@
 
 ;;; Defaults that should probably be set by everyone.
 
-;;; Code:
+;;; Sources:
+;;; - https://github.com/magnars/.emacs.d/blob/master/sane-defaults.el
 
-;; ;; Don't show the startup screen
-;; (setq inhibit-startup-screen t)
+;;; Code:
 
 ;; Don't show message in the scratch buffer
 (setq initial-scratch-message nil)
@@ -30,6 +30,9 @@
 ;; Never insert tabs
 (set-default 'indent-tabs-mode nil)
 
+;; Show me empty lines after buffer end
+(set-default 'indicate-empty-lines t)
+
 ;; Easily navigate sillycased words
 (global-subword-mode 1)
 
@@ -44,6 +47,9 @@
 
 ;; Show matching parens
 (show-paren-mode t)
+
+;; Modern memory threshold
+(setq gc-cons-threshold 20000000)
 
 (provide 'sane-defaults)
 
