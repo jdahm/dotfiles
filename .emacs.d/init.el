@@ -6,11 +6,18 @@
 
 ;;; Code:
 
-;; Early settings
+;; Top-level settings
 
 ;; Name/Email
 (setq user-full-name    "Johann Dahm")
 (setq user-mail-address "jdahm@fastmail.com")
+
+;; Set up load path
+(add-to-list 'load-path (concat user-emacs-directory "elisp/"))
+
+;; Local customization file
+(setq custom-file "~/.config/emacs/init-custom.el")
+(if (file-readable-p custom-file) (load custom-file))
 
 ;; Turn off scrollbar, toolbar, etc. early for graphical mode in startup to
 ;; avoid window width weirdness
@@ -22,21 +29,14 @@
   (menu-bar-mode -1)    ; disable menu bar mode in terminal
   )
 
-;; Set up load path
-(add-to-list 'load-path (concat user-emacs-directory "elisp/"))
-
-;; Local customization file
-(setq custom-file "~/.config/emacs/init-custom.el")
-(if (file-readable-p custom-file) (load custom-file))
-
-;; Are we on a mac?
-(setq is-mac (equal system-type 'darwin))
-
 ;; Start with some sanity
 (require 'sane-defaults)
 
 ;; A few functions
 (require 'defuns)
+
+
+;; Setup built-in, standard, packages
 
 ;; Save backup files to dedicated folder
 (setq backup-directory-alist '(("." . "~/.emacs.d/saves")))
@@ -46,9 +46,27 @@
 (unless (file-exists-p emacs-persistence-directory)
   (make-directory emacs-persistence-directory t))
 
+;; Save buffer history
+(require 'savehist)
+(setq savehist-file (expand-file-name "saved-history" emacs-persistence-directory))
+(savehist-mode 1)
+
+;; Save place in buffer
+(require 'saveplace)
+(setq save-place-file (expand-file-name "saved-places" emacs-persistence-directory))
+(setq-default save-place t)
+
+;; Better window selection
+(require 'windmove)
+(windmove-default-keybindings)
+
+;; Better buffer names
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
+
 
 ;; Mac
-(when is-mac
+(when (equal system-type 'darwin)
   ;; Menu bar is not annoying in OSX
   (menu-bar-mode 1)
 
@@ -58,37 +76,6 @@
 
   ;; Make the browser the OS X default
   (setq browse-url-browser-function 'browse-url-default-macosx-browser))
-
-
-;; Octave
-
-;; Treat .m files as octave (not objective-C)
-(setq auto-mode-alist
-      (cons '("\\.m$" . octave-mode) auto-mode-alist))
-
-;; Turn on the abbrevs, auto-fill and font-lock features
-(add-hook 'octave-mode-hook
-          (lambda ()
-            (abbrev-mode 1)
-            (auto-fill-mode 1)
-            (if (eq window-system 'x)
-                (font-lock-mode 1))))
-
-
-;;; Setup built-in, standard, packages
-(require 'savehist)
-(setq savehist-file (expand-file-name "saved-history" emacs-persistence-directory))
-(savehist-mode 1)
-
-(require 'saveplace)
-(setq save-place-file (expand-file-name "saved-places" emacs-persistence-directory))
-(setq-default save-place t)
-
-(require 'windmove)
-(windmove-default-keybindings)
-
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 
 
 ;; Keys
@@ -156,8 +143,8 @@
 
   ;; Magit
   (setq magit-status-buffer-switch-function 'switch-to-buffer)
-  (global-set-key (kbd "C-c g")   'magit-status)
-  (global-set-key (kbd "C-c l")   'magit-log)
+  (add-hook 'magit-mode-hook 'magit-load-config-extensions)
+  (global-set-key (kbd "C-x g")   'magit-status)
 
   ;; Flycheck
   (global-set-key (kbd "C-c f")   'flycheck-mode)
