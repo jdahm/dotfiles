@@ -60,19 +60,28 @@
 (require 'windmove)
 (windmove-default-keybindings)
 
-;; Better buffer names
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
+
+;; Clean modeline
+(defvar mode-line-cleaner-alist
+  `((auto-complete-mode . " α")
+    (paredit-mode . " π")
+    (eldoc-mode . "")
+    (abbrev-mode . "")
+    (subword-mode . " σ")
+    (projectile-mode . " φ")
+    ;; Major modes
+    (dired-mode . "Δ")
+    (lisp-interaction-mode . "Λ")
+    (python-mode . "Py")
+    (emacs-lisp-mode . "EL")))
+
+(add-hook 'after-change-major-mode-hook 'clean-mode-line)
 
 
 ;; Mac
 (when (equal system-type 'darwin)
   ;; Menu bar is not annoying in OSX
   (menu-bar-mode 1)
-
-  ;; Use GNU ls if found
-  (if (executable-find "gls")
-      (setq insert-directory-program "gls"))
 
   ;; Make the browser the OS X default
   (setq browse-url-browser-function 'browse-url-default-macosx-browser))
@@ -138,7 +147,6 @@
   (projectile-global-mode)
   (setq projectile-completion-system 'ido)
   (setq projectile-enable-caching t)
-  (setq projectile-mode-line '(:eval (format " Proj[%s]" (projectile-project-name))))
   (add-to-list 'projectile-globally-ignored-files ".DS_Store")
 
   ;; Magit
@@ -159,7 +167,13 @@
   (flx-ido-mode 1)
   ;; disable ido faces to see flx highlights.
   (setq ido-enable-flex-matching t)
-  (setq ido-use-faces nil))
+  (setq ido-use-faces nil)
+
+  (require 'dired)
+  (add-hook 'dired-mode-hook 'dired-hide-details-mode)
+  (setq dired-recursive-copies 'always)
+  (setq dired-recursive-deletes 'always)
+  (setq dired-listing-switches "-Al --si --time-style long-iso --group-directories-first"))
 
 (provide 'init)
 

@@ -6,6 +6,8 @@
 
 ;;; Code:
 
+(require 'cl)
+
 (defun my-show-file-name ()
   "Show the full path file name in the minibuffer."
   (interactive)
@@ -100,6 +102,18 @@ Call a second time to restore the original window configuration."
   (if (not buffer-file-name)
       (write-file (concat "/sudo:root@localhost:" (read-string "File: ")))
     (write-file (concat "/sudo:root@localhost:" buffer-file-name))))
+
+(defun clean-mode-line ()
+  (interactive)
+  (loop for cleaner in mode-line-cleaner-alist
+        do (let* ((mode (car cleaner))
+                 (mode-str (cdr cleaner))
+                 (old-mode-str (cdr (assq mode minor-mode-alist))))
+             (when old-mode-str
+                 (setcar old-mode-str mode-str))
+               ;; major mode
+             (when (eq mode major-mode)
+               (setq mode-name mode-str)))))
 
 
 (provide 'defuns)
