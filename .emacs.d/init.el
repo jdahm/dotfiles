@@ -131,6 +131,7 @@
       projectile
       magit
       flx-ido
+      elfeed
       ))
   (dolist (p my-packages)
     (when (not (package-installed-p p))
