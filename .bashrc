@@ -6,7 +6,7 @@
 [ -f /etc/bash.bashrc ] && . /etc/bash.bashrc
 
 # Prompt
-prompt_err() {
+_prompt_err() {
     local EXIT="$?"
     local Black='\e[0;30m'
     local Red='\e[0;31m'
@@ -17,14 +17,12 @@ prompt_err() {
     local Cyan='\e[0;36m'
     local White='\e[0;37m'
     local Reset='\e[0m'
-    if [ $EXIT -eq 0 ]; then
-	    PS1="\[${Blue}\]\W\[${Reset}\] > "
-    else
-	    PS1="\[${Blue}\]\W\[${Reset}\] [\[${Red}\]${EXIT}\[${Reset}\]] > "
-    fi
+    PS1="\[${Blue}\]\W\[${Reset}\] "
+    [ $EXIT -ne 0 ] && PS1+="[\[${Red}\]${EXIT}\[${Reset}\]] "
+    PS1+="> "
 }
 
-PROMPT_COMMAND=prompt_err
+PROMPT_COMMAND=_prompt_err
 PS2="    "
 
 # Set mode
