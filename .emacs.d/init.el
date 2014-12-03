@@ -114,9 +114,6 @@
 
 ;; External packages
 (when (>= emacs-major-version 24)
-  ;; Colors/Theme
-  (load-theme 'wombat t)
-
   ;; External packages
   (require 'package)
   (add-to-list 'package-archives
@@ -169,11 +166,15 @@
   (setq ido-enable-flex-matching t)
   (setq ido-use-faces nil)
 
+  ;; Dired
   (require 'dired)
   (add-hook 'dired-mode-hook 'dired-hide-details-mode)
   (setq dired-recursive-copies 'always)
   (setq dired-recursive-deletes 'always)
-  (setq dired-listing-switches "-Al --si --time-style long-iso --group-directories-first"))
+  (setq dired-listing-switches "-Al --si --time-style long-iso --group-directories-first")
+
+  ;; Colors/Theme
+  (load-theme 'wombat t))
 
 (provide 'init)
 
