@@ -132,6 +132,7 @@
       magit
       flx-ido
       elfeed
+      org-present
       ))
   (dolist (p my-packages)
     (when (not (package-installed-p p))
@@ -175,7 +176,12 @@
   (setq dired-listing-switches "-Al --si --time-style long-iso --group-directories-first")
 
   ;; Colors/Theme
-  (load-theme 'wombat t))
+  (load-theme 'wombat t)
+
+  ;; Frame title
+  (setq frame-title-format
+      (list (format "%s %%S: %%j " (system-name))
+        '(buffer-file-name "%f" (dired-directory dired-directory "%b")))))
 
 (provide 'init)
 

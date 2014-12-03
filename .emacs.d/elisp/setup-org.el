@@ -38,6 +38,18 @@
 (global-set-key (kbd "C-c l")   'org-store-link)
 (global-set-key (kbd "C-c a")   'org-agenda)
 
+;; Org-present
+
+(add-hook 'org-present-mode-hook
+          (lambda ()
+            (org-present-big)
+            (org-display-inline-images)))
+
+(add-hook 'org-present-mode-quit-hook
+          (lambda ()
+            (org-present-small)
+            (org-remove-inline-images)))
+
 (provide 'org-setup)
 
 ;;; setup-org.el ends here
