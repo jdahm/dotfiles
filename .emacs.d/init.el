@@ -157,7 +157,7 @@
   (global-set-key (kbd "C-c f")   'flycheck-mode)
 
   ;; Org-mode setup
-  (with-eval-after-load "org" (require 'setup-org))
+  (require 'setup-org)
 
   ;; Ido
   (require 'flx-ido)
