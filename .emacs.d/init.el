@@ -141,7 +141,14 @@
   (require 'hide-modes)
 
   ;; Keys
-  (require 'keybindings))
+  (require 'keybindings)
+
+  ;; Visible bell
+  (setq visible-bell t)
+
+  ;; Highlight the current line (but don't underline!)
+  (global-hl-line-mode 1)
+  (set-face-attribute hl-line-face nil :underline nil))
 
 (provide 'init)
 
