@@ -89,12 +89,13 @@
       clojure-mode
       haskell-mode
       flycheck
+      diminish
       projectile
-      magit
       flx-ido
       elfeed
       org-present
-      diminish
+      magit
+      git-timemachine
       ))
   (dolist (p my-packages)
     (when (not (package-installed-p p))
@@ -144,11 +145,7 @@
   (require 'keybindings)
 
   ;; Visible bell
-  (setq visible-bell t)
-
-  ;; Highlight the current line (but don't underline!)
-  (global-hl-line-mode 1)
-  (set-face-attribute hl-line-face nil :underline nil))
+  (setq visible-bell t))
 
 (provide 'init)
 
