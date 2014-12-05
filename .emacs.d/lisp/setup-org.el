@@ -50,6 +50,6 @@
             (org-present-small)
             (org-remove-inline-images)))
 
-(provide 'org-setup)
+(provide 'setup-org)
 
 ;;; setup-org.el ends here

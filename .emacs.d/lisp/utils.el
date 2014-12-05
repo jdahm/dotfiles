@@ -1,43 +1,87 @@
-;;; defuns.el --- Some extra functions
+;;; defuns.el --- Some extra utility functions
 
 ;;; Commentary:
 
-;;; A few functions defined to make certain operations easier.
-
 ;;; Code:
 
-(require 'cl)
+(defun tidy-region (start end)
+  "Indent, delete whitespace, and untabify the region."
+  (interactive "r")
+  (progn
+    (delete-trailing-whitespace start end)
+    (indent-region start end nil)
+    (untabify start end)))
 
-(defun my-show-file-name ()
+(defun tidy-buffer ()
+  "Indent, delete whitespace, and untabify the buffer."
+  (interactive)
+  (save-excursion
+    (tidy-region (point-min) (point-max))))
+
+(defun date ()
+  (interactive)
+  (insert (format-time-string "%Y-%m-%d")))
+
+(defun time ()
+  (interactive)
+  (insert (format-time-string "%H:%M:%S")))
+
+(defun move-line-up ()
+  (interactive)
+  (transpose-lines 1)
+  (forward-line -2))
+
+(defun move-line-down ()
+  (interactive)
+  (forward-line 1)
+  (transpose-lines 1)
+  (forward-line -1))
+
+(defun beautify-json ()
+  (interactive)
+  (save-excursion
+    (shell-command-on-region (mark) (point) "jsonpp" (buffer-name) t)))
+
+(defun comment-or-uncomment-region-or-line ()
+  "Comments or uncomments the region or the current line if there's no active region."
+  (interactive)
+  (let (beg end)
+    (if (region-active-p)
+        (setq beg (region-beginning) end (region-end))
+      (setq beg (line-beginning-position) end (line-end-position)))
+    (comment-or-uncomment-region beg end)))
+
+(setq search-engine-url "http://www.google.com/search?ie=utf-8&oe=utf-8&q=")
+
+(defun search-engine ()
+  "Search the selected region if any, display a query prompt otherwise."
+  (interactive)
+  (browse-url
+   (concat search-engine-url
+    (url-hexify-string (if mark-active
+                           (buffer-substring (region-beginning) (region-end))
+                         (read-string "Search: "))))))
+
+(defun jdahm/show-file-name ()
   "Show the full path file name in the minibuffer."
   (interactive)
   (message (buffer-file-name))
   (kill-new (file-truename buffer-file-name)))
 
-(defun my-url-insert-file-contents (url)
-  "Prompt for URL and insert file contents at point."
-  (interactive "sURL: ")
-  (url-insert-file-contents url))
-
-(defun my-indent-whole-buffer ()
-  "Indent entire buffer."
-  (interactive)
-  (indent-region (point-min) (point-max)))
-
-(defun my-switch-to-minibuffer-window ()
+(defun jdahm/switch-to-minibuffer-window ()
   "Switch to minibuffer window (if active)."
   (interactive)
   (when (active-minibuffer-window)
     (select-window (active-minibuffer-window))))
 
-(defun my-beginning-of-line ()
+(defun jdahm/beginning-of-line ()
   "Toggle between `beginning-of-line' and `back-to-indentation'."
   (interactive)
   (if (bolp)
       (back-to-indentation)
     (beginning-of-line)))
 
-(defun my-split-window()
+(defun jdahm/split-window()
   "Split the window to see the most recent buffer in the other window.
 Call a second time to restore the original window configuration."
   (interactive)
@@ -48,7 +92,7 @@ Call a second time to restore the original window configuration."
     (window-configuration-to-register :my-split-window)
     (switch-to-buffer-other-window nil)))
 
-(defun my-toggle-window-split ()
+(defun jdahm/toggle-window-split ()
   "Change window split from vertical to horizontal and vice versa."
   (interactive)
   (if (= (count-windows) 2)
@@ -74,19 +118,17 @@ Call a second time to restore the original window configuration."
           (select-window first-win)
           (if this-win-2nd (other-window 1))))))
 
-(defun my-toggle-show-trailing-whitespace ()
-  "Toggle `show-trailing-whitespace' between t and nil."
-  (interactive)
-  (setq show-trailing-whitespace (not show-trailing-whitespace))
-  (setq-default indicate-empty-lines (not indicate-empty-lines))
-  (redraw-display))
-
-(defun my-prev-buffer ()
+(defun jdahm/prev-buffer ()
   "Switch to previous buffer."
   (interactive)
   (switch-to-buffer (other-buffer)))
 
-(defun my-tab-width ()
+(defun jdahm/url-insert-file-contents (url)
+  "Prompt for URL and insert file contents at point."
+  (interactive "sURL: ")
+  (url-insert-file-contents url))
+
+(defun jdahm/toggle-tab-width ()
   "Cycle 'tab-width' between values 2, 4, and 8."
   (interactive)
   (setq tab-width
@@ -96,26 +138,7 @@ Call a second time to restore the original window configuration."
   (message "%s %d" "tab-width =" tab-width)
   (redraw-display))
 
-(defun sudo-save-buffer ()
-  "Save a buffer to file using sudo via TRAMP."
-  (interactive)
-  (if (not buffer-file-name)
-      (write-file (concat "/sudo:root@localhost:" (read-string "File: ")))
-    (write-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
-(defun clean-mode-line ()
-  (interactive)
-  (loop for cleaner in mode-line-cleaner-alist
-        do (let* ((mode (car cleaner))
-                 (mode-str (cdr cleaner))
-                 (old-mode-str (cdr (assq mode minor-mode-alist))))
-             (when old-mode-str
-                 (setcar old-mode-str mode-str))
-               ;; major mode
-             (when (eq mode major-mode)
-               (setq mode-name mode-str)))))
+(provide 'utils)
 
-
-(provide 'defuns)
-
-;;; defuns.el ends here
+;; utils.el ends here

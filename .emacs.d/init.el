@@ -2,8 +2,6 @@
 
 ;;; Commentary:
 
-;;; My init.el file.
-
 ;;; Code:
 
 ;; Top-level settings
@@ -13,7 +11,7 @@
 (setq user-mail-address "jdahm@fastmail.com")
 
 ;; Set up load path
-(add-to-list 'load-path (concat user-emacs-directory "elisp/"))
+(add-to-list 'load-path (concat user-emacs-directory "lisp/"))
 
 ;; Local customization file
 (setq custom-file "~/.config/emacs/init-custom.el")
@@ -29,17 +27,24 @@
   (menu-bar-mode -1)    ; disable menu bar mode in terminal
   )
 
-;; Start with some sanity
+;; Start with some better defaults
 (require 'sane-defaults)
 
 ;; A few functions
-(require 'defuns)
+(require 'utils)
 
+;; Frame title
+(setq frame-title-format
+      (list (format "%s %%S: %%j " (system-name))
+            '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
 
-;; Setup built-in, standard, packages
+;; Put autosave files (ie #foo#) and backup files (ie foo~) in ~/.emacs.d/.
+(custom-set-variables
+  '(auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/\\1" t)))
+  '(backup-directory-alist '((".*" . "~/.emacs.d/backups/"))))
 
-;; Save backup files to dedicated folder
-(setq backup-directory-alist '(("." . "~/.emacs.d/saves")))
+;; create the autosave dir if necessary, since emacs won't.
+(make-directory "~/.emacs.d/autosaves/" t)
 
 ;; Persistence directory
 (setq emacs-persistence-directory (concat user-emacs-directory "persistence/"))
@@ -60,24 +65,6 @@
 (require 'windmove)
 (windmove-default-keybindings)
 
-
-;; Clean modeline
-(defvar mode-line-cleaner-alist
-  `((auto-complete-mode . " α")
-    (paredit-mode . " π")
-    (eldoc-mode . "")
-    (abbrev-mode . "")
-    (subword-mode . " σ")
-    (projectile-mode . " φ")
-    ;; Major modes
-    (dired-mode . "Δ")
-    (lisp-interaction-mode . "Λ")
-    (python-mode . "Py")
-    (emacs-lisp-mode . "EL")))
-
-(add-hook 'after-change-major-mode-hook 'clean-mode-line)
-
-
 ;; Mac
 (when (equal system-type 'darwin)
   ;; Menu bar is not annoying in OSX
@@ -85,32 +72,6 @@
 
   ;; Make the browser the OS X default
   (setq browse-url-browser-function 'browse-url-default-macosx-browser))
-
-
-;; Keys
-(global-set-key (kbd "C-a")   'my-beginning-of-line)
-
-(global-set-key (kbd "C-c C-a") 'auto-fill-mode)
-(global-set-key (kbd "C-c C-w") 'whitespace-mode)
-(global-set-key (kbd "C-c w")   'my-toggle-show-trailing-whitespace)
-(global-set-key (kbd "C-c s")   'shell)
-(global-set-key (kbd "C-c \\")  'align-regexp)
-(global-set-key (kbd "C-c t")   'my-tab-width)
-
-(global-set-key (kbd "C-x C-u") 'my-url-insert-file-contents)
-(global-set-key (kbd "C-x C-q") 'toggle-read-only)
-
-(global-set-key (kbd "M-<up>")   (lambda () (interactive) (scroll-up 1)))
-(global-set-key (kbd "M-<down>") (lambda () (interactive) (scroll-down 1)))
-(global-set-key (kbd "M-9")      'my-switch-to-minibuffer-window)
-
-(global-set-key (kbd "<f6>") 'my-prev-buffer)
-(global-set-key (kbd "<f7>") 'my-split-window)
-(global-set-key (kbd "<f8>") 'my-toggle-window-split)
-(global-set-key (kbd "<f9>") 'toggle-menu-bar-mode-from-frame)
-
-(define-key emacs-lisp-mode-map (kbd "M-.") 'find-function-at-point)
-
 
 ;; External packages
 (when (>= emacs-major-version 24)
@@ -133,6 +94,7 @@
       flx-ido
       elfeed
       org-present
+      diminish
       ))
   (dolist (p my-packages)
     (when (not (package-installed-p p))
@@ -146,18 +108,15 @@
   (projectile-global-mode)
   (setq projectile-completion-system 'ido)
   (setq projectile-enable-caching t)
-  (add-to-list 'projectile-globally-ignored-files ".DS_Store")
 
   ;; Magit
   (setq magit-status-buffer-switch-function 'switch-to-buffer)
   (add-hook 'magit-mode-hook 'magit-load-config-extensions)
-  (global-set-key (kbd "C-x g")   'magit-status)
 
   ;; Flycheck
-  (global-set-key (kbd "C-c f")   'flycheck-mode)
 
   ;; Org-mode setup
-  (with-eval-after-load "org" (require 'setup-org))
+  (require 'setup-org)
 
   ;; Ido
   (require 'flx-ido)
@@ -173,15 +132,16 @@
   (add-hook 'dired-mode-hook 'dired-hide-details-mode)
   (setq dired-recursive-copies 'always)
   (setq dired-recursive-deletes 'always)
-  (setq dired-listing-switches "-Al --si --time-style long-iso --group-directories-first")
+  (setq-default dired-listing-switches "-alh")
 
   ;; Colors/Theme
   (load-theme 'wombat t)
 
-  ;; Frame title
-  (setq frame-title-format
-      (list (format "%s %%S: %%j " (system-name))
-        '(buffer-file-name "%f" (dired-directory dired-directory "%b")))))
+  ;; Hide modes
+  (require 'hide-modes)
+
+  ;; Keys
+  (require 'keybindings))
 
 (provide 'init)
 
