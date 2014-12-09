@@ -61,6 +61,11 @@
 (setq save-place-file (expand-file-name "saved-places" emacs-persistence-directory))
 (setq-default save-place t)
 
+;; ;; Save recently opened file history
+;; (require 'recentf)
+;; (recentf-mode 1)
+;; (setq recentf-max-menu-items 25)
+
 ;; Better window selection
 (require 'windmove)
 (windmove-default-keybindings)
@@ -143,7 +148,10 @@
   (require 'keybindings)
 
   ;; Visible bell
-  (setq visible-bell t))
+  (setq visible-bell t)
+
+  ;; Haskell
+  (require 'setup-haskell))
 
 (provide 'init)
 
