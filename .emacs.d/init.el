@@ -61,6 +61,11 @@
 (setq save-place-file (expand-file-name "saved-places" emacs-persistence-directory))
 (setq-default save-place t)
 
+;; ;; Save recently opened file history
+;; (require 'recentf)
+;; (recentf-mode 1)
+;; (setq recentf-max-menu-items 25)
+
 ;; Better window selection
 (require 'windmove)
 (windmove-default-keybindings)
@@ -133,7 +138,7 @@
   (add-hook 'dired-mode-hook 'dired-hide-details-mode)
   (setq dired-recursive-copies 'always)
   (setq dired-recursive-deletes 'always)
-  (setq-default dired-listing-switches "-alh")
+  (setq-default dired-listing-switches "-Al --si --time-style long-iso")
 
   ;; Colors/Theme
   (load-theme 'wombat t)
@@ -145,7 +150,10 @@
   (require 'keybindings)
 
   ;; Visible bell
-  (setq visible-bell t))
+  (setq visible-bell t)
+
+  ;; Haskell
+  (require 'setup-haskell))
 
 (provide 'init)
 
