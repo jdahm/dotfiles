@@ -114,8 +114,6 @@
   (setq magit-status-buffer-switch-function 'switch-to-buffer)
   (add-hook 'magit-mode-hook 'magit-load-config-extensions)
 
-  ;; Flycheck
-
   ;; Org-mode setup
   (require 'setup-org)
 
@@ -133,7 +131,7 @@
   (add-hook 'dired-mode-hook 'dired-hide-details-mode)
   (setq dired-recursive-copies 'always)
   (setq dired-recursive-deletes 'always)
-  (setq-default dired-listing-switches "-alh")
+  (setq-default dired-listing-switches "-Al --si --time-style long-iso")
 
   ;; Colors/Theme
   (load-theme 'wombat t)
