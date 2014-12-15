@@ -18,8 +18,6 @@
   '(haskell-process-auto-import-loaded-modules t)
   '(haskell-process-log t))
 
-(define-key haskell-mode-map (kbd "C-x C-s") 'haskell-mode-save-buffer)
-
 (provide 'setup-haskell)
 
 ;; setup-haskell.el ends here
