@@ -5,8 +5,8 @@
 ;;; Code:
 
 ;; Indentation scheme
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
 
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
@@ -17,6 +17,8 @@
   '(haskell-process-suggest-remove-import-lines t)
   '(haskell-process-auto-import-loaded-modules t)
   '(haskell-process-log t))
+
+(define-key haskell-mode-map (kbd "C-x C-s") 'haskell-mode-save-buffer)
 
 (provide 'setup-haskell)
 
