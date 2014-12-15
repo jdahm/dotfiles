@@ -119,8 +119,6 @@
   (setq magit-status-buffer-switch-function 'switch-to-buffer)
   (add-hook 'magit-mode-hook 'magit-load-config-extensions)
 
-  ;; Flycheck
-
   ;; Org-mode setup
   (require 'setup-org)
 

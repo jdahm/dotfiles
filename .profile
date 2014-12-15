@@ -6,6 +6,6 @@ export EMACS="emacs"
 export EDITOR="emacs -nw"
 export VISUAL="${EDITOR}"
 export PAGER="less"
-export LESS="-F -R -X"
+export LESS="-R -X"
 
 [ -f ~/.profile.local ] && source ~/.profile.local
