@@ -61,11 +61,6 @@
 (setq save-place-file (expand-file-name "saved-places" emacs-persistence-directory))
 (setq-default save-place t)
 
-;; ;; Save recently opened file history
-;; (require 'recentf)
-;; (recentf-mode 1)
-;; (setq recentf-max-menu-items 25)
-
 ;; Better window selection
 (require 'windmove)
 (windmove-default-keybindings)
@@ -106,9 +101,13 @@
     (when (not (package-installed-p p))
       (package-install p)))
 
+  ;; Colors/Theme
+  (load-theme 'wombat t)
+
   ;; Markdown
-  (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
-  (setq-default markdown-indent-on-enter nil)
+  (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+  (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+  (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
   ;; Projectile
   (projectile-global-mode)
@@ -138,20 +137,25 @@
   (setq dired-recursive-deletes 'always)
   (setq-default dired-listing-switches "-Al --si --time-style long-iso")
 
-  ;; Colors/Theme
-  (load-theme 'wombat t)
-
   ;; Hide modes
   (require 'hide-modes)
 
   ;; Keys
   (require 'keybindings)
 
+  ;; Haskell
+  (require 'setup-haskell)
+
+  ;; Octave/Matlab
+  (require 'setup-octave)
+
+  ;; New(er) emacs settings
   ;; Visible bell
   (setq visible-bell t)
 
-  ;; Haskell
-  (require 'setup-haskell))
+  ;; Easily navigate sillycased words
+  (global-subword-mode 1))
+
 
 (provide 'init)
 

@@ -41,5 +41,16 @@ HISTIGNORE='bg:fg:history'
 HISTTIMEFORMAT='%F %T '
 shopt -s cmdhist
 
+# Navigation (pushd/popd, etc.)
+alias p='pushd'
+alias o='popd'
+alias ..="cd .."
+alias ..2="cd ../.."
+alias ..3="cd ../../.."
+alias ..4="cd ../../../.."
+alias ..5="cd ../../../../.."
+
+mkdircd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
+
 # Local config
 [ -f ~/.bashrc.local ] && . ~/.bashrc.local

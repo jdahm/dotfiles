@@ -36,9 +36,6 @@
 ;; Show me empty lines after buffer end
 (set-default 'indicate-empty-lines t)
 
-;; Easily navigate sillycased words
-(global-subword-mode 1)
-
 ;; Sentences do not need double spaces to end. Period.
 (set-default 'sentence-end-double-space nil)
 
