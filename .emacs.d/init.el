@@ -88,8 +88,9 @@
       d-mode
       clojure-mode
       haskell-mode
-      flycheck
+      pandoc-mode
       diminish
+      flycheck
       projectile
       flx-ido
       elfeed
@@ -108,6 +109,8 @@
   (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
   (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
   (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+  (add-hook 'markdown-mode-hook 'pandoc-mode)
+  (add-hook 'pandoc-mode-hook 'pandoc-load-default-settings)
 
   ;; Projectile
   (projectile-global-mode)
