@@ -150,7 +150,7 @@
   (require 'setup-haskell)
 
   ;; Octave/Matlab
-  (require 'setup-octave)
+  (setq auto-mode-alist (cons '("\\.m$" . octave-mode) auto-mode-alist))
 
   ;; New(er) emacs settings
   ;; Visible bell
