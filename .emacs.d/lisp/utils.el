@@ -19,25 +19,30 @@
     (tidy-region (point-min) (point-max))))
 
 (defun date ()
+  "Inserts the current date in the format %Y-%m-%d."
   (interactive)
   (insert (format-time-string "%Y-%m-%d")))
 
 (defun time ()
+  "Inserts the current time in the format %H:%M:%S."
   (interactive)
   (insert (format-time-string "%H:%M:%S")))
 
 (defun move-line-up ()
+  "Transposes the line at point with the line above."
   (interactive)
   (transpose-lines 1)
   (forward-line -2))
 
 (defun move-line-down ()
+  "Transposes the line at point with the line below it."
   (interactive)
   (forward-line 1)
   (transpose-lines 1)
   (forward-line -1))
 
 (defun kill-current-buffer ()
+  "Kills the current buffer. Meant to "
   (interactive)
   (kill-buffer (current-buffer)))
 
@@ -48,6 +53,7 @@
     (fill-paragraph nil)))
 
 (defun beautify-json ()
+  "Calls `jsonpp' on the region between mark and point."
   (interactive)
   (save-excursion
     (shell-command-on-region (mark) (point) "jsonpp" (buffer-name) t)))
@@ -145,7 +151,7 @@ Call a second time to restore the original window configuration."
   (interactive "sURL: ")
   (url-insert-file-contents url))
 
-(defun jdahm/toggle-tab-width ()
+(defun jdahm/cycle-tab-width ()
   "Cycle 'tab-width' between values 2, 4, and 8."
   (interactive)
   (setq tab-width
