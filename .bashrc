@@ -50,6 +50,9 @@ alias ..3="cd ../../.."
 alias ..4="cd ../../../.."
 alias ..5="cd ../../../../.."
 
+# Process information
+alias psc='ps xawf -eo pid,user,cgroup,args'
+
 mkdircd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
 
 # Local config
