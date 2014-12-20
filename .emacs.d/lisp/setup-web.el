@@ -19,4 +19,6 @@
 ;; Add the hook
 (add-hook 'web-mode-hook 'my-web-mode-hook)
 
+(provide 'setup-web)
+
 ;;; setup-web.el ends here
