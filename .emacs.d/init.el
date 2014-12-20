@@ -89,6 +89,7 @@
       clojure-mode
       haskell-mode
       web-mode
+      golden-ratio
       diminish
       flycheck
       projectile
@@ -104,6 +105,18 @@
 
   ;; Colors/Theme
   (load-theme 'wombat t)
+
+  ;; Resize active to golden ratio
+  (require 'golden-ratio)
+  (golden-ratio-mode 1)
+  ;; Except for these modes
+  (setq golden-ratio-exclude-modes '("ediff-mode"
+                                     "eshell-mode"
+                                     "dired-mode"
+                                     "help-mode"))
+  ;; Might want to use this for high-resolution screens
+  ;; source: http://truongtx.me/2014/11/15/auto-resize-windows-by-golden-ratio-in-emacs/
+  ;; (setq split-width-threshold nil)
 
   ;; Markdown
   (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
