@@ -1,4 +1,4 @@
-;; setup-haskell.el --- Setup for haskell-mode
+;; setup-haskell.el --- Setup for haskell-mode.
 
 ;;; Commentary:
 

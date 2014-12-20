@@ -88,7 +88,7 @@
       d-mode
       clojure-mode
       haskell-mode
-      pandoc-mode
+      web-mode
       diminish
       flycheck
       projectile
@@ -109,8 +109,6 @@
   (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
   (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
   (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-  (add-hook 'markdown-mode-hook 'pandoc-mode)
-  (add-hook 'pandoc-mode-hook 'pandoc-load-default-settings)
 
   ;; Projectile
   (projectile-global-mode)
@@ -150,7 +148,10 @@
   (require 'setup-haskell)
 
   ;; Octave/Matlab
-  (setq auto-mode-alist (cons '("\\.m$" . octave-mode) auto-mode-alist))
+  (add-to-list 'auto-mode-alist '("\\.m$\\'" . octave-mode))
+
+  ;; Web
+  (require 'setup-web)
 
   ;; New(er) emacs settings
   ;; Visible bell
