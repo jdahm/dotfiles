@@ -67,8 +67,9 @@
 
 ;; Mac
 (when (equal system-type 'darwin)
-  ;; Menu bar is not annoying in OSX
-  (menu-bar-mode 1)
+  (when (display-graphic-p)
+    ;; Menu bar is not annoying in OSX
+    (menu-bar-mode 1))
 
   ;; Make the browser the OS X default
   (setq browse-url-browser-function 'browse-url-default-macosx-browser))
@@ -98,13 +99,11 @@
       org-present
       magit
       git-timemachine
+      color-theme-solarized
       ))
   (dolist (p my-packages)
     (when (not (package-installed-p p))
       (package-install p)))
-
-  ;; Colors/Theme
-  (load-theme 'wombat t)
 
   ;; Resize active to golden ratio
   (require 'golden-ratio)
@@ -166,12 +165,16 @@
   ;; Web
   (require 'setup-web)
 
-  ;; New(er) emacs settings
   ;; Visible bell
   (setq visible-bell t)
 
   ;; Easily navigate sillycased words
-  (global-subword-mode 1))
+  (global-subword-mode 1)
+
+  ;; Colors/Theme
+  ;; (require 'color-theme-solarized)
+  (jdahm/color-theme-init)
+  (load-theme jdahm/color-theme-type t))
 
 
 (provide 'init)

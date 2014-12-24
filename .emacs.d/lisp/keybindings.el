@@ -31,6 +31,7 @@
 
 (global-set-key (kbd "M-9") 'jdahm/switch-to-minibuffer-window)
 
+(global-set-key (kbd "<f5>") 'jdahm/toggle-color-theme)
 (global-set-key (kbd "<f6>") 'jdahm/prev-buffer)
 (global-set-key (kbd "<f7>") 'jdahm/split-window)
 (global-set-key (kbd "<f8>") 'jdahm/toggle-window-split)
