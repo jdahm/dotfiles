@@ -8,7 +8,7 @@
 
 ;; Name/Email
 (setq user-full-name    "Johann Dahm")
-(setq user-mail-address "jdahm@fastmail.com")
+(setq user-mail-address "johann.dahm@gmail.com")
 
 ;; Set up load path
 (add-to-list 'load-path (concat user-emacs-directory "lisp/"))
@@ -90,6 +90,7 @@
       clojure-mode
       haskell-mode
       web-mode
+      smex
       golden-ratio
       diminish
       flycheck
@@ -99,14 +100,15 @@
       org-present
       magit
       git-timemachine
-      color-theme-solarized
       ))
   (dolist (p my-packages)
     (when (not (package-installed-p p))
       (package-install p)))
 
+  ;; Initialize smex
+  (smex-initialize)
+
   ;; Resize active to golden ratio
-  (require 'golden-ratio)
   (golden-ratio-mode 1)
   ;; Except for these modes
   (setq golden-ratio-exclude-modes '("ediff-mode"
@@ -135,7 +137,6 @@
   (require 'setup-org)
 
   ;; Ido
-  (require 'flx-ido)
   (ido-mode 1)
   (ido-everywhere 1)
   (flx-ido-mode 1)
@@ -172,7 +173,6 @@
   (global-subword-mode 1)
 
   ;; Colors/Theme
-  ;; (require 'color-theme-solarized)
   (jdahm/color-theme-init)
   (load-theme jdahm/color-theme-type t))
 
