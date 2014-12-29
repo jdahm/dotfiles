@@ -6,27 +6,26 @@
 
 (global-set-key (kbd "C-a")   'jdahm/beginning-of-line)
 
+(global-set-key (kbd "C-=") 'er/expand-region)
+
 (global-set-key (kbd "C-c s")   'shell)
 (global-set-key (kbd "C-c C-a") 'auto-fill-mode)
 (global-set-key (kbd "C-c C-w") 'whitespace-mode)
-(global-set-key (kbd "C-c f") 'flycheck-mode)
+(global-set-key (kbd "C-c f")   'flycheck-mode)
 
-(global-set-key (kbd "C-c t")   'jdahm/cycle-tab-width)
+(global-set-key (kbd "C-c t") 'jdahm/cycle-tab-width)
 (global-set-key (kbd "C-c g") 'search-engine)
 
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
 
-(global-set-key (kbd "C-x a r")  'align-regexp)
-
-;; Disable below in favor of open-read-only
-;; (global-set-key (kbd "C-x C-r") 'recentf-ido-find-file)
+(global-set-key (kbd "C-x a r") 'align-regexp)
 (global-set-key (kbd "C-x C-u") 'jdahm/url-insert-file-contents)
 
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-;; This is your old M-x.
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 (global-set-key (kbd "M-<up>") 'move-line-up)
 (global-set-key (kbd "M-<down>") 'move-line-down)

@@ -85,44 +85,38 @@
     (package-refresh-contents))
 
   (defvar my-packages
-    '(markdown-mode
+    '(;; Modes
+      markdown-mode
       d-mode
       clojure-mode
       haskell-mode
-      web-mode
+      ;; Project and modeline
       smex
-      golden-ratio
       diminish
       flycheck
       projectile
       flx-ido
-      elfeed
-      org-present
+      ;; Git
       magit
       git-timemachine
+      ;; Editing
+      expand-region
+      multiple-cursors
+      ;; Extra
+      elfeed
+      org-present
       ))
   (dolist (p my-packages)
     (when (not (package-installed-p p))
       (package-install p)))
 
-  ;; Initialize smex
-  (smex-initialize)
-
-  ;; Resize active to golden ratio
-  (golden-ratio-mode 1)
-  ;; Except for these modes
-  (setq golden-ratio-exclude-modes '("ediff-mode"
-                                     "eshell-mode"
-                                     "dired-mode"
-                                     "help-mode"))
-  ;; Might want to use this for high-resolution screens
-  ;; source: http://truongtx.me/2014/11/15/auto-resize-windows-by-golden-ratio-in-emacs/
-  ;; (setq split-width-threshold nil)
-
   ;; Markdown
   (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
   (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
   (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+  ;; Initialize smex
+  (smex-initialize)
 
   ;; Projectile
   (projectile-global-mode)
@@ -162,12 +156,6 @@
 
   ;; Octave/Matlab
   (add-to-list 'auto-mode-alist '("\\.m$\\'" . octave-mode))
-
-  ;; Web
-  (require 'setup-web)
-
-  ;; Visible bell
-  (setq visible-bell t)
 
   ;; Easily navigate sillycased words
   (global-subword-mode 1)

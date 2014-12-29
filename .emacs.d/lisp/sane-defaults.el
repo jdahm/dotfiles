@@ -21,6 +21,9 @@
 ;; Remove text in active region if inserting text
 (delete-selection-mode 1)
 
+;; Don't break lines for me, please
+(setq-default truncate-lines t)
+
 ;; Move files to trash when deleting
 (setq delete-by-moving-to-trash t)
 
@@ -29,6 +32,9 @@
 
 ;; Lines should be 80 characters wide, not 72
 (setq fill-column 80)
+
+;; Visible bell
+(setq visible-bell t)
 
 ;; Never insert tabs
 (set-default 'indent-tabs-mode nil)
