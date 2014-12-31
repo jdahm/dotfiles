@@ -107,6 +107,7 @@
       ;; Editing
       expand-region
       multiple-cursors
+      smartparens
       ;; Extra
       elfeed
       org-present
@@ -161,6 +162,10 @@
 
   ;; Octave/Matlab
   (add-to-list 'auto-mode-alist '("\\.m$\\'" . octave-mode))
+
+  ;; smartparens
+  (require 'smartparens-config)
+  (smartparens-global-mode 1)
 
   ;; Easily navigate sillycased words
   (global-subword-mode 1)
