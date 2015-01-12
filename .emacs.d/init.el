@@ -164,8 +164,7 @@
   (add-to-list 'auto-mode-alist '("\\.m$\\'" . octave-mode))
 
   ;; smartparens
-  (require 'smartparens-config)
-  (smartparens-global-mode 1)
+  (require 'setup-smartparens)
 
   ;; Easily navigate sillycased words
   (global-subword-mode 1)

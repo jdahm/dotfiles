@@ -38,6 +38,12 @@
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
+;; smex M-x
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;; old M-x
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+
 (global-set-key (kbd "M-<up>") 'move-line-up)
 (global-set-key (kbd "M-<down>") 'move-line-down)
 (global-set-key (kbd "M-#") 'sort-lines)
@@ -49,6 +55,7 @@
 (global-set-key (kbd "<f6>") 'jdahm/prev-buffer)
 (global-set-key (kbd "<f7>") 'jdahm/split-window)
 (global-set-key (kbd "<f8>") 'jdahm/toggle-window-split)
+(global-set-key (kbd "<f9>") 'toggle-truncate-lines)
 
 (provide 'keybindings)
 
