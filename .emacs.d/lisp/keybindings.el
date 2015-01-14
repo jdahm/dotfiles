@@ -57,6 +57,9 @@
 (global-set-key (kbd "<f8>") 'jdahm/toggle-window-split)
 (global-set-key (kbd "<f9>") 'toggle-truncate-lines)
 
+;; help commands
+(define-key 'help-command (kbd "C-i") 'info-display-manual)
+
 (provide 'keybindings)
 
 ;; keybindings.el ends here

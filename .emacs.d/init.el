@@ -166,9 +166,6 @@
   ;; smartparens
   (require 'setup-smartparens)
 
-  ;; Easily navigate sillycased words
-  (global-subword-mode 1)
-
   ;; Colors/Theme
   (jdahm/color-theme-init)
   (load-theme jdahm/color-theme-type t))
