@@ -92,8 +92,6 @@
   (defvar my-packages
     '(;; Modes
       markdown-mode
-      d-mode
-      clojure-mode
       haskell-mode
       ;; Project and modeline
       smex
@@ -108,6 +106,8 @@
       expand-region
       multiple-cursors
       smartparens
+      ;; Movement
+      jump-char
       ;; Extra
       elfeed
       org-present
@@ -168,8 +168,10 @@
 
   ;; Colors/Theme
   (jdahm/color-theme-init)
-  (load-theme jdahm/color-theme-type t))
+  (load-theme jdahm/color-theme-type t)
 
+  ;; Hidden mode-line mode
+  (require 'hidden-mode-line-mode))
 
 (provide 'init)
 

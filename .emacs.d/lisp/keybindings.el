@@ -26,6 +26,7 @@
 (global-set-key (kbd "C-x C-M-f") 'find-file-in-project)
 (global-set-key (kbd "C-x f")     'recentf-ido-find-file)
 (global-set-key (kbd "C-c r")     'bury-buffer)
+(global-set-key (kbd "C-x p")     'prev-window)
 
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
@@ -44,10 +45,18 @@
 ;; old M-x
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
+;; Source: https://github.com/rlister/emacs.d/blob/master/lisp/window-movement.el
+(global-set-key (kbd "M-o") 'other-window) ; convenience, replaces facemenu-keymap
+(global-set-key (kbd "M-p") 'prev-window)  ; replaces empty binding
+
 (global-set-key (kbd "M-<up>") 'move-line-up)
 (global-set-key (kbd "M-<down>") 'move-line-down)
 (global-set-key (kbd "M-#") 'sort-lines)
 (global-set-key (kbd "M-;") 'comment-or-uncomment-region-or-line)
+
+;; jump-char
+(global-set-key (kbd "M-m")   'jump-char-forward)
+(global-set-key (kbd "M-S-M") 'jump-char-backward)
 
 (global-set-key (kbd "M-9") 'jdahm/switch-to-minibuffer-window)
 
