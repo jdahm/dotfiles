@@ -25,6 +25,7 @@
 (diminish-minor-mode 'flyspell 'flyspell-mode)
 (diminish-minor-mode 'golden-ratio 'golden-ratio-mode)
 (diminish-minor-mode 'global-whitespace 'global-whitespace-mode)
+(diminish-minor-mode 'yasnippet 'yas-minor-mode " υ")
 (diminish-minor-mode 'magit 'magit-auto-revert-mode)
 (diminish-minor-mode 'projectile 'projectile-mode " π")
 (diminish-minor-mode 'smartparens 'smartparens-mode)

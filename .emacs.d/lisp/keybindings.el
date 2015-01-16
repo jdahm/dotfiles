@@ -4,40 +4,54 @@
 
 ;;; Code:
 
-(global-set-key (kbd "C-a")   'jdahm/beginning-of-line)
+(global-set-key (kbd "C-a")   'my-beginning-of-line)
 
-(global-set-key (kbd "C-=") 'er/expand-region)
+(global-set-key (kbd "C-'") 'er/expand-region)
 
 (global-set-key (kbd "C-c s")   'shell)
+(global-set-key (kbd "C-c f")   'flycheck-mode)
+(global-set-key (kbd "C-c o")   'occur)
+(global-set-key (kbd "C-c r")   'bury-buffer)
 (global-set-key (kbd "C-c C-a") 'auto-fill-mode)
 (global-set-key (kbd "C-c C-w") 'whitespace-mode)
-(global-set-key (kbd "C-c f")   'flycheck-mode)
+(global-set-key (kbd "C-c n")   'tidy-region)
+(global-set-key (kbd "C-c C-n") 'tidy-buffer)
 
-
+;; Org-mode standard keybindings
 (global-set-key (kbd "C-c c")   'org-capture)
 (global-set-key (kbd "C-c l")   'org-store-link)
 (global-set-key (kbd "C-c a")   'org-agenda)
-(global-set-key (kbd "C-c b")   'org-iswitchb)
 
-(global-set-key (kbd "C-c t") 'jdahm/cycle-tab-width)
+;; Create additional scratch buffers
+(global-set-key (kbd "C-c b") 'create-scratch-buffer)
+
+(global-set-key (kbd "C-c t") 'cycle-tab-width)
+
+;; Eval buffer
+(global-set-key (kbd "C-c C-k") 'eval-buffer)
+
+;; Search Google? why not...
 (global-set-key (kbd "C-c g") 'search-engine)
 
 (global-set-key (kbd "C-x M-f")   'ido-find-file-other-window)
 (global-set-key (kbd "C-x C-M-f") 'find-file-in-project)
 (global-set-key (kbd "C-x f")     'recentf-ido-find-file)
-(global-set-key (kbd "C-c r")     'bury-buffer)
-(global-set-key (kbd "C-x p")     'prev-window)
+(global-set-key (kbd "C-x p")     'prev-buffer)
 
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
 
+(global-set-key (kbd "C-x -") 'toggle-window-split)
+(global-set-key (kbd "C-x C--") 'rotate-windows)
+(global-unset-key (kbd "C-x C-+")) ;; don't zoom like this
+
 (global-set-key (kbd "C-x a r") 'align-regexp)
-(global-set-key (kbd "C-x C-u") 'jdahm/url-insert-file-contents)
+(global-set-key (kbd "C-x C-u") 'url-insert-file-contents)
 
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+(global-set-key (kbd "C->")         'mc/mark-next-like-this)
+(global-set-key (kbd "C-<")         'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<")     'mc/mark-all-like-this)
 
 ;; smex M-x
 (global-set-key (kbd "M-x") 'smex)
@@ -49,21 +63,26 @@
 (global-set-key (kbd "M-o") 'other-window) ; convenience, replaces facemenu-keymap
 (global-set-key (kbd "M-p") 'prev-window)  ; replaces empty binding
 
-(global-set-key (kbd "M-<up>") 'move-line-up)
+;; Sorting
+(global-set-key (kbd "M-s l") 'sort-lines)
+
+;; Transpose line with that above or below it
+(global-set-key (kbd "M-<up>")   'move-line-up)
 (global-set-key (kbd "M-<down>") 'move-line-down)
-(global-set-key (kbd "M-#") 'sort-lines)
+
+;; Smart comment and uncomment
 (global-set-key (kbd "M-;") 'comment-or-uncomment-region-or-line)
 
 ;; jump-char
 (global-set-key (kbd "M-m")   'jump-char-forward)
 (global-set-key (kbd "M-S-M") 'jump-char-backward)
 
-(global-set-key (kbd "M-9") 'jdahm/switch-to-minibuffer-window)
+(global-set-key (kbd "M-9") 'switch-to-minibuffer-window)
 
 (global-set-key (kbd "<f5>") 'jdahm/toggle-color-theme)
-(global-set-key (kbd "<f6>") 'jdahm/prev-buffer)
-(global-set-key (kbd "<f7>") 'jdahm/split-window)
-(global-set-key (kbd "<f8>") 'jdahm/toggle-window-split)
+(global-set-key (kbd "<f6>") 'prev-buffer)
+(global-set-key (kbd "<f7>") 'split-window-show-prev)
+(global-set-key (kbd "<f8>") 'toggle-window-split)
 (global-set-key (kbd "<f9>") 'toggle-truncate-lines)
 
 ;; help commands

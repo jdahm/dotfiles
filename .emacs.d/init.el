@@ -2,6 +2,8 @@
 
 ;;; Commentary:
 
+;;; Source: https://github.com/magnars/.emacs.d
+
 ;;; Code:
 
 ;; Top-level settings
@@ -30,9 +32,6 @@
 ;; Start with some better defaults
 (require 'sane-defaults)
 
-;; A few functions
-(require 'utils)
-
 ;; Frame title
 (setq frame-title-format
       (list (format "%s %%S: %%j " (system-name))
@@ -40,11 +39,14 @@
 
 ;; Put autosave files (ie #foo#) and backup files (ie foo~) in ~/.emacs.d/.
 (custom-set-variables
-  '(auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/\\1" t)))
-  '(backup-directory-alist '((".*" . "~/.emacs.d/backups/"))))
+ '(auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/\\1" t)))
+ '(backup-directory-alist '((".*" . "~/.emacs.d/backups/"))))
 
 ;; create the autosave dir if necessary, since emacs won't.
 (make-directory "~/.emacs.d/autosaves/" t)
+
+;; Make backups of files, even when they're in version control
+(setq vc-make-backup-files t)
 
 ;; Persistence directory
 (setq emacs-persistence-directory (concat user-emacs-directory "persistence/"))
@@ -79,42 +81,49 @@
   ;; Make the browser the OS X default
   (setq browse-url-browser-function 'browse-url-default-macosx-browser))
 
+(defvar jdahm/pkgs
+  '(;; Modes
+    markdown-mode
+    haskell-mode
+    ;; Project and modeline
+    projectile
+    flycheck
+    flx-ido
+    smex
+    diminish
+    ;; Git
+    magit
+    git-timemachine
+    ;; Editing
+    expand-region
+    change-inner
+    multiple-cursors
+    yasnippet
+    ;; Movement
+    jump-char
+    ;; Extra
+    elfeed
+    org-present
+    ))
+
 ;; External packages
 (when (>= emacs-major-version 24)
-  ;; External packages
-  (require 'package)
-  (add-to-list 'package-archives
-               '("melpa" . "http://melpa.milkbox.net/packages/"))
-  (package-initialize)
-  (when (not package-archive-contents)
-    (package-refresh-contents))
 
-  (defvar my-packages
-    '(;; Modes
-      markdown-mode
-      haskell-mode
-      ;; Project and modeline
-      smex
-      diminish
-      flycheck
-      projectile
-      flx-ido
-      ;; Git
-      magit
-      git-timemachine
-      ;; Editing
-      expand-region
-      multiple-cursors
-      smartparens
-      ;; Movement
-      jump-char
-      ;; Extra
-      elfeed
-      org-present
-      ))
-  (dolist (p my-packages)
-    (when (not (package-installed-p p))
-      (package-install p)))
+  ;; Initialize package repository
+  (require 'setup-package)
+
+  ;; Ensure packages are installed
+  (packages-install jdahm/pkgs)
+
+  ;; Apearance
+  (require 'appearance)
+
+  ;; Keys
+  (require 'keybindings)
+
+  ;; Some additional functions
+  (require 'editing-defuns)
+  (require 'buffer-defuns)
 
   ;; Markdown
   (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
@@ -151,27 +160,23 @@
   (setq dired-recursive-deletes 'always)
   (setq-default dired-listing-switches "-Al --si --time-style long-iso")
 
-  ;; Hide modes
-  (require 'hide-modes)
-
-  ;; Keys
-  (require 'keybindings)
-
   ;; Haskell
   (require 'setup-haskell)
 
   ;; Octave/Matlab
   (add-to-list 'auto-mode-alist '("\\.m$\\'" . octave-mode))
 
-  ;; smartparens
-  (require 'setup-smartparens)
+  ;; Parens
+  (electric-pair-mode 1)
 
-  ;; Colors/Theme
-  (jdahm/color-theme-init)
-  (load-theme jdahm/color-theme-type t)
+  ;; Snippets
+  (require 'setup-yasnippet)
 
   ;; Hidden mode-line mode
-  (require 'hidden-mode-line-mode))
+  (require 'hidden-mode-line-mode)
+
+  ;; Hide modes
+  (require 'hide-modes))
 
 (provide 'init)
 

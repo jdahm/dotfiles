@@ -1,0 +1,26 @@
+# -*- mode: snippet -*-
+# name: xfprototype
+# key: xfpr
+# --
+/******************************************************************/
+//   FUNCTION Prototype: ${1:name}
+extern ${2:return type}
+$1(${3:parameters});
+/*
+  PURPOSE:
+
+  ${4:Purpose}
+ 
+  INPUTS:
+
+  ${5:Inputs}
+ 
+  OUTPUTS:
+
+  ${6:Outputs}
+
+  RETURN:
+
+  ${7:Error Code}
+ */
+$0
