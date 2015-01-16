@@ -60,8 +60,15 @@
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
 ;; Source: https://github.com/rlister/emacs.d/blob/master/lisp/window-movement.el
-(global-set-key (kbd "M-o") 'other-window) ; convenience, replaces facemenu-keymap
-(global-set-key (kbd "M-p") 'prev-window)  ; replaces empty binding
+(global-set-key (kbd "M-n") 'other-window)
+(global-set-key (kbd "M-p") 'prev-window)
+
+;; vim's ci and co commands
+(global-set-key (kbd "M-i") 'change-inner)
+(global-set-key (kbd "M-o") 'change-outer)
+
+;; Zap up to instead of over char
+(global-set-key (kbd "M-z") 'zap-up-to-char)
 
 ;; Sorting
 (global-set-key (kbd "M-s l") 'sort-lines)

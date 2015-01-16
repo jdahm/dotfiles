@@ -80,6 +80,9 @@
   (message "%s %d" "tab-width =" tab-width)
   (redraw-display))
 
+(autoload 'zap-up-to-char "misc"
+"Kill up to, but not including ARGth occurrence of CHAR.")
+
 (provide 'editing-defuns)
 
 ;; editing-defuns.el ends here
