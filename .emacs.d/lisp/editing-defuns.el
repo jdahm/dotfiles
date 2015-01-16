@@ -65,11 +65,6 @@
       (back-to-indentation)
     (beginning-of-line)))
 
-(defun url-insert-file-contents (url)
-  "Prompt for URL and insert file contents at point."
-  (interactive "sURL: ")
-  (url-insert-file-contents url))
-
 (defun cycle-tab-width ()
   "Cycle 'tab-width' between values 2, 4, and 8."
   (interactive)
@@ -81,7 +76,8 @@
   (redraw-display))
 
 (autoload 'zap-up-to-char "misc"
-"Kill up to, but not including ARGth occurrence of CHAR.")
+  "Kill up to, but not including ARGth occurrence of CHAR.")
+
 
 (provide 'editing-defuns)
 

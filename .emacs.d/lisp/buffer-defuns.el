@@ -29,7 +29,7 @@
     (when file
       (find-file file))))
 
-(defun create-scratch-buffer nil
+(defun create-scratch-buffer ()
   "create a new scratch buffer to work in. (could be *scratch* - *scratchX*)"
   (interactive)
   (let ((n 0)

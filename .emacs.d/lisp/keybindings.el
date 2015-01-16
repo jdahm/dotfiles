@@ -46,7 +46,6 @@
 (global-unset-key (kbd "C-x C-+")) ;; don't zoom like this
 
 (global-set-key (kbd "C-x a r") 'align-regexp)
-(global-set-key (kbd "C-x C-u") 'url-insert-file-contents)
 
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->")         'mc/mark-next-like-this)
