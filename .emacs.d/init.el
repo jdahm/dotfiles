@@ -72,6 +72,9 @@
 (require 'windmove)
 (windmove-default-keybindings)
 
+;; Highlight current line
+(global-hl-line-mode 1)
+
 ;; Mac
 (when (equal system-type 'darwin)
   (when (display-graphic-p)
@@ -81,6 +84,7 @@
   ;; Make the browser the OS X default
   (setq browse-url-browser-function 'browse-url-default-macosx-browser))
 
+;; Packages I use
 (defvar jdahm/pkgs
   '(;; Modes
     markdown-mode
@@ -99,12 +103,16 @@
     change-inner
     multiple-cursors
     yasnippet
+    smartparens
     ;; Movement
     jump-char
+    ;; Themes
+    zenburn-theme
     ;; Extra
     elfeed
     org-present
     ))
+
 
 ;; External packages
 (when (>= emacs-major-version 24)
@@ -167,7 +175,8 @@
   (add-to-list 'auto-mode-alist '("\\.m$\\'" . octave-mode))
 
   ;; Parens
-  (electric-pair-mode 1)
+  (require 'setup-smartparens)
+  ;; (electric-pair-mode 1)
 
   ;; Snippets
   (require 'setup-yasnippet)

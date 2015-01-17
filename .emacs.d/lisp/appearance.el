@@ -6,7 +6,7 @@
 
 (defun jdahm/color-theme-init ()
   "Initializes the jdahm/color-theme-* variables."
-  (defvar jdahm/color-theme-dark 'wombat "Dark color theme.")
+  (defvar jdahm/color-theme-dark 'zenburn "Dark color theme.")
   (defvar jdahm/color-theme-light 'leuven "Light color theme.")
   (defvar jdahm/color-theme-type jdahm/color-theme-dark "Default color theme."))
 

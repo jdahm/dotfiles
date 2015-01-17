@@ -4,7 +4,7 @@
 # --
 /******************************************************************/
 //   FUNCTION Prototype: ${1:name}
-extern ${2:return type}
+extern ${2:return}
 $1(${3:parameters});
 /*
   PURPOSE:

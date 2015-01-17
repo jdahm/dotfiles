@@ -18,9 +18,6 @@
 ;; Answering just 'y' or 'n' will do
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; Remove text in active region if inserting text
-(delete-selection-mode 1)
-
 ;; Don't break lines for me, please
 (setq-default truncate-lines t)
 
@@ -53,6 +50,9 @@
 
 ;; Show matching parens
 (show-paren-mode t)
+
+;; Don't blink the cursor
+(blink-cursor-mode 0)
 
 ;; Modern memory threshold
 (setq gc-cons-threshold 20000000)

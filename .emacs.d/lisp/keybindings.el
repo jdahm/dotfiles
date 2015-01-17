@@ -62,9 +62,15 @@
 (global-set-key (kbd "M-n") 'other-window)
 (global-set-key (kbd "M-p") 'prev-window)
 
-;; vim's ci and co commands
+;; vim's ci and co commands (change-inner settings)
 (global-set-key (kbd "M-i") 'change-inner)
 (global-set-key (kbd "M-o") 'change-outer)
+
+;; ;; Smart-forward settings
+;; (global-set-key (kbd "M-<up>") 'smart-up)
+;; (global-set-key (kbd "M-<down>") 'smart-down)
+;; (global-set-key (kbd "M-<left>") 'smart-backward)
+;; (global-set-key (kbd "M-<right>") 'smart-forward)
 
 ;; Zap up to instead of over char
 (global-set-key (kbd "M-z") 'zap-up-to-char)
