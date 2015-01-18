@@ -104,4 +104,4 @@ Call a second time to restore the original window configuration."
 
 (provide 'buffer-defuns)
 
-;; buffer-defuns.el ends here
+;;; buffer-defuns.el ends here

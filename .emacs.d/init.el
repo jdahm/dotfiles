@@ -47,25 +47,6 @@
 (unless (file-exists-p emacs-persistence-directory)
   (make-directory emacs-persistence-directory t))
 
-;; Save buffer history
-(require 'savehist)
-(setq savehist-file (expand-file-name "saved-history" emacs-persistence-directory))
-(savehist-mode 1)
-
-;; Save place in buffer
-(require 'saveplace)
-(setq save-place-file (expand-file-name "saved-places" emacs-persistence-directory))
-(setq-default save-place t)
-
-;; Save recently opened files
-(require 'recentf)
-(recentf-mode 1)
-(setq recentf-max-menu-items 25)
-
-;; Better window selection
-(require 'windmove)
-(windmove-default-keybindings)
-
 ;; Highlight current line
 (global-hl-line-mode 1)
 
@@ -113,29 +94,28 @@
   ;; Apearance
   (use-package appearance
     :bind
-    (("<f6>" . jdahm/toggle-color-theme)))
+    (("<f6>" . jdahm/toggle-color-theme))
+    :init
+    (progn
+      (defvar jdahm/color-theme-dark 'zenburn "Dark color theme.")
+      (defvar jdahm/color-theme-light 'leuven "Light color theme.")
+      (defvar jdahm/color-theme jdahm/color-theme-dark "Default color theme.")
+      (load-theme jdahm/color-theme t)))
 
   ;; Parens
   (electric-pair-mode 1)
 
-  ;; Keybindings to existing commands
-  (global-set-key (kbd "C-c s") 'shell)
-  (global-set-key (kbd "C-c r") 'bury-buffer)
-  (global-set-key (kbd "C-c C-a") 'auto-fill-mode)
-  (global-set-key (kbd "C-c w") 'whitespace-mode)
-
-  (global-set-key (kbd "C-c C-k") 'eval-buffer)
-
-  (global-set-key (kbd "M-s l") 'sort-lines)
-
-  (global-set-key (kbd "<f9>") 'toggle-truncate-lines)
-
+  ;; Open manual easier
   (define-key 'help-command (kbd "C-i") 'info-display-manual)
 
   ;; Editing functions
   (use-package editing-defuns
     :bind
-    (("C-a" . my-beginning-of-line)
+    (;; Existing functions
+     ("C-c C-a" . auto-fill-mode)
+     ("C-c w" . whitespace-mode)
+     ("M-s l" . sort-lines)
+     ;; Inside editing-functions.el
      ("C-c t" . cycle-tab-width)
      ("C-c n" . tidy-region)
      ("C-c C-n" . tidy-buffer)
@@ -144,12 +124,20 @@
      ("M-z" . zap-up-to-char)
      ("M-;" . comment-or-uncomment-region-or-line)
      ("C-M-<up>". move-line-up)
-     ("C-M-<down>" . move-line-down)))
+     ("C-M-<down>" . move-line-down))
+    :config
+    (global-set-key [remap move-beginning-of-line] 'my-beginning-of-line))
 
   ;; Buffer functions
   (use-package buffer-defuns
     :bind
-    (("C-x k" . kill-current-buffer)
+    (;; Existing functions
+     ("C-c s" . shell)
+     ("C-c r" . bury-buffer)
+     ("C-c C-k" . eval-buffer)
+     ("<f9>" . toggle-truncate-lines)
+     ;; Inside buffer-defuns.el
+     ("C-x k" . kill-current-buffer)
      ("C-x p" . prev-buffer)
      ("C-x -" . toggle-window-split)
      ("C-x C--" . rotate-windows)
@@ -164,6 +152,36 @@
   (use-package hidden-mode-line-mode)
 
   ;; Packages distributed with Emacs
+  (use-package savehist
+    :config
+    (setq savehist-file (expand-file-name "saved-history" emacs-persistence-directory))
+    :init (savehist-mode 1))
+
+  (use-package savehist
+    :config
+    (setq save-place-file (expand-file-name "saved-places" emacs-persistence-directory))
+    :init (setq-default save-place t))
+
+  (use-package recentf
+    :init
+    (progn
+      (setq recentf-max-saved-items 300
+            recentf-auto-cleanup 600)
+      (when (not noninteractive) (recentf-mode 1))))
+
+  (use-package windmove
+    :init (windmove-default-keybindings))
+
+  (use-package dired
+    :config
+    (progn
+      (setq dired-recursive-copies 'always
+            dired-recursive-deletes 'always
+            delete-by-moving-to-trash t)
+      (setq-default dired-listing-switches "-Al --si --time-style long-iso")
+      ;; hide some details by default
+      (add-hook 'dired-mode-hook 'dired-hide-details-mode)))
+
   (use-package octave
     :init
     (add-to-list 'auto-mode-alist '("\\.m$\\'" . octave-mode)))
@@ -204,32 +222,6 @@
               (sequence "TODELEGATE(-)" "DELEGATED(d)" "COMPLETE(x)")
               (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")))))
 
-  (use-package org-present
-    :ensure t
-    :config
-    (progn
-      (add-hook 'org-present-mode-hook
-                (lambda ()
-                  (org-present-big)
-                  (org-display-inline-images)
-                  (org-present-hide-cursor)
-                  (org-present-read-only)))
-      (add-hook 'org-present-mode-quit-hook
-                (lambda ()
-                  (org-present-small)
-                  (org-remove-inline-images)
-                  (org-present-show-cursor)
-                  (org-present-read-write)))))
-
-  (use-package dired
-    :config
-    (progn
-      (setq dired-recursive-copies 'always
-            dired-recursive-deletes 'always)
-      (setq-default dired-listing-switches "-Al --si --time-style long-iso")
-      ;; hide some details by default
-      (add-hook 'dired-mode-hook 'dired-hide-details-mode)))
-
   ;; External packages
   (use-package markdown-mode
     :ensure t
@@ -249,19 +241,27 @@
       (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
       (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)))
 
+  (use-package projectile
+    :ensure t
+    :config
+    (progn
+      (setq projectile-enable-caching t
+            projectile-completion-system 'helm)
+      (helm-projectile-on))
+    :idle (projectile-global-mode)
+    :diminish " p")
+
   (use-package helm-config
     :ensure helm
-    :diminish helm-mode
     :bind
     (("M-y" . helm-show-kill-ring)
      ("M-x" . helm-M-x)
      ("C-x C-m" . helm-M-x)
      ("C-x C-f" . helm-find-files)
      ("C-x b" . helm-mini)
+     ("C-x C-b" . helm-buffers-list)
      ("C-c f" . helm-recentf)
-     ("C-c h" . helm-command-prefix))
-    :init
-    (global-unset-key (kbd "C-x c"))
+     ("C-x r l" . helm-filtered-bookmarks))
     :config
     (progn
       (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
@@ -271,21 +271,16 @@
       (define-key helm-command-map (kbd "o") 'helm-occur)
       (define-key 'help-command (kbd "C-l") 'helm-locate-library)
       (define-key 'help-command (kbd "r") 'helm-info-emacs)
-      (define-key 'help-command (kbd "f") 'helm-apropos))
-    :idle helm-mode
-    :diminish " h")
-
-  (use-package projectile
-    :ensure t
-    :init (projectile-global-mode)
-    :config (setq projectile-enable-caching t)
-    :diminish " p")
-
-  (use-package helm-projectile
-    :ensure t
-    :bind (("C-x f" . helm-projectile)
-           ("C-c p f" . helm-projectile-find-file)
-           ("C-c p s" . helm-projectile-switch-project)))
+      (define-key 'help-command (kbd "f") 'helm-apropos)
+      (use-package helm-eshell
+        :init
+        (add-hook 'eshell-mode-hook
+                  #'(lambda ()
+                      (define-key eshell-mode-map [remap pcomplete] 'helm-esh-pcomplete)))))
+    :idle
+    (progn
+      (helm-mode 1)
+      (diminish 'helm-mode " h")))
 
   (use-package magit
     :ensure t
@@ -311,7 +306,6 @@
   (use-package change-inner
     :ensure t
     :bind
-    ;; vim's ci and co commands (change-inner settings)
     (("M-i" . change-inner)
      ("M-o" . change-outer)))
 
@@ -326,7 +320,29 @@
     :ensure t
     :bind
     (("M-m" . jump-char-forward)
-     ("M-S-m" . jump-char-backward))))
+     ("M-S-m" . jump-char-backward)))
+
+  (use-package org-present
+    :ensure t
+    :config
+    (progn
+      (add-hook 'org-present-mode-hook
+                (lambda ()
+                  (org-present-big)
+                  (org-display-inline-images)
+                  (org-present-hide-cursor)
+                  (org-present-read-only)))
+      (add-hook 'org-present-mode-quit-hook
+                (lambda ()
+                  (org-present-small)
+                  (org-remove-inline-images)
+                  (org-present-show-cursor)
+                  (org-present-read-write)))))
+
+  (use-package ox-reveal
+    :ensure t
+    :config
+    (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/2.6.2/")))
 
 (provide 'init)
 

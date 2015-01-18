@@ -81,4 +81,4 @@
 
 (provide 'editing-defuns)
 
-;; editing-defuns.el ends here
+;;; editing-defuns.el ends here
