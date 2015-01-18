@@ -11,24 +11,6 @@
   (interactive)
   (kill-buffer (current-buffer)))
 
-(setq search-engine-url "http://www.google.com/search?ie=utf-8&oe=utf-8&q=")
-
-(defun search-engine ()
-  "Search the selected region if any, display a query prompt otherwise."
-  (interactive)
-  (browse-url
-   (concat search-engine-url
-    (url-hexify-string (if mark-active
-                           (buffer-substring (region-beginning) (region-end))
-                         (read-string "Search: "))))))
-
-(defun recentf-ido-find-file ()
-  "Find a recent file using Ido."
-  (interactive)
-  (let ((file (ido-completing-read "Choose recent file: " recentf-list nil t)))
-    (when file
-      (find-file file))))
-
 (defun create-scratch-buffer ()
   "create a new scratch buffer to work in. (could be *scratch* - *scratchX*)"
   (interactive)
@@ -44,10 +26,14 @@
     (emacs-lisp-mode)
     ))
 
+(defun prev-buffer ()
+  "Switch to previous buffer."
+  (interactive)
+  (switch-to-buffer (other-buffer)))
+
 (defun prev-window ()
   "C-x o is other-window, which is next window in clockwise order.
-
-Make C-x p go anti-clockwise (previous window)."
+Bind this to C-x p go anti-clockwise (previous window)."
   (interactive)
   (other-window -1))
 
@@ -109,11 +95,6 @@ Call a second time to restore the original window configuration."
         (setq this-command 'my-unsplit-window))
     (window-configuration-to-register :my-split-window)
     (switch-to-buffer-other-window nil)))
-
-(defun prev-buffer ()
-  "Switch to previous buffer."
-  (interactive)
-  (switch-to-buffer (other-buffer)))
 
 (defun switch-to-minibuffer-window ()
   "Switch to minibuffer window (if active)."
