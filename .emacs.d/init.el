@@ -247,7 +247,9 @@
     (progn
       (setq projectile-enable-caching t
             projectile-completion-system 'helm)
-      (helm-projectile-on))
+      (use-package helm-projectile
+        :init
+        (helm-projectile-on)))
     :idle (projectile-global-mode)
     :diminish " p")
 
