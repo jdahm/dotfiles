@@ -186,42 +186,6 @@
     :init
     (add-to-list 'auto-mode-alist '("\\.m$\\'" . octave-mode)))
 
-  (use-package org
-    :bind
-    (("C-c c" . org-capture)
-     ("C-c l" . org-store-link)
-     ("C-c a" . org-agenda))
-
-    :init
-    (progn
-      (setq
-       org-directory "~/Dropbox/org/"  ; default directory for notes
-       org-default-notes-file (concat org-directory "notes.org") ; default target file for notes
-       org-agenda-start-on-weekday 6 ; start weeks on Saturdays
-       )
-
-      (setq org-agenda-files (list (concat org-directory "personal.org")
-                                   (concat org-directory "work.org"))))
-
-    :config
-    (progn
-      (setq org-capture-templates
-            '(("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
-               "* TODO %?\n %a")
-              ("p" "Personal task" entry (file+headline (concat org-directory "personal.org") "Tasks")
-               "* TODO %?")
-              ("w" "Work task" entry (file+headline (concat org-directory "work.org") "Tasks")
-               "* TODO %?\n %a")))
-
-      (setq org-todo-keywords
-            '((sequence
-               "TODO(t)"
-               "STARTED(s)"
-               "WAITING(w@/!)"
-               "SOMEDAY(.)" "|" "DONE(x!)" "CANCELLED(c@)")
-              (sequence "TODELEGATE(-)" "DELEGATED(d)" "COMPLETE(x)")
-              (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")))))
-
   ;; External packages
   (use-package markdown-mode
     :ensure t
@@ -263,9 +227,11 @@
      ("C-x b" . helm-mini)
      ("C-x C-b" . helm-buffers-list)
      ("C-c f" . helm-recentf)
+     ("C-x r i" . helm-register)
      ("C-x r l" . helm-filtered-bookmarks))
     :config
     (progn
+      (setq helm-truncate-lines t)
       (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
       (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
       (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
@@ -274,11 +240,13 @@
       (define-key 'help-command (kbd "C-l") 'helm-locate-library)
       (define-key 'help-command (kbd "r") 'helm-info-emacs)
       (define-key 'help-command (kbd "f") 'helm-apropos)
+      (define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
+      (define-key minibuffer-local-map (kbd "C-c C-l") 'helm-minibuffer-history)
       (use-package helm-eshell
         :init
         (add-hook 'eshell-mode-hook
-                  #'(lambda ()
-                      (define-key eshell-mode-map [remap pcomplete] 'helm-esh-pcomplete)))))
+          #'(lambda ()
+              (define-key eshell-mode-map (kbd "C-c C-l")  'helm-eshell-history)))))
     :idle
     (progn
       (helm-mode 1)
@@ -323,6 +291,46 @@
     :bind
     (("M-m" . jump-char-forward)
      ("M-S-m" . jump-char-backward)))
+
+  (use-package org
+    :ensure t
+    :bind
+    (("C-c c" . org-capture)
+     ("C-c l" . org-store-link)
+     ("C-c a" . org-agenda))
+
+    :init
+    (progn
+      (setq
+       org-directory "~/Dropbox/org/"  ; default directory for notes
+       org-default-notes-file (concat org-directory "notes.org") ; default target file for notes
+       org-agenda-start-on-weekday 6 ; start weeks on Saturdays
+       )
+
+      (setq org-agenda-files (list (concat org-directory "personal.org")
+                                   (concat org-directory "work.org"))))
+
+    :config
+    (progn
+      (setq org-capture-templates
+            '(("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
+               "* TODO %?\n %a")
+              ("p" "Personal task" entry (file+headline (concat org-directory "personal.org") "Tasks")
+               "* TODO %?")
+              ("w" "Work task" entry (file+headline (concat org-directory "work.org") "Tasks")
+               "* TODO %?\n %a")))
+
+      (setq org-todo-keywords
+            '((sequence
+               "TODO(t)"
+               "STARTED(s)"
+               "WAITING(w@/!)"
+               "SOMEDAY(.)" "|" "DONE(x!)" "CANCELLED(c@)")
+              (sequence "TODELEGATE(-)" "DELEGATED(d)" "COMPLETE(x)")
+              (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")))
+
+      (setq org-latex-pdf-process
+            "latexmk -pdflatex='lualatex -shell-escape -interaction nonstopmode' -pdf -f  %f")))
 
   (use-package org-present
     :ensure t
