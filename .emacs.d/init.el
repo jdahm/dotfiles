@@ -116,17 +116,17 @@
      ("C-c w" . whitespace-mode)
      ("M-s l" . sort-lines)
      ;; Inside editing-functions.el
-     ("C-c t" . cycle-tab-width)
+     ("C-x a r" . align-regexp)
      ("C-c n" . tidy-region)
      ("C-c C-n" . tidy-buffer)
-     ("C-c b" . create-scratch-buffers)
-     ("C-x a r" . align-regexp)
-     ("M-z" . zap-up-to-char)
-     ("M-;" . comment-or-uncomment-region-or-line)
+     ("C-c t" . cycle-tab-width)
      ("C-M-<up>". move-line-up)
      ("C-M-<down>" . move-line-down))
     :config
-    (global-set-key [remap move-beginning-of-line] 'my-beginning-of-line))
+    (progn
+      (global-set-key [remap zap-to-char] 'zap-up-to-char)
+      (global-set-key [remap comment-dwim] 'comment-or-uncomment-region-or-line)
+      (global-set-key [remap move-beginning-of-line] 'my-beginning-of-line)))
 
   ;; Buffer functions
   (use-package buffer-defuns
@@ -138,6 +138,7 @@
      ("<f9>" . toggle-truncate-lines)
      ;; Inside buffer-defuns.el
      ("C-x k" . kill-current-buffer)
+     ("C-c b" . create-scratch-buffer)
      ("C-x p" . prev-buffer)
      ("C-x -" . toggle-window-split)
      ("C-x C--" . rotate-windows)
@@ -147,7 +148,9 @@
      ("<f7>" . split-window-show-prev)
      ("<f8>" . toggle-window-split))
     :init
-    (global-unset-key (kbd "C-x C-+")))
+    (progn
+      (global-set-key [remap kill-buffer] 'kill-current-buffer)
+      (global-unset-key (kbd "C-x C-+"))))
 
   (use-package hidden-mode-line-mode)
 
@@ -245,8 +248,8 @@
       (use-package helm-eshell
         :init
         (add-hook 'eshell-mode-hook
-          #'(lambda ()
-              (define-key eshell-mode-map (kbd "C-c C-l")  'helm-eshell-history)))))
+                  #'(lambda ()
+                      (define-key eshell-mode-map (kbd "C-c C-l") 'helm-eshell-history)))))
     :idle
     (progn
       (helm-mode 1)
