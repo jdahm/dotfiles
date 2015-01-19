@@ -235,21 +235,22 @@
     :config
     (progn
       (setq helm-truncate-lines t)
-      (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
-      (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-      (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
       (define-key helm-command-map (kbd "g") 'helm-do-grep)
       (define-key helm-command-map (kbd "o") 'helm-occur)
       (define-key 'help-command (kbd "C-l") 'helm-locate-library)
       (define-key 'help-command (kbd "r") 'helm-info-emacs)
-      (define-key 'help-command (kbd "f") 'helm-apropos)
-      (define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
-      (define-key minibuffer-local-map (kbd "C-c C-l") 'helm-minibuffer-history)
-      (use-package helm-eshell
-        :init
-        (add-hook 'eshell-mode-hook
-                  #'(lambda ()
-                      (define-key eshell-mode-map (kbd "C-c C-l") 'helm-eshell-history)))))
+      (define-key 'help-command (kbd "f") 'helm-apropos))
+    ;; Other commonly used definitions
+      ;; (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
+      ;; (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+      ;; (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+      ;; (define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
+      ;; (define-key minibuffer-local-map (kbd "C-c C-l") 'helm-minibuffer-history)
+      ;; (use-package helm-eshell
+      ;;   :init
+      ;;   (add-hook 'eshell-mode-hook
+      ;;             #'(lambda ()
+      ;;                 (define-key eshell-mode-map (kbd "C-c C-l") 'helm-eshell-history)))))
     :idle
     (progn
       (helm-mode 1)
