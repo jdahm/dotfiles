@@ -116,17 +116,15 @@
      ("C-c w" . whitespace-mode)
      ("M-s l" . sort-lines)
      ;; Inside editing-functions.el
-     ("C-x a r" . align-regexp)
+     ("M-z" . zap-up-to-char)
+     ("M-;" . comment-or-uncomment-region-or-line)
+     ("C-a" . my-beginning-of-line)
      ("C-c n" . tidy-region)
      ("C-c C-n" . tidy-buffer)
      ("C-c t" . cycle-tab-width)
+     ("C-x a r" . align-regexp)
      ("C-M-<up>". move-line-up)
-     ("C-M-<down>" . move-line-down))
-    :config
-    (progn
-      (global-set-key [remap zap-to-char] 'zap-up-to-char)
-      (global-set-key [remap comment-dwim] 'comment-or-uncomment-region-or-line)
-      (global-set-key [remap move-beginning-of-line] 'my-beginning-of-line)))
+     ("C-M-<down>" . move-line-down)))
 
   ;; Buffer functions
   (use-package buffer-defuns
@@ -148,9 +146,7 @@
      ("<f7>" . split-window-show-prev)
      ("<f8>" . toggle-window-split))
     :init
-    (progn
-      (global-set-key [remap kill-buffer] 'kill-current-buffer)
-      (global-unset-key (kbd "C-x C-+"))))
+    (global-unset-key (kbd "C-x C-+")))
 
   (use-package hidden-mode-line-mode)
 
