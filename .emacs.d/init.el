@@ -270,8 +270,8 @@
 
   (use-package expand-region
     :ensure t
-    :bind (("C-'" . er/expand-region)
-           ("C-M-'" . er/contract-region)))
+    :bind (("C-=" . er/expand-region)
+           ("C-M-=" . er/contract-region)))
 
   (use-package change-inner
     :ensure t
