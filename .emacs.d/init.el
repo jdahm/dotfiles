@@ -327,7 +327,9 @@
                "WAITING(w@/!)"
                "SOMEDAY(.)" "|" "DONE(x!)" "CANCELLED(c@)")
               (sequence "TODELEGATE(-)" "DELEGATED(d)" "COMPLETE(x)")
-              (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")))))
+              (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")))
+
+      (setq org-latex-pdf-process (list "latexmk -lualatex -f %f"))))
 
   (use-package org-present
     :ensure t
