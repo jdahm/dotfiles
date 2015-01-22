@@ -94,7 +94,7 @@
   ;; Apearance
   (use-package appearance
     :bind
-    (("<f6>" . jdahm/toggle-color-theme))
+    (("<f5>" . jdahm/toggle-color-theme))
     :init
     (progn
       (defvar jdahm/color-theme-dark 'zenburn "Dark color theme.")
@@ -117,6 +117,7 @@
      ("M-s l" . sort-lines)
      ;; Inside editing-functions.el
      ("M-z" . zap-up-to-char)
+     ("M-Z" . zap-to-char)
      ("M-;" . comment-or-uncomment-region-or-line)
      ("C-a" . my-beginning-of-line)
      ("C-c n" . tidy-region)
@@ -137,12 +138,11 @@
      ;; Inside buffer-defuns.el
      ("C-x k" . kill-current-buffer)
      ("C-c b" . create-scratch-buffer)
-     ("C-x p" . prev-buffer)
+     ("C-x p" . prev-window)
      ("C-x -" . toggle-window-split)
      ("C-x C--" . rotate-windows)
-     ("M-n" . other-window)
-     ("M-p" . prev-window)
      ("M-9" . switch-to-minibuffer-window)
+     ("<f6>" . prev-buffer)
      ("<f7>" . split-window-show-prev)
      ("<f8>" . toggle-window-split))
     :init
@@ -221,13 +221,15 @@
     :bind
     (("M-y" . helm-show-kill-ring)
      ("M-x" . helm-M-x)
-     ("C-x C-m" . helm-M-x)
-     ("C-x C-f" . helm-find-files)
-     ("C-x b" . helm-mini)
+     ("<f1>" . helm-resume)
      ("C-x C-b" . helm-buffers-list)
+     ("C-x C-f" . helm-find-files)
+     ("C-x C-m" . helm-M-x)
+     ("C-x b" . helm-mini)
+     ("C-x r j" . helm-register)
+     ("C-x r b" . helm-filtered-bookmarks)
      ("C-c f" . helm-recentf)
-     ("C-x r i" . helm-register)
-     ("C-x r l" . helm-filtered-bookmarks))
+     ("C-c <SPC>" . helm-all-mark-rings))
     :config
     (progn
       (setq helm-truncate-lines t)
