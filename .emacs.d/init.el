@@ -265,6 +265,12 @@
 
   (use-package git-timemachine :ensure t)
 
+  ;; Git modes
+  (use-package git-commit-mode :ensure t)
+  (use-package git-rebase-mode :ensure t)
+  (use-package gitconfig-mode :ensure t)
+  (use-package gitignore-mode :ensure t)
+
   (use-package flycheck
     :ensure t
     :bind (("C-c y" . flycheck-mode))

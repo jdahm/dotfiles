@@ -1,18 +1,18 @@
 [core]
-    excludesfile = ~/.config/git/ignore
-    whitespace = trailing-space,space-before-tab
-[init]
-    templatedir = ~/.git_template
+	excludesfile = ~/.config/git/ignore
+	whitespace = trailing-space,space-before-tab
 [color]
-    ui = true
+	ui = true
 [alias]
-    co = checkout
-    br = branch
-    oops = commit --all --amend
+	co = checkout
+	ci = commit
+	st = status
+	br = branch
+	oops = commit --all --amend
+	hist = log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short
+	stash-rename = "!_() { rev=$(git rev-parse $1) && git stash drop $1 || exit 1 ; git diff-index --quiet HEAD; s=$?; [ $s != 0 ] && git stash save \"tmp stash from stash-rename\"; git stash apply $rev && shift && git stash save \"$@\" && [ $s != 0 ] && git stash pop stash@{1}; }; _"
 [apply]
-    whitespace = fix
+	whitespace = fix
 [include]
-    path = ~/.config/git/identity
-    path = ~/.config/git/config
-
-# vim: et sw=4 sts=4
+	path = ~/.config/git/identity
+	path = ~/.config/git/config
