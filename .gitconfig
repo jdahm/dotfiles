@@ -4,12 +4,31 @@
 [color]
 	ui = true
 [alias]
+	# Most of these from: http://durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples/
+	cp = cherry-pick	
+	br = branch
 	co = checkout
 	ci = commit
-	st = status
-	br = branch
+	st = status -s
+	cl = clone	
 	oops = commit --all --amend
-	hist = log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short
+	logtree = log --graph --oneline --decorate --all
+	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+	lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short	
+	lnc = log --pretty=format:"%h\\ %s\\ [%cn]"	
+	dl = "!git ll -1"
+	dlc = diff --cached HEAD^
+	dc = diff --cached
+	r = reset
+	r1 = reset HEAD^
+	r2 = reset HEAD^^
+	rh = reset --hard
+	rh1 = reset HEAD^ --hard
+	rh2 = reset HEAD^^ --hard
+	sl = stash list
+	sa = stash apply
+	ss = stash save
+	lasttag = describe --tags --abbrev=0	
 	stash-rename = "!_() { rev=$(git rev-parse $1) && git stash drop $1 || exit 1 ; git diff-index --quiet HEAD; s=$?; [ $s != 0 ] && git stash save \"tmp stash from stash-rename\"; git stash apply $rev && shift && git stash save \"$@\" && [ $s != 0 ] && git stash pop stash@{1}; }; _"
 [apply]
 	whitespace = fix
