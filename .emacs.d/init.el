@@ -271,6 +271,8 @@
   (use-package gitconfig-mode :ensure t)
   (use-package gitignore-mode :ensure t)
 
+  (use-package julia-mode :ensure t)
+
   (use-package flycheck
     :ensure t
     :bind (("C-c y" . flycheck-mode))
@@ -317,7 +319,9 @@
        )
 
       (setq org-agenda-files (list (concat org-directory "personal.org")
-                                   (concat org-directory "work.org"))))
+                                   (concat org-directory "work.org")))
+
+      (setq org-archive-location "~/Dropbox/org/datetree.org::datetree/* Finished Tasks"))
 
     :config
     (progn
