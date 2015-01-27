@@ -238,12 +238,15 @@
      ("C-c <SPC>" . helm-all-mark-rings))
     :config
     (progn
-      (setq helm-truncate-lines t)
+      (setq helm-truncate-lines t  ; truncate lines in buffer by default
+            helm-M-x-fuzzy-match t ; use fuzzy M-x matching
+            )
       (define-key helm-command-map (kbd "g") 'helm-do-grep)
       (define-key helm-command-map (kbd "o") 'helm-occur)
       (define-key 'help-command (kbd "C-l") 'helm-locate-library)
       (define-key 'help-command (kbd "r") 'helm-info-emacs)
-      (define-key 'help-command (kbd "f") 'helm-apropos))
+      (define-key 'help-command (kbd "f") 'helm-apropos)
+      )
     ;; Other commonly used definitions
       ;; (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
       ;; (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
