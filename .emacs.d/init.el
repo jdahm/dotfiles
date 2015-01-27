@@ -178,14 +178,14 @@
       ;; hide some details by default
       (add-hook 'dired-mode-hook 'dired-hide-details-mode)))
 
-  (use-package octave :mode ("\\.m$\\" . octave-mode))
+  (use-package octave :mode ("\\.m\\'" . octave-mode))
 
   ;; External packages
   (use-package markdown-mode
     :ensure t
-    :mode (("\\.text\\" . markdown-mode)
-           ("\\.markdown\\" . markdown-mode)
-           ("\\.md\\" . markdown-mode)))
+    :mode (("\\.text\\'" . markdown-mode)
+           ("\\.markdown\\'" . markdown-mode)
+           ("\\.md\\'" . markdown-mode)))
 
   (use-package haskell-mode
     :ensure t
