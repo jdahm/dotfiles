@@ -15,9 +15,8 @@
 ;; Set up load path
 (add-to-list 'load-path (concat user-emacs-directory "lisp/"))
 
-;; Local customization file
+;; Customization file here
 (setq custom-file "~/.config/emacs/init-custom.el")
-(if (file-readable-p custom-file) (load custom-file))
 
 ;; Turn off scrollbar, toolbar, etc. early for graphical mode in startup to
 ;; avoid window width weirdness
@@ -64,8 +63,6 @@
 
   ;; Make the browser the OS X default
   (setq browse-url-browser-function 'browse-url-default-macosx-browser))
-
-;; If this is an older Emacs, it will stop here
 
 ;; External packages
 (when (>= emacs-major-version 24)
@@ -181,18 +178,14 @@
       ;; hide some details by default
       (add-hook 'dired-mode-hook 'dired-hide-details-mode)))
 
-  (use-package octave
-    :init
-    (add-to-list 'auto-mode-alist '("\\.m$\\'" . octave-mode)))
+  (use-package octave :mode ("\\.m$\\" . octave-mode))
 
   ;; External packages
   (use-package markdown-mode
     :ensure t
-    :init
-    (progn
-      (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
-      (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-      (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))))
+    :mode (("\\.text\\" . markdown-mode)
+           ("\\.markdown\\" . markdown-mode)
+           ("\\.md\\" . markdown-mode)))
 
   (use-package haskell-mode
     :ensure t
@@ -203,6 +196,10 @@
       ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
       (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
       (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)))
+
+  (use-package cmake-mode :ensure t)
+
+  (use-package d-mode :ensure t)
 
   (use-package projectile
     :ensure t
@@ -342,18 +339,24 @@
                   (org-present-big)
                   (org-display-inline-images)
                   (org-present-hide-cursor)
+                  (global-hl-line-mode nil)
                   (org-present-read-only)))
       (add-hook 'org-present-mode-quit-hook
                 (lambda ()
                   (org-present-small)
                   (org-remove-inline-images)
+                  (global-hl-line-mode 1)
                   (org-present-show-cursor)
                   (org-present-read-write)))))
 
-  (use-package ox-reveal
+  (use-package elfeed
     :ensure t
-    :config
-    (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/2.6.2/")))
+    :bind
+    ("C-x w" . elfeed)))
+
+
+;; Load customization file last
+(if (file-readable-p custom-file) (load custom-file))
 
 (provide 'init)
 
