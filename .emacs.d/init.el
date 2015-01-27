@@ -87,6 +87,7 @@
 
   ;; Themes (used in appearance)
   (use-package zenburn-theme :ensure t)
+  (use-package solarized-theme :ensure t)
 
   ;; Apearance
   (use-package appearance
@@ -95,15 +96,12 @@
     :init
     (progn
       (defvar jdahm/color-theme-dark 'zenburn "Dark color theme.")
-      (defvar jdahm/color-theme-light 'leuven "Light color theme.")
+      (defvar jdahm/color-theme-light 'solarized-light "Light color theme.")
       (defvar jdahm/color-theme jdahm/color-theme-dark "Default color theme.")
       (load-theme jdahm/color-theme t)))
 
   ;; Parens
   (electric-pair-mode 1)
-
-  ;; Open manual easier
-  (define-key 'help-command (kbd "C-i") 'info-display-manual)
 
   ;; Editing functions
   (use-package editing-defuns
@@ -117,12 +115,16 @@
      ("M-Z" . zap-to-char)
      ("M-;" . comment-or-uncomment-region-or-line)
      ("C-a" . my-beginning-of-line)
+     ("C-c M-w" . copy-line-or-region)
+     ("C-c C-w" . kill-line-or-region)
      ("C-c n" . tidy-region)
      ("C-c C-n" . tidy-buffer)
      ("C-c t" . cycle-tab-width)
      ("C-x a r" . align-regexp)
      ("C-M-<up>". move-line-up)
-     ("C-M-<down>" . move-line-down)))
+     ("C-M-<down>" . move-line-down))
+    :init
+    (define-key 'help-command (kbd "C-i") 'info-display-manual))
 
   ;; Buffer functions
   (use-package buffer-defuns
@@ -180,6 +182,10 @@
 
   (use-package octave :mode ("\\.m\\'" . octave-mode))
 
+  (use-package python :mode "\\.py'" :interpreter ("python" . python-mode))
+
+  (use-package ruby-mode :mode "\\.rb\\'" :interpreter "ruby")
+
   ;; External packages
   (use-package markdown-mode
     :ensure t
@@ -189,17 +195,15 @@
 
   (use-package haskell-mode
     :ensure t
+    :mode "\\.l?hs$"
     :config
     (progn
+      (use-package inf-haskell)
       (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
       ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
       ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
       (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
       (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)))
-
-  (use-package cmake-mode :ensure t)
-
-  (use-package d-mode :ensure t)
 
   (use-package projectile
     :ensure t
@@ -352,7 +356,13 @@
   (use-package elfeed
     :ensure t
     :bind
-    ("C-x w" . elfeed)))
+    ("C-x w" . elfeed))
+
+  ;; Disabled external packages
+
+  (use-package twittering-mode :disabled t)
+
+  (use-package cmake-mode :disabled t :mode "\\.cmake\\'"))
 
 
 ;; Load customization file last
