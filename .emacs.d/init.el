@@ -187,6 +187,8 @@
   (use-package ruby-mode :mode "\\.rb\\'" :interpreter "ruby")
 
   ;; External packages
+
+  ;; Various useful modes
   (use-package markdown-mode
     :ensure t
     :mode (("\\.text\\'" . markdown-mode)
@@ -205,6 +207,9 @@
       (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
       (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)))
 
+  (use-package julia-mode :ensure t)
+
+  ;; Project management
   (use-package projectile
     :ensure t
     :config
@@ -255,54 +260,6 @@
       (helm-mode 1)
       (diminish 'helm-mode " h")))
 
-  (use-package magit
-    :ensure t
-    :bind (("C-x g" . magit-status))
-    :config
-    (progn
-      (setq magit-status-buffer-switch-function 'switch-to-buffer)
-      (add-hook 'magit-mode-hook 'magit-load-config-extensions)))
-
-  (use-package git-timemachine :ensure t)
-
-  ;; Git modes
-  (use-package git-commit-mode :ensure t)
-  (use-package git-rebase-mode :ensure t)
-  (use-package gitconfig-mode :ensure t)
-  (use-package gitignore-mode :ensure t)
-
-  (use-package julia-mode :ensure t)
-
-  (use-package flycheck
-    :ensure t
-    :bind (("C-c y" . flycheck-mode))
-    :init (add-hook 'after-init-hook #'global-flycheck-mode)
-    :diminish " f")
-
-  (use-package expand-region
-    :ensure t
-    :bind (("C-=" . er/expand-region)
-           ("C-M-=" . er/contract-region)))
-
-  (use-package change-inner
-    :ensure t
-    :bind
-    (("M-i" . change-inner)
-     ("M-o" . change-outer)))
-
-  (use-package multiple-cursors
-    :ensure t
-    :bind (("C-S-c C-S-c" . mc/edit-lines)
-           ("C->" . mc/mark-next-like-this)
-           ("C-<" . mc/mark-previous-like-this)
-           ("C-c C-<" . mc/mark-all-like-this)))
-
-  (use-package jump-char
-    :ensure t
-    :bind
-    (("M-m" . jump-char-forward)
-     ("M-S-m" . jump-char-backward)))
-
   (use-package org
     :ensure t
     :bind
@@ -312,18 +269,20 @@
 
     :init
     (setq
-     org-directory "~/Dropbox/org/"                                               ; default directory for notes
-     org-default-notes-file (concat org-directory "notes.org")                    ; default target file for notes
+     org-directory "~/Dropbox/org/"                                               ; directory for notes
+     org-default-notes-file (concat org-directory "notes.org")                    ; default file
      org-agenda-files (list (concat org-directory "personal.org")
-                            (concat org-directory "work.org"))                    ;; agenda files
+                            (concat org-directory "work.org"))                    ; agenda files
      org-archive-location "~/Dropbox/org/datetree.org::datetree/* Finished Tasks" ; archive format
      )
 
     :config
     (progn
       (setq
-       org-modules '(org-habit)      ; modules for org-mode
-       org-agenda-start-on-weekday 6 ; start weeks on Saturdays
+       org-modules '(org-habit)                               ; modules for org-mode
+       org-agenda-start-on-weekday 6                          ; start weeks on Saturdays
+       org-refile-targets '((nil :maxlevel . 1)
+                            (org-agenda-files :maxlevel . 1)) ; flexible refiling
        )
       (setq org-capture-templates
             '(("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
@@ -363,6 +322,55 @@
                   (org-present-show-cursor)
                   (org-present-read-write)))))
 
+  ;; Git
+  (use-package magit
+    :ensure t
+    :bind (("C-x g" . magit-status))
+    :config
+    (progn
+      (setq magit-status-buffer-switch-function 'switch-to-buffer)
+      (add-hook 'magit-mode-hook 'magit-load-config-extensions)))
+
+  (use-package git-timemachine :ensure t)
+
+  (use-package git-commit-mode :ensure t)
+  (use-package git-rebase-mode :ensure t)
+  (use-package gitconfig-mode :ensure t)
+  (use-package gitignore-mode :ensure t)
+
+  ;; Compiling
+  (use-package flycheck
+    :ensure t
+    :bind (("C-c y" . flycheck-mode))
+    :init (add-hook 'after-init-hook #'global-flycheck-mode)
+    :diminish " f")
+
+  ;; Editing
+  (use-package expand-region
+    :ensure t
+    :bind (("C-=" . er/expand-region)
+           ("C-M-=" . er/contract-region)))
+
+  (use-package change-inner
+    :ensure t
+    :bind
+    (("M-i" . change-inner)
+     ("M-o" . change-outer)))
+
+  (use-package multiple-cursors
+    :ensure t
+    :bind (("C-S-c C-S-c" . mc/edit-lines)
+           ("C->" . mc/mark-next-like-this)
+           ("C-<" . mc/mark-previous-like-this)
+           ("C-c C-<" . mc/mark-all-like-this)))
+
+  (use-package jump-char
+    :ensure t
+    :bind
+    (("M-m" . jump-char-forward)
+     ("M-S-m" . jump-char-backward)))
+
+  ;; News
   (use-package elfeed
     :ensure t
     :bind
