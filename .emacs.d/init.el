@@ -311,20 +311,20 @@
      ("C-c a" . org-agenda))
 
     :init
-    (progn
-      (setq
-       org-directory "~/Dropbox/org/"  ; default directory for notes
-       org-default-notes-file (concat org-directory "notes.org") ; default target file for notes
-       org-agenda-start-on-weekday 6 ; start weeks on Saturdays
-       )
-
-      (setq org-agenda-files (list (concat org-directory "personal.org")
-                                   (concat org-directory "work.org")))
-
-      (setq org-archive-location "~/Dropbox/org/datetree.org::datetree/* Finished Tasks"))
+    (setq
+     org-directory "~/Dropbox/org/"                                               ; default directory for notes
+     org-default-notes-file (concat org-directory "notes.org")                    ; default target file for notes
+     org-agenda-files (list (concat org-directory "personal.org")
+                            (concat org-directory "work.org"))                    ;; agenda files
+     org-archive-location "~/Dropbox/org/datetree.org::datetree/* Finished Tasks" ; archive format
+     )
 
     :config
     (progn
+      (setq
+       org-modules '(org-habit)      ; modules for org-mode
+       org-agenda-start-on-weekday 6 ; start weeks on Saturdays
+       )
       (setq org-capture-templates
             '(("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
                "* TODO %?\n %a")
