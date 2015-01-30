@@ -131,6 +131,7 @@
     :bind
     (;; Existing functions
      ("C-c s" . shell)
+     ("C-c S" . eshell)
      ("C-c r" . bury-buffer)
      ("C-c C-k" . eval-buffer)
      ("<f9>" . toggle-truncate-lines)
@@ -213,17 +214,19 @@
   (use-package magit
     :ensure t
     :bind (("C-x g" . magit-status))
+    :init
+    (progn
+      (use-package git-timemachine :ensure t)
+      (use-package git-commit-mode :ensure t)
+      (use-package git-rebase-mode :ensure t)
+      (use-package gitconfig-mode :ensure t)
+      (use-package gitignore-mode :ensure t)
+      )
     :config
     (progn
       (setq magit-status-buffer-switch-function 'switch-to-buffer)
       (add-hook 'magit-mode-hook 'magit-load-config-extensions)))
 
-  (use-package git-timemachine :ensure t)
-
-  (use-package git-commit-mode :ensure t)
-  (use-package git-rebase-mode :ensure t)
-  (use-package gitconfig-mode :ensure t)
-  (use-package gitignore-mode :ensure t)
 
   ;; Helm
   (use-package helm-config
@@ -241,9 +244,10 @@
      ("C-x r b" . helm-filtered-bookmarks)
      ("C-c f" . helm-recentf)
      ("C-c <SPC>" . helm-all-mark-rings))
+    :init
+      (use-package helm-ls-git :ensure t) ; git interface
     :config
     (progn
-      (use-package helm-ls-git :ensure t)            ; nice interface to git
       (setq helm-truncate-lines t                    ; truncate lines in buffer by default
             helm-split-window-in-side-p t            ; open helm buffer inside current window
             helm-ls-git-status-command 'magit-status ; use Magit
@@ -254,18 +258,18 @@
       (define-key helm-command-map (kbd "o") 'helm-occur)
       (define-key 'help-command (kbd "C-l") 'helm-locate-library)
       (define-key 'help-command (kbd "r") 'helm-info-emacs)
+      (use-package helm-eshell
+        :init
+        (add-hook 'eshell-mode-hook
+                  #'(lambda ()
+                      (define-key eshell-mode-map (kbd "C-c C-l") 'helm-eshell-history))))
       )
-    ;; Other commonly used definitions
+    ;; other commonly used definitions
       ;; (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
       ;; (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
       ;; (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
       ;; (define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
       ;; (define-key minibuffer-local-map (kbd "C-c C-l") 'helm-minibuffer-history)
-      ;; (use-package helm-eshell
-      ;;   :init
-      ;;   (add-hook 'eshell-mode-hook
-      ;;             #'(lambda ()
-      ;;                 (define-key eshell-mode-map (kbd "C-c C-l") 'helm-eshell-history)))))
     :idle
     (progn
       (helm-mode 1)
