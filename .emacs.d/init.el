@@ -89,7 +89,7 @@
   (use-package zenburn-theme :ensure t)
   (use-package solarized-theme :ensure t)
 
-  ;; Apearance
+  ;; Appearance
   (use-package appearance
     :bind
     (("<f5>" . jdahm/toggle-color-theme))
