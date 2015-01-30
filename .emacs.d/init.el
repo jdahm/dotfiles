@@ -79,8 +79,12 @@
   (when (not package-archive-contents) (package-refresh-contents))
 
   ;; Install and require use-package to install everything else
-  (packages-install '(use-package))
+  (packages-install '(bind-key use-package))
+  (require 'bind-key)
   (require 'use-package)
+
+  ;; (use-package benchmark-init :ensure t)
+  ;; (benchmark-init/activate)
 
   ;; Diminish is needed
   (use-package diminish :ensure t)
@@ -164,12 +168,12 @@
   (use-package recentf
     :init
     (progn
-      (setq recentf-max-saved-items 300
-            recentf-auto-cleanup 600)
+      (setq recentf-max-saved-items 300 ; number of saved items
+            recentf-auto-cleanup 600    ; cleanup when idle for 600 seconds
+            )
       (when (not noninteractive) (recentf-mode 1))))
 
-  (use-package windmove
-    :init (windmove-default-keybindings))
+  (use-package windmove :init (windmove-default-keybindings))
 
   (use-package dired
     :config
@@ -214,24 +218,19 @@
   (use-package magit
     :ensure t
     :bind (("C-x g" . magit-status))
-    :init
+    :config
     (progn
       (use-package git-timemachine :ensure t)
       (use-package git-commit-mode :ensure t)
       (use-package git-rebase-mode :ensure t)
       (use-package gitconfig-mode :ensure t)
       (use-package gitignore-mode :ensure t)
-      )
-    :config
-    (progn
       (setq magit-status-buffer-switch-function 'switch-to-buffer)
       (add-hook 'magit-mode-hook 'magit-load-config-extensions)))
-
 
   ;; Helm
   (use-package helm
     :ensure t
-    :diminish helm-mode " h"
     :bind
     (("M-y" . helm-show-kill-ring)
      ("M-x" . helm-M-x)
@@ -246,15 +245,11 @@
      ("C-x r b" . helm-filtered-bookmarks)
      ("C-c f" . helm-recentf)
      ("C-c <SPC>" . helm-all-mark-rings))
-    :init
-    (progn
-      (require 'helm-config)
-      (use-package helm-ls-git :ensure t)
-      (use-package helm-make :ensure t)
-      (helm-mode 1))
     :config
     (progn
-      (diminish 'helm-mode " h")
+      (use-package helm-ls-git :ensure t)
+      (use-package helm-make :ensure t)
+      (require 'helm-config)
       (setq helm-M-x-fuzzy-match t                   ; use fuzzy M-x matching
             helm-apropos-fuzzy-match t               ; use fuzzy matching for apropos
             helm-ls-git-status-command 'magit-status ; use Magit
@@ -272,11 +267,14 @@
       ;; (define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
     ;; (define-key minibuffer-local-map (kbd "C-c C-l") 'helm-minibuffer-history)
       (use-package helm-eshell
-        :init
+        :config
         (add-hook 'eshell-mode-hook
                   #'(lambda ()
-                      (define-key eshell-mode-map (kbd "C-c C-l") 'helm-eshell-history))))
-      ))
+                      (define-key eshell-mode-map (kbd "C-c C-l") 'helm-eshell-history)))))
+    :idle
+    (progn
+      (helm-mode 1)
+      (diminish 'helm-mode " h")))
   
   (use-package org
     :ensure t
@@ -378,12 +376,12 @@
     :bind
     ("C-x w" . elfeed))
 
+  ;; (benchmark-init/deactivate)
+
   ;; Disabled external packages
-
-  (use-package twittering-mode :disabled t)
-
-  (use-package cmake-mode :disabled t :mode "\\.cmake\\'"))
-
+  ;; (use-package twittering-mode :disabled t)
+  ;; (use-package cmake-mode :disabled t :mode "\\.cmake\\'")
+  )
 
 ;; Load customization file last
 (if (file-readable-p custom-file) (load custom-file))
