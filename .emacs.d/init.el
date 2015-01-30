@@ -209,19 +209,23 @@
 
   (use-package julia-mode :ensure t)
 
-  ;; Project management
-  (use-package projectile
+  ;; Git
+  (use-package magit
     :ensure t
+    :bind (("C-x g" . magit-status))
     :config
     (progn
-      (setq projectile-enable-caching t
-            projectile-completion-system 'helm)
-      (use-package helm-projectile
-        :init
-        (helm-projectile-on)))
-    :idle (projectile-global-mode)
-    :diminish " p")
+      (setq magit-status-buffer-switch-function 'switch-to-buffer)
+      (add-hook 'magit-mode-hook 'magit-load-config-extensions)))
 
+  (use-package git-timemachine :ensure t)
+
+  (use-package git-commit-mode :ensure t)
+  (use-package git-rebase-mode :ensure t)
+  (use-package gitconfig-mode :ensure t)
+  (use-package gitignore-mode :ensure t)
+
+  ;; Helm
   (use-package helm-config
     :ensure helm
     :bind
@@ -231,6 +235,7 @@
      ("C-x C-b" . helm-buffers-list)
      ("C-x C-f" . helm-find-files)
      ("C-x C-m" . helm-M-x)
+     ("C-x C-d" . helm-browse-project)
      ("C-x b" . helm-mini)
      ("C-x r j" . helm-register)
      ("C-x r b" . helm-filtered-bookmarks)
@@ -238,9 +243,12 @@
      ("C-c <SPC>" . helm-all-mark-rings))
     :config
     (progn
-      (setq helm-truncate-lines t         ; truncate lines in buffer by default
-            helm-M-x-fuzzy-match t        ; use fuzzy M-x matching
-            helm-split-window-in-side-p t ; open helm buffer inside current window
+      (use-package helm-ls-git :ensure t)            ; nice interface to git
+      (setq helm-truncate-lines t                    ; truncate lines in buffer by default
+            helm-split-window-in-side-p t            ; open helm buffer inside current window
+            helm-ls-git-status-command 'magit-status ; use Magit
+            helm-M-x-fuzzy-match t                   ; use fuzzy M-x matching
+            helm-apropos-fuzzy-match t               ; use fuzzy matching for apropos
             )
       (define-key helm-command-map (kbd "g") 'helm-do-grep)
       (define-key helm-command-map (kbd "o") 'helm-occur)
@@ -324,22 +332,6 @@
                   (global-hl-line-mode 1)
                   (org-present-show-cursor)
                   (org-present-read-write)))))
-
-  ;; Git
-  (use-package magit
-    :ensure t
-    :bind (("C-x g" . magit-status))
-    :config
-    (progn
-      (setq magit-status-buffer-switch-function 'switch-to-buffer)
-      (add-hook 'magit-mode-hook 'magit-load-config-extensions)))
-
-  (use-package git-timemachine :ensure t)
-
-  (use-package git-commit-mode :ensure t)
-  (use-package git-rebase-mode :ensure t)
-  (use-package gitconfig-mode :ensure t)
-  (use-package gitignore-mode :ensure t)
 
   ;; Compiling
   (use-package flycheck
