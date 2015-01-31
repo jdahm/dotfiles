@@ -297,6 +297,7 @@
       (setq
        org-modules '(org-habit)                               ; modules for org-mode
        org-agenda-start-on-weekday 6                          ; start weeks on Saturdays
+       org-clock-idle-time 15                                 ; idle time
        org-refile-targets '((nil :maxlevel . 1)
                             (org-agenda-files :maxlevel . 1)) ; flexible refiling
        )
