@@ -248,6 +248,8 @@
      ("C-c m" . helm-make)
      ("C-c f" . helm-recentf)
      ("C-c g" . helm-git-grep)
+     ("C-c C-x m" . helm-make-projectile)
+     ("C-c m" . helm-make)
      ("M-." . helm-git-grep-at-point)
      ("C-c <SPC>" . helm-all-mark-rings))
     :config
@@ -277,8 +279,8 @@
       (use-package helm-eshell
         :config
         (add-hook 'eshell-mode-hook
-                  #'(lambda ()
-                      (define-key eshell-mode-map (kbd "C-c C-l") 'helm-eshell-history)))))
+                  (lambda ()
+                    (define-key eshell-mode-map (kbd "C-c C-l") 'helm-eshell-history)))))
     :idle
     (progn
       (helm-mode 1)
