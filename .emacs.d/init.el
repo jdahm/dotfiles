@@ -127,8 +127,7 @@
      ("C-M-<up>". move-line-up)
      ("C-M-<down>" . move-line-down))
     :init
-    (define-key 'help-command (kbd "C-i") 'info-display-manual)
-    (add-hook 'prog-mode-hook (lambda () (subword-mode 1))))
+    (define-key 'help-command (kbd "C-i") 'info-display-manual))
 
   ;; Buffer functions
   (use-package buffer-defuns
