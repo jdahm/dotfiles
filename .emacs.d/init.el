@@ -245,30 +245,34 @@
      ("C-x r j" . helm-register)
      ("C-x r b" . helm-filtered-bookmarks)
      ("C-c m" . helm-make)
-     ("C-c C-m" . helm-make-projectile)
      ("C-c f" . helm-recentf)
+     ("C-c g" . helm-git-grep)
+     ("M-." . helm-git-grep-at-point)
      ("C-c <SPC>" . helm-all-mark-rings))
     :config
     (progn
-      (use-package helm-ls-git :ensure t)
-      (use-package helm-make :ensure t)
       (require 'helm-config)
+      (use-package helm-ls-git :ensure t)
+      (use-package helm-git-grep :ensure t)
+      (use-package helm-make :ensure t)
       (setq helm-M-x-fuzzy-match t                   ; use fuzzy M-x matching
             helm-apropos-fuzzy-match t               ; use fuzzy matching for apropos
             helm-ls-git-status-command 'magit-status ; use Magit
             helm-truncate-lines t                    ; truncate lines in buffer by default
             helm-split-window-in-side-p t            ; open helm buffer inside current window
             )
+      (define-key isearch-mode-map (kbd "C-c g") 'helm-git-grep-from-isearch)
+      (define-key helm-map (kbd "C-c g") 'helm-git-grep-from-helm)
       (define-key helm-command-map (kbd "g") 'helm-do-grep)
       (define-key helm-command-map (kbd "o") 'helm-occur)
       (define-key 'help-command (kbd "C-l") 'helm-locate-library)
       (define-key 'help-command (kbd "r") 'helm-info-emacs)
-    ;; other commonly used definitions
+      ;; other commonly used definitions
       ;; (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
       ;; (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
       ;; (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
       ;; (define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
-    ;; (define-key minibuffer-local-map (kbd "C-c C-l") 'helm-minibuffer-history)
+      ;; (define-key minibuffer-local-map (kbd "C-c C-l") 'helm-minibuffer-history)
       (use-package helm-eshell
         :config
         (add-hook 'eshell-mode-hook
