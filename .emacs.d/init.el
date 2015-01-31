@@ -241,8 +241,8 @@
      ("C-x b" . helm-mini)
      ("C-x r j" . helm-register)
      ("C-x r b" . helm-filtered-bookmarks)
-     ("C-c C-m" . helm-make)
-     ("C-c m" . helm-make-projectile)
+     ("C-c m" . helm-make)
+     ("C-c C-m" . helm-make-projectile)
      ("C-c f" . helm-recentf)
      ("C-c <SPC>" . helm-all-mark-rings))
     :config
