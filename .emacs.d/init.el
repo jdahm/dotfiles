@@ -79,8 +79,7 @@
   (when (not package-archive-contents) (package-refresh-contents))
 
   ;; Install and require use-package to install everything else
-  (packages-install '(bind-key use-package))
-  (require 'bind-key)
+  (packages-install '(use-package))
   (require 'use-package)
 
   ;; (use-package benchmark-init :ensure t)
@@ -240,9 +239,10 @@
      ("C-x C-m" . helm-M-x)
      ("C-x C-d" . helm-browse-project)
      ("C-x b" . helm-mini)
-     ("C-x m" . helm-make)
      ("C-x r j" . helm-register)
      ("C-x r b" . helm-filtered-bookmarks)
+     ("C-c C-m" . helm-make)
+     ("C-c m" . helm-make-projectile)
      ("C-c f" . helm-recentf)
      ("C-c <SPC>" . helm-all-mark-rings))
     :config
