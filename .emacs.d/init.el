@@ -179,7 +179,8 @@
     (progn
       (setq dired-recursive-copies 'always
             dired-recursive-deletes 'always
-            delete-by-moving-to-trash t)
+            delete-by-moving-to-trash t
+            dired-dwim-target t)
       (setq-default dired-listing-switches "-Al --si --time-style long-iso")
       ;; hide some details by default
       (add-hook 'dired-mode-hook 'dired-hide-details-mode)))
