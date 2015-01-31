@@ -10,7 +10,7 @@
 
 ;; Name/Email
 (setq user-full-name    "Johann Dahm")
-(setq user-mail-address "johann.dahm@gmail.com")
+(setq user-mail-address "jdahm@fastmail.com")
 
 ;; Set up load path
 (add-to-list 'load-path (concat user-emacs-directory "lisp/"))
