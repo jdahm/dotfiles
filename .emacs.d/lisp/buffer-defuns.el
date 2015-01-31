@@ -102,6 +102,12 @@ Call a second time to restore the original window configuration."
   (when (active-minibuffer-window)
     (select-window (active-minibuffer-window))))
 
+(defun dired-open-fm ()
+  "Open a GUI file manager at (dired-current-directory) using
+xdg-open."
+  (interactive)
+  (call-process "xdg-open" nil 0 nil (dired-current-directory)))
+
 (provide 'buffer-defuns)
 
 ;;; buffer-defuns.el ends here

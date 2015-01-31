@@ -182,6 +182,8 @@
             delete-by-moving-to-trash t
             dired-dwim-target t)
       (setq-default dired-listing-switches "-Al --si --time-style long-iso")
+      (require 'buffer-defuns)
+      (define-key dired-mode-map (kbd "e") 'dired-open-fm)
       ;; hide some details by default
       (add-hook 'dired-mode-hook 'dired-hide-details-mode)))
 
