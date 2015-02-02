@@ -111,21 +111,22 @@
     :bind
     (;; Existing functions
      ("C-c C-a" . auto-fill-mode)
-     ("C-c w" . whitespace-mode)
+     ("C-c w" . subword-mode)
+     ("C-c C-w" . whitespace-mode)
      ("M-s l" . sort-lines)
      ;; Inside editing-functions.el
      ("M-z" . zap-up-to-char)
      ("M-Z" . zap-to-char)
      ("M-;" . comment-or-uncomment-region-or-line)
      ("C-a" . my-beginning-of-line)
-     ("C-c M-w" . copy-line-or-region)
-     ("C-c C-w" . kill-line-or-region)
+     ("M-w" . copy-line-or-region)
+     ("C-w" . kill-line-or-region)
      ("C-c n" . tidy-region)
      ("C-c C-n" . tidy-buffer)
      ("C-c t" . cycle-tab-width)
      ("C-x a r" . align-regexp)
-     ("C-M-<up>". move-line-up)
-     ("C-M-<down>" . move-line-down))
+     ("M-<up>". move-line-up)
+     ("M-<down>" . move-line-down))
     :init
     (define-key 'help-command (kbd "C-i") 'info-display-manual))
 
@@ -133,8 +134,8 @@
   (use-package buffer-defuns
     :bind
     (;; Existing functions
-     ("C-c s" . shell)
-     ("C-c S" . eshell)
+     ("C-c s" . eshell)
+     ("C-c S" . shell)
      ("C-c r" . bury-buffer)
      ("C-c C-k" . eval-buffer)
      ("<f9>" . toggle-truncate-lines)
