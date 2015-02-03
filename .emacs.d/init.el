@@ -85,7 +85,7 @@
   ;; (use-package benchmark-init :ensure t)
   ;; (benchmark-init/activate)
 
-  ;; Diminish is needed
+  ;; Needed for other packages
   (use-package diminish :ensure t)
 
   ;; Themes (used in appearance)
@@ -111,44 +111,44 @@
     :bind
     (;; Existing functions
      ("C-c C-a" . auto-fill-mode)
-     ("C-c w" . subword-mode)
      ("C-c C-w" . whitespace-mode)
+     ("C-c w" . subword-mode)
      ("M-s l" . sort-lines)
      ;; Inside editing-functions.el
-     ("M-z" . zap-up-to-char)
-     ("M-Z" . zap-to-char)
-     ("M-;" . comment-or-uncomment-region-or-line)
-     ("C-a" . my-beginning-of-line)
-     ("M-w" . copy-line-or-region)
-     ("C-w" . kill-line-or-region)
-     ("C-c n" . tidy-region)
      ("C-c C-n" . tidy-buffer)
+     ("C-c n" . tidy-region)
      ("C-c t" . cycle-tab-width)
+     ("C-w" . kill-line-or-region)
      ("C-x a r" . align-regexp)
+     ("M-;" . comment-or-uncomment-region-or-line)
+     ("M-<down>" . move-line-down)
      ("M-<up>". move-line-up)
-     ("M-<down>" . move-line-down))
+     ("M-w" . copy-line-or-region)
+     ("M-z" . zap-up-to-char)
+     ("M-Z" . zap-to-char))
     :init
-    (define-key 'help-command (kbd "C-i") 'info-display-manual))
+    (progn
+      (global-set-key [remap move-beginning-of-line] 'my-beginning-of-line)
+      (define-key 'help-command (kbd "C-i") 'info-display-manual)))
 
   ;; Buffer functions
   (use-package buffer-defuns
     :bind
     (;; Existing functions
-     ("C-c s" . eshell)
+     ("<f9>" . toggle-truncate-lines)
+     ("C-c C-k" . eval-buffer)
      ("C-c S" . shell)
      ("C-c r" . bury-buffer)
-     ("C-c C-k" . eval-buffer)
-     ("<f9>" . toggle-truncate-lines)
+     ("C-c s" . eshell)
      ;; Inside buffer-defuns.el
-     ("C-x k" . kill-current-buffer)
-     ("C-c b" . create-scratch-buffer)
-     ("C-x p" . prev-window)
-     ("C-x -" . toggle-window-split)
-     ("C-x C--" . rotate-windows)
-     ("M-9" . switch-to-minibuffer-window)
      ("<f6>" . prev-buffer)
      ("<f7>" . split-window-show-prev)
-     ("<f8>" . toggle-window-split))
+     ("<f8>" . toggle-window-split)
+     ("C-c b" . create-scratch-buffer)
+     ("C-x -" . toggle-window-split)
+     ("C-x C--" . rotate-windows)
+     ("C-x k" . kill-current-buffer)
+     ("M-9" . switch-to-minibuffer-window))
     :init
     (global-unset-key (kbd "C-x C-+")))
 
@@ -223,11 +223,14 @@
     :bind (("C-x g" . magit-status))
     :config
     (progn
-      (use-package git-timemachine :ensure t)
+      ;; Magit already depends on these modes, but just them here for completeness
       (use-package git-commit-mode :ensure t)
       (use-package git-rebase-mode :ensure t)
+      ;; Extra highlighting
       (use-package gitconfig-mode :ensure t)
       (use-package gitignore-mode :ensure t)
+      ;; Also nice to use
+      (use-package git-timemachine :ensure t)
       (setq magit-status-buffer-switch-function 'switch-to-buffer)
       (add-hook 'magit-mode-hook 'magit-load-config-extensions)))
 
@@ -235,23 +238,23 @@
   (use-package helm
     :ensure t
     :bind
-    (("M-y" . helm-show-kill-ring)
-     ("M-x" . helm-M-x)
-     ("<f1>" . helm-resume)
-     ("C-x C-b" . helm-buffers-list)
-     ("C-x C-f" . helm-find-files)
-     ("C-x C-m" . helm-M-x)
-     ("C-x C-d" . helm-browse-project)
-     ("C-x b" . helm-mini)
-     ("C-x r j" . helm-register)
-     ("C-x r b" . helm-filtered-bookmarks)
-     ("C-c m" . helm-make)
+    (("<f1>" . helm-resume)
+     ("C-c <SPC>" . helm-all-mark-rings)
+     ("C-c C-x m" . helm-make-projectile)
      ("C-c f" . helm-recentf)
      ("C-c g" . helm-git-grep)
-     ("C-c C-x m" . helm-make-projectile)
      ("C-c m" . helm-make)
+     ("C-c m" . helm-make)
+     ("C-x C-b" . helm-buffers-list)
+     ("C-x C-d" . helm-browse-project)
+     ("C-x C-f" . helm-find-files)
+     ("C-x C-m" . helm-M-x)
+     ("C-x b" . helm-mini)
+     ("C-x r b" . helm-filtered-bookmarks)
+     ("C-x r j" . helm-register)
      ("M-." . helm-git-grep-at-point)
-     ("C-c <SPC>" . helm-all-mark-rings))
+     ("M-x" . helm-M-x)
+     ("M-y" . helm-show-kill-ring))
     :config
     (progn
       (require 'helm-config)
@@ -285,7 +288,7 @@
     (progn
       (helm-mode 1)
       (diminish 'helm-mode " h")))
-  
+
   (use-package org
     :ensure t
     :bind

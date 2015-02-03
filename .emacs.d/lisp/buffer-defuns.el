@@ -7,12 +7,12 @@
 ;;; Code:
 
 (defun kill-current-buffer ()
-  "Kills the current buffer. Meant to "
+  "Kill the current buffer."
   (interactive)
   (kill-buffer (current-buffer)))
 
 (defun create-scratch-buffer ()
-  "create a new scratch buffer to work in. (could be *scratch* - *scratchX*)"
+  "Create a new scratch buffer to work in. (could be *scratch* - *scratchX*)"
   (interactive)
   (let ((n 0)
         bufname)
@@ -30,12 +30,6 @@
   "Switch to previous buffer."
   (interactive)
   (switch-to-buffer (other-buffer)))
-
-(defun prev-window ()
-  "C-x o is other-window, which is next window in clockwise order.
-Bind this to C-x p go anti-clockwise (previous window)."
-  (interactive)
-  (other-window -1))
 
 (defun toggle-window-split ()
   (interactive)
