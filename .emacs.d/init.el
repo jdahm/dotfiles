@@ -242,7 +242,6 @@
      ("C-c f" . helm-recentf)
      ("C-c g" . helm-git-grep)
      ("C-c m" . helm-make)
-     ("C-c m" . helm-make)
      ("C-x C-b" . helm-buffers-list)
      ("C-x C-d" . helm-browse-project)
      ("C-x C-f" . helm-find-files)
@@ -258,25 +257,22 @@
       (require 'helm-config)
       (use-package helm-ls-git :ensure t)
       (use-package helm-git-grep :ensure t)
-      (use-package helm-make :ensure t)
+      (use-package helm-make
+        :ensure t :init (use-package projectile :ensure t))
       (setq helm-M-x-fuzzy-match t                   ; use fuzzy M-x matching
             helm-apropos-fuzzy-match t               ; use fuzzy matching for apropos
             helm-ls-git-status-command 'magit-status ; use Magit
             helm-truncate-lines t                    ; truncate lines in buffer by default
             helm-split-window-in-side-p t            ; open helm buffer inside current window
             )
-      (define-key isearch-mode-map (kbd "C-c g") 'helm-git-grep-from-isearch)
-      (define-key helm-map (kbd "C-c g") 'helm-git-grep-from-helm)
-      (define-key helm-command-map (kbd "g") 'helm-do-grep)
-      (define-key helm-command-map (kbd "o") 'helm-occur)
       (define-key 'help-command (kbd "C-l") 'helm-locate-library)
       (define-key 'help-command (kbd "r") 'helm-info-emacs)
-      ;; other commonly used definitions
-      ;; (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
-      ;; (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-      ;; (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
-      ;; (define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
-      ;; (define-key minibuffer-local-map (kbd "C-c C-l") 'helm-minibuffer-history)
+      (define-key helm-command-map (kbd "g") 'helm-do-grep)
+      (define-key helm-command-map (kbd "o") 'helm-occur)
+      (define-key helm-map (kbd "C-c g") 'helm-git-grep-from-helm)
+      (define-key isearch-mode-map (kbd "C-c g") 'helm-git-grep-from-isearch)
+      (define-key minibuffer-local-map (kbd "C-c C-l") 'helm-minibuffer-history)
+      (define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
       (use-package helm-eshell
         :config
         (add-hook 'eshell-mode-hook
@@ -359,15 +355,10 @@
 
   ;; Editing
   (use-package expand-region
-    :ensure t
-    :bind (("C-=" . er/expand-region)
-           ("C-M-=" . er/contract-region)))
+    :ensure t :bind (("C-=" . er/expand-region) ("C-M-=" . er/contract-region)))
 
   (use-package change-inner
-    :ensure t
-    :bind
-    (("M-i" . change-inner)
-     ("M-o" . change-outer)))
+    :ensure t :bind (("M-i" . change-inner) ("M-o" . change-outer)))
 
   (use-package multiple-cursors
     :ensure t
@@ -377,19 +368,12 @@
            ("C-c C-<" . mc/mark-all-like-this)))
 
   (use-package jump-char
-    :ensure t
-    :bind
-    (("C-;" . jump-char-forward)
-     ("C-'" . jump-char-backward)))
+    :ensure t :bind (("C-;" . jump-char-forward) ("C-'" . jump-char-backward)))
 
   ;; News
   (use-package elfeed :ensure t)
 
   ;; (benchmark-init/deactivate)
-
-  ;; Disabled external packages
-  ;; (use-package twittering-mode :disabled t)
-  ;; (use-package cmake-mode :disabled t :mode "\\.cmake\\'")
   )
 
 ;; Load customization file last
