@@ -87,6 +87,7 @@
 
   ;; Needed for other packages
   (use-package diminish :ensure t)
+  ;; (use-package hydra :ensure t)
 
   ;; Themes (used in appearance)
   (use-package zenburn-theme :ensure t)
@@ -104,7 +105,7 @@
       (load-theme jdahm/color-theme t)))
 
   ;; Parens
-  (electric-pair-mode 1)
+  (use-package elec-pair :init (electric-pair-mode 1))
 
   ;; Editing functions
   (use-package editing-defuns
