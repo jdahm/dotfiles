@@ -118,6 +118,7 @@
      ("C-c C-n" . tidy-buffer)
      ("C-c n" . tidy-region)
      ("C-c t" . cycle-tab-width)
+     ("C-a" . my-beginning-of-line)
      ("C-w" . kill-line-or-region)
      ("C-x a r" . align-regexp)
      ("M-;" . comment-or-uncomment-region-or-line)
@@ -127,9 +128,7 @@
      ("M-z" . zap-up-to-char)
      ("M-Z" . zap-to-char))
     :init
-    (progn
-      (global-set-key [remap move-beginning-of-line] 'my-beginning-of-line)
-      (define-key 'help-command (kbd "C-i") 'info-display-manual)))
+    (define-key 'help-command (kbd "C-i") 'info-display-manual))
 
   ;; Buffer functions
   (use-package buffer-defuns
@@ -381,8 +380,8 @@
   (use-package jump-char
     :ensure t
     :bind
-    (("M-m" . jump-char-forward)
-     ("M-S-m" . jump-char-backward)))
+    (("C-;" . jump-char-forward)
+     ("C-'" . jump-char-backward)))
 
   ;; News
   (use-package elfeed
