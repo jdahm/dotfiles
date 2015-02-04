@@ -135,17 +135,16 @@
     :bind
     (;; Existing functions
      ("<f9>" . toggle-truncate-lines)
-     ("C-c C-k" . eval-buffer)
      ("C-c S" . shell)
-     ("C-c r" . bury-buffer)
      ("C-c s" . eshell)
+     ("C-x a k" . bury-buffer)
      ;; Inside buffer-defuns.el
      ("<f6>" . prev-buffer)
      ("<f7>" . split-window-show-prev)
      ("<f8>" . toggle-window-split)
-     ("C-c b" . create-scratch-buffer)
      ("C-x -" . toggle-window-split)
      ("C-x C--" . rotate-windows)
+     ("C-x a b" . create-scratch-buffer)
      ("C-x k" . kill-current-buffer)
      ("M-9" . switch-to-minibuffer-window))
     :init
@@ -384,10 +383,7 @@
      ("C-'" . jump-char-backward)))
 
   ;; News
-  (use-package elfeed
-    :ensure t
-    :bind
-    ("C-x w" . elfeed))
+  (use-package elfeed :ensure t)
 
   ;; (benchmark-init/deactivate)
 
