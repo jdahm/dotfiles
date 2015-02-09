@@ -58,20 +58,6 @@
       (setq beg (line-beginning-position) end (line-end-position)))
     (comment-or-uncomment-region beg end)))
 
-(defun copy-line-or-region ()
-  "Copy current line, or current text selection."
-  (interactive)
-  (if (region-active-p)
-      (kill-ring-save (region-beginning) (region-end))
-    (kill-ring-save (line-beginning-position) (line-beginning-position 2)) ) )
-
-(defun kill-line-or-region ()
-  "Kill the current line, or current text selection."
-  (interactive)
-  (if (region-active-p)
-      (kill-region (region-beginning) (region-end))
-    (kill-region (line-beginning-position) (line-beginning-position 2)) ) )
-
 (defun my-beginning-of-line ()
   "Toggle between `beginning-of-line' and `back-to-indentation'."
   (interactive)

@@ -116,16 +116,14 @@
      ("C-c w" . subword-mode)
      ("M-s l" . sort-lines)
      ;; Inside editing-functions.el
+     ("C-a" . my-beginning-of-line)
      ("C-c C-n" . tidy-buffer)
      ("C-c n" . tidy-region)
      ("C-c t" . cycle-tab-width)
-     ("C-a" . my-beginning-of-line)
-     ("C-w" . kill-line-or-region)
      ("C-x a r" . align-regexp)
      ("M-;" . comment-or-uncomment-region-or-line)
      ("M-<down>" . move-line-down)
      ("M-<up>". move-line-up)
-     ("M-w" . copy-line-or-region)
      ("M-z" . zap-up-to-char)
      ("M-Z" . zap-to-char))
     :init
