@@ -41,6 +41,10 @@ HISTIGNORE='bg:fg:history'
 HISTTIMEFORMAT='%F %T '
 shopt -s cmdhist
 
+# Make it harder to exit accidentally
+# Require ^D 3 times to exit
+export IGNOREEOF=2
+
 # Navigation (pushd/popd, etc.)
 alias p='pushd'
 alias o='popd'
