@@ -1,7 +1,0 @@
-*.git
-*.git/*
-./.gitmodules
-./deploy
-./Makefile
-*Session.vim
-cscope.files
