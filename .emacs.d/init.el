@@ -91,7 +91,7 @@
 
   ;; Themes (used in appearance)
   (use-package zenburn-theme :ensure t)
-  (use-package solarized-theme :ensure t)
+  ;; (use-package solarized-theme :ensure t)
 
   ;; Appearance
   (use-package appearance
@@ -100,7 +100,7 @@
     :init
     (progn
       (defvar jdahm/color-theme-dark 'zenburn "Dark color theme.")
-      (defvar jdahm/color-theme-light 'solarized-light "Light color theme.")
+      (defvar jdahm/color-theme-light 'leuven "Light color theme.")
       (defvar jdahm/color-theme jdahm/color-theme-dark "Default color theme.")
       (load-theme jdahm/color-theme t)))
 
