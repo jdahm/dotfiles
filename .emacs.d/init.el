@@ -10,7 +10,7 @@
 
 ;; Name/Email
 (setq user-full-name    "Johann Dahm")
-(setq user-mail-address "jdahm@fastmail.com")
+(setq user-mail-address "johann@dahm.co")
 
 ;; Set up load path
 (add-to-list 'load-path (concat user-emacs-directory "lisp/"))
@@ -134,8 +134,8 @@
     :bind
     (;; Existing functions
      ("<f9>" . toggle-truncate-lines)
-     ("C-c S" . shell)
      ("C-c s" . eshell)
+     ("C-c S" . ansi-term)
      ("C-x a k" . bury-buffer)
      ;; Inside buffer-defuns.el
      ("<f6>" . prev-buffer)
@@ -213,6 +213,8 @@
       (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)))
 
   (use-package julia-mode :ensure t)
+
+  (use-package yaml-mode :ensure t)
 
   ;; Git
   (use-package magit
