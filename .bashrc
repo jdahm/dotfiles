@@ -59,5 +59,11 @@ alias psc='ps xawf -eo pid,user,cgroup,args'
 
 mkdircd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
 
+if [ -d ~/.config/shell ]; then
+    for f in ~/.config/shell/*; do
+        source $f
+    done
+fi
+
 # Local config
 [ -f ~/.bashrc.local ] && . ~/.bashrc.local
