@@ -1,5 +1,4 @@
-*.git*
+.git/
 setup
 excludes
-deploy*
 README.md
