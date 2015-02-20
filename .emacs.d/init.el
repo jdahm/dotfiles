@@ -20,13 +20,9 @@
 
 ;; Turn off scrollbar, toolbar, etc. early for graphical mode in startup to
 ;; avoid window width weirdness
-(when (display-graphic-p)
-  (scroll-bar-mode -1)   ; disable the scroll bar
-  (tool-bar-mode -1)     ; disable the awful toolbar
-  )
-(unless (display-graphic-p)
-  (menu-bar-mode -1)    ; disable menu bar mode in terminal
-  )
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
 
 ;; Frame title
 (setq frame-title-format
