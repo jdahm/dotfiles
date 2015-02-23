@@ -75,6 +75,11 @@
   (message "%s %d" "tab-width =" tab-width)
   (redraw-display))
 
+(defun my-url-insert-file-contents (url)
+  "Prompt for URL and insert file contents at point."
+  (interactive "sURL: ")
+  (url-insert-file-contents url))
+
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR.")
 

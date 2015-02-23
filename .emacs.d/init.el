@@ -105,43 +105,42 @@
 
   ;; Editing functions
   (use-package editing-defuns
-    :bind
-    (;; Existing functions
-     ("C-c C-a" . auto-fill-mode)
-     ("C-c C-w" . whitespace-mode)
-     ("C-c w" . subword-mode)
-     ("M-s l" . sort-lines)
-     ;; Inside editing-functions.el
-     ("C-a" . my-beginning-of-line)
-     ("C-c C-n" . tidy-buffer)
-     ("C-c n" . tidy-region)
-     ("C-c t" . cycle-tab-width)
-     ("C-x a r" . align-regexp)
-     ("M-;" . comment-or-uncomment-region-or-line)
-     ("M-<down>" . move-line-down)
-     ("M-<up>". move-line-up)
-     ("M-z" . zap-up-to-char)
-     ("M-Z" . zap-to-char))
+    :bind (;; Existing functions
+           ("C-c C-a" . auto-fill-mode)
+           ("C-c C-w" . whitespace-mode)
+           ("C-c w" . subword-mode)
+           ("M-s l" . sort-lines)
+           ;; Inside editing-functions.el
+           ("C-<down>" . move-line-down)
+           ("C-<up>". move-line-up)
+           ("C-a" . my-beginning-of-line)
+           ("C-c C-n" . tidy-buffer)
+           ("C-c i" . my-url-insert-file-contents)
+           ("C-c n" . tidy-region)
+           ("C-c t" . cycle-tab-width)
+           ("C-x a r" . align-regexp)
+           ("M-;" . comment-or-uncomment-region-or-line)
+           ("M-z" . zap-up-to-char)
+           ("M-Z" . zap-to-char))
     :init
     (define-key 'help-command (kbd "C-i") 'info-display-manual))
 
   ;; Buffer functions
   (use-package buffer-defuns
-    :bind
-    (;; Existing functions
-     ("<f9>" . toggle-truncate-lines)
-     ("C-c s" . eshell)
-     ("C-c S" . ansi-term)
-     ("C-x a k" . bury-buffer)
-     ;; Inside buffer-defuns.el
-     ("<f6>" . prev-buffer)
-     ("<f7>" . split-window-show-prev)
-     ("<f8>" . toggle-window-split)
-     ("C-x -" . toggle-window-split)
-     ("C-x C--" . rotate-windows)
-     ("C-x a b" . create-scratch-buffer)
-     ("C-x k" . kill-current-buffer)
-     ("M-9" . switch-to-minibuffer-window))
+    :bind (;; Existing functions
+           ("<f9>" . toggle-truncate-lines)
+           ("C-c s" . eshell)
+           ("C-c S" . ansi-term)
+           ("C-x a k" . bury-buffer)
+           ;; Inside buffer-defuns.el
+           ("<f6>" . prev-buffer)
+           ("<f7>" . split-window-show-prev)
+           ("<f8>" . toggle-window-split)
+           ("C-x -" . toggle-window-split)
+           ("C-x C--" . rotate-windows)
+           ("C-x a b" . create-scratch-buffer)
+           ("C-x k" . kill-current-buffer)
+           ("M-9" . switch-to-minibuffer-window))
     :init
     (global-unset-key (kbd "C-x C-+")))
 
@@ -177,13 +176,14 @@
             dired-dwim-target t)
       (setq-default dired-listing-switches "-Al --si --time-style long-iso")
       (require 'buffer-defuns)
-      (define-key dired-mode-map (kbd "e") 'dired-open-fm)
+      (define-key dired-mode-map (kbd "b") 'dired-open-file)
+      (define-key dired-mode-map (kbd "c") 'dired-open-fm)
       ;; hide some details by default
       (add-hook 'dired-mode-hook 'dired-hide-details-mode)))
 
   (use-package octave :mode ("\\.m\\'" . octave-mode))
 
-  (use-package python :mode "\\.py'" :interpreter ("python" . python-mode))
+  (use-package python :mode "\\.py\\'" :interpreter ("python" . python-mode))
 
   (use-package ruby-mode :mode "\\.rb\\'" :interpreter "ruby")
 
@@ -232,23 +232,22 @@
   ;; Helm
   (use-package helm
     :ensure t
-    :bind
-    (("<f1>" . helm-resume)
-     ("C-c <SPC>" . helm-all-mark-rings)
-     ("C-c C-x m" . helm-make-projectile)
-     ("C-c f" . helm-recentf)
-     ("C-c g" . helm-git-grep)
-     ("C-c m" . helm-make)
-     ("C-x C-b" . helm-buffers-list)
-     ("C-x C-d" . helm-browse-project)
-     ("C-x C-f" . helm-find-files)
-     ("C-x C-m" . helm-M-x)
-     ("C-x b" . helm-mini)
-     ("C-x r b" . helm-filtered-bookmarks)
-     ("C-x r j" . helm-register)
-     ("M-." . helm-git-grep-at-point)
-     ("M-x" . helm-M-x)
-     ("M-y" . helm-show-kill-ring))
+    :bind (("<f1>" . helm-resume)
+           ("C-c <SPC>" . helm-all-mark-rings)
+           ("C-c C-x m" . helm-make-projectile)
+           ("C-c f" . helm-recentf)
+           ("C-c g" . helm-git-grep)
+           ("C-c m" . helm-make)
+           ("C-x C-b" . helm-buffers-list)
+           ("C-x C-d" . helm-browse-project)
+           ("C-x C-f" . helm-find-files)
+           ("C-x C-m" . helm-M-x)
+           ("C-x b" . helm-mini)
+           ("C-x r b" . helm-filtered-bookmarks)
+           ("C-x r j" . helm-register)
+           ("M-." . helm-git-grep-at-point)
+           ("M-x" . helm-M-x)
+           ("M-y" . helm-show-kill-ring))
     :config
     (progn
       (require 'helm-config)
@@ -282,10 +281,9 @@
 
   (use-package org
     :ensure t
-    :bind
-    (("C-c c" . org-capture)
-     ("C-c l" . org-store-link)
-     ("C-c a" . org-agenda))
+    :bind (("C-c c" . org-capture)
+           ("C-c l" . org-store-link)
+           ("C-c a" . org-agenda))
 
     :init
     (setq
@@ -353,6 +351,13 @@
   ;; Editing
   (use-package expand-region
     :ensure t :bind (("C-=" . er/expand-region) ("C-M-=" . er/contract-region)))
+
+  (use-package smart-forward
+    :ensure t
+    :bind (("M-<up>" . smart-up)
+           ("M-<dow>" . smart-down)
+           ("M-<left>" . smart-backward)
+           ("M-<right>" . smart-forward)))
 
   (use-package change-inner
     :ensure t :bind (("M-i" . change-inner) ("M-o" . change-outer)))

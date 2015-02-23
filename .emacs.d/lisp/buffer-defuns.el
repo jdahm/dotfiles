@@ -102,6 +102,14 @@ xdg-open."
   (interactive)
   (call-process "xdg-open" nil 0 nil (dired-current-directory)))
 
+(defun dired-open-file ()
+  "In dired, open the file named on this line."
+  (interactive)
+  (let* ((file (dired-get-filename nil t)))
+    (message "Opening %s..." file)
+    (call-process "xdg-open" nil 0 nil file)
+    (message "Opening %s done" file)))
+
 (provide 'buffer-defuns)
 
 ;;; buffer-defuns.el ends here
