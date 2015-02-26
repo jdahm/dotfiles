@@ -150,7 +150,7 @@
     (setq savehist-file (expand-file-name "saved-history" emacs-persistence-directory))
     :init (savehist-mode 1))
 
-  (use-package savehist
+  (use-package saveplace
     :config
     (setq save-place-file (expand-file-name "saved-places" emacs-persistence-directory))
     :init (setq-default save-place t))
