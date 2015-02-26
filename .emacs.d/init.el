@@ -83,11 +83,9 @@
 
   ;; Needed for other packages
   (use-package diminish :ensure t)
-  ;; (use-package hydra :ensure t)
 
   ;; Themes (used in appearance)
   (use-package zenburn-theme :ensure t)
-  ;; (use-package solarized-theme :ensure t)
 
   ;; Appearance
   (use-package appearance
@@ -255,6 +253,11 @@
       (use-package helm-git-grep :ensure t)
       (use-package helm-make
         :ensure t :init (use-package projectile :ensure t))
+      (use-package helm-bibtex
+        :ensure t
+        :config (setq helm-bibtex-bibliography "~/Dropbox/Papers/main.bib"
+                      helm-bibtex-library-path "~/Dropbox/Papers"
+                      helm-bibtex-notes-path "~/Dropbox/My-Notes"))
       (setq helm-M-x-fuzzy-match t                   ; use fuzzy M-x matching
             helm-apropos-fuzzy-match t               ; use fuzzy matching for apropos
             helm-ls-git-status-command 'magit-status ; use Magit
@@ -265,6 +268,7 @@
       (define-key 'help-command (kbd "r") 'helm-info-emacs)
       (define-key helm-command-map (kbd "g") 'helm-do-grep)
       (define-key helm-command-map (kbd "o") 'helm-occur)
+      (define-key helm-command-map (kbd "C-x l") 'helm-bibtex)
       (define-key helm-map (kbd "C-c g") 'helm-git-grep-from-helm)
       (define-key isearch-mode-map (kbd "C-c g") 'helm-git-grep-from-isearch)
       (define-key minibuffer-local-map (kbd "C-c C-l") 'helm-minibuffer-history)
