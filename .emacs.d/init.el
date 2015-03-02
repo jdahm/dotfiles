@@ -138,7 +138,7 @@
            ("C-x C--" . rotate-windows)
            ("C-x a b" . create-scratch-buffer)
            ("C-x k" . kill-current-buffer)
-           ("M-9" . switch-to-minibuffer-window))
+           ("C-x <f9>" . switch-to-minibuffer-window))
     :init
     (global-unset-key (kbd "C-x C-+")))
 
@@ -207,7 +207,6 @@
       (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)))
 
   (use-package julia-mode :ensure t)
-
   (use-package yaml-mode :ensure t)
 
   ;; Git
