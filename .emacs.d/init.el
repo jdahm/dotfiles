@@ -109,6 +109,7 @@
            ("C-c w" . subword-mode)
            ("M-s l" . sort-lines)
            ;; Inside editing-functions.el
+           ;; ("M-;" . comment-or-uncomment-region-or-line)
            ("C-<down>" . move-line-down)
            ("C-<up>". move-line-up)
            ("C-a" . my-beginning-of-line)
@@ -117,7 +118,6 @@
            ("C-c n" . tidy-region)
            ("C-c t" . cycle-tab-width)
            ("C-x a r" . align-regexp)
-           ("M-;" . comment-or-uncomment-region-or-line)
            ("M-z" . zap-up-to-char)
            ("M-Z" . zap-to-char))
     :init
