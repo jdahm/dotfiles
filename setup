@@ -1,3 +1,66 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-rsync -arPv --exclude-from=excludes ./ ~/
+usage() {
+    cat <<EOF
+Install/Uninstall dotfiles
+
+SYNOPSIS:
+
+    $PROGRAM [OPTION ...] PACKAGE ... PACKAGE
+
+OPTIONS:
+
+    -c           Use 'cp -nars' instead of GNU stow.
+    -d DIR       Install into DIR instead of $HOME.
+    -u           Uninstall.
+EOF
+}
+
+install() {
+    local package=$1
+    if [ "$USECOPY" = true ]; then
+        shopt -s dotglob nullglob
+        cp -nars $(pwd)/$package/* $DESTDIR/
+    else
+        stow -t $DESTDIR $package
+    fi
+}
+
+uninstall() {
+    local package=$1
+    if [ "$USECOPY" = true ]; then
+        find $package -type f | while read f; do unlink $DESTDIR/$(expr $f : '[^/]*/\(.*\)') 2>/dev/null; done
+        find $package -type l | while read f; do unlink $DESTDIR/$(expr $f : '[^/]*/\(.*\)') 2>/dev/null; done
+        find $package -depth -prune -type d | while read d; do rmdir $DESTDIR/$(expr $d : '[^/]*/\(.*\)') 2>/dev/null; done
+    else
+        stow -t $DESTDIR -D $package
+    fi
+}
+
+# Defaults
+PROGRAM="${0##*/}"
+DESTDIR=$HOME
+USECOPY=false
+cmd=install
+
+# Parse options
+while getopts hucd: opt
+do
+    case $opt in
+        u) cmd=uninstall;;
+        c) USECOPY=true;;
+        d) DESTDIR="$OPTARG";;
+        h | ?) usage; exit 2;;
+    esac
+done
+
+# Perform actions
+shift $(($OPTIND-1))
+for pkg in $*; do
+    if [ "$cmd" = "install" ]; then
+        echo ${cmd}ing $pkg to $DESTDIR
+    else
+        echo ${cmd}ing $pkg from $DESTDIR
+    fi
+    $cmd $pkg
+done

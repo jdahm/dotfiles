@@ -29,18 +29,14 @@
       (list (format "%s %%S: %%j " (system-name))
             '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
 
-;; Put autosave files (ie #foo#) and backup files (ie foo~) in ~/.emacs.d/.
+;; Backup
+(unless (file-exists-p "~/.emacs.d/backup/")
+    (make-directory "~/.emacs.d/backup/" t))
+
+;; Put autosave files (ie #foo#) and backup files (ie foo~) in ~/.emacs.d/backup
 (custom-set-variables
- '(auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/\\1" t)))
- '(backup-directory-alist '((".*" . "~/.emacs.d/backups/"))))
-
-;; create the autosave dir if necessary, since emacs won't.
-(make-directory "~/.emacs.d/autosaves/" t)
-
-;; Persistence directory
-(setq emacs-persistence-directory (concat user-emacs-directory "persistence/"))
-(unless (file-exists-p emacs-persistence-directory)
-  (make-directory emacs-persistence-directory t))
+ '(backup-directory-alist '((".*" . "~/.emacs.d/backup/")))
+ '(auto-save-file-name-transforms '((".*" "~/.emacs.d/backup/\\1" t))))
 
 ;; Highlight current line
 (global-hl-line-mode 1)
@@ -147,12 +143,12 @@
   ;; Packages distributed with Emacs
   (use-package savehist
     :config
-    (setq savehist-file (expand-file-name "saved-history" emacs-persistence-directory))
+    (setq savehist-file (expand-file-name "saved-history" "~/.emacs.d/backup/"))
     :init (savehist-mode 1))
 
   (use-package saveplace
     :config
-    (setq save-place-file (expand-file-name "saved-places" emacs-persistence-directory))
+    (setq save-place-file (expand-file-name "saved-places" "~/.emacs.d/backup/"))
     :init (setq-default save-place t))
 
   (use-package recentf
@@ -184,6 +180,9 @@
   (use-package python :mode "\\.py\\'" :interpreter ("python" . python-mode))
 
   (use-package ruby-mode :mode "\\.rb\\'" :interpreter "ruby")
+
+  (use-package tramp :config
+    (setq tramp-backup-directory-alist backup-directory-alist))
 
   ;; External packages
 
