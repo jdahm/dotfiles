@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: xferror
-# key: xfer
-# --
-xf_Error(${1:name})$0

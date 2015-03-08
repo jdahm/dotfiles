@@ -42,25 +42,36 @@ PROGRAM="${0##*/}"
 DESTDIR=$HOME
 USECOPY=false
 cmd=install
+all=false
 
 # Parse options
-while getopts hucd: opt
+while getopts haucd: opt
 do
     case $opt in
         u) cmd=uninstall;;
+        a) all=true;;
         c) USECOPY=true;;
         d) DESTDIR="$OPTARG";;
         h | ?) usage; exit 2;;
     esac
 done
+shift $(($OPTIND-1))
+
+# Create list of packages
+declare -a pkgs
+if [ "$all" = "true" ]; then
+    for p in $(ls -d */); do pkg=${p%%/}; pkgs+=($pkg); done
+else
+    for pkg in $*; do pkgs+=($pkg); done
+fi
 
 # Perform actions
 shift $(($OPTIND-1))
-for pkg in $*; do
+for p in "${pkgs[@]}"; do
     if [ "$cmd" = "install" ]; then
-        echo ${cmd}ing $pkg to $DESTDIR
+        echo ${cmd}ing $p to $DESTDIR
     else
-        echo ${cmd}ing $pkg from $DESTDIR
+        echo ${cmd}ing $p from $DESTDIR
     fi
-    $cmd $pkg
+    $cmd $p
 done
