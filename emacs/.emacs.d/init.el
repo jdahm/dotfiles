@@ -72,69 +72,69 @@
 
   ;; Install and require use-package to install everything else
   (packages-install '(use-package))
-  (require 'use-package)
+  (eval-when-compile
+    (require 'use-package))
+  (require 'diminish)                ;; if you use :diminish
+  (require 'bind-key)                ;; if you use any :bind variant
 
   ;; (use-package benchmark-init :ensure t)
   ;; (benchmark-init/activate)
-
-  ;; Needed for other packages
-  (use-package diminish :ensure t)
 
   ;; Themes (used in appearance)
   (use-package zenburn-theme :ensure t)
 
   ;; Appearance
   (use-package appearance
-    :bind
-    (("<f5>" . jdahm/toggle-color-theme))
+    :bind (("<f5>" . jdahm/toggle-color-theme))
     :init
-    (progn
-      (defvar jdahm/color-theme-dark 'zenburn "Dark color theme.")
-      (defvar jdahm/color-theme-light 'leuven "Light color theme.")
-      (defvar jdahm/color-theme jdahm/color-theme-dark "Default color theme.")
-      (load-theme jdahm/color-theme t)))
+    (defvar jdahm/color-theme-dark 'zenburn "Dark color theme.")
+    (defvar jdahm/color-theme-light 'leuven "Light color theme.")
+    (defvar jdahm/color-theme jdahm/color-theme-dark "Default color theme.")
+    (load-theme jdahm/color-theme t))
 
   ;; Parens
   (use-package elec-pair :init (electric-pair-mode 1))
 
   ;; Editing functions
   (use-package editing-defuns
-    :bind (;; Existing functions
-           ("C-c C-a" . auto-fill-mode)
-           ("C-c C-w" . whitespace-mode)
-           ("C-c w" . subword-mode)
-           ("M-s l" . sort-lines)
-           ;; Inside editing-functions.el
-           ;; ("M-;" . comment-or-uncomment-region-or-line)
-           ("C-<down>" . move-line-down)
-           ("C-<up>". move-line-up)
-           ("C-a" . my-beginning-of-line)
-           ("C-c C-n" . tidy-buffer)
-           ("C-c i" . my-url-insert-file-contents)
-           ("C-c n" . tidy-region)
-           ("C-c t" . cycle-tab-width)
-           ("C-x a r" . align-regexp)
-           ("M-z" . zap-up-to-char)
-           ("M-Z" . zap-to-char))
+    :bind
+    (;; Existing functions
+     ("C-c C-a" . auto-fill-mode)
+     ("C-c C-w" . whitespace-mode)
+     ("C-c w" . subword-mode)
+     ("M-s l" . sort-lines)
+     ;; Inside editing-functions.el
+     ;; ("M-;" . comment-or-uncomment-region-or-line)
+     ("C-<down>" . move-line-down)
+     ("C-<up>". move-line-up)
+     ("C-a" . my-beginning-of-line)
+     ("C-c C-n" . tidy-buffer)
+     ("C-c i" . my-url-insert-file-contents)
+     ("C-c n" . tidy-region)
+     ("C-c t" . cycle-tab-width)
+     ("C-x a r" . align-regexp)
+     ("M-z" . zap-up-to-char)
+     ("M-Z" . zap-to-char))
     :init
     (define-key 'help-command (kbd "C-i") 'info-display-manual))
 
   ;; Buffer functions
   (use-package buffer-defuns
-    :bind (;; Existing functions
-           ("<f9>" . toggle-truncate-lines)
-           ("C-c s" . eshell)
-           ("C-c S" . ansi-term)
-           ("C-x a k" . bury-buffer)
-           ;; Inside buffer-defuns.el
-           ("<f6>" . prev-buffer)
-           ("<f7>" . split-window-show-prev)
-           ("<f8>" . toggle-window-split)
-           ("C-x -" . toggle-window-split)
-           ("C-x C--" . rotate-windows)
-           ("C-x a b" . create-scratch-buffer)
-           ("C-x k" . kill-current-buffer)
-           ("C-x <f9>" . switch-to-minibuffer-window))
+    :bind
+    (;; Existing functions
+     ("<f9>" . toggle-truncate-lines)
+     ("C-c s" . eshell)
+     ("C-c S" . ansi-term)
+     ("C-x a k" . bury-buffer)
+     ;; Inside buffer-defuns.el
+     ("<f6>" . prev-buffer)
+     ("<f7>" . split-window-show-prev)
+     ("<f8>" . toggle-window-split)
+     ("C-x -" . toggle-window-split)
+     ("C-x C--" . rotate-windows)
+     ("C-x a b" . create-scratch-buffer)
+     ("C-x k" . kill-current-buffer)
+     ("C-x <f9>" . switch-to-minibuffer-window))
     :init
     (global-unset-key (kbd "C-x C-+")))
 
@@ -142,38 +142,34 @@
 
   ;; Packages distributed with Emacs
   (use-package savehist
-    :config
-    (setq savehist-file (expand-file-name "saved-history" "~/.emacs.d/backup/"))
+    :config (setq savehist-file (expand-file-name "saved-history" "~/.emacs.d/backup/"))
     :init (savehist-mode 1))
 
   (use-package saveplace
-    :config
-    (setq save-place-file (expand-file-name "saved-places" "~/.emacs.d/backup/"))
+    :config (setq save-place-file (expand-file-name "saved-places" "~/.emacs.d/backup/"))
     :init (setq-default save-place t))
 
   (use-package recentf
     :init
-    (progn
-      (setq recentf-max-saved-items 300 ; number of saved items
-            recentf-auto-cleanup 600    ; cleanup when idle for 600 seconds
-            )
-      (when (not noninteractive) (recentf-mode 1))))
+    (setq recentf-max-saved-items 300 ; number of saved items
+          recentf-auto-cleanup 600    ; cleanup when idle for 600 seconds
+          )
+    (when (not noninteractive) (recentf-mode 1)))
 
   (use-package windmove :init (windmove-default-keybindings))
 
   (use-package dired
     :config
-    (progn
-      (setq dired-recursive-copies 'always
-            dired-recursive-deletes 'always
-            delete-by-moving-to-trash t
-            dired-dwim-target t)
-      (setq-default dired-listing-switches "-Al --si --time-style long-iso")
-      (require 'buffer-defuns)
-      (define-key dired-mode-map (kbd "b") 'dired-open-file)
-      (define-key dired-mode-map (kbd "c") 'dired-open-fm)
-      ;; hide some details by default
-      (add-hook 'dired-mode-hook 'dired-hide-details-mode)))
+    (setq dired-recursive-copies 'always
+          dired-recursive-deletes 'always
+          delete-by-moving-to-trash t
+          dired-dwim-target t)
+    (setq-default dired-listing-switches "-Al --si --time-style long-iso")
+    (require 'buffer-defuns)
+    (define-key dired-mode-map (kbd "b") 'dired-open-file)
+    (define-key dired-mode-map (kbd "c") 'dired-open-fm)
+    ;; hide some details by default
+    (add-hook 'dired-mode-hook 'dired-hide-details-mode))
 
   (use-package octave :mode ("\\.m\\'" . octave-mode))
 
@@ -181,29 +177,28 @@
 
   (use-package ruby-mode :mode "\\.rb\\'" :interpreter "ruby")
 
-  (use-package tramp :config
-    (setq tramp-backup-directory-alist backup-directory-alist))
+  (use-package tramp :config (setq tramp-backup-directory-alist backup-directory-alist))
 
   ;; External packages
 
   ;; Various useful modes
   (use-package markdown-mode
     :ensure t
-    :mode (("\\.text\\'" . markdown-mode)
-           ("\\.markdown\\'" . markdown-mode)
-           ("\\.md\\'" . markdown-mode)))
+    :mode
+    (("\\.text\\'" . markdown-mode)
+     ("\\.markdown\\'" . markdown-mode)
+     ("\\.md\\'" . markdown-mode)))
 
   (use-package haskell-mode
     :ensure t
     :mode "\\.l?hs$"
     :config
-    (progn
-      (use-package inf-haskell)
-      (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-      ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-      ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
-      (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-      (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)))
+    (use-package inf-haskell)
+    (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+    ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+    ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
+    (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+    (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode))
 
   (use-package julia-mode :ensure t)
   (use-package yaml-mode :ensure t)
@@ -213,39 +208,41 @@
     :ensure t
     :bind (("C-x g" . magit-status))
     :config
-    (progn
-      ;; Magit already depends on these modes, but just them here for completeness
-      (use-package git-commit-mode :ensure t)
-      (use-package git-rebase-mode :ensure t)
-      ;; Extra highlighting
-      (use-package gitconfig-mode :ensure t)
-      (use-package gitignore-mode :ensure t)
-      ;; Also nice to use
-      (use-package git-timemachine :ensure t)
-      (setq magit-status-buffer-switch-function 'switch-to-buffer)
-      (add-hook 'magit-mode-hook 'magit-load-config-extensions)))
+    ;; Magit already depends on these modes, but just them here for completeness
+    (use-package git-commit-mode :ensure t)
+    (use-package git-rebase-mode :ensure t)
+    ;; Extra highlighting
+    (use-package gitconfig-mode :ensure t)
+    (use-package gitignore-mode :ensure t)
+    ;; Also nice to use
+    (use-package git-timemachine :ensure t)
+    (setq magit-status-buffer-switch-function 'switch-to-buffer)
+    (add-hook 'magit-mode-hook 'magit-load-config-extensions))
 
   ;; Helm
   (use-package helm
     :ensure t
-    :bind (("<f1>" . helm-resume)
-           ("C-c <SPC>" . helm-all-mark-rings)
-           ("C-c C-x m" . helm-make-projectile)
-           ("C-c f" . helm-recentf)
-           ("C-c g" . helm-git-grep)
-           ("C-c m" . helm-make)
-           ("C-x C-b" . helm-buffers-list)
-           ("C-x C-d" . helm-browse-project)
-           ("C-x C-f" . helm-find-files)
-           ("C-x C-m" . helm-M-x)
-           ("C-x b" . helm-mini)
-           ("C-x r b" . helm-filtered-bookmarks)
-           ("C-x r j" . helm-register)
-           ("M-." . helm-git-grep-at-point)
-           ("M-x" . helm-M-x)
-           ("M-y" . helm-show-kill-ring))
+    :defer
+    :diminish " h"
+    :bind
+    (("<f1>" . helm-resume)
+     ("C-c <SPC>" . helm-all-mark-rings)
+     ("C-c C-x m" . helm-make)
+     ("C-c f" . helm-recentf)
+     ("C-c g" . helm-git-grep)
+     ("C-c m" . helm-make-projectile)
+     ("C-x C-b" . helm-buffers-list)
+     ("C-x C-d" . helm-browse-project)
+     ("C-x C-f" . helm-find-files)
+     ("C-x C-m" . helm-M-x)
+     ("C-x b" . helm-mini)
+     ("C-x r b" . helm-filtered-bookmarks)
+     ("C-x r j" . helm-register)
+     ("M-." . helm-git-grep-at-point)
+     ("M-x" . helm-M-x)
+     ("M-y" . helm-show-kill-ring))
     :config
-    (progn
+      (helm-mode 1)
       (require 'helm-config)
       (use-package helm-ls-git :ensure t)
       (use-package helm-git-grep :ensure t)
@@ -275,17 +272,15 @@
         :config
         (add-hook 'eshell-mode-hook
                   (lambda ()
-                    (define-key eshell-mode-map (kbd "C-c C-l") 'helm-eshell-history)))))
-    :idle
-    (progn
-      (helm-mode 1)
-      (diminish 'helm-mode " h")))
+                    (define-key eshell-mode-map (kbd "C-c C-l") 'helm-eshell-history))))
+    )
 
   (use-package org
     :ensure t
-    :bind (("C-c c" . org-capture)
-           ("C-c l" . org-store-link)
-           ("C-c a" . org-agenda))
+    :bind
+    (("C-c c" . org-capture)
+     ("C-c l" . org-store-link)
+     ("C-c a" . org-agenda))
 
     :init
     (setq
@@ -297,51 +292,49 @@
      )
 
     :config
-    (progn
-      (setq
-       org-modules '(org-habit)                               ; modules for org-mode
-       org-agenda-start-on-weekday 6                          ; start weeks on Saturdays
-       org-clock-idle-time 15                                 ; idle time
-       org-refile-targets '((nil :maxlevel . 1)
-                            (org-agenda-files :maxlevel . 1)) ; flexible refiling
-       )
-      (setq org-capture-templates
-            '(("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
-               "* TODO %?\n %a")
-              ("p" "Personal task" entry (file+headline (concat org-directory "personal.org") "Tasks")
-               "* TODO %?")
-              ("w" "Work task" entry (file+headline (concat org-directory "work.org") "Tasks")
-               "* TODO %?\n %a")))
+    (setq
+     org-modules '(org-habit)                               ; modules for org-mode
+     org-agenda-start-on-weekday 6                          ; start weeks on Saturdays
+     org-clock-idle-time 15                                 ; idle time
+     org-refile-targets '((nil :maxlevel . 1)
+                          (org-agenda-files :maxlevel . 1)) ; flexible refiling
+     )
+    (setq org-capture-templates
+          '(("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
+             "* TODO %?\n %a")
+            ("p" "Personal task" entry (file+headline (concat org-directory "personal.org") "Tasks")
+             "* TODO %?")
+            ("w" "Work task" entry (file+headline (concat org-directory "work.org") "Tasks")
+             "* TODO %?\n %a")))
 
-      (setq org-todo-keywords
-            '((sequence
-               "TODO(t)"
-               "STARTED(s)"
-               "WAITING(w@/!)"
-               "SOMEDAY(.)" "|" "DONE(x!)" "CANCELLED(c@)")
-              (sequence "TODELEGATE(-)" "DELEGATED(d)" "COMPLETE(x)")
-              (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")))
+    (setq org-todo-keywords
+          '((sequence
+             "TODO(t)"
+             "STARTED(s)"
+             "WAITING(w@/!)"
+             "SOMEDAY(.)" "|" "DONE(x!)" "CANCELLED(c@)")
+            (sequence "TODELEGATE(-)" "DELEGATED(d)" "COMPLETE(x)")
+            (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")))
 
-      (setq org-latex-pdf-process (list "latexmk -lualatex -f %f"))))
+    (setq org-latex-pdf-process (list "latexmk -lualatex -f %f")))
 
   (use-package org-present
     :ensure t
     :config
-    (progn
-      (add-hook 'org-present-mode-hook
-                (lambda ()
-                  (org-present-big)
-                  (org-display-inline-images)
-                  (org-present-hide-cursor)
-                  (global-hl-line-mode nil)
-                  (org-present-read-only)))
-      (add-hook 'org-present-mode-quit-hook
-                (lambda ()
-                  (org-present-small)
-                  (org-remove-inline-images)
-                  (global-hl-line-mode 1)
-                  (org-present-show-cursor)
-                  (org-present-read-write)))))
+    (add-hook 'org-present-mode-hook
+              (lambda ()
+                (org-present-big)
+                (org-display-inline-images)
+                (org-present-hide-cursor)
+                (global-hl-line-mode nil)
+                (org-present-read-only)))
+    (add-hook 'org-present-mode-quit-hook
+              (lambda ()
+                (org-present-small)
+                (org-remove-inline-images)
+                (global-hl-line-mode 1)
+                (org-present-show-cursor)
+                (org-present-read-write))))
 
   ;; Compiling
   (use-package flycheck
@@ -356,10 +349,11 @@
 
   (use-package smart-forward
     :ensure t
-    :bind (("M-<up>" . smart-up)
-           ("M-<dow>" . smart-down)
-           ("M-<left>" . smart-backward)
-           ("M-<right>" . smart-forward)))
+    :bind
+    (("M-<up>" . smart-up)
+     ("M-<dow>" . smart-down)
+     ("M-<left>" . smart-backward)
+     ("M-<right>" . smart-forward)))
 
   (use-package change-inner
     :ensure t :bind (("M-i" . change-inner) ("M-o" . change-outer)))
