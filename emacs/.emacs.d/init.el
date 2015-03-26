@@ -366,7 +366,7 @@
            ("C-c C-<" . mc/mark-all-like-this)))
 
   (use-package jump-char
-    :ensure t :bind (("C-;" . jump-char-forward) ("C-'" . jump-char-backward)))
+    :ensure t :bind (("M-m" . jump-char-forward) ("C-M-m" . jump-char-backward)))
 
   ;; News
   (use-package elfeed :ensure t)
