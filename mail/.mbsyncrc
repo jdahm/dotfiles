@@ -1,0 +1,35 @@
+IMAPAccount fastmail-account
+        # Address to connect to
+        Host mail.messagingengine.com
+        User jdahm@fastmail.com
+        PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mailpass.gpg"
+        # `UseIMAPS' is required since FM disabled insecure connections
+        UseIMAPS yes
+        CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore fastmail-imap
+	Account	fastmail-account
+        Path	INBOX.
+
+MaildirStore fastmail-local
+	Path	~/Mail/fm/
+	Inbox	~/Mail/fm/Inbox
+
+Channel fastmail-inbox
+        Master :fastmail-imap:
+        Slave  :fastmail-local:
+        Pattern %
+        Create Slave
+        SyncState *
+        Sync All
+
+Channel fastmail-folders
+        Master :fastmail-imap:INBOX/
+        Slave  :fastmail-local:
+        Patterns * !INBOX !Drafts !Trash !Spam
+        Create Slave
+        SyncState *
+        Sync All
+
+Group fm
+        Channels fastmail-inbox fastmail-folders
