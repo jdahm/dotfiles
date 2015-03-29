@@ -41,6 +41,14 @@
 ;; Highlight current line
 (global-hl-line-mode 1)
 
+;; Enable disabled commands
+(put 'set-goal-column 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+(put 'scroll-left 'disabled nil)
+(put 'erase-buffer 'disabled nil)
+
 ;; Make backups of files, even when they're in version control
 (setq vc-make-backup-files t)
 
