@@ -4,7 +4,8 @@ IMAPAccount fastmail-account
         User jdahm@fastmail.com
         PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mailpass.gpg"
         # `UseIMAPS' is required since FM disabled insecure connections
-        UseIMAPS yes
+        SSLType IMAPS
+        SSLVersions TLSv1
         CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore fastmail-imap
@@ -23,7 +24,7 @@ Channel fastmail-inbox
         Sync All
 
 Channel fastmail-folders
-        Master :fastmail-imap:INBOX/
+        Master :fastmail-imap:
         Slave  :fastmail-local:
         Patterns * !INBOX !Drafts !Trash !Spam
         Create Slave
