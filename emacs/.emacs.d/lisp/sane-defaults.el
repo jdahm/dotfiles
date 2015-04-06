@@ -57,6 +57,9 @@
 ;; Modern memory threshold
 (setq gc-cons-threshold 20000000)
 
+;; Make backups of files, even when they're in version control
+(setq vc-make-backup-files t)
+
 (provide 'sane-defaults)
 
 ;;; sane-defaults.el ends here

@@ -38,6 +38,9 @@
  '(backup-directory-alist '((".*" . "~/.emacs.d/backup/")))
  '(auto-save-file-name-transforms '((".*" "~/.emacs.d/backup/\\1" t))))
 
+;; Better defaults
+(require 'sane-defaults)
+
 ;; Highlight current line
 (global-hl-line-mode 1)
 
@@ -49,11 +52,8 @@
 (put 'scroll-left 'disabled nil)
 (put 'erase-buffer 'disabled nil)
 
-;; Make backups of files, even when they're in version control
-(setq vc-make-backup-files t)
-
-;; Better defaults
-(require 'sane-defaults)
+;; Automatically revert buffers
+(auto-revert-mode 1)
 
 ;; Mac
 (when (equal system-type 'darwin)
