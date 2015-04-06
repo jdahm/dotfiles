@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+bindfs -r --map=501/jdahm:@utmp/@users /media/mac/Users/jdahm /home/jdahm/Mac
