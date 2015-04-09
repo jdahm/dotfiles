@@ -7,10 +7,7 @@
 ;;; Code:
 
 ;; Top-level settings
-
-;; Name/Email
-(setq user-full-name    "Johann Dahm")
-(setq user-mail-address "jdahm@fastmail.com")
+(setq user-full-name "Johann Dahm")
 
 ;; Set up load path
 (add-to-list 'load-path (concat user-emacs-directory "lisp/"))
