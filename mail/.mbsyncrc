@@ -2,7 +2,17 @@ IMAPAccount fastmail-account
         # Address to connect to
         Host mail.messagingengine.com
         User jdahm@fastmail.com
-        PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mailpass.gpg"
+        PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mailpass-fm.gpg"
+        # `UseIMAPS' is required since FM disabled insecure connections
+        SSLType IMAPS
+        SSLVersions TLSv1
+        CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPAccount umich-account
+        # Address to connect to
+        Host imap.gmail.com
+        User jdahm@umich.edu
+        PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mailpass-umich.gpg"
         # `UseIMAPS' is required since FM disabled insecure connections
         SSLType IMAPS
         SSLVersions TLSv1
@@ -12,24 +22,58 @@ IMAPStore fastmail-imap
 	Account	fastmail-account
         Path	INBOX.
 
+IMAPStore umich-imap
+        Account umich-account
+
 MaildirStore fastmail-local
+        # The trailing "/" is important
 	Path	~/Mail/fm/
 	Inbox	~/Mail/fm/Inbox
 
-Channel fastmail-inbox
+MaildirStore umich-local
+        Path ~/Mail/umich/
+        Inbox ~/Mail/umich/Inbox
+
+Channel fm
         Master :fastmail-imap:
         Slave  :fastmail-local:
+        Patterns * !Trash !Drafts
         Create Slave
         SyncState *
         Sync All
+        Expunge Both
 
-Channel fastmail-folders
-        Master :fastmail-imap:
-        Slave  :fastmail-local:
-        Patterns * !INBOX !Drafts !Trash !Spam
+Channel umich-inbox
+        Master ":umich-imap:INBOX"
+        Slave ":umich-local:Inbox"
         Create Slave
         SyncState *
         Sync All
+        Expunge Both
 
-Group fm
-        Channels fastmail-inbox fastmail-folders
+Channel umich-sent
+        Master ":umich-imap:[Gmail]/Sent Mail"
+        Slave ":umich-local:Sent Mail"
+        Create Slave
+        SyncState *
+        Sync All
+        Expunge Both
+
+Channel umich-archived
+        Master ":umich-imap:Archived"
+        Slave ":umich-local:Archive"
+        Create Slave
+        SyncState *
+        Sync All
+        Expunge Both
+
+Channel umich-spam
+        Master ":umich-imap:[Gmail]/Spam"
+        Slave ":umich-local:Spam"
+        Create Slave
+        SyncState *
+        Sync All
+        Expunge Both
+
+Group all
+        Channels fm umich-inbox umich-sent umich-archived umich-spam
