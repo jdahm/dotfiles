@@ -41,6 +41,9 @@
 ;; Highlight current line
 (global-hl-line-mode 1)
 
+;; Automatically revert buffers
+(global-auto-revert-mode 1)
+
 ;; Enable disabled commands
 (put 'set-goal-column 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
@@ -48,9 +51,6 @@
 (put 'downcase-region 'disabled nil)
 (put 'scroll-left 'disabled nil)
 (put 'erase-buffer 'disabled nil)
-
-;; Automatically revert buffers
-(auto-revert-mode 1)
 
 ;; Mac
 (when (equal system-type 'darwin)
@@ -109,7 +109,6 @@
      ("C-c w" . subword-mode)
      ("M-s l" . sort-lines)
      ;; Inside editing-functions.el
-     ;; ("M-;" . comment-or-uncomment-region-or-line)
      ("C-<down>" . move-line-down)
      ("C-<up>". move-line-up)
      ("C-a" . my-beginning-of-line)
@@ -212,6 +211,8 @@
   (use-package magit
     :ensure t
     :bind (("C-x g" . magit-status))
+    :init
+    (setq magit-last-seen-setup-instructions "1.4.0")
     :config
     ;; Magit already depends on these modes, but just them here for completeness
     (use-package git-commit-mode :ensure t)
@@ -250,9 +251,9 @@
       (helm-mode 1)
       (require 'helm-config)
       (use-package helm-ls-git :ensure t)
-      (use-package helm-git-grep :ensure t)
       (use-package helm-make
         :ensure t :init (use-package projectile :ensure t))
+      (use-package helm-git-grep :ensure t)
       (use-package helm-bibtex
         :ensure t
         :config (setq helm-bibtex-bibliography "~/Dropbox/Papers/main.bib"
@@ -277,8 +278,7 @@
         :config
         (add-hook 'eshell-mode-hook
                   (lambda ()
-                    (define-key eshell-mode-map (kbd "C-c C-l") 'helm-eshell-history))))
-    )
+                    (define-key eshell-mode-map (kbd "C-c C-l") 'helm-eshell-history)))))
 
   (use-package org
     :ensure t
@@ -321,7 +321,12 @@
             (sequence "TODELEGATE(-)" "DELEGATED(d)" "COMPLETE(x)")
             (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")))
 
-    (setq org-latex-pdf-process (list "latexmk -lualatex -f %f")))
+    (setq org-latex-pdf-process (list "latexmk -lualatex -f %f"))
+
+    ;; Load python in babel
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((python . t))))
 
   (use-package org-present
     :ensure t
