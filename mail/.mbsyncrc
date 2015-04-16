@@ -31,8 +31,8 @@ MaildirStore fastmail-local
 	Inbox	~/Mail/fm/Inbox
 
 MaildirStore umich-local
-        Path ~/Mail/umich/
-        Inbox ~/Mail/umich/Inbox
+        Path ~/Mail/um/
+        Inbox ~/Mail/um/Inbox
 
 Channel fm
         Master :fastmail-imap:
