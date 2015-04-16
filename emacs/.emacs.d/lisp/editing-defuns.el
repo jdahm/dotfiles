@@ -6,19 +6,17 @@
 
 ;;; Code:
 
-(defun tidy-region (start end)
-  "Indent, delete whitespace, and untabify the region."
-  (interactive "r")
-  (progn
-    (delete-trailing-whitespace start end)
-    (indent-region start end nil)
-    (untabify start end)))
-
-(defun tidy-buffer ()
-  "Indent, delete whitespace, and untabify the buffer."
+(defun tidy-region-or-buffer ()
+  "Indent, delete whitespace, and untabify the region or buffer."
   (interactive)
   (save-excursion
-    (tidy-region (point-min) (point-max))))
+    (let ((begin (point-min)) (end (point-max)))
+      (when (region-active-p)
+        (setq begin (region-beginning))
+        (setq end (region-end)))
+    (delete-trailing-whitespace begin end)
+    (indent-region begin end nil)
+    (untabify begin end))))
 
 (defun date ()
   "Inserts the current date in the format %Y-%m-%d."
