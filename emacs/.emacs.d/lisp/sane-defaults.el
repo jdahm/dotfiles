@@ -18,8 +18,8 @@
 ;; Answering just 'y' or 'n' will do
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; Don't break lines for me, please
-(setq-default truncate-lines t)
+;; ;; Don't break lines for me, please
+;; (setq-default truncate-lines t)
 
 ;; Move files to trash when deleting
 (setq delete-by-moving-to-trash t)
