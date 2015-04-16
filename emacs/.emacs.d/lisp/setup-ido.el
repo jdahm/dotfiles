@@ -18,8 +18,13 @@ your recently and most frequently used commands.")
 (global-set-key (kbd "M-x") 'smex)
 
 ;; ibuffer
+(add-hook 'ibuffer-hook
+          (lambda ()
+            (ibuffer-vc-set-filter-groups-by-vc-root)
+            (unless (eq ibuffer-sorting-mode 'alphabetic)
+              (ibuffer-do-sort-by-alphabetic))))
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-(add-to-list 'recentf-exclude "\\.ido.last\\'")
+(add-to-list 'recentf-exclude "\\ido.last\\'")
 
 (provide 'setup-ido)
