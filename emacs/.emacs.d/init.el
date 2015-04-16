@@ -26,11 +26,9 @@
       auto-save-file-name-transforms '((".*" "~/.emacs.d/backup/\\1" t)))
 
 (require 'savehist)
-(setq savehist-file (expand-file-name "saved-history" "~/.emacs.d/backup/"))
 (savehist-mode 1)
 
 (require 'saveplace)
-(setq save-place-file (expand-file-name "saved-places" "~/.emacs.d/backup/"))
 (setq-default save-place t)
 
 (require 'recentf)
@@ -186,8 +184,5 @@
 ;; Load customization file last
 (if (file-readable-p custom-file) (load-file custom-file))
 
-;; Start-emacs-server
-(add-hook 'after-init-hook #'(lambda ()
-                               (unless (daemonp)
-                                 (server-start)
-                                 (setq server-raise-frame t))))
+(require 'server)
+(unless (server-running-p) (server-start))
