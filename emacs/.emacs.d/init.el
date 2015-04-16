@@ -99,11 +99,11 @@
     flx-ido ido-ubiquitous smex
     git-commit-mode git-rebase-mode gitconfig-mode gitignore-mode git-timemachine magit ibuffer-vc
     ;; helm helm-ls-git helm-descbinds helm-bibtex helm-git-grep helm-make
-    projectile flycheck
+    projectile flycheck company
     expand-region change-inner jump-char multiple-cursors diminish shm elfeed)
   "Packages to ensure are installed.")
 
-(defvar my-themes '(basic zenburn wombat) "My themes.")
+(defvar my-themes '(basic zenburn) "My themes.")
 (defvar current-theme nil)
 
 ;; Do this for newer Emacs
@@ -155,13 +155,16 @@
   (require 'setup-org)
 
   ;; Projectile
-  (projectile-global-mode)
   (setq projectile-enable-caching t)
   (setq projectile-completion-system 'ido)
+  (add-hook 'after-init-hook #'projectile-global-mode)
 
   ;; Flycheck
   (global-set-key (kbd "C-c f") 'flycheck-mode)
   (add-hook 'after-init-hook #'global-flycheck-mode)
+
+  ;; ;; Company
+  ;; (add-hook 'after-init-hook 'global-company-mode)
 
   ;; Expand-region
   (global-set-key (kbd "C-=") 'er/expand-region)
@@ -183,6 +186,3 @@
 
 ;; Load customization file last
 (if (file-readable-p custom-file) (load-file custom-file))
-
-(require 'server)
-(unless (server-running-p) (server-start))
