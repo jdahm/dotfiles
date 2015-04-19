@@ -40,6 +40,7 @@
       helm-ls-git-status-command 'magit-status ; use Magit
       helm-truncate-lines t                    ; truncate lines in buffer by default
       helm-split-window-in-side-p t            ; open helm buffer inside current window
+      helm-display-header-line nil
       helm-lisp-fuzzy-completion t
       helm-completion-in-region-fuzzy-match t
       )
