@@ -36,7 +36,6 @@
       recentf-auto-cleanup 600    ; cleanup when idle for 600 seconds
       )
 (when (not noninteractive) (recentf-mode 1))
-(global-set-key (kbd "C-x C-r") 'recentf-open-files)
 
 (require 'windmove)
 (windmove-default-keybindings)
@@ -93,17 +92,17 @@
 
 ;; Packages
 (defvar my-packages
-  '(zenburn-theme basic-theme
+  '(leuven-theme
     markdown-mode yaml-mode haskell-mode
     org org-present
-    flx-ido ido-ubiquitous smex
     git-commit-mode git-rebase-mode gitconfig-mode gitignore-mode git-timemachine magit ibuffer-vc
+    ;; flx-ido ido-ubiquitous
     ;; helm helm-ls-git helm-descbinds helm-bibtex helm-git-grep helm-make
-    projectile flycheck company
+    flycheck company swiper smex
     expand-region change-inner jump-char multiple-cursors diminish shm elfeed)
   "Packages to ensure are installed.")
 
-(defvar my-themes '(basic zenburn) "My themes.")
+(defvar my-themes '(leuven wombat) "My themes.")
 (defvar current-theme nil)
 
 ;; Do this for newer Emacs
@@ -140,28 +139,49 @@
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
   (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 
-  ;; Git
-  (global-set-key (kbd "C-x g") 'magit-status)
-  (add-hook 'magit-mode-hook 'magit-load-config-extensions)
-  (setq magit-last-seen-setup-instructions "1.4.0"
-        magit-completing-read-function 'magit-ido-completing-read
-        magit-status-buffer-switch-function 'switch-to-buffer)
-
-  ;; Ido ... or Helm
-  (require 'setup-ido)
+  ;; Ivy instead of ido and helm
+  ;; (require 'setup-ido)
   ;; (require 'setup-helm)
+  (ivy-mode 1)
+  ;; Use swiper instead of `isearch-forward-regexp'
+  (global-set-key (kbd "C-M-s") 'swiper)
+
+  ;; Smex
+  (autoload 'smex "smex"
+    "Smex is a M-x enhancement for Emacs, it provides a convenient interface to
+your recently and most frequently used commands.")
+  (global-set-key (kbd "M-x") 'smex)
+
+  ;; Ibuffer
+  (add-hook 'ibuffer-hook
+            (lambda ()
+              (ibuffer-vc-set-filter-groups-by-vc-root)
+              (unless (eq ibuffer-sorting-mode 'alphabetic)
+                (ibuffer-do-sort-by-alphabetic))))
+  (global-set-key (kbd "C-x C-b") 'ibuffer)
+
+  ;; Git
+  (require 'setup-git)
+  (global-set-key (kbd "C-c m") 'git-compile)
+  (global-set-key (kbd "C-c C-m") 'recompile)
+
+  (require 'counsel)
+  (defun counsel-recentf ()
+    "Find file in the current Git repository."
+    (interactive)
+    (let* ((cands recentf-list)
+           (file (ivy-read "Recent file: " cands)))
+      (when file
+        (find-file file))))
+  (global-set-key (kbd "C-x C-r") 'counsel-recentf)
+  (global-set-key (kbd "C-c g") 'counsel-git-grep)
 
   ;; Org
   (require 'setup-org)
 
-  ;; Projectile
-  (setq projectile-enable-caching t)
-  (setq projectile-completion-system 'ido)
-  (add-hook 'after-init-hook #'projectile-global-mode)
-
   ;; Flycheck
-  (global-set-key (kbd "C-c f") 'flycheck-mode)
-  (add-hook 'after-init-hook #'global-flycheck-mode)
+  ;; (global-set-key (kbd "C-c f") 'flycheck-mode)
+  ;; (add-hook 'after-init-hook #'global-flycheck-mode)
 
   ;; ;; Company
   ;; (add-hook 'after-init-hook 'global-company-mode)
