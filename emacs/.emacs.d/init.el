@@ -46,12 +46,12 @@
       delete-by-moving-to-trash t
       dired-dwim-target t)
 (setq-default dired-listing-switches "-Al --si --time-style long-iso")
+;; hide some details by default
+(add-hook 'dired-mode-hook 'dired-hide-details-mode)
 
 (require 'buffer-defuns)
 (define-key dired-mode-map (kbd "b") 'dired-open-file)
 (define-key dired-mode-map (kbd "c") 'dired-open-fm)
-;; hide some details by default
-(add-hook 'dired-mode-hook 'dired-hide-details-mode)
 
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
 (global-set-key (kbd "C-c s") 'eshell)
@@ -84,21 +84,17 @@
 (require 'octave)
 (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
 
-(require 'tramp)
-(setq tramp-backup-directory-alist backup-directory-alist)
-
 (require 'hidden-mode-line-mode)
 (global-set-key (kbd "<f6>") 'hidden-mode-line-mode)
 
 ;; Packages
 (defvar my-packages
-  '(leuven-theme
-    markdown-mode yaml-mode haskell-mode
-    org org-present
+  '(markdown-mode yaml-mode haskell-mode
     git-commit-mode git-rebase-mode gitconfig-mode gitignore-mode git-timemachine magit ibuffer-vc
+    org org-present
     ;; flx-ido ido-ubiquitous
     ;; helm helm-ls-git helm-descbinds helm-bibtex helm-git-grep helm-make
-    flycheck company swiper smex
+    flycheck company counsel swiper smex
     expand-region change-inner jump-char multiple-cursors diminish shm elfeed)
   "Packages to ensure are installed.")
 
