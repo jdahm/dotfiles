@@ -89,13 +89,15 @@
 
 ;; Packages
 (defvar my-packages
-  '(markdown-mode yaml-mode haskell-mode
+  '(cl-lib
+    markdown-mode yaml-mode haskell-mode
     git-commit-mode git-rebase-mode gitconfig-mode gitignore-mode git-timemachine magit ibuffer-vc
     org org-present
     ;; flx-ido ido-ubiquitous
     ;; helm helm-ls-git helm-descbinds helm-bibtex helm-git-grep helm-make
     flycheck company counsel swiper smex
-    expand-region change-inner jump-char multiple-cursors diminish shm elfeed)
+    expand-region change-inner multiple-cursors
+    jump-char ledger-mode diminish shm elfeed)
   "Packages to ensure are installed.")
 
 (defvar my-themes '(leuven wombat) "My themes.")
@@ -136,11 +138,21 @@
   (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 
   ;; Ivy instead of ido and helm
-  ;; (require 'setup-ido)
-  ;; (require 'setup-helm)
   (ivy-mode 1)
   ;; Use swiper instead of `isearch-forward-regexp'
   (global-set-key (kbd "C-M-s") 'swiper)
+  ;; (require 'setup-ido)
+  ;; (require 'setup-helm)
+  (require 'counsel)
+  (defun counsel-recentf ()
+    "Find file in the current Git repository."
+    (interactive)
+    (let* ((cands recentf-list)
+           (file (ivy-read "Recent file: " cands)))
+      (when file
+        (find-file file))))
+  (global-set-key (kbd "C-x C-r") 'counsel-recentf)
+  (global-set-key (kbd "C-c g") 'counsel-git-grep)
 
   ;; Smex
   (autoload 'smex "smex"
@@ -160,17 +172,6 @@ your recently and most frequently used commands.")
   (require 'setup-git)
   (global-set-key (kbd "C-c m") 'git-compile)
   (global-set-key (kbd "C-c C-m") 'recompile)
-
-  (require 'counsel)
-  (defun counsel-recentf ()
-    "Find file in the current Git repository."
-    (interactive)
-    (let* ((cands recentf-list)
-           (file (ivy-read "Recent file: " cands)))
-      (when file
-        (find-file file))))
-  (global-set-key (kbd "C-x C-r") 'counsel-recentf)
-  (global-set-key (kbd "C-c g") 'counsel-git-grep)
 
   ;; Org
   (require 'setup-org)
@@ -198,7 +199,10 @@ your recently and most frequently used commands.")
 
   ;; Jump-char
   (global-set-key (kbd "M-m") 'jump-char-forward)
-  (global-set-key (kbd "C-M-m") 'jump-char-backward))
+  (global-set-key (kbd "C-M-m") 'jump-char-backward)
+
+  ;; Ledger-mode
+  (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode)))
 
 ;; Load customization file last
 (if (file-readable-p custom-file) (load-file custom-file))
