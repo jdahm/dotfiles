@@ -7,7 +7,7 @@
 
 (setq mu4e-maildir (expand-file-name "~/Mail")
       mu4e-attachment-dir (expand-file-name "~/Downloads")
-      mu4e-get-mail-command "check-mail-and-notify"
+      mu4e-get-mail-command "mbsync -q -a"
       mu4e-view-show-images t
       mu4e-view-image-max-width 800
       ;; mu4e-update-interval 300 ; No automatic updates
@@ -104,9 +104,9 @@
             (set-fill-column 72)
             (flyspell-mode)))
 
-(setq bbdb-file "~/Mail/bbdb")
-;; Expand BBDB aliases with SPC
-(add-hook 'mu4e-compose-mode-hook 'bbdb-define-all-aliases)
+;; ;; Expand BBDB aliases with SPC
+;; (setq bbdb-file "~/Mail/bbdb")
+;; (add-hook 'mu4e-compose-mode-hook 'bbdb-define-all-aliases)
 
 (setq mu4e-headers-fields
   '( (:human-date    .   12)

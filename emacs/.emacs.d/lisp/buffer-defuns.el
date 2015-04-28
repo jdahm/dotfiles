@@ -102,19 +102,4 @@ xdg-open."
     (call-process "xdg-open" nil 0 nil file)
     (message "Opening %s done" file)))
 
-(defun basic-mode-line-visual-toggle ()
-  (interactive)
-  (let ((faces-to-toggle '(mode-line mode-line-inactive))
-        (invisible-color "#e8e8e8")
-        (visible-color "#a1b56c"))
-    (cond ((string= visible-color (face-attribute 'mode-line :background))
-           (mapcar (lambda (face)
-                     (set-face-background face invisible-color))
-                   faces-to-toggle))
-          (t
-           (mapcar (lambda (face)
-                     (set-face-background face visible-color)
-                     (set-face-attribute face nil :height (face-attribute 'default :height)))
-                   faces-to-toggle)))))
-
 (provide 'buffer-defuns)

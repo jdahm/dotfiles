@@ -81,6 +81,9 @@
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR.")
 
+(defun edit-emacs-init ()
+  (interactive)
+  (find-file "~/.emacs.d/init.el"))
 
 (provide 'editing-defuns)
 
