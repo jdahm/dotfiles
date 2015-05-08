@@ -24,7 +24,20 @@
         ("p" "Personal task" entry (file+headline (concat org-directory "personal.org") "Tasks")
          "* TODO %?")
         ("w" "Work task" entry (file+headline (concat org-directory "work.org") "Tasks")
-         "* TODO %?\n %a")))
+         "* TODO %?\n %a")
+        ("l" "Ledger entries")
+        ("lv" "VISA" plain
+         (file "~/Documents/Finances/finances.ledger")
+         "%(org-read-date) %^{Payee}
+  Liabilities:VISA
+  Expenses:%^{Account}  %^{Amount}
+")
+        ("lc" "Cash" plain
+         (file "~/Documents/Finances/finances.ledger")
+         "%(org-read-date) * %^{Payee}
+  Expenses:Cash
+  Expenses:%^{Account}  %^{Amount}
+")))
 
 (setq org-todo-keywords
       '((sequence
