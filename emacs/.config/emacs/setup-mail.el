@@ -1,11 +1,8 @@
-;; Name
-(setq user-full-name "Johann Dahm")
-
-;; Email
 (require 'mu4e)
 (require 'smtpmail)
 
-(setq mu4e-maildir (expand-file-name "~/Mail")
+(setq user-full-name "Johann Dahm"
+      mu4e-maildir (expand-file-name "~/Mail")
       mu4e-attachment-dir (expand-file-name "~/Downloads")
       mu4e-get-mail-command "mbsync -q -a"
       mu4e-view-show-images t
@@ -16,11 +13,8 @@
       ;; mu4e-use-fancy-chars t ; These are ugly!
       mu4e-drafts-folder "/Drafts"
       mu4e-trash-folder "/Trash"
-      mu4e-msg2pdf "/usr/bin/msg2pdf")
-
-;; set this to nil so signature is not included by default
-;; you can include in message with C-c C-w
-(setq mu4e-compose-signature-auto-include nil)
+      mu4e-msg2pdf "/usr/bin/msg2pdf"
+      mu4e-compose-signature-auto-include nil) ;; include with C-c C-w
 
 (setq mu4e-html2text-command
       "html2text --body-width=72 --images-to-alt --protect-links")
@@ -34,7 +28,8 @@
 
 (defun create-home-signature (addr)
   (concat "Johann Dahm <" addr ">"
-          "http://johanndahm.com | 734.476.8606 (c)"))
+          "http://johanndahm.com | 734.476.8606 (c)"
+          "PGP: 4320 C3EF CDB1 863B 4922  F8AD 4912 E1CF EC5A 99B3"))
 
 (defun create-work-signature (addr)
   (concat "Johann P.S. Dahm <" addr ">"
@@ -104,9 +99,24 @@
             (set-fill-column 72)
             (flyspell-mode)))
 
-;; ;; Expand BBDB aliases with SPC
-;; (setq bbdb-file "~/Mail/bbdb")
-;; (add-hook 'mu4e-compose-mode-hook 'bbdb-define-all-aliases)
+;; Attaching files via dired
+;; Source: http://www.djcbsoftware.nl/code/mu/mu4e/Attaching-files-with-dired.html
+(require 'gnus-dired)
+;; make the `gnus-dired-mail-buffers' function also work on
+;; message-mode derived modes, such as mu4e-compose-mode
+(defun gnus-dired-mail-buffers ()
+  "Return a list of active message buffers."
+  (let (buffers)
+    (save-current-buffer
+      (dolist (buffer (buffer-list t))
+	(set-buffer buffer)
+	(when (and (derived-mode-p 'message-mode)
+		(null message-sent-message-via))
+	  (push (buffer-name buffer) buffers))))
+    (nreverse buffers)))
+
+(setq gnus-dired-mail-mode 'mu4e-user-agent)
+(add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
 
 (setq mu4e-headers-fields
   '( (:human-date    .   12)
