@@ -4,9 +4,12 @@ IMAPAccount fastmail-account
         User jdahm@fastmail.com
         PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mailpass-fm.gpg"
         # `UseIMAPS' is required since FM disabled insecure connections
-        SSLType IMAPS
-        SSLVersions TLSv1
+        UseIMAPS yes
+        RequireSSL yes
         CertificateFile /etc/ssl/certs/ca-certificates.crt
+        # for newer version
+        # SSLType IMAPS
+        # SSLVersions TLSv1
 
 IMAPAccount umich-account
         # Address to connect to
@@ -14,9 +17,12 @@ IMAPAccount umich-account
         User jdahm@umich.edu
         PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mailpass-umich.gpg"
         # `UseIMAPS' is required since FM disabled insecure connections
-        SSLType IMAPS
-        SSLVersions TLSv1
+        UseIMAPS yes
+        RequireSSL yes
         CertificateFile /etc/ssl/certs/ca-certificates.crt
+        # for newer version
+        # SSLType IMAPS
+        # SSLVersions TLSv1
 
 IMAPStore fastmail-imap
 	Account	fastmail-account
@@ -34,14 +40,30 @@ MaildirStore umich-local
         Path ~/Mail/um/
         Inbox ~/Mail/um/Inbox
 
-Channel fm
+# for newer version
+# Channel fm
+#         Master :fastmail-imap:
+#         Slave  :fastmail-local:
+#         Patterns * !Trash !Drafts
+#         Create Slave
+#         SyncState *
+#         Sync All
+#         Expunge Both
+
+Channel fastmail-inbox
         Master :fastmail-imap:
         Slave  :fastmail-local:
-        Patterns * !Trash !Drafts
         Create Slave
         SyncState *
         Sync All
-        Expunge Both
+
+Channel fastmail-folders
+        Master :fastmail-imap:INBOX/
+        Slave  :fastmail-local:
+        Patterns * !INBOX !Drafts !Trash !Spam
+        Create Slave
+        SyncState *
+        Sync All
 
 Channel umich-inbox
         Master ":umich-imap:INBOX"
@@ -76,4 +98,4 @@ Channel umich-spam
         Expunge Both
 
 Group all
-        Channels fm umich-inbox umich-sent umich-archived umich-spam
+        Channels fastmail-inbox fastmail-folders umich-inbox umich-sent umich-archived umich-spam

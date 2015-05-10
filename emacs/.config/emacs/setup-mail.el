@@ -17,7 +17,7 @@
       mu4e-compose-signature-auto-include nil) ;; include with C-c C-w
 
 (setq mu4e-html2text-command
-      "html2text --body-width=72 --images-to-alt --protect-links")
+      "html2text -width 72 -utf8")
 
 (add-to-list 'mu4e-view-actions
              '("View in browser" . mu4e-action-view-in-browser) t)
