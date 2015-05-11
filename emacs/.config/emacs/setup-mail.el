@@ -126,3 +126,23 @@
      (:subject       .   nil)))
 
 (global-set-key (kbd "C-c u") 'mu4e-update-mail-and-index)
+
+(defun new-message-from-uri (uri)
+  "Create a new email message based on a 'mailto' URI and its parameters."
+  (let ((uri-decoded (url-unhex-string uri))
+        (to-address-re "mailto:\\([^?]+\\)")
+        (to-address "")
+        (has-args-re "\\(\\?\\)")
+        (has-args-p nil)
+        (args-alist '()))
+    (string-match to-address-re uri-decoded)
+    (setq to-address (match-string 1 uri-decoded))
+    (string-match has-args-re uri-decoded)
+    (setq has-args-p (match-string 1 uri-decoded))
+    (if has-args-p
+        (let ((args-re "\\([^&=]+\\)=\\([^&]+\\)"))
+          (while (string-match args-re uri-decoded (match-end 0))
+            (setq args-alist (cons `(,(match-string 1 uri-decoded) . ,(match-string 2 uri-decoded)) args-alist)))))
+    (if (assoc "Subject" args-alist)
+        (message-mail to-address (cdr (assoc "Subject" args-alist)) args-alist)
+      (message-mail to-address nil args-alist))))
