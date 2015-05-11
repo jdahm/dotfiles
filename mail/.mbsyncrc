@@ -26,7 +26,6 @@ IMAPAccount umich-account
 
 IMAPStore fastmail-imap
 	Account	fastmail-account
-        Path	INBOX.
 
 IMAPStore umich-imap
         Account umich-account
@@ -40,30 +39,22 @@ MaildirStore umich-local
         Path ~/Mail/um/
         Inbox ~/Mail/um/Inbox
 
-# for newer version
-# Channel fm
-#         Master :fastmail-imap:
-#         Slave  :fastmail-local:
-#         Patterns * !Trash !Drafts
-#         Create Slave
-#         SyncState *
-#         Sync All
-#         Expunge Both
-
-Channel fastmail-inbox
-        Master :fastmail-imap:
-        Slave  :fastmail-local:
+Channel fm-inbox
+        Master :fastmail-imap:INBOX
+        Slave  :fastmail-local:Inbox
         Create Slave
         SyncState *
         Sync All
+        Expunge Both
 
-Channel fastmail-folders
+Channel fm-folders
         Master :fastmail-imap:INBOX/
         Slave  :fastmail-local:
         Patterns * !INBOX !Drafts !Trash !Spam
         Create Slave
         SyncState *
         Sync All
+        Expunge Both
 
 Channel umich-inbox
         Master ":umich-imap:INBOX"
@@ -98,4 +89,4 @@ Channel umich-spam
         Expunge Both
 
 Group all
-        Channels fastmail-inbox fastmail-folders umich-inbox umich-sent umich-archived umich-spam
+        Channels fm-inbox fm-folders umich-inbox umich-sent umich-archived umich-spam
