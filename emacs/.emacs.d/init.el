@@ -105,7 +105,7 @@
     jump-char ledger-mode diminish shm elfeed)
   "Packages to ensure are installed.")
 
-(defvar my-themes '(leuven niflheim) "My themes.")
+(defvar my-themes '(tango niflheim) "My themes.")
 (defvar current-theme nil)
 
 ;; Do this for newer Emacs
