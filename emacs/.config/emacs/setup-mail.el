@@ -143,6 +143,7 @@
         (let ((args-re "\\([^&=]+\\)=\\([^&]+\\)"))
           (while (string-match args-re uri-decoded (match-end 0))
             (setq args-alist (cons `(,(match-string 1 uri-decoded) . ,(match-string 2 uri-decoded)) args-alist)))))
+    (my-mu4e-set-account)
     (if (assoc "Subject" args-alist)
         (message-mail to-address (cdr (assoc "Subject" args-alist)) args-alist)
       (message-mail to-address nil args-alist))))
