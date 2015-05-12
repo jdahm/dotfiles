@@ -59,6 +59,9 @@
   (interactive)
   (let ((directory (compile-dir))
         (target (compile-tar)))
-    (compile (concat "make -k -C " directory " " target))))
+    (if (= (length directory) 0)
+        (setq args (concat "make -k " target))
+        (setq args (concat "make -k -C " directory " " target)))
+    (compile args)))
 
 (provide 'setup-git)
