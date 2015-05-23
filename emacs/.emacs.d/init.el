@@ -94,7 +94,6 @@
 ;; Packages
 (defvar my-packages
   '(cl-lib
-    niflheim-theme
     markdown-mode yaml-mode haskell-mode
     git-commit-mode git-rebase-mode gitconfig-mode gitignore-mode git-timemachine magit ibuffer-vc
     org org-present
@@ -105,7 +104,7 @@
     jump-char ledger-mode diminish shm elfeed)
   "Packages to ensure are installed.")
 
-(defvar my-themes '(tango niflheim) "My themes.")
+(defvar my-themes '(tango wombat) "My themes.")
 (defvar current-theme nil)
 
 ;; Do this for newer Emacs
@@ -123,6 +122,7 @@
 
   ;; Cycle themes
   (require 'appearance-defuns)
+  (cycle-my-themes)
   (global-set-key (kbd "<f5>") 'cycle-my-themes)
   (global-set-key (kbd "C-x <f5>") 'clear-current-theme)
 
