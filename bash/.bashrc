@@ -9,6 +9,10 @@ shopt -s cdspell
 shopt -s cmdhist
 shopt -s extglob
 
+# Check the window size after each command and, if necessary, update
+# the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
 # History
 # Source: http://blog.sanctum.geek.nz/better-bash-history/
 shopt -s histappend
@@ -16,10 +20,6 @@ HISTCONTROL=ignoreboth
 HISTIGNORE='bg:fg:history'
 HISTTIMEFORMAT='%F %T '
 shopt -s cmdhist
-
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
 
 # Make it harder to exit accidentally
 # Require ^D 3 times to exit
