@@ -52,8 +52,7 @@ if [ $# == 0 ]; then
 fi
 
 # Parse options
-while getopts haucd: opt
-do
+while getopts haucd: opt; do
     case $opt in
         u) cmd=uninstall;;
         a) all=true;;
@@ -73,7 +72,7 @@ else
 fi
 
 # Perform actions
-shift $(($OPTIND-1))
+shift $((OPTIND-1))
 for p in "${pkgs[@]}"; do
     if [ "$cmd" = "install" ]; then
         echo ${cmd}ing $p to $DESTDIR
