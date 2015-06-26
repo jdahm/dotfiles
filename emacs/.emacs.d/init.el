@@ -63,18 +63,21 @@
 (global-set-key (kbd "<f7>") 'prev-buffer)
 (global-set-key (kbd "<f8>") 'split-window-show-prev)
 (global-set-key (kbd "<f9>") 'toggle-truncate-lines)
+(global-set-key (kbd "M-i") 'imenu)
+(global-set-key (kbd "M-o") 'other-window)
 
 (global-unset-key (kbd "C-x C-+"))
 
 (require 'editing-defuns)
-(global-set-key (kbd "C-a") 'my-beginning-of-line)
+;; (global-set-key (kbd "C-a") 'my-beginning-of-line)
 (global-set-key (kbd "C-<down>") 'move-line-down)
 (global-set-key (kbd "C-<up>") 'move-line-up)
 (global-set-key (kbd "C-c C-a") 'auto-fill-mode)
 (global-set-key (kbd "C-c C-w")   'subword-mode)
+(global-set-key (kbd "C-c i")   'my-url-insert-file-contents)
 (global-set-key (kbd "C-c n")   'tidy-region-or-buffer)
 (global-set-key (kbd "C-c t")   'cycle-tab-width)
-(global-set-key (kbd "C-c i")   'my-url-insert-file-contents)
+(global-set-key (kbd "C-x C-;") 'comment-or-uncomment-region-or-line)
 (global-set-key (kbd "C-x a r") 'align-regexp)
 (global-set-key (kbd "M-Z")     'zap-up-to-char)
 
@@ -91,17 +94,18 @@
 (require 'hidden-mode-line-mode)
 (global-set-key (kbd "<f6>") 'hidden-mode-line-mode)
 
+
 ;; Packages
 (defvar my-packages
   '(cl-lib
     markdown-mode yaml-mode haskell-mode
     git-commit-mode git-rebase-mode gitconfig-mode gitignore-mode git-timemachine magit ibuffer-vc
     org org-present
-    ;; flx-ido ido-ubiquitous
+    flx-ido ido-ubiquitous
     ;; helm helm-ls-git helm-descbinds helm-bibtex helm-git-grep helm-make
-    flycheck company counsel swiper smex
-    expand-region change-inner multiple-cursors
-    jump-char ledger-mode diminish shm elfeed)
+    flycheck counsel smex
+    ;; expand-region change-inner multiple-cursors jump-char
+    ledger-mode diminish shm elfeed)
   "Packages to ensure are installed.")
 
 (defvar my-themes '(tango wombat) "My themes.")
@@ -160,8 +164,8 @@
        (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)))
 
   ;; Ivy instead of ido and helm
-  (ivy-mode 1)
-  ;; (require 'setup-ido)
+  ;; (ivy-mode 1)
+  (require 'setup-ido)
   ;; (require 'setup-helm)
   (require 'counsel)
   (defun counsel-recentf ()
@@ -174,7 +178,7 @@
   (global-set-key (kbd "C-x C-r") 'counsel-recentf)
   (global-set-key (kbd "C-c g") 'counsel-git-grep)
   (global-set-key (kbd "C-c f") 'counsel-git)
-  (global-set-key (kbd "C-M-s") 'swiper)
+  ;; (global-set-key (kbd "C-M-s") 'swiper)
 
   ;; Smex
   (autoload 'smex "smex"
@@ -205,23 +209,23 @@ your recently and most frequently used commands.")
   ;; ;; Company
   ;; (add-hook 'after-init-hook 'global-company-mode)
 
-  ;; Expand-region
-  (global-set-key (kbd "C-=") 'er/expand-region)
-  (global-set-key (kbd "C-M-=") 'er/contract-region)
+  ;; ;; Expand-region
+  ;; (global-set-key (kbd "C-=") 'er/expand-region)
+  ;; (global-set-key (kbd "C-M-=") 'er/contract-region)
 
-  ;; Change-inner
-  (global-set-key (kbd "M-i") 'change-inner)
-  (global-set-key (kbd "M-o") 'change-outer)
+  ;; ;; Change-inner
+  ;; (global-set-key (kbd "M-i") 'change-inner)
+  ;; (global-set-key (kbd "M-o") 'change-outer)
 
-  ;; Multiple-cursors
-  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-<") 'mc/mark-prev-like-this)
-  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+  ;; ;; Multiple-cursors
+  ;; (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+  ;; (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  ;; (global-set-key (kbd "C-<") 'mc/mark-prev-like-this)
+  ;; (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
-  ;; Jump-char
-  (global-set-key (kbd "M-m") 'jump-char-forward)
-  (global-set-key (kbd "C-M-m") 'jump-char-backward)
+  ;; ;; Jump-char
+  ;; (global-set-key (kbd "M-m") 'jump-char-forward)
+  ;; (global-set-key (kbd "C-M-m") 'jump-char-backward)
 
   ;; Ledger-mode
   (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode)))
