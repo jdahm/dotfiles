@@ -82,12 +82,6 @@ Call a second time to restore the original window configuration."
     (window-configuration-to-register :my-split-window)
     (switch-to-buffer-other-window nil)))
 
-(defun switch-to-minibuffer-window ()
-  "Switch to minibuffer window (if active)."
-  (interactive)
-  (when (active-minibuffer-window)
-    (select-window (active-minibuffer-window))))
-
 (defun dired-open-fm ()
   "Open a GUI file manager at (dired-current-directory) using
 xdg-open."
