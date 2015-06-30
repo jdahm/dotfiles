@@ -98,6 +98,7 @@
 ;; Packages
 (defvar my-packages
   '(cl-lib
+    basic-theme
     markdown-mode yaml-mode haskell-mode
     git-commit-mode git-rebase-mode gitconfig-mode gitignore-mode git-timemachine magit ibuffer-vc
     org org-present
@@ -108,7 +109,7 @@
     ledger-mode diminish shm elfeed)
   "Packages to ensure are installed.")
 
-(defvar my-themes '(tango wombat) "My themes.")
+(defvar my-themes '(wombat basic) "My themes.")
 (defvar current-theme nil)
 
 ;; Do this for newer Emacs
