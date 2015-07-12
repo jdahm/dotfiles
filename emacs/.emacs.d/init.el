@@ -98,9 +98,9 @@
 ;; Packages
 (defvar my-packages
   '(cl-lib
-    basic-theme
+    sublime-themes
     markdown-mode yaml-mode haskell-mode
-    git-commit-mode git-rebase-mode gitconfig-mode gitignore-mode git-timemachine magit ibuffer-vc
+    git-timemachine magit ibuffer-vc
     org org-present
     flx-ido ido-ubiquitous
     ;; helm helm-ls-git helm-descbinds helm-bibtex helm-git-grep helm-make
@@ -109,7 +109,7 @@
     ledger-mode diminish shm elfeed)
   "Packages to ensure are installed.")
 
-(defvar my-themes '(wombat basic) "My themes.")
+(defvar my-themes '(mccarthy brin granger spolsky graham odersky hickey fogus dorsey wilson junio) "My themes.")
 (defvar current-theme nil)
 
 ;; Do this for newer Emacs
