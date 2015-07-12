@@ -1,5 +1,6 @@
 ;; Set up load path
 (add-to-list 'load-path (concat user-emacs-directory "lisp/"))
+(add-to-list 'custom-theme-load-path (concat user-emacs-directory "themes/"))
 
 ;; Customization file here
 (setq custom-file (expand-file-name "~/.config/emacs/init-custom.el"))
@@ -98,7 +99,6 @@
 ;; Packages
 (defvar my-packages
   '(cl-lib
-    sublime-themes
     markdown-mode yaml-mode haskell-mode
     git-timemachine magit ibuffer-vc
     org org-present
@@ -106,10 +106,10 @@
     ;; helm helm-ls-git helm-descbinds helm-bibtex helm-git-grep helm-make
     flycheck counsel smex
     ;; expand-region change-inner multiple-cursors jump-char
-    ledger-mode diminish shm elfeed)
+    ledger-mode diminish elfeed)
   "Packages to ensure are installed.")
 
-(defvar my-themes '(mccarthy brin granger spolsky graham odersky hickey fogus dorsey wilson junio) "My themes.")
+(defvar my-themes '(twilight-bright wombat) "My themes.")
 (defvar current-theme nil)
 
 ;; Do this for newer Emacs
