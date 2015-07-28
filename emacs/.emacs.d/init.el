@@ -33,8 +33,8 @@
 (setq-default save-place t)
 
 (require 'recentf)
-(setq recentf-max-saved-items 300 ; number of saved items
-      recentf-auto-cleanup 600    ; cleanup when idle for 600 seconds
+(setq recentf-max-saved-items 50 ; number of saved items
+      recentf-auto-cleanup 600   ; cleanup when idle for 600 seconds
       )
 (when (not noninteractive) (recentf-mode 1))
 
@@ -70,17 +70,16 @@
 (global-unset-key (kbd "C-x C-+"))
 
 (require 'editing-defuns)
-;; (global-set-key (kbd "C-a") 'my-beginning-of-line)
 (global-set-key (kbd "C-<down>") 'move-line-down)
-(global-set-key (kbd "C-<up>") 'move-line-up)
-(global-set-key (kbd "C-c C-a") 'auto-fill-mode)
-(global-set-key (kbd "C-c C-w")   'subword-mode)
-(global-set-key (kbd "C-c i")   'my-url-insert-file-contents)
-(global-set-key (kbd "C-c n")   'tidy-region-or-buffer)
-(global-set-key (kbd "C-c t")   'cycle-tab-width)
-(global-set-key (kbd "C-x C-;") 'comment-or-uncomment-region-or-line)
-(global-set-key (kbd "C-x a r") 'align-regexp)
-(global-set-key (kbd "M-Z")     'zap-up-to-char)
+(global-set-key (kbd "C-<up>")   'move-line-up)
+(global-set-key (kbd "C-c C-a")  'auto-fill-mode)
+(global-set-key (kbd "C-c C-w")  'subword-mode)
+(global-set-key (kbd "C-c i")    'my-url-insert-file-contents)
+(global-set-key (kbd "C-c n")    'tidy-region-or-buffer)
+(global-set-key (kbd "C-c t")    'cycle-tab-width)
+(global-set-key (kbd "C-x C-;")  'comment-or-uncomment-region-or-line)
+(global-set-key (kbd "C-x a r")  'align-regexp)
+(global-set-key (kbd "M-Z")      'zap-up-to-char)
 
 (define-key 'help-command (kbd "C-i") 'info-display-manual)
 
@@ -95,18 +94,21 @@
 (require 'hidden-mode-line-mode)
 (global-set-key (kbd "<f6>") 'hidden-mode-line-mode)
 
+(add-hook 'prog-mode-hook
+               (lambda ()
+                (font-lock-add-keywords nil
+                 '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
 
 ;; Packages
 (defvar my-packages
   '(cl-lib
     markdown-mode yaml-mode haskell-mode
     git-timemachine magit ibuffer-vc
-    org org-present
     flx-ido ido-ubiquitous
-    ;; helm helm-ls-git helm-descbinds helm-bibtex helm-git-grep helm-make
-    flycheck counsel smex
+    ;; helm helm-ls-git helm-descbinds helm-bibtex helm-git-grep helm-make counsel
+    flycheck smex
     ;; expand-region change-inner multiple-cursors jump-char
-    ledger-mode diminish elfeed)
+    ledger-mode elfeed)
   "Packages to ensure are installed.")
 
 (defvar my-themes '(twilight-bright wombat) "My themes.")
@@ -164,28 +166,21 @@
        (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
        (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)))
 
-  ;; Ivy instead of ido and helm
-  ;; (ivy-mode 1)
-  (require 'setup-ido)
-  ;; (require 'setup-helm)
-  (require 'counsel)
-  (defun counsel-recentf ()
-    "Find file in the current Git repository."
-    (interactive)
-    (let* ((cands recentf-list)
-           (file (ivy-read "Recent file: " cands)))
-      (when file
-        (find-file file))))
-  (global-set-key (kbd "C-x C-r") 'counsel-recentf)
-  (global-set-key (kbd "C-c g") 'counsel-git-grep)
-  (global-set-key (kbd "C-c f") 'counsel-git)
-  ;; (global-set-key (kbd "C-M-s") 'swiper)
-
   ;; Smex
-  (autoload 'smex "smex"
-    "Smex is a M-x enhancement for Emacs, it provides a convenient interface to
-your recently and most frequently used commands.")
+  (autoload 'smex "smex")
   (global-set-key (kbd "M-x") 'smex)
+
+  ;; Ido
+  (ido-mode 1)
+  (flx-ido-mode 1)
+  (ido-everywhere 1)
+  (ido-ubiquitous-mode 1)
+  (setq ido-enable-flex-matching t
+        ido-use-faces nil
+        ido-use-virtual-buffers t
+        ido-ignore-extensions t
+        ido-use-filename-at-point 'guess
+        ido-create-new-buffer 'prompt)
 
   ;; Ibuffer
   (add-hook 'ibuffer-hook
@@ -197,36 +192,9 @@ your recently and most frequently used commands.")
 
   ;; Git
   (require 'setup-git)
-  (global-set-key (kbd "C-c m") 'git-compile)
-  (global-set-key (kbd "C-c C-m") 'recompile)
 
   ;; Org
   (require 'setup-org)
-
-  ;; Flycheck
-  ;; (global-set-key (kbd "C-c f") 'flycheck-mode)
-  ;; (add-hook 'after-init-hook #'global-flycheck-mode)
-
-  ;; ;; Company
-  ;; (add-hook 'after-init-hook 'global-company-mode)
-
-  ;; ;; Expand-region
-  ;; (global-set-key (kbd "C-=") 'er/expand-region)
-  ;; (global-set-key (kbd "C-M-=") 'er/contract-region)
-
-  ;; ;; Change-inner
-  ;; (global-set-key (kbd "M-i") 'change-inner)
-  ;; (global-set-key (kbd "M-o") 'change-outer)
-
-  ;; ;; Multiple-cursors
-  ;; (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-  ;; (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-  ;; (global-set-key (kbd "C-<") 'mc/mark-prev-like-this)
-  ;; (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-
-  ;; ;; Jump-char
-  ;; (global-set-key (kbd "M-m") 'jump-char-forward)
-  ;; (global-set-key (kbd "C-M-m") 'jump-char-backward)
 
   ;; Ledger-mode
   (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode)))

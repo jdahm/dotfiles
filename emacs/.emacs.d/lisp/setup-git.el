@@ -1,7 +1,6 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 (add-hook 'magit-mode-hook 'magit-load-config-extensions)
 (setq magit-last-seen-setup-instructions "1.4.0"
-      magit-completing-read-function 'ivy-completing-read
       magit-status-buffer-switch-function 'switch-to-buffer)
 
 (defun git-grep-prompt ()
@@ -22,19 +21,6 @@
                      (shell-quote-argument search)
                      " `git rev-parse --show-toplevel`")))
 
-(defun couns-git ()
-  "Find file in the current Git repository."
-  (interactive)
-  (let* ((default-directory (locate-dominating-file
-                             default-directory ".git"))
-         (cands (split-string
-                 (shell-command-to-string
-                  "git ls-files --full-name --")
-                 "\n"))
-         (file (ivy-read "Find file: " cands)))
-    (when file
-      (find-file file))))
-
 (defun compile-dir ()
   (let* ((default (locate-dominating-file
                             default-directory ".git"))
@@ -48,7 +34,7 @@
 
 (defun compile-tar ()
   (let* ((default "all")
-         (prompt (concat "Taget: (default all) "))
+         (prompt (concat "Target: (default all) "))
          (target (read-from-minibuffer prompt nil nil nil nil default)))
     (if (> (length target) 0)
         target
@@ -63,5 +49,9 @@
         (setq args (concat "make -k " target))
         (setq args (concat "make -k -C " directory " " target)))
     (compile args)))
+
+(global-set-key (kbd "C-c g")   'git-grep)
+(global-set-key (kbd "C-c m")   'git-compile)
+(global-set-key (kbd "C-c C-m") 'recompile)
 
 (provide 'setup-git)
