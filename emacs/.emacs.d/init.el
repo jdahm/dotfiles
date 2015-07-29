@@ -197,7 +197,13 @@
   (require 'setup-org)
 
   ;; Ledger-mode
-  (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode)))
+  (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode))
+
+  ;; Password-store
+  (global-set-key (kbd "C-c p k") 'password-store-clear)
+  (global-set-key (kbd "C-c p c") 'password-store-copy)
+  (global-set-key (kbd "C-c p n") 'password-store-insert)
+  (global-set-key (kbd "C-c p g") 'password-store-generate))
 
 ;; Load customization file last
 (if (file-readable-p custom-file) (load-file custom-file))
