@@ -26,18 +26,6 @@
 (setq message-send-mail-function 'smtpmail-send-it
       message-kill-buffer-on-exit t)
 
-(defun create-home-signature (addr)
-  (concat "Johann Dahm <" addr ">"
-          "http://johanndahm.com | 734.476.8606 (c)"
-          "PGP: 4320 C3EF CDB1 863B 4922  F8AD 4912 E1CF EC5A 99B3"))
-
-(defun create-work-signature (addr)
-  (concat "Johann P.S. Dahm <" addr ">"
-          "Ph.D. Candidate"
-          "Department of Aerospace Engineering, University of Michigan"
-          "2001 François-Xavier Bagnoud Building"
-          "www.johanndahm.com | 734.476.8606 (c)"))
-
 (defun create-fm-vars (mail-address)
   "Return account-vars for fm given MAIL-ADDRESS."
   (mapc 'list `((mu4e-sent-folder "/fm/Sent Items")

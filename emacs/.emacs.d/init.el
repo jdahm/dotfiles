@@ -108,10 +108,10 @@
     ;; helm helm-ls-git helm-descbinds helm-bibtex helm-git-grep helm-make counsel
     flycheck smex
     ;; expand-region change-inner multiple-cursors jump-char
-    ledger-mode elfeed)
+    ledger-mode password-store elfeed company flycheck)
   "Packages to ensure are installed.")
 
-(defvar my-themes '(twilight-bright wombat) "My themes.")
+(defvar my-themes '(twilight-bright twilight-anti-bright) "My themes.")
 (defvar current-theme nil)
 
 ;; Do this for newer Emacs
