@@ -97,18 +97,26 @@
 (add-hook 'prog-mode-hook
                (lambda ()
                 (font-lock-add-keywords nil
-                 '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
+                                        '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
+
+;; Shell-mode
+(setq comint-input-ignoredups t
+      comint-completion-addsuffix t
+      comint-completion-addsuffix t
+      comint-scroll-to-bottom-on-input t
+      comint-scroll-show-maximum-output t)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; Packages
 (defvar my-packages
   '(cl-lib
-    markdown-mode yaml-mode haskell-mode
+    markdown-mode yaml-mode haskell-mode gnuplot-mode ledger-mode
     git-timemachine magit ibuffer-vc
     flx-ido ido-ubiquitous
     ;; helm helm-ls-git helm-descbinds helm-bibtex helm-git-grep helm-make counsel
     flycheck smex
     ;; expand-region change-inner multiple-cursors jump-char
-    ledger-mode password-store elfeed company flycheck)
+    password-store elfeed company flycheck)
   "Packages to ensure are installed.")
 
 (defvar my-themes '(twilight-bright twilight-anti-bright) "My themes.")
