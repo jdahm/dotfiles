@@ -18,6 +18,9 @@
 ;; Better defaults
 (require 'sane-defaults)
 
+;; Prefer utf-8
+(prefer-coding-system 'utf-8)
+
 ;; Backup
 (unless (file-exists-p "~/.emacs.d/backup/")
   (make-directory "~/.emacs.d/backup/" t))
@@ -88,7 +91,9 @@
 (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
 
 ;; Writing
+(require 'dubcaps-mode)
 (add-hook 'text-mode-hook 'auto-fill-mode)
+(add-hook 'text-mode-hook 'dubcaps-mode)
 
 ;; Hidden mode line
 (require 'hidden-mode-line-mode)
@@ -112,11 +117,8 @@
   '(cl-lib
     markdown-mode yaml-mode haskell-mode gnuplot-mode ledger-mode
     git-timemachine magit ibuffer-vc
-    flx-ido ido-ubiquitous
-    ;; helm helm-ls-git helm-descbinds helm-bibtex helm-git-grep helm-make counsel
-    flycheck smex
-    ;; expand-region change-inner multiple-cursors jump-char
-    password-store elfeed company flycheck)
+    flx-ido ido-ubiquitous smex
+    flycheck password-store elfeed)
   "Packages to ensure are installed.")
 
 (defvar my-themes '(twilight-bright twilight-anti-bright) "My themes.")
@@ -197,6 +199,9 @@
               (unless (eq ibuffer-sorting-mode 'alphabetic)
                 (ibuffer-do-sort-by-alphabetic))))
   (global-set-key (kbd "C-x C-b") 'ibuffer)
+
+  ;; Hippie-expand
+  (global-set-key [remap dabbrev-expand] 'hippie-expand)
 
   ;; Git
   (require 'setup-git)

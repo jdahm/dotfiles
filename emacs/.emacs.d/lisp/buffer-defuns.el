@@ -96,4 +96,11 @@ xdg-open."
     (call-process "xdg-open" nil 0 nil file)
     (message "Opening %s done" file)))
 
+(defun project-root ()
+  "Return the project root for current buffer."
+  (let ((directory default-directory))
+    (or (locate-dominating-file directory ".git")
+        (locate-dominating-file directory ".svn")
+        (locate-dominating-file directory ".hg"))))
+
 (provide 'buffer-defuns)
