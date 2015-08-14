@@ -44,6 +44,9 @@
 (require 'windmove)
 (windmove-default-keybindings)
 
+(require 're-builder)
+(setq reb-re-syntax 'string)
+
 (require 'dired)
 (setq dired-recursive-copies 'always
       dired-recursive-deletes 'always
@@ -115,7 +118,7 @@
 ;; Packages
 (defvar my-packages
   '(cl-lib
-    markdown-mode yaml-mode haskell-mode gnuplot-mode ledger-mode
+    markdown-mode yaml-mode haskell-mode clojure-mode gnuplot-mode ledger-mode
     git-timemachine magit ibuffer-vc
     flx-ido ido-ubiquitous smex
     flycheck password-store elfeed)

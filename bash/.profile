@@ -1,5 +1,5 @@
 # Path settings
-export PATH=~/usr/bin:/usr/local/bin:${PATH}
+export PATH=~/bin:/usr/local/bin:${PATH}
 
 # Sane defaults
 export EMACS="emacs"
