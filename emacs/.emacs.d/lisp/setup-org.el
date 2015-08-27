@@ -3,11 +3,11 @@
 (global-set-key (kbd "C-c a") 'org-agenda)
 
 (setq
- org-directory "~/annex/org/"                                               ; directory for notes
+ org-directory "~/Sync/org/"                                               ; directory for notes
  org-default-notes-file (concat org-directory "notes.org")                    ; default file
  org-agenda-files (list (concat org-directory "personal.org")
                         (concat org-directory "work.org"))                    ; agenda files
- org-archive-location "~/annex/org/datetree.org::datetree/* Finished Tasks" ; archive format
+ org-archive-location "~/Sync/org/datetree.org::datetree/* Finished Tasks" ; archive format
  )
 
 (setq

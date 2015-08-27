@@ -124,9 +124,6 @@
     flycheck password-store elfeed)
   "Packages to ensure are installed.")
 
-(defvar my-themes '(twilight-bright twilight-anti-bright) "My themes.")
-(defvar current-theme nil)
-
 ;; Do this for newer Emacs
 (when (>= emacs-major-version 24)
   (setq package-archives
@@ -139,12 +136,6 @@
   (dolist (p my-packages)
     (when (not (package-installed-p p))
       (package-install p)))
-
-  ;; Cycle themes
-  (require 'appearance-defuns)
-  (cycle-my-themes)
-  (global-set-key (kbd "<f5>") 'cycle-my-themes)
-  (global-set-key (kbd "C-x <f5>") 'clear-current-theme)
 
   ;; Match braces and parens
   (require 'elec-pair)
