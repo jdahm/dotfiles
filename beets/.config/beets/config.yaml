@@ -1,7 +1,7 @@
 library: /home/jdahm/Music/Library/music.blb
 directory: /home/jdahm/Music/Library
 threaded: yes
-plugins: scrub fetchart lastgenre
+plugins: scrub fetchart lastgenre duplicates
 paths:
   default: $albumartist/$album%aunique{}/$track-$title
   singleton: Non-Album/$artist/$title
