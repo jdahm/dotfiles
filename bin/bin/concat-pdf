@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+outfile=$1
+shift
+gs -sDEVICE=pdfwrite -sOutputFile=$outfile -f $*
