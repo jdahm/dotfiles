@@ -61,8 +61,8 @@
 (define-key dired-mode-map (kbd "c") 'dired-open-fm)
 
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
-(global-set-key (kbd "C-c s") 'eshell)
-(global-set-key (kbd "C-c S") 'ansi-term)
+(global-set-key (kbd "C-c s") 'shell)
+(global-set-key (kbd "C-c S") 'eshell)
 (global-set-key (kbd "C-x a k") 'bury-buffer)
 (global-set-key (kbd "C-x -") 'toggle-window-split)
 (global-set-key (kbd "C-x C--") 'rotate-windows)
