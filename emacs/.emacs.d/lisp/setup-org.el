@@ -37,7 +37,11 @@
          "%(org-read-date) * %^{Payee}
   Expenses:Cash
   Expenses:%^{Account}  %^{Amount}
-")))
+")
+         ("j" "Journal Entry"
+         entry (file+datetree "journal.org")
+         "* %?"
+         :empty-lines 1)))
 
 (setq org-todo-keywords
       '((sequence
