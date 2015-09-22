@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Execute this as root
+
+for i in /sys/bus/usb/devices/*/power/autosuspend; do echo 2 > $i; done
+
+for foo in /sys/bus/usb/devices/*/power/level; do echo on > $foo; done
