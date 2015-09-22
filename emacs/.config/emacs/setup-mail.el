@@ -11,8 +11,6 @@
       mu4e-change-filenames-when-moving t
       mu4e-view-show-addresses t
       ;; mu4e-use-fancy-chars t ; These are ugly!
-      mu4e-drafts-folder "/Drafts"
-      mu4e-trash-folder "/Trash"
       mu4e-msg2pdf "/usr/bin/msg2pdf"
       mu4e-compose-signature-auto-include nil) ;; include with C-c C-w
 
@@ -32,6 +30,8 @@
                 (mu4e-compose-signature ,(create-home-signature mail-address))
                 (user-mail-address ,mail-address)
                 (mu4e-sent-messages-behavior sent)
+                (mu4e-drafts-folder "/fm/Drafts")
+                (mu4e-trash-folder "/fm/Trash")
                 (smtpmail-smtp-user "jdahm@fastmail.com")
                 (smtpmail-smtp-server "mail.messagingengine.com")
                 (smtpmail-stream-type starttls)
@@ -50,7 +50,7 @@
 
 ;; Account alist
 (defvar my-mu4e-account-alist
-  (list (cons "johann@dahm.co" (create-fm-vars "johann@dahm.co"))
+  (list (cons "johann@jdahm.me" (create-fm-vars "johann@jdahm.me"))
         (cons "jdahm@fastmail.com" (create-fm-vars "jdahm@fastmail.com"))
         (cons "jdahm@umich.edu" (create-gmail-vars "jdahm@umich.edu"))))
 
@@ -74,6 +74,20 @@
                   (set (car var) (cadr var)))
               account-vars)
       (error "No email account found"))))
+
+(defun set-mail-fm ()
+  "Set the account for composing a message."
+  (interactive)
+  (mapc #'(lambda (var)
+            (set (car var) (cadr var)))
+        (create-fm-vars "jdahm@fastmail.com")))
+
+(defun set-mail-um ()
+  "Set the account for composing a message."
+  (interactive)
+  (mapc #'(lambda (var)
+            (set (car var) (cadr var)))
+        (create-um-vars "jdahm@umich.edu")))
 
 (add-hook 'mu4e-compose-pre-hook 'my-mu4e-set-account)
 
