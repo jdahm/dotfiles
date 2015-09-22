@@ -50,7 +50,7 @@ Channel fm-inbox
 Channel fm-folders
         Master :fastmail-imap:INBOX/
         Slave  :fastmail-local:
-        Patterns * !INBOX !Drafts !Trash !Spam
+        Patterns * !INBOX !Spam
         Create Slave
         SyncState *
         Sync All
