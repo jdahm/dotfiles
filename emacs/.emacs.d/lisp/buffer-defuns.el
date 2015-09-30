@@ -103,4 +103,12 @@ xdg-open."
         (locate-dominating-file directory ".svn")
         (locate-dominating-file directory ".hg"))))
 
+(defun backward-up-sexp (arg)
+  (interactive "p")
+  (let ((ppss (syntax-ppss)))
+    (cond ((elt ppss 3)
+           (goto-char (elt ppss 8))
+           (backward-up-sexp (1- arg)))
+          ((backward-up-list arg)))))
+
 (provide 'buffer-defuns)

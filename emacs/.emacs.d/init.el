@@ -71,7 +71,12 @@
 (global-set-key (kbd "<f8>") 'split-window-show-prev)
 (global-set-key (kbd "<f9>") 'toggle-truncate-lines)
 (global-set-key (kbd "M-i") 'imenu)
-(global-set-key (kbd "M-o") 'other-window)
+
+(global-set-key [remap backward-up-list] 'backward-up-sexp)
+
+;; (global-set-key (kbd "M-o") 'other-window)
+(global-set-key (kbd "C-,") (lambda () (interactive) (other-window -1)))
+(global-set-key (kbd "C-.") (lambda () (interactive) (other-window  1)))
 
 (global-unset-key (kbd "C-x C-+"))
 
@@ -88,6 +93,10 @@
 (global-set-key (kbd "M-Z")      'zap-up-to-char)
 
 (define-key 'help-command (kbd "C-i") 'info-display-manual)
+
+(global-set-key (kbd "C-c +") 'my-increment-number-at-point)
+(global-set-key (kbd "C-c -") 'my-decrement-number-at-point)
+
 
 ;; Built-in modes
 (require 'octave)
@@ -121,7 +130,8 @@
     markdown-mode yaml-mode haskell-mode clojure-mode gnuplot-mode ledger-mode
     git-timemachine magit ibuffer-vc
     flx-ido ido-ubiquitous smex
-    flycheck password-store elfeed)
+    flycheck password-store elfeed
+    window-numbering)
   "Packages to ensure are installed.")
 
 ;; Do this for newer Emacs
@@ -210,7 +220,10 @@
   (global-set-key (kbd "C-c p k") 'password-store-clear)
   (global-set-key (kbd "C-c p c") 'password-store-copy)
   (global-set-key (kbd "C-c p n") 'password-store-insert)
-  (global-set-key (kbd "C-c p g") 'password-store-generate))
+  (global-set-key (kbd "C-c p g") 'password-store-generate)
+
+  ;; Window numbering
+  (window-numbering-mode 1))
 
 ;; Load customization file last
 (if (file-readable-p custom-file) (load-file custom-file))

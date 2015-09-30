@@ -90,12 +90,26 @@
                 (looking-at "\\b[[:upper:]]\\{2\\}[[:lower:]]"))
               (capitalize-word 1)))))
 
+(defun my-change-number-at-point (change)
+  (let ((number (number-at-point))
+        (point (point)))
+    (when number
+      (progn
+        (forward-word)
+        (search-backward (number-to-string number))
+        (replace-match (number-to-string (funcall change number)))
+        (goto-char point)))))
+(defun my-increment-number-at-point ()
+  "Increment number at point like vim's C-a"
+  (interactive)
+  (my-change-number-at-point '1+))
+(defun my-decrement-number-at-point ()
+  "Decrement number at point like vim's C-x"
+  (interactive)
+  (my-change-number-at-point '1-))
+
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR.")
-
-(defun edit-emacs-init ()
-  (interactive)
-  (find-file "~/.emacs.d/init.el"))
 
 (provide 'editing-defuns)
 
