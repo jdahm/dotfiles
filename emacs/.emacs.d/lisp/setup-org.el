@@ -56,4 +56,8 @@
 
 (setq org-completion-use-ido t)
 
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)))
+
 (provide 'setup-org)
