@@ -1,6 +1,5 @@
 ;; Set up load path
 (add-to-list 'load-path (concat user-emacs-directory "lisp/"))
-(add-to-list 'custom-theme-load-path (concat user-emacs-directory "themes/"))
 
 ;; Customization file here
 (setq custom-file (expand-file-name "~/.config/emacs/init-custom.el"))
@@ -53,8 +52,6 @@
       delete-by-moving-to-trash t
       dired-dwim-target t)
 (setq-default dired-listing-switches "-Al --si --time-style long-iso")
-;; hide some details by default
-(add-hook 'dired-mode-hook 'dired-hide-details-mode)
 
 (require 'buffer-defuns)
 (define-key dired-mode-map (kbd "b") 'dired-open-file)
@@ -97,19 +94,10 @@
 (global-set-key (kbd "C-c +") 'my-increment-number-at-point)
 (global-set-key (kbd "C-c -") 'my-decrement-number-at-point)
 
-
-;; Built-in modes
-(require 'octave)
-(add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
-
 ;; Writing
 (require 'dubcaps-mode)
 (add-hook 'text-mode-hook 'auto-fill-mode)
 (add-hook 'text-mode-hook 'dubcaps-mode)
-
-;; Hidden mode line
-(require 'hidden-mode-line-mode)
-(global-set-key (kbd "<f6>") 'hidden-mode-line-mode)
 
 (add-hook 'prog-mode-hook
                (lambda ()
@@ -223,7 +211,21 @@
   (global-set-key (kbd "C-c p g") 'password-store-generate)
 
   ;; Window numbering
-  (window-numbering-mode 1))
+  (window-numbering-mode 1)
+
+  ;; Themes
+  (add-to-list 'custom-theme-load-path (concat user-emacs-directory "themes/"))
+
+  ;; Built-in modes
+  (require 'octave)
+  (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
+
+  ;; Hidden mode line
+  (require 'hidden-mode-line-mode)
+  (global-set-key (kbd "<f6>") 'hidden-mode-line-mode)
+
+  ;; Dired details
+  (add-hook 'dired-mode-hook 'dired-hide-details-mode))
 
 ;; Load customization file last
 (if (file-readable-p custom-file) (load-file custom-file))
