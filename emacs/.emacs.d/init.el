@@ -43,6 +43,15 @@
 (require 'windmove)
 (windmove-default-keybindings)
 
+(require 'ido)
+(ido-mode 1)
+(ido-everywhere 1)
+(setq ido-use-faces nil
+      ido-create-new-buffer 'prompt
+      ido-ignore-extensions t
+      ido-use-filename-at-point 'guess)
+
+
 (require 're-builder)
 (setq reb-re-syntax 'string)
 
@@ -173,16 +182,10 @@
   (global-set-key (kbd "M-x") 'smex)
 
   ;; Ido
-  (ido-mode 1)
   (flx-ido-mode 1)
-  (ido-everywhere 1)
   (ido-ubiquitous-mode 1)
   (setq ido-enable-flex-matching t
-        ido-use-faces nil
-        ido-use-virtual-buffers t
-        ido-ignore-extensions t
-        ido-use-filename-at-point 'guess
-        ido-create-new-buffer 'prompt)
+        ido-use-virtual-buffers t)
 
   ;; Ibuffer
   (add-hook 'ibuffer-hook
