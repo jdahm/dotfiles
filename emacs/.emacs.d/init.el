@@ -42,15 +42,7 @@
 
 (require 'windmove)
 (windmove-default-keybindings)
-
-(require 'ido)
-(ido-mode 1)
-(ido-everywhere 1)
-(setq ido-use-faces nil
-      ido-create-new-buffer 'prompt
-      ido-ignore-extensions t
-      ido-use-filename-at-point 'guess)
-
+(winner-mode 1)
 
 (require 're-builder)
 (setq reb-re-syntax 'string)
@@ -67,8 +59,8 @@
 (define-key dired-mode-map (kbd "c") 'dired-open-fm)
 
 (global-set-key (kbd "C-x k") 'kill-current-buffer)
-(global-set-key (kbd "C-c s") 'shell)
-(global-set-key (kbd "C-c S") 'eshell)
+(global-set-key (kbd "C-c C-s") 'shell)
+(global-set-key (kbd "C-c C-S") 'eshell)
 (global-set-key (kbd "C-x a k") 'bury-buffer)
 (global-set-key (kbd "C-x -") 'toggle-window-split)
 (global-set-key (kbd "C-x C--") 'rotate-windows)
@@ -126,7 +118,7 @@
   '(cl-lib
     markdown-mode yaml-mode haskell-mode clojure-mode gnuplot-mode ledger-mode
     git-timemachine magit ibuffer-vc
-    flx-ido ido-ubiquitous smex
+    swiper counsel
     flycheck password-store elfeed
     window-numbering)
   "Packages to ensure are installed.")
@@ -134,8 +126,9 @@
 ;; Do this for newer Emacs
 (when (>= emacs-major-version 24)
   (setq package-archives
-	'(("gnu"   . "http://elpa.gnu.org/packages/")
-          ("melpa" . "http://melpa.org/packages/")))
+	'(("melpa-stable" . "http://stable.melpa.org/packages/")
+          ("melpa" . "http://melpa.org/packages/")
+          ("gnu"   . "http://elpa.gnu.org/packages/")))
   (package-initialize)
 
   (when (not package-archive-contents) (package-refresh-contents))
@@ -177,15 +170,12 @@
        (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
        (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)))
 
-  ;; Smex
-  (autoload 'smex "smex")
-  (global-set-key (kbd "M-x") 'smex)
-
-  ;; Ido
-  (flx-ido-mode 1)
-  (ido-ubiquitous-mode 1)
-  (setq ido-enable-flex-matching t
-        ido-use-virtual-buffers t)
+  ;; Ivy
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (global-set-key (kbd "C-c s") 'swiper)
+  (global-set-key (kbd "C-c r") 'swiper)
+  (global-set-key (kbd "C-c C-r") 'ivy-resume)
 
   ;; Ibuffer
   (add-hook 'ibuffer-hook
