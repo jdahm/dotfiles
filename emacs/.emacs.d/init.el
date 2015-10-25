@@ -44,6 +44,15 @@
 (windmove-default-keybindings)
 (winner-mode 1)
 
+(require 'ido)
+(ido-mode 1)
+(ido-everywhere 1)
+(setq ido-create-new-buffer 'always
+      ido-use-faces t
+      ido-ignore-extensions t
+      ido-use-filename-at-point 'guess)
+
+
 (require 're-builder)
 (setq reb-re-syntax 'string)
 
@@ -58,17 +67,17 @@
 (define-key dired-mode-map (kbd "b") 'dired-open-file)
 (define-key dired-mode-map (kbd "c") 'dired-open-fm)
 
-(global-set-key (kbd "C-x k") 'kill-current-buffer)
-(global-set-key (kbd "C-c C-s") 'shell)
-(global-set-key (kbd "C-c C-S") 'eshell)
+(global-set-key (kbd "C-x k")   'kill-current-buffer)
+(global-set-key (kbd "C-c s")   'shell)
+(global-set-key (kbd "C-c S")   'eshell)
 (global-set-key (kbd "C-x a k") 'bury-buffer)
-(global-set-key (kbd "C-x -") 'toggle-window-split)
+(global-set-key (kbd "C-x -")   'toggle-window-split)
 (global-set-key (kbd "C-x C--") 'rotate-windows)
 (global-set-key (kbd "C-x a b") 'create-scratch-buffer)
-(global-set-key (kbd "<f7>") 'prev-buffer)
-(global-set-key (kbd "<f8>") 'split-window-show-prev)
-(global-set-key (kbd "<f9>") 'toggle-truncate-lines)
-(global-set-key (kbd "M-i") 'imenu)
+(global-set-key (kbd "<f7>")    'prev-buffer)
+(global-set-key (kbd "<f8>")    'split-window-show-prev)
+(global-set-key (kbd "<f9>")    'toggle-truncate-lines)
+(global-set-key (kbd "M-i")     'imenu)
 
 (global-set-key [remap backward-up-list] 'backward-up-sexp)
 
@@ -101,9 +110,9 @@
 (add-hook 'text-mode-hook 'dubcaps-mode)
 
 (add-hook 'prog-mode-hook
-               (lambda ()
-                (font-lock-add-keywords nil
-                                        '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
+          (lambda ()
+            (font-lock-add-keywords
+             nil '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
 
 ;; Shell-mode
 (setq comint-input-ignoredups t
@@ -118,7 +127,7 @@
   '(cl-lib
     markdown-mode yaml-mode haskell-mode clojure-mode gnuplot-mode ledger-mode
     git-timemachine magit ibuffer-vc
-    swiper counsel
+    flx-ido ido-vertical-mode smex
     flycheck password-store elfeed
     window-numbering)
   "Packages to ensure are installed.")
@@ -170,12 +179,24 @@
        (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
        (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)))
 
-  ;; Ivy
-  (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t)
-  (global-set-key (kbd "C-c s") 'swiper)
-  (global-set-key (kbd "C-c r") 'swiper)
-  (global-set-key (kbd "C-c C-r") 'ivy-resume)
+  ;; Smex
+  (autoload 'smex "smex")
+  (global-set-key (kbd "M-x") 'smex)
+
+  ;; Ido
+  (flx-ido-mode 1)
+  (setq ido-enable-flex-matching t
+        ido-use-virtual-buffers t)
+
+  (ido-vertical-mode 1)
+  (set-face-attribute 'ido-vertical-first-match-face nil
+                      :background nil
+                      :foreground "orange")
+  (set-face-attribute 'ido-vertical-only-match-face nil
+                      :background nil
+                      :foreground nil)
+  (set-face-attribute 'ido-vertical-match-face nil
+                      :foreground nil)
 
   ;; Ibuffer
   (add-hook 'ibuffer-hook
