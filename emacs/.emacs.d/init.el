@@ -50,7 +50,8 @@
 (setq ido-create-new-buffer 'always
       ido-use-faces t
       ido-ignore-extensions t
-      ido-use-filename-at-point 'guess)
+      ido-use-filename-at-point 'guess
+      ido-auto-merge-delay-time 3)
 
 
 (require 're-builder)
@@ -127,9 +128,9 @@
   '(cl-lib
     markdown-mode yaml-mode haskell-mode clojure-mode gnuplot-mode ledger-mode
     git-timemachine magit ibuffer-vc
-    flx-ido ido-vertical-mode smex
-    flycheck password-store elfeed
-    window-numbering)
+    flx-ido smex
+    avy flycheck
+    password-store elfeed window-numbering)
   "Packages to ensure are installed.")
 
 ;; Do this for newer Emacs
@@ -188,16 +189,6 @@
   (setq ido-enable-flex-matching t
         ido-use-virtual-buffers t)
 
-  (ido-vertical-mode 1)
-  (set-face-attribute 'ido-vertical-first-match-face nil
-                      :background nil
-                      :foreground "orange")
-  (set-face-attribute 'ido-vertical-only-match-face nil
-                      :background nil
-                      :foreground nil)
-  (set-face-attribute 'ido-vertical-match-face nil
-                      :foreground nil)
-
   ;; Ibuffer
   (add-hook 'ibuffer-hook
             (lambda ()
@@ -214,6 +205,14 @@
 
   ;; Org
   (require 'setup-org)
+
+  ;; Avy
+  (avy-setup-default)
+  (global-set-key (kbd "C-:") 'avy-goto-char)
+  (global-set-key (kbd "C-'") 'avy-goto-char-2)
+  (global-set-key (kbd "M-g g") 'avy-goto-line)
+  (global-set-key (kbd "M-g w") 'avy-goto-word-1)
+  (global-set-key (kbd "M-g e") 'avy-goto-word-0)
 
   ;; Ledger-mode
   (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode))
