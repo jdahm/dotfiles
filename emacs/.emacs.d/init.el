@@ -35,9 +35,8 @@
 (setq-default save-place t)
 
 (require 'recentf)
-(setq recentf-max-saved-items 50 ; number of saved items
-      recentf-auto-cleanup 600   ; cleanup when idle for 600 seconds
-      )
+(setq recentf-auto-cleanup 600
+      recentf-max-saved-items 50)
 (when (not noninteractive) (recentf-mode 1))
 
 (require 'windmove)
@@ -130,7 +129,8 @@
     git-timemachine magit ibuffer-vc
     flx-ido smex
     avy flycheck
-    password-store elfeed window-numbering)
+    god-mode
+    password-store elfeed)
   "Packages to ensure are installed.")
 
 ;; Do this for newer Emacs
@@ -214,6 +214,17 @@
   (global-set-key (kbd "M-g w") 'avy-goto-word-1)
   (global-set-key (kbd "M-g e") 'avy-goto-word-0)
 
+  ;; God
+  (require 'setup-god)
+
+  (defun god-toggle-on-overwrite ()
+    "Toggle god-mode on overwrite-mode."
+    (if (bound-and-true-p overwrite-mode)
+        (god-local-mode-pause)
+      (god-local-mode-resume)))
+
+  (add-hook 'overwrite-mode-hook 'god-toggle-on-overwrite)
+
   ;; Ledger-mode
   (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode))
 
@@ -222,9 +233,6 @@
   (global-set-key (kbd "C-c p c") 'password-store-copy)
   (global-set-key (kbd "C-c p n") 'password-store-insert)
   (global-set-key (kbd "C-c p g") 'password-store-generate)
-
-  ;; Window numbering
-  (window-numbering-mode 1)
 
   ;; Themes
   (add-to-list 'custom-theme-load-path (concat user-emacs-directory "themes/"))
