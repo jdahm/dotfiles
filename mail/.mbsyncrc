@@ -40,8 +40,23 @@ Channel fm-inbox
 Channel fm-folders
         Master :fm-imap:
         Slave  :fm-local:
-        # Patterns * !INBOX
-        Patterns * !INBOX
+        Patterns * !INBOX !*Sent* !*Junk* !*Spam*
+        Create Slave
+        SyncState *
+        Sync All
+        Expunge Both
+
+Channel fm-sent
+        Master ":fm-imap:INBOX/Sent Items"
+        Slave  :fm-local:Sent
+        Create Slave
+        SyncState *
+        Sync All
+        Expunge Both
+
+Channel fm-spam
+        Master ":fm-imap:INBOX/Junk Mail"
+        Slave  :fm-local:Spam
         Create Slave
         SyncState *
         Sync All
@@ -57,7 +72,7 @@ Channel um-inbox
 
 Channel um-sent
         Master ":um-imap:[Gmail]/Sent Mail"
-        Slave ":um-local:Sent Mail"
+        Slave ":um-local:Sent"
         Create Slave
         SyncState *
         Sync All
@@ -66,6 +81,15 @@ Channel um-sent
 Channel um-archived
         Master ":um-imap:Archived"
         Slave ":um-local:Archive"
+        Create Slave
+        SyncState *
+        Sync All
+        Expunge Both
+
+Channel um-folders
+        Master :um-imap:
+        Slave :um-local:
+        Patterns UM Aero Groups GSAC Tecplot
         Create Slave
         SyncState *
         Sync All
@@ -96,7 +120,7 @@ Channel um-drafts
         Expunge Both
 
 Group all
-        Channels fm-inbox fm-folders um-inbox um-sent um-archived um-spam um-trash um-drafts
+        Channels fm-inbox fm-sent fm-spam fm-folders um-inbox um-sent um-archived um-spam um-trash um-drafts um-folders
 
 Group inbox
       Channels fm-inbox um-inbox
