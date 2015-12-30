@@ -1,11 +1,11 @@
 ;; Set up load path
 (add-to-list 'load-path (concat user-emacs-directory "lisp/"))
+(add-to-list 'load-path "~/.config/emacs")
 
 ;; Customization file here
 (setq custom-file (expand-file-name "~/.config/emacs/init-custom.el"))
 
 ;; Turn off the extras
-(scroll-bar-mode -1)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 
@@ -85,7 +85,11 @@
 (global-set-key (kbd "C-,") (lambda () (interactive) (other-window -1)))
 (global-set-key (kbd "C-.") (lambda () (interactive) (other-window  1)))
 
-(global-unset-key (kbd "C-x C-+"))
+;; Increase/decrease font size
+(global-set-key (kbd "C-x C-+") 'text-scale-increase)
+(global-set-key (kbd "C-x C--") 'text-scale-decrease)
+
+;; (global-unset-key (kbd "C-x C-+"))
 
 (require 'editing-defuns)
 (global-set-key (kbd "C-<down>") 'move-line-down)
@@ -246,7 +250,10 @@
   (global-set-key (kbd "<f6>") 'hidden-mode-line-mode)
 
   ;; Dired details
-  (add-hook 'dired-mode-hook 'dired-hide-details-mode))
+  (add-hook 'dired-mode-hook 'dired-hide-details-mode)
+
+  ;; Elfeed
+  (setq-default elfeed-search-filter "@1-week-ago +unread -news"))
 
 ;; Load customization file last
 (if (file-readable-p custom-file) (load-file custom-file))

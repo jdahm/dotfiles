@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-emacsclient -c -e "(new-message-from-uri \"$@\")"
+emacsclient -c --eval "(browse-url-mail \"$@\")"
