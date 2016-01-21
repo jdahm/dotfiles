@@ -54,8 +54,8 @@
 ;; Don't blink the cursor
 (blink-cursor-mode 0)
 
-;; Modern memory threshold
-(setq gc-cons-threshold 20000000)
+;; ;; Modern memory threshold
+;; (setq gc-cons-threshold 20000000)
 
 ;; Make backups of files, even when they're in version control
 (setq vc-make-backup-files t)

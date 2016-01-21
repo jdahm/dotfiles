@@ -82,14 +82,13 @@
 (global-set-key [remap backward-up-list] 'backward-up-sexp)
 
 ;; (global-set-key (kbd "M-o") 'other-window)
+;; (global-unset-key (kbd "C-x C-+"))
 (global-set-key (kbd "C-,") (lambda () (interactive) (other-window -1)))
 (global-set-key (kbd "C-.") (lambda () (interactive) (other-window  1)))
 
 ;; Increase/decrease font size
 (global-set-key (kbd "C-x C-+") 'text-scale-increase)
 (global-set-key (kbd "C-x C--") 'text-scale-decrease)
-
-;; (global-unset-key (kbd "C-x C-+"))
 
 (require 'editing-defuns)
 (global-set-key (kbd "C-<down>") 'move-line-down)
@@ -126,19 +125,22 @@
       comint-scroll-show-maximum-output t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
+;; Better C++ syntax highlighting
+;; Might eventually be able to remove this according to
+(require 'setup-cc)
+
 ;; Packages
 (defvar my-packages
   '(cl-lib
     markdown-mode yaml-mode haskell-mode clojure-mode gnuplot-mode ledger-mode
     git-timemachine magit ibuffer-vc
-    flx-ido smex
-    avy flycheck
-    god-mode
+    flx-ido smex flycheck god-mode
     password-store elfeed)
   "Packages to ensure are installed.")
 
 ;; Do this for newer Emacs
-(when (>= emacs-major-version 24)
+(when (or (and (= emacs-major-version 24) (>= emacs-minor-version 4))
+          (>= emacs-major-version 25))
   (setq package-archives
 	'(("melpa-stable" . "http://stable.melpa.org/packages/")
           ("melpa" . "http://melpa.org/packages/")
@@ -210,24 +212,8 @@
   ;; Org
   (require 'setup-org)
 
-  ;; Avy
-  (avy-setup-default)
-  (global-set-key (kbd "C-:") 'avy-goto-char)
-  (global-set-key (kbd "C-'") 'avy-goto-char-2)
-  (global-set-key (kbd "M-g g") 'avy-goto-line)
-  (global-set-key (kbd "M-g w") 'avy-goto-word-1)
-  (global-set-key (kbd "M-g e") 'avy-goto-word-0)
-
   ;; God
   (require 'setup-god)
-
-  (defun god-toggle-on-overwrite ()
-    "Toggle god-mode on overwrite-mode."
-    (if (bound-and-true-p overwrite-mode)
-        (god-local-mode-pause)
-      (god-local-mode-resume)))
-
-  (add-hook 'overwrite-mode-hook 'god-toggle-on-overwrite)
 
   ;; Ledger-mode
   (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode))
