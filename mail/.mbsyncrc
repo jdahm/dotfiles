@@ -89,7 +89,7 @@ Channel um-archived
 Channel um-folders
         Master :um-imap:
         Slave :um-local:
-        Patterns UM Aero Groups GSAC Tecplot
+        Patterns UM Aero Lists GSAC Tecplot xflow
         Create Slave
         SyncState *
         Sync All
