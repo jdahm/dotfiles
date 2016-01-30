@@ -52,7 +52,6 @@
       ido-use-filename-at-point 'guess
       ido-auto-merge-delay-time 3)
 
-
 (require 're-builder)
 (setq reb-re-syntax 'string)
 
@@ -86,19 +85,16 @@
 (global-set-key (kbd "C-,") (lambda () (interactive) (other-window -1)))
 (global-set-key (kbd "C-.") (lambda () (interactive) (other-window  1)))
 
-;; Increase/decrease font size
 (global-set-key (kbd "C-x C-+") 'text-scale-increase)
 (global-set-key (kbd "C-x C--") 'text-scale-decrease)
 
 (require 'editing-defuns)
-(global-set-key (kbd "C-<down>") 'move-line-down)
-(global-set-key (kbd "C-<up>")   'move-line-up)
 (global-set-key (kbd "C-c C-a")  'auto-fill-mode)
 (global-set-key (kbd "C-c C-w")  'subword-mode)
 (global-set-key (kbd "C-c i")    'my-url-insert-file-contents)
 (global-set-key (kbd "C-c n")    'tidy-region-or-buffer)
 (global-set-key (kbd "C-c t")    'cycle-tab-width)
-(global-set-key (kbd "C-x C-;")  'comment-or-uncomment-region-or-line)
+;; (global-set-key (kbd "C-x C-;")  'comment-or-uncomment-region-or-line)
 (global-set-key (kbd "C-x a r")  'align-regexp)
 (global-set-key (kbd "M-Z")      'zap-up-to-char)
 
@@ -106,6 +102,10 @@
 
 (global-set-key (kbd "C-c +") 'my-increment-number-at-point)
 (global-set-key (kbd "C-c -") 'my-decrement-number-at-point)
+
+;; Move text
+(require 'move-text)
+(move-text-default-bindings)
 
 ;; Writing
 (require 'dubcaps-mode)
@@ -126,7 +126,7 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; Better C++ syntax highlighting
-;; Might eventually be able to remove this according to
+;; Might eventually be able to remove this
 (require 'setup-cc)
 
 ;; Packages
@@ -134,7 +134,7 @@
   '(cl-lib
     markdown-mode yaml-mode haskell-mode clojure-mode gnuplot-mode ledger-mode
     git-timemachine magit ibuffer-vc
-    flx-ido smex flycheck god-mode
+    flx-ido smex flycheck
     password-store elfeed)
   "Packages to ensure are installed.")
 
@@ -211,9 +211,6 @@
 
   ;; Org
   (require 'setup-org)
-
-  ;; God
-  (require 'setup-god)
 
   ;; Ledger-mode
   (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode))
