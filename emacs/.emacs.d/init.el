@@ -97,15 +97,13 @@
 ;; (global-set-key (kbd "C-x C-;")  'comment-or-uncomment-region-or-line)
 (global-set-key (kbd "C-x a r")  'align-regexp)
 (global-set-key (kbd "M-Z")      'zap-up-to-char)
+(global-set-key (kbd "M-<up>")   'move-line-up)
+(global-set-key (kbd "M-<down>") 'move-line-down)
 
 (define-key 'help-command (kbd "C-i") 'info-display-manual)
 
 (global-set-key (kbd "C-c +") 'my-increment-number-at-point)
 (global-set-key (kbd "C-c -") 'my-decrement-number-at-point)
-
-;; Move text
-(require 'move-text)
-(move-text-default-bindings)
 
 ;; Writing
 (require 'dubcaps-mode)
