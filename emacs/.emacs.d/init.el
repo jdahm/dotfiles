@@ -139,9 +139,6 @@
 ;; Do this for newer Emacs
 (when (or (and (= emacs-major-version 24) (>= emacs-minor-version 4))
           (>= emacs-major-version 25))
-  ;; Load the theme
-  (load-theme 'default-dark t)
-
   (setq package-archives
 	'(("melpa-stable" . "http://stable.melpa.org/packages/")
           ("melpa"        . "http://melpa.org/packages/")
@@ -235,8 +232,9 @@
   (global-set-key (kbd "C-c p n") 'password-store-insert)
   (global-set-key (kbd "C-c p g") 'password-store-generate)
 
-  ;; Themes
+  ;; Theme
   (add-to-list 'custom-theme-load-path (concat user-emacs-directory "themes/"))
+  (load-theme 'default-dark t)
 
   ;; Built-in modes
   (require 'octave)
