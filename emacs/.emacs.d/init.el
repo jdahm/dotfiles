@@ -131,8 +131,8 @@
 (defvar my-packages
   '(cl-lib
     markdown-mode yaml-mode haskell-mode clojure-mode gnuplot-mode ledger-mode
-    git-timemachine magit ibuffer-vc
-    flx-ido smex flycheck
+    git-timemachine magit ibuffer-vc paredit
+    flx-ido smex flycheck idomenu buffer-move
     password-store elfeed)
   "Packages to ensure are installed.")
 
@@ -200,6 +200,16 @@
               (unless (eq ibuffer-sorting-mode 'alphabetic)
                 (ibuffer-do-sort-by-alphabetic))))
   (global-set-key (kbd "C-x C-b") 'ibuffer)
+
+  ;; Imenu
+  (global-set-key (kbd "M-i") 'idomenu)
+
+  ;; Buffer-move
+  (global-set-key (kbd "<C-S-up>")     'buf-move-up)
+  (global-set-key (kbd "<C-S-down>")   'buf-move-down)
+  (global-set-key (kbd "<C-S-left>")   'buf-move-left)
+  (global-set-key (kbd "<C-S-right>")  'buf-move-right)
+  ;; (setq buffer-move-behavior 'move)
 
   ;; Hippie-expand
   (global-set-key [remap dabbrev-expand] 'hippie-expand)
