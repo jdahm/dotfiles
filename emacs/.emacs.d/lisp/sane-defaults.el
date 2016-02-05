@@ -9,8 +9,8 @@
 
 ;;; Code:
 
-;; Quiet startup
-(setq inhibit-startup-message t)
+;; ;; Quiet startup
+;; (setq inhibit-startup-message t)
 
 ;; Don't show message in the scratch buffer
 (setq initial-scratch-message nil)
