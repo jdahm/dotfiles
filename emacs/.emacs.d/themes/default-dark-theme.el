@@ -4,7 +4,7 @@
 (custom-theme-set-faces
  'default-dark
  ;; '(default ((t (:inherit nil :stipple nil :background "Black" :foreground "White" :inverse-video nil :box nil :strike-t*hrough nil :overline nil :underline nil :slant normal :weight normal :width normal :height 105))))
- '(default ((t (:inherit nil :stipple nil :background "#191919" :foreground "White" :inverse-video nil :box nil :strike-t*hrough nil :overline nil :underline nil :slant normal :weight normal :width normal :height 105))))
+ '(default ((t (:inherit nil :stipple nil :background "#252727" :foreground "White" :inverse-video nil :box nil :strike-t*hrough nil :overline nil :underline nil :slant normal :weight normal :width normal :height 105))))
  '(highlight ((((class color) (min-colors 88) (background dark)) (:background "#111111"))))
  '(region ((nil (:background "#464740"))))
  '(hl-line ((nil (:background "#222222"))))
