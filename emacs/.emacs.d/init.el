@@ -220,6 +220,9 @@
   ;; Org
   (require 'setup-org)
 
+  ;; Paredit
+  (require 'setup-lisp)
+
   ;; Ledger-mode
   (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode))
 
