@@ -139,6 +139,9 @@
 ;; Do this for newer Emacs
 (when (or (and (= emacs-major-version 24) (>= emacs-minor-version 4))
           (>= emacs-major-version 25))
+  ;; Load the theme
+  (load-theme 'default-dark t)
+
   (setq package-archives
 	'(("melpa-stable" . "http://stable.melpa.org/packages/")
           ("melpa"        . "http://melpa.org/packages/")
