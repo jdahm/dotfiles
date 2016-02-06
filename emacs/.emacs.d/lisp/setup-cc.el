@@ -18,7 +18,6 @@
 (global-font-lock-mode t)
 (setq font-lock-maximum-decoration t)
 
-
 (add-hook 'c++-mode-hook
       '(lambda()
         (font-lock-add-keywords
@@ -38,5 +37,14 @@
            ("\\<\\(xstring\\|xchar\\)\\>" . font-lock-type-face)
            ))
         ) t)
+
+(defun my-c++-style ()
+  "Customiations for c++-mode"
+(c-set-style "stroustrup")
+(c-set-offset 'namespace-open 0)
+(c-set-offset 'namespace-close 0)
+(c-set-offset 'innamespace 0))
+
+(add-hook 'c++-mode-hook 'my-c++-style)
 
 (provide 'setup-cc)
