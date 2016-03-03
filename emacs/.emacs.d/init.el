@@ -153,7 +153,7 @@
 (csetq vc-make-backup-files t)
 
 (csetq save-place-file (expand-file-name "etc/saveplace" emacs-d))
-(save-place-mode 1)
+(setq-default save-place t)
 
 (use-package recentf
   :config
