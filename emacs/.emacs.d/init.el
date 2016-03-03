@@ -1,254 +1,385 @@
-;; Set up load path
-(add-to-list 'load-path (concat user-emacs-directory "lisp/"))
-(add-to-list 'load-path "~/.config/emacs")
+;;; init.el --- jdahm's GNU Emacs config
 
-;; Customization file here
-(setq custom-file (expand-file-name "~/.config/emacs/init-custom.el"))
+;;; Commentary:
 
-;; Turn off the extras
-(tool-bar-mode -1)
-(menu-bar-mode -1)
+;;; sources:
+;; * abo-abo/oremacs
+;; * wasamasa/dotemacs
 
-;; Frame title
-(setq frame-title-format
-      (list (format "%s %%S: %%j " (system-name))
-            '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+;;; Code:
 
-;; Better defaults
-(require 'sane-defaults)
+(defvar emacs-d
+  (file-name-directory
+   (file-chase-links load-file-name))
+  "The giant turtle on which the world rests.")
 
-;; Prefer utf-8
-(prefer-coding-system 'utf-8)
+(defvar config-d (expand-file-name "emacs/" "~/.config/"))
+(defvar lisp-d (expand-file-name "lisp/" emacs-d))
 
-;; Backup
-(unless (file-exists-p "~/.emacs.d/backup/")
-  (make-directory "~/.emacs.d/backup/" t))
+(defvar local-init-file (expand-file-name "init.el" config-d))
 
-;; Put autosave files (ie #foo#) and backup files (ie foo~) in ~/.emacs.d/backup
-(setq backup-directory-alist '((".*" . "~/.emacs.d/backup/"))
-      auto-save-file-name-transforms '((".*" "~/.emacs.d/backup/\\1" t)))
+;; Load customizations through custom-set-variable
+(setq custom-file (expand-file-name "custom.el" config-d))
+(if (file-readable-p custom-file) (load-file custom-file))
 
-(require 'savehist)
-(savehist-mode 1)
+;; Source: http://stackoverflow.com/questions/12058717/confusing-about-the-emacs-custom-system
+(defmacro csetq (var val)
+  "Call `customize-set-variable' to set VAR to VAL."
+  `(funcall 'customize-set-variable ',var ,val))
 
-(require 'saveplace)
-(setq-default save-place t)
+;; Initialize the package interface
+(setq package-user-dir (expand-file-name "elpa" emacs-d))
+(setq package-archives
+      '(("gnu"          . "https://elpa.gnu.org/packages/")
+        ("melpa-stable" . "https://stable.melpa.org/packages/")
+        ("melpa"        . "https://melpa.org/packages/")))
+(package-initialize)
 
-(require 'recentf)
-(setq recentf-auto-cleanup 600
-      recentf-max-saved-items 50)
-(when (not noninteractive) (recentf-mode 1))
+;; Install use-package -- handles the rest of the package config
+(when (not package-archive-contents) (package-refresh-contents))
+(let ((p 'use-package))
+  (when (not (package-installed-p p))
+    (package-install p)))
 
-(require 'windmove)
-(windmove-default-keybindings)
-(winner-mode 1)
-
-(require 'ido)
-(ido-mode 1)
-(ido-everywhere 1)
-(setq ido-create-new-buffer 'always
-      ido-use-faces t
-      ido-ignore-extensions t
-      ido-use-filename-at-point 'guess
-      ido-auto-merge-delay-time 3)
-
-(require 're-builder)
-(setq reb-re-syntax 'string)
-
-(require 'dired)
-(setq dired-recursive-copies 'always
-      dired-recursive-deletes 'always
-      delete-by-moving-to-trash t
-      dired-dwim-target t)
-(setq-default dired-listing-switches "-Al --si --time-style long-iso")
-
-(require 'buffer-defuns)
-(define-key dired-mode-map (kbd "b") 'dired-open-file)
-(define-key dired-mode-map (kbd "c") 'dired-open-fm)
-
-(global-set-key (kbd "C-x k")   'kill-current-buffer)
-(global-set-key (kbd "C-c s")   'shell)
-(global-set-key (kbd "C-c S")   'eshell)
-(global-set-key (kbd "C-x a k") 'bury-buffer)
-(global-set-key (kbd "C-x -")   'toggle-window-split)
-(global-set-key (kbd "C-x C--") 'rotate-windows)
-(global-set-key (kbd "C-x a b") 'create-scratch-buffer)
-(global-set-key (kbd "<f7>")    'prev-buffer)
-(global-set-key (kbd "<f8>")    'split-window-show-prev)
-(global-set-key (kbd "<f9>")    'toggle-truncate-lines)
-(global-set-key (kbd "M-i")     'imenu)
-
-(global-set-key [remap backward-up-list] 'backward-up-sexp)
-
-;; (global-set-key (kbd "M-o") 'other-window)
-;; (global-unset-key (kbd "C-x C-+"))
-(global-set-key (kbd "C-,") (lambda () (interactive) (other-window -1)))
-(global-set-key (kbd "C-.") (lambda () (interactive) (other-window  1)))
-
-(global-set-key (kbd "C-x C-+") 'text-scale-increase)
-(global-set-key (kbd "C-x C--") 'text-scale-decrease)
-
-(require 'editing-defuns)
-(global-set-key (kbd "C-c C-a")  'auto-fill-mode)
-(global-set-key (kbd "C-c C-w")  'subword-mode)
-(global-set-key (kbd "C-c i")    'my-url-insert-file-contents)
-(global-set-key (kbd "C-c n")    'tidy-region-or-buffer)
-(global-set-key (kbd "C-c t")    'cycle-tab-width)
-;; (global-set-key (kbd "C-x C-;")  'comment-or-uncomment-region-or-line)
-(global-set-key (kbd "C-x a r")  'align-regexp)
-(global-set-key (kbd "M-Z")      'zap-up-to-char)
-(global-set-key (kbd "M-<up>")   'move-line-up)
-(global-set-key (kbd "M-<down>") 'move-line-down)
-
-(define-key 'help-command (kbd "C-i") 'info-display-manual)
-
-(global-set-key (kbd "C-c +") 'my-increment-number-at-point)
-(global-set-key (kbd "C-c -") 'my-decrement-number-at-point)
-
-;; Writing
-(require 'dubcaps-mode)
-(add-hook 'text-mode-hook 'auto-fill-mode)
-(add-hook 'text-mode-hook 'dubcaps-mode)
-
-(add-hook 'prog-mode-hook
-          (lambda ()
-            (font-lock-add-keywords
-             nil '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
-
-;; Shell-mode
-(setq comint-input-ignoredups t
-      comint-completion-addsuffix t
-      comint-completion-addsuffix t
-      comint-scroll-to-bottom-on-input t
-      comint-scroll-show-maximum-output t)
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-
-;; Better C++ syntax highlighting
-;; Might eventually be able to remove this
-(require 'setup-cc)
-
-;; Packages
-(defvar my-packages
-  '(cl-lib
-    markdown-mode yaml-mode haskell-mode clojure-mode gnuplot-mode ledger-mode
-    git-timemachine magit ibuffer-vc paredit
-    flx-ido smex flycheck idomenu buffer-move
-    password-store elfeed)
-  "Packages to ensure are installed.")
-
-;; Do this for newer Emacs
-(when (or (and (= emacs-major-version 24) (>= emacs-minor-version 4))
-          (>= emacs-major-version 25))
-  (setq package-archives
-	'(("melpa-stable" . "http://stable.melpa.org/packages/")
-          ("melpa"        . "http://melpa.org/packages/")
-          ("gnu"          . "http://elpa.gnu.org/packages/")))
-  (package-initialize)
-
-  (when (not package-archive-contents) (package-refresh-contents))
-
-  (dolist (p my-packages)
-    (when (not (package-installed-p p))
-      (package-install p)))
-
-  ;; Match braces and parens
-  (require 'elec-pair)
-  (electric-pair-mode 1)
-
-  ;; Markdown extensions (apparently not added by requiring feature)
+(use-package markdown-mode
+  :ensure t
+  :init
   (add-to-list 'auto-mode-alist '("\\.text$"     . markdown-mode))
   (add-to-list 'auto-mode-alist '("\\.markdown$" . markdown-mode))
-  (add-to-list 'auto-mode-alist '("\\.md$"       . markdown-mode))
+  (add-to-list 'auto-mode-alist '("\\.md$"       . markdown-mode)))
 
-  ;; Haskell settings
-  (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-  ;; (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-  ;; (add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
-  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-  (custom-set-variables '(haskell-process-type 'cabal-repl))
-  (eval-after-load 'haskell-mode
-    '(progn
-       (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
-       (define-key haskell-mode-map (kbd "C-`") 'haskell-interactive-bring)
-       (define-key haskell-mode-map (kbd "C-c C-t") 'haskell-process-do-type)
-       (define-key haskell-mode-map (kbd "C-c C-i") 'haskell-process-do-info)
-       (define-key haskell-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
-       (define-key haskell-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
-       (define-key haskell-mode-map (kbd "C-c c") 'haskell-process-cabal)
-       (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)))
+(use-package yaml-mode :ensure t)
+(use-package haskell-mode :ensure t)
+(use-package clojure-mode :ensure t)
+(use-package gnuplot-mode :ensure t)
+(use-package ledger-mode :ensure t)
 
-  (eval-after-load 'haskell-cabal
-    '(progn
-       (define-key haskell-cabal-mode-map (kbd "C-`") 'haskell-interactive-bring)
-       (define-key haskell-cabal-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
-       (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
-       (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)))
+;; Theme
+(add-to-list 'custom-theme-load-path (expand-file-name "themes/" emacs-d))
+;; (load-file (expand-file-name "modeline.el" lisp-d))
+;; (use-package ample-theme
+;;   :ensure t
+;;   :config
+;;   (load-theme 'ample-flat t))
+(use-package zenburn-theme
+  :ensure t
+  :config (load-theme 'zenburn t))
 
-  ;; Smex
-  (autoload 'smex "smex")
-  (global-set-key (kbd "M-x") 'smex)
+;; Interface
+(csetq inhibit-startup-screen t)
+(csetq initial-scratch-message "")
+(setq-default text-quoting-style 'grave)
+(tool-bar-mode 0)
+(menu-bar-mode 0)
+(scroll-bar-mode 0)
+(add-hook 'after-init-hook
+          (lambda ()
+            (setq frame-title-format
+                  '(buffer-file-name
+                    "%f"
+                    (dired-directory dired-directory "%b")))))
 
-  ;; Ido
-  (flx-ido-mode 1)
-  (setq ido-enable-flex-matching t
-        ido-use-virtual-buffers t)
+(bind-key "C-x C-+" 'text-scale-increase)
+(bind-key "C-x C--" 'text-scale-decrease)
 
-  ;; Ibuffer
+;; Finding files
+(csetq bookmark-default-file (expand-file-name "etc/bookmarks" emacs-d))
+(csetq find-file-suppress-same-file-warnings t)
+(prefer-coding-system 'utf-8)
+
+(use-package dired
+  :init
+  (add-hook 'dired-mode-hook 'dired-hide-details-mode)
+  :commands dired
+  :config
+  (load-file (expand-file-name "dired.el" lisp-d))
+  (bind-key "b" 'dired-open-file dired-mode-map)
+  (bind-key "c" 'dired-open-fm dired-mode-map))
+
+;; Minibuffer
+(csetq echo-keystrokes "0.1")
+(csetq savehist-file (expand-file-name "etc/savehist" emacs-d))
+(csetq history-length 150)
+(savehist-mode 1)
+
+;; Regular expression builder
+(use-package re-builder
+  :bind (("C-c R" . re-builder))
+  :config (setq reb-re-syntax 'string))
+
+;; Editing
+(setq-default indent-tabs-mode nil)
+(defalias 'yes-or-no-p 'y-or-n-p)
+(csetq delete-by-moving-to-trash t)
+(csetq visible-bell t)
+(setq-default indicate-empty-lines t)
+(csetq set-mark-command-repeat-pop t)
+
+(electric-pair-mode 1)
+(blink-cursor-mode -1)
+(show-paren-mode 1)
+(column-number-mode 1)
+(winner-mode 1)
+
+(csetq windmove-wrap-around t)
+(windmove-default-keybindings)
+
+(csetq mouse-yank-at-point t)
+
+(use-package transpose-frame :ensure t)
+
+(load-file (expand-file-name "buffer.el" lisp-d))
+(bind-key "C-x a b" 'create-scratch-buffer)
+
+(bind-keys ("C-," . (lambda () (interactive) (other-window -1)))
+           ("C-." . (lambda () (interactive) (other-window +1))))
+
+(load-file (expand-file-name "editing.el" lisp-d))
+(bind-key "C-c n" 'tidy-region-or-buffer)
+(bind-key "C-x a r" 'align-regexp)
+
+(bind-key "M-<up>"   'move-line-up)
+(bind-key "M-<down>" 'move-line-down)
+
+(bind-key "C-c +" 'my-increment-number-at-point)
+(bind-key "C-c -" 'my-decrement-number-at-point)
+
+;; Backups and saving
+(let ((backup-dir (expand-file-name "backup/" emacs-d)))
+  (csetq backup-directory-alist `((".*" . ,backup-dir)))
+  (csetq auto-save-file-name-transforms `((".*" ,backup-dir t)))
+  (unless (file-exists-p backup-dir)
+    (make-directory backup-dir)))
+(csetq vc-make-backup-files t)
+
+(csetq save-place-file (expand-file-name "etc/saveplace" emacs-d))
+(save-place-mode 1)
+
+(use-package recentf
+  :config
+  (csetq recentf-exclude '("COMMIT_MSG" "COMMIT_EDITMSG" "github.*txt$"
+                           ".*png$" ".*cache$"))
+  (csetq recentf-max-saved-items 60)
+  (csetq recentf-save-file (expand-file-name "etc/recentf" emacs-d)))
+
+;; Internal
+(csetq gc-cons-threshold (* 10 1024 1024))
+
+;; Help
+(bind-key "C-i" 'info-display-manual 'help-command)
+(bind-key "C-k" 'customize-apropos 'help-command)
+
+;; Shell
+(use-package shell
+  :init (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+  :bind ("C-c s" . shell)
+  :config
+  (csetq comint-input-ignoredups t)
+  (csetq comint-completion-addsuffix t)
+  (csetq comint-completion-addsuffix t)
+  (csetq comint-scroll-to-bottom-on-input t)
+  (csetq comint-prompt-read-only t)
+  (csetq comint-scroll-show-maximum-output t))
+
+;; Completion
+(use-package swiper
+  :ensure t
+  :init (ivy-mode 1)
+  :diminish ivy-mode
+  :bind (("C-s" . swiper)
+         ("C-r" . swiper)
+         ("C-c C-r" . ivy-resume)
+         ("<f6>" . ivy-resume)
+         ("M-x" . counsel-M-x)
+         ("C-x C-f" . counsel-find-file)
+         ("<f1> f" . counsel-describe-function)
+         ("<f1> v" . counsel-describe-variable)
+         ("<f1> l" . counsel-load-library)
+         ("<f2> i" . counsel-info-lookup-symbol)
+         ("<f2> u" . counsel-unicode-char)
+         ("C-c g" . counsel-git)
+         ("C-c j" . counsel-git-grep)
+         ("C-x l" . counsel-locate))
+  :config
+  (csetq ivy-use-virtual-buffers t)
+  (use-package counsel
+    :ensure t
+    :config
+    (setq-default counsel-git-grep-cmd "/home/jdahm/src/git/git --no-pager grep --full-name -n --no-color -i -e %S")
+    (setq-default counsel-git-grep-cmd-history "/home/jdahm/src/git/git --no-pager grep --full-name -n --no-color -i -e %S")))
+
+(use-package lispy
+  :ensure t
+  :init (add-hook 'emacs-lisp-mode-hook #'lispy-mode)
+  :config
+  (load-file (expand-file-name "abel.el" lisp-d)))
+
+(use-package multiple-cursors
+  :ensure t
+  :bind ( ("C-S-c C-S-c" . mc/edit-lines)
+          ("C->" . mc/mark-next-like-this)
+          ("C-<" . mc/mark-previous-like-this)
+          ("C-c C-<" . mc/mark-all-like-this)))
+
+(use-package avy
+  :ensure t
+  :bind (("C-;" . avy-goto-char)
+         ("C-'" . avy-goto-char-2)
+         ("M-g a" . avy-goto-line)
+         ("M-g w" . avy-goto-word-1)))
+
+(use-package company
+  :ensure t
+  :diminish company-mode
+  :init
+  (add-hook 'prog-mode-hook #'company-mode))
+
+(use-package flycheck
+  :ensure t
+  :diminish flycheck-mode
+  :init (add-hook 'prog-mode-hook #'flycheck-mode)
+  :config
+  (flycheck-define-checker proselint
+    "A linter for prose."
+    :command ("~/.local/bin/proselint" source-inplace)
+    :error-patterns
+    ((warning line-start (file-name) ":" line ":" column ": "
+              (id (one-or-more (not (any " "))))
+              (message) line-end))
+    :modes (text-mode markdown-mode gfm-mode))
+  (add-to-list 'flycheck-checkers 'proselint))
+
+(use-package function-args
+  :ensure t
+  :init (fa-config-default)
+  :config
+  (bind-key (kbd "C-2") 'fa-show) function-args-mode-map)
+
+(use-package compile
+  :init
+  ;; Close the compilation window if there was no error at all.
+  (csetq compilation-exit-message-function
+         (lambda (status code msg)
+           ;; If M-x compile exists with a 0
+           (when (and (eq status 'exit) (zerop code))
+             ;; then bury the *compilation* buffer, so that C-x b doesn't go there
+             (run-with-timer 1 nil
+                             (lambda ()
+                               (bury-buffer "*compilation*")
+                               ;; and return to whatever were looking at before
+                               (replace-buffer-in-windows "*compilation*"))))
+           ;; Always return the anticipated result of compilation-exit-message-function
+           (cons msg code))))
+
+(use-package web-mode
+  :ensure t
+  :init
+  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.css?\\'" . web-mode)))
+
+;; Version control stuff
+(use-package magit
+  :ensure t
+  ;; :defer t -- implied
+  :commands magit-status
+  :init (add-hook 'magit-mode-hook 'magit-load-config-extensions)
+  :bind ("C-x g" . magit-status)
+  :config
+  (csetq magit-last-seen-setup-instructions "1.4.0")
+  (csetq magit-status-buffer-switch-function 'switch-to-buffer))
+
+(use-package ibuffer-vc
+  :ensure t
+  :bind ("C-x C-b" . ibuffer)
+  :init
   (add-hook 'ibuffer-hook
             (lambda ()
               (ibuffer-vc-set-filter-groups-by-vc-root)
               (unless (eq ibuffer-sorting-mode 'alphabetic)
-                (ibuffer-do-sort-by-alphabetic))))
-  (global-set-key (kbd "C-x C-b") 'ibuffer)
+                (ibuffer-do-sort-by-alphabetic)))))
 
-  ;; Imenu
-  (global-set-key (kbd "M-i") 'idomenu)
+(use-package git-timemachine :ensure t)
 
-  ;; Buffer-move
-  (global-set-key (kbd "<C-S-up>")     'buf-move-up)
-  (global-set-key (kbd "<C-S-down>")   'buf-move-down)
-  (global-set-key (kbd "<C-S-left>")   'buf-move-left)
-  (global-set-key (kbd "<C-S-right>")  'buf-move-right)
-  ;; (setq buffer-move-behavior 'move)
+(use-package projectile
+  :ensure t
+  :commands projectile-compile-project
+  :diminish projectile-mode
+  ;; :config (projectile-global-mode)
+  :bind ("C-c m" . projectile-compile-project))
 
-  ;; Hippie-expand
-  (global-set-key [remap dabbrev-expand] 'hippie-expand)
+;; (csetq paragraph-start "\f\\|[ \t]*$\\|[ \t]*[-+*] ")
 
-  ;; Git
-  (require 'setup-git)
+(use-package octave
+  :init (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode)))
 
-  ;; Org
-  (require 'setup-org)
+(use-package engine-mode
+  :ensure t
+  :config
+  (engine-mode t)
+  (csetq engine/browser-function 'browse-url-default-browser)
+  (defengine duckduckgo
+    "https://duckduckgo.com/?q=%s"
+    :keybinding "d")
+  (defengine github
+    "https://github.com/search?ref=simplesearch&q=%s"
+    :keybinding "g")
+  (defengine cppreference
+    "http://en.cppreference.com/mwiki/index.php?search=%s"
+    :keybinding "c")
+  (defengine stack-overflow
+    "https://stackoverflow.com/search?q=%s"
+    :keybinding "s"))
 
-  ;; Paredit
-  (require 'setup-lisp)
+(use-package org
+  :bind (("C-c c" . org-capture)
+         ("C-c l" . org-store-link)
+         ("C-c a" . org-agenda))
+  :config
+  (csetq org-modules '(org-habit))
+  (csetq org-agenda-start-on-weekday 6) ; start weeks on Saturdays
+  (csetq org-clock-idle-time 15)        ; idle time
+  (csetq org-refile-targets '((nil :maxlevel . 1)
+                              (org-agenda-files :maxlevel . 1))) ; flexible refiling
 
-  ;; Ledger-mode
-  (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode))
+  (csetq org-todo-keywords
+         '((sequence
+            "TODO(t)"
+            "STARTED(s)"
+            "WAITING(w@/!)"
+            "SOMEDAY(.)" "|" "DONE(x!)" "CANCELLED(c@)")
+           (sequence "TODELEGATE(-)" "DELEGATED(d)" "COMPLETE(x)")
+           (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")))
 
-  ;; Password-store
-  (global-set-key (kbd "C-c p k") 'password-store-clear)
-  (global-set-key (kbd "C-c p c") 'password-store-copy)
-  (global-set-key (kbd "C-c p n") 'password-store-insert)
-  (global-set-key (kbd "C-c p g") 'password-store-generate)
+  (csetq org-latex-pdf-process (list "latexmk -lualatex -f %f"))
 
-  ;; Theme
-  (add-to-list 'custom-theme-load-path (concat user-emacs-directory "themes/"))
-  (load-theme 'default-dark t)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((python . t)))
 
-  ;; Built-in modes
-  (require 'octave)
-  (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
+  (use-package org-present
+    :ensure t
+    :config
+    (add-hook 'org-present-mode-hook
+              (lambda ()
+                (org-present-big)
+                (org-display-inline-images)
+                (org-present-hide-cursor)
+                (org-present-read-only)))
+    (add-hook 'org-present-mode-quit-hook
+              (lambda ()
+                (org-present-small)
+                (org-remove-inline-images)
+                (org-present-show-cursor)
+                (org-present-read-write)))))
 
-  ;; Hidden mode line
-  (require 'hidden-mode-line-mode)
-  (global-set-key (kbd "<f6>") 'hidden-mode-line-mode)
+(use-package cc-mode
+  :init
+  (load-file (expand-file-name "cc.el" lisp-d))
+  (add-hook 'c++-mode-hook (lambda ()
+                             (c-set-style "stroustrup")
+                             (c-set-offset 'namespace-open 0)
+                             (c-set-offset 'namespace-close 0)
+                             (c-set-offset 'innamespace 0))))
 
-  ;; Dired details
-  (add-hook 'dired-mode-hook 'dired-hide-details-mode)
-
-  ;; Elfeed
-  (setq-default elfeed-search-filter "@1-week-ago +unread -news"))
-
-;; Load customization file last
-(if (file-readable-p custom-file) (load-file custom-file))
+;; Load local customize files last
+(if (file-readable-p local-init-file) (load-file local-init-file))

@@ -1,5 +1,5 @@
 # Sources:
-# - https://github.com/mathiasbynens/dotfiles/blob/master/.bash_prompt
+# * https://github.com/mathiasbynens/dotfiles/blob/master/.bash_prompt
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
