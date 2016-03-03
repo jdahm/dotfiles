@@ -152,6 +152,10 @@
     (make-directory backup-dir)))
 (csetq vc-make-backup-files t)
 
+;; Make etc directory if necessary
+(unless (file-exists-p (expand-file-name "etc/" emacs-d))
+  (make-directory (expand-file-name "etc/" emacs-d)))
+
 (csetq save-place-file (expand-file-name "etc/saveplace" emacs-d))
 (setq-default save-place t)
 
