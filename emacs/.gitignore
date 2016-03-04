@@ -2,3 +2,4 @@
 .emacs.d/backup/
 .emacs.d/etc/
 .emacs.d/ede*
+.emacs.d/semantic*
