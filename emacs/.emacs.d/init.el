@@ -383,7 +383,11 @@
                              (c-set-style "stroustrup")
                              (c-set-offset 'namespace-open 0)
                              (c-set-offset 'namespace-close 0)
-                             (c-set-offset 'innamespace 0))))
+                             (c-set-offset 'innamespace 0)))
+  (add-hook 'c-mode-common-hook
+               (lambda ()
+                (font-lock-add-keywords nil
+                 '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t))))))
 
 ;; Load local customize files last
 (if (file-readable-p local-init-file) (load-file local-init-file))
