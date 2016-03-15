@@ -5,7 +5,7 @@
 ;; Initialize package system
 (setq package-archives
     '(("gnu" . "http://elpa.gnu.org/packages/")
-      ("melpa" . "http://melpa.milkbox.net/packages/")))
+      ("melpa" . "http://melpa.org/packages/")))
 (package-initialize)
 
 ;;; Fetch the list of packages available
@@ -32,8 +32,7 @@
     projectile
     function-args
     engine-mode
-    org-present
-    zenburn-theme))
+    org-present))
 
 ;; Install packages
 (dolist (p jdahm/package-list)
@@ -101,6 +100,9 @@
 (global-set-key (kbd "C-x l") 'counsel-locate)
 ;; (global-set-key (kbd "M-y") 'counsel-yank-pop)
 
+;; Ivy
+(ivy-mode 1)
+
 ;; Avy
 (global-set-key (kbd "C-;") 'avy-goto-char)
 (global-set-key (kbd "C-'") 'avy-goto-char-2)
@@ -112,7 +114,6 @@
 
 ;; Web-mode
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.css?\\'" . web-mode))
 
 ;; Magit
 (add-hook 'magit-mode-hook #'magit-load-config-extensions)
@@ -123,11 +124,13 @@
               (ibuffer-vc-set-filter-groups-by-vc-root)
               (unless (eq ibuffer-sorting-mode 'alphabetic)
                 (ibuffer-do-sort-by-alphabetic))))
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 (require 'octave)
 (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
 
 (require 'engine-mode)
+(engine-mode 1)
 (defengine duckduckgo
   "https://duckduckgo.com/?q=%s"
   :keybinding "d")
