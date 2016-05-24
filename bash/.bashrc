@@ -16,6 +16,9 @@ shopt -s extglob
 # the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
+# Turn off suspend and resume feature (not needed in most modern terminals)
+stty -ixon
+
 # History
 # Source: http://blog.sanctum.geek.nz/better-bash-history/
 shopt -s histappend
