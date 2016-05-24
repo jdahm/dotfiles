@@ -43,9 +43,6 @@ alias psc='ps xawf -eo pid,user,cgroup,args'
 # Functions
 mkdircd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
 
-# Local config
-[ -f ~/.bashrc.local ] && . ~/.bashrc.local
-
 # Add shell config files
 configdir=~/.config/bash
 if [ -d $configdir ]; then
@@ -154,18 +151,29 @@ else
 	hostStyle="${yellow}"
 fi
 
-# Set the terminal title to the current working directory.
-# PS1="\[\033]0;\w\007\]"
-PS1="\[${bold}\]" # begin bold
-PS1+="\[${userStyle}\]\u" # username
-PS1+="\[${white}\] at "
-PS1+="\[${hostStyle}\]\h" # host
-PS1+="\[${white}\] in "
-PS1+="\[${green}\]\w" # working directory
-PS1+="\$(prompt_git \"${white} on ${violet}\")" # Git repository details
-PS1+="\n"
-PS1+="\[${white}\]\$ \[${reset}\]" # `$` (and reset color)
-export PS1
+# Set the prompt
+set-prompt() {
+    sepcolor=$1
+    # Set the terminal title to the current working directory.
+    # PS1="\[\033]0;\w\007\]"
+    PS1="\[${bold}\]" # begin bold
+    PS1+="\[${userStyle}\]\u" # username
+    PS1+="\[${sepcolor}\] at "
+    PS1+="\[${hostStyle}\]\h" # host
+    PS1+="\[${sepcolor}\] in "
+    PS1+="\[${green}\]\w" # working directory
+    PS1+="\$(prompt_git \"${sepcolor} on ${violet}\")" # Git repository details
+    PS1+="\n"
+    PS1+="\[${sepcolor}\]\$ \[${reset}\]" # `$` (and reset color)
+    export PS1
 
-PS2="\[${yellow}\]→ \[${reset}\]"
-export PS2
+    PS2="\[${yellow}\]→ \[${reset}\]"
+    export PS2
+}
+
+# Prompt "themes"
+prompt-dark-theme() { set-prompt $white; }
+prompt-light-theme() { set-prompt $black; }
+
+# Local config
+[ -f ~/.bashrc.local ] && . ~/.bashrc.local
