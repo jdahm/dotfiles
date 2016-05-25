@@ -151,10 +151,18 @@
            ("C-x l" . counsel-locate)
            ("C-c L" . counsel-git-log)
            ("C-c i" . counsel-imenu)
+           ("C-c t" . counsel-load-theme)
+           ("M-y" . counsel-yank-pop)
            :map help-map
            ("C-f" . counsel-describe-function)
            ("C-v" . counsel-describe-variable)
-           ("C-k" . counsel-descbinds)))
+           ("C-k" . counsel-descbinds)
+           ("u" . counsel-unicode-char)
+           ("l" . counsel-load-library)
+           :map lisp-mode-shared-map
+           ("M-i" . counsel-el)
+           :map lisp-mode-map
+           ("M-i" . counsel-cl)))
   (ivy-mode 1)
   :bind (("C-s" . counsel-grep-or-swiper)
          ("C-r" . counsel-grep-or-swiper)))
