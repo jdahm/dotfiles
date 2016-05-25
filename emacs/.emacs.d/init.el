@@ -219,6 +219,8 @@
 (use-package hydra :ensure t)
 (bind-key "M-p" 'bookmark-jump)
 (use-package ace-window :ensure t)
+(use-package ace-link :ensure t
+  :init (ace-link-setup-default))
 (use-package headlong
   :ensure t
   :bind (("M-o" . headlong-bookmark-jump)))
