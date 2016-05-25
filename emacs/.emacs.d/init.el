@@ -279,15 +279,19 @@
 
 (use-package company
   :ensure t
-  :commands company-mode
   :diminish company-mode
-  :init (add-hook 'prog-mode-hook #'company-mode))
+  :init
+  (add-hook 'after-init-hook 'global-company-mode))
 
 (use-package flycheck
   :ensure t
-  :commands flycheck-mode
   :diminish flycheck-mode
-  :init (add-hook 'prog-mode-hook #'flycheck-mode))
+  :init
+  (add-hook 'after-init-hook 'global-flycheck-mode))
+
+(use-package function-args
+  :ensure t
+  :init (fa-config-default))
 
 (setq custom-file (expand-file-name "custom.el" config-d))
 (if (file-readable-p custom-file) (load-file custom-file))
