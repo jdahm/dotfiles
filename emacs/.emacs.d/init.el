@@ -306,7 +306,7 @@ _k_: previous error    _l_: last error
   ("C-n" (forward-line 1) nil :exit t)
   ("C-p" (forward-line -1) nil :exit t))
 
-(bind-key "vv" 'hydra-vi/body)
+(key-chord-define-global "vv" 'hydra-vi/body)
 
 (use-package octave
   :mode (("\\.m\\'" . octave-mode)))
