@@ -1,5 +1,4 @@
 ;; Emacs config
-;; Author: Johann Dahm <jdahm@fastmail.com>
 
 (defvar config-d "~/.config/emacs/")
 (defvar lisp-d (expand-file-name "lisp/" user-emacs-directory))
@@ -57,6 +56,9 @@
 
 ;; Set location for ede cache of visited projects.
 (setq ede-project-placeholder-cache-file (jd/cache-for "ede-projects.el"))
+
+;; Set semanticdb location for parsing projects.
+(setq semanticdb-default-save-directory (jd/emacs.d "etc/ede-projects.el"))
 
 ;; Set location for savehist file.
 (setq savehist-file (jd/cache-for "history"))
@@ -139,34 +141,36 @@
 (use-package compile
   :init (setq compilation-scroll-output 'first-error))
 
-(use-package swiper
+(use-package unkillable-scratch
   :ensure t
+  :init (unkillable-scratch))
+
+(use-package ivy
+  :ensure t
+  :diminish ivy-mode
+  :bind (("C-c C-r" . ivy-resume))
+  :init (ivy-mode 1))
+
+(use-package counsel
+  :ensure t
+  :diminish counsel-mode
+  :bind (("C-c i" . counsel-imenu)
+         ("C-c g" . counsel-git)
+         ("C-c j" . counsel-git-grep)
+         ("C-c L" . counsel-git-log)
+         ("C-c u" . counsel-unicode-char)
+         ("C-x l" . counsel-locate)
+         ("C-c l" . counsel-ag)
+         ("C-s" . counsel-grep-or-swiper)
+         ("C-r" . counsel-grep-or-swiper)
+         ("C-x j" . counsel-bookmark)
+         ([remap bookmark-jump] . counsel-bookmark)
+         ;; :map isearch-mode-map ("M-o" . swiper-from-isearch)
+         :map lisp-mode-shared-map
+         ("M-i" . counsel-el))
   :init
-  (use-package counsel
-    :ensure t
-    :bind (("M-x" . counsel-M-x)
-           ("C-x C-f" . counsel-find-file)
-           ("C-c g" . counsel-git)
-           ("C-c j" . counsel-git-grep)
-           ("C-x l" . counsel-locate)
-           ("C-c L" . counsel-git-log)
-           ("C-c i" . counsel-imenu)
-           ("C-c t" . counsel-load-theme)
-           ("M-y" . counsel-yank-pop)
-           :map help-map
-           ("C-f" . counsel-describe-function)
-           ("C-v" . counsel-describe-variable)
-           ("C-k" . counsel-descbinds)
-           ("u" . counsel-unicode-char)
-           ("l" . counsel-load-library)
-           :map lisp-mode-shared-map
-           ("M-i" . counsel-el)
-           :map lisp-mode-map
-           ("M-i" . counsel-cl)))
-  (ivy-mode 1)
-  :bind (("C-s" . counsel-grep-or-swiper)
-         ("C-r" . counsel-grep-or-swiper)))
-  ;; :bind (:map isearch-mode-map ("M-o" . swiper-from-isearch)))
+  (use-package swiper :ensure t)
+  (counsel-mode 1))
 
 (use-package avy
   :ensure t
@@ -240,7 +244,7 @@
 ;; Better manage window layouts with winner-mode.
 (winner-mode 1)
 
-(defhydra hydra-window (global-map "C-M-o")
+(defhydra hydra-window ()
   "window"
   ("h" windmove-left "left")
   ("j" windmove-down "down")
@@ -255,11 +259,54 @@
 (key-chord-define-global "yy" 'hydra-window/body)
 
 (defhydra hydra-next-error (global-map "C-x")
-  "next-error"
-  ("`" next-error "next")
-  ("j" next-error "next" :bind nil)
-  ("k" previous-error "previous" :bind nil)
-  ("h" first-error nil :bind nil))
+    "
+Compilation errors:
+_j_: next error        _h_: first error    _q_uit
+_k_: previous error    _l_: last error
+"
+    ("`" next-error     nil)
+    ("j" next-error     nil :bind nil)
+    ("k" previous-error nil :bind nil)
+    ("h" first-error    nil :bind nil)
+    ("l" (condition-case err
+             (while t
+               (next-error))
+           (user-error nil))
+     nil :bind nil)
+    ("q" nil            nil :color blue))
+
+(defhydra hydra-vi (:color pink)
+  "vi"
+  ;; movement
+  ("w" forward-word)
+  ("b" backward-word)
+  ;; scrolling
+  ("C-v" scroll-up-command nil)
+  ("M-v" scroll-down-command nil)
+  ("v" recenter-top-bottom)
+  ;; arrows
+  ("h" backward-char)
+  ("j" next-line)
+  ("k" previous-line)
+  ("l" forward-char)
+  ;; delete
+  ("x" delete-char)
+  ("d" hydra-vi-del/body "del" :exit t)
+  ("u" undo)
+  ;; should be generic "open"
+  ("r" push-button "open")
+  ("." hydra-repeat)
+  ;; bad
+  ("m" set-mark-command "mark")
+  ("a" move-beginning-of-line "beg")
+  ("e" move-end-of-line "end")
+  ("y" kill-ring-save "yank" :exit t)
+  ;; exit points
+  ("q" nil "ins")
+  ("C-n" (forward-line 1) nil :exit t)
+  ("C-p" (forward-line -1) nil :exit t))
+
+(bind-key "vv" 'hydra-vi/body)
 
 (use-package octave
   :mode (("\\.m\\'" . octave-mode)))
@@ -281,17 +328,23 @@
   :ensure t
   :diminish company-mode
   :init
-  (add-hook 'after-init-hook 'global-company-mode))
+  (add-hook 'after-init-hook #'global-company-mode)
+  )
 
 (use-package flycheck
   :ensure t
   :diminish flycheck-mode
   :init
-  (add-hook 'after-init-hook 'global-flycheck-mode))
+  (add-hook 'after-init-hook #'global-flycheck-mode))
 
 (use-package function-args
   :ensure t
   :init (fa-config-default))
+
+(use-package aggressive-indent
+  :ensure t
+  :commands (aggressive-indent-mode)
+  :bind (("C-c a" . aggressive-indent-mode)))
 
 (setq custom-file (expand-file-name "custom.el" config-d))
 (if (file-readable-p custom-file) (load-file custom-file))
