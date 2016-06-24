@@ -138,9 +138,6 @@
   :init (add-hook 'shell-mode-hook #'ansi-color-for-comint-mode-on)
   :bind (("C-c s" . shell)))
 
-(use-package compile
-  :init (setq compilation-scroll-output 'first-error))
-
 (use-package unkillable-scratch
   :ensure t
   :init (unkillable-scratch))
@@ -166,8 +163,7 @@
          ("C-x j" . counsel-bookmark)
          ([remap bookmark-jump] . counsel-bookmark)
          ;; :map isearch-mode-map ("M-o" . swiper-from-isearch)
-         :map lisp-mode-shared-map
-         ("M-i" . counsel-el))
+         :map lisp-mode-shared-map ("M-i" . counsel-el))
   :init
   (use-package swiper :ensure t)
   (counsel-mode 1))
@@ -328,8 +324,7 @@ _k_: previous error    _l_: last error
   :ensure t
   :diminish company-mode
   :init
-  (add-hook 'after-init-hook #'global-company-mode)
-  )
+  (add-hook 'after-init-hook #'global-company-mode))
 
 (use-package flycheck
   :ensure t
