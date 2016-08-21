@@ -1,7 +1,9 @@
-(defun kill-current-buffer ()
+(defun kill-current-buffer (arg)
   "Kill the current buffer."
-  (interactive)
-  (kill-buffer (current-buffer)))
+  (interactive "P")
+  (if arg
+      (kill-buffer)
+    (kill-buffer (current-buffer))))
 
 (defun create-scratch-buffer ()
   "Create a new scratch buffer to work in. (could be *scratch* - *scratchX*)"
@@ -22,3 +24,5 @@
   "Switch to previous buffer."
   (interactive)
   (switch-to-buffer (other-buffer)))
+
+(provide 'jd-buffer)

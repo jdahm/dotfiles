@@ -59,3 +59,5 @@
         (setq end (region-end)))
     (delete-trailing-whitespace begin end)
     (indent-region begin end nil))))
+
+(provide 'jd-editing)

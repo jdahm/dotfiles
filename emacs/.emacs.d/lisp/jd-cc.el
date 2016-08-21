@@ -34,3 +34,5 @@
                     ("\\<\\(xstring\\|xchar\\)\\>" . font-lock-type-face)
                     ))
              ) t)
+
+(provide 'jd-cc)

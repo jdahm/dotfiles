@@ -27,3 +27,5 @@
              (string= (substring path -3) ".el")
              (not (string-match "^\\." path)))
         (load (file-name-sans-extension fullpath)))))))
+
+(provide 'jd-defuns)

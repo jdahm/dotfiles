@@ -22,3 +22,5 @@ xdg-open."
     (or (locate-dominating-file directory ".git")
         (locate-dominating-file directory ".svn")
         (locate-dominating-file directory ".hg"))))
+
+(provide 'jd-dired)

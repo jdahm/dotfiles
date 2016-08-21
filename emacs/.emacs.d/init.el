@@ -1,121 +1,101 @@
-;; Emacs config
+;;; ~/.emacs.d/init.el: Emacs configuration
+;;
+;; Johann Dahm
 
 (defvar config-d "~/.config/emacs/")
 (defvar lisp-d (expand-file-name "lisp/" user-emacs-directory))
 
-;; Set package archives and initialize.
+;; Set package archives and initialize
 (require 'package)
 (setq package-enable-at-startup nil)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
-
 (package-initialize)
 
-;; Bootstrap `use-package'
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+;; Load lisp from here
+(add-to-list 'load-path lisp-d)
 
-;; Load core functions.
-(load-file (expand-file-name "core-defuns.el" lisp-d))
+;; Require `use-package' and `bind-key'
+(require 'use-package)
+(require 'bind-key)
 
-;; Create sub-directories.
-(jd/mkdir-p (jd/emacs.d "tmp"))
-(jd/mkdir-p (jd/emacs.d "etc"))
-(jd/mkdir-p (jd/cache-for "backups"))
+;; Load core functions
+(require 'jd-defuns)
 
-;; Character encodings default to utf-8.
+;; Character encodings default to utf-8
 (prefer-coding-system 'utf-8)
 (set-language-environment 'utf-8)
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-selection-coding-system 'utf-8)
 
-;; Keep backups in a separate directory.
-(defun make-backup-file-name (file)
-  (concat (jd/cache-for "backups/") (file-name-nondirectory file) "~"))
+;; Create sub-directories
+(jd/mkdir-p (jd/emacs.d "tmp"))
+(jd/mkdir-p (jd/emacs.d "etc"))
 
-;; Keep autosave files in /tmp.
+;; Keep backups and auto-saves in a separate directory
+(jd/mkdir-p (jd/cache-for "backups"))
+(jd/mkdir-p (jd/cache-for "auto-save-list"))
+(setq backup-directory-alist
+      `((".*" . ,(jd/cache-for "backups/"))))
 (setq auto-save-file-name-transforms
-      `((".*" ,temporary-file-directory t)))
+      `((".*" ,(jd/cache-for "auto-save-list/") t)))
 
-;; Change auto-save-list directory.
-(setq auto-save-list-file-prefix (jd/cache-for "auto-save-list/.saves-"))
-
-;; Change eshell directory.
-(setq eshell-directory-name (jd/cache-for "eshell"))
-
-;; Disable annoying lock files.
-(setq create-lockfiles nil)
-
-;; Change recentf file location.
-(setq recentf-save-file (jd/cache-for "recentf"))
-
-;; Set max number of recentf menu items.
-(setq recentf-max-menu-items 25)
-
-;; Set location for ede cache of visited projects.
-(setq ede-project-placeholder-cache-file (jd/cache-for "ede-projects.el"))
-
-;; Set semanticdb location for parsing projects.
-(setq semanticdb-default-save-directory (jd/emacs.d "etc/ede-projects.el"))
-
-;; Set location for savehist file.
+;; Set location for savehist file
 (setq savehist-file (jd/cache-for "history"))
 
-;; Change bookmarks file location.
+;; Change bookmarks file location
 (setq bookmark-file (jd/emacs.d "etc/bookmarks"))
 
-;; Change save-places file location.
+;; Change save-places file location
 (setq save-place-file (jd/cache-for "places"))
 
-;; Show column numbers in mode line.
-(setq column-number-mode t)
+;; Change eshell directory
+(setq eshell-directory-name (jd/cache-for "eshell"))
 
-;; Don't use dialog boxes.
-(setq use-dialog-box nil)
+;; Change recentf file location
+(setq recentf-save-file (jd/cache-for "recentf"))
 
-;; Move files to trash when deleting.
+;; Precaution: Move files to trash when deleting
 (setq delete-by-moving-to-trash t)
 
-;; Disable message in startup buffer.
-(setq inhibit-startup-message t)
-
-;; Enable y/n answers.
+;; Enable y/n answers
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; ring-bell-function = `invert-face' on modeline.
+;; ring-bell-function = `invert-face' on modeline
 (setq visible-bell nil)
 (setq ring-bell-function (lambda ()
 			   (invert-face 'mode-line)
 			   (run-with-timer 0.1 nil 'invert-face 'mode-line)))
 
-;; Add useful functions to help-map.
+;; Add useful functions to help-map
 (bind-key "C-i" 'info-display-manual help-map)
 (bind-key "C-s" 'customize-apropos help-map)
 
-;; Replace and add a few critical functions.
-(load-file (expand-file-name "buffer.el" lisp-d))
-(bind-key "C-x a b" 'create-scratch-buffer)
-(bind-key "C-x k" 'kill-current-buffer)
+;; Replace and add a few critical functions
+(use-package jd-buffer
+  :bind (("C-x a b" . create-scratch-buffer)
+         ("C-x k" . kill-current-buffer)))
 
-(load-file (expand-file-name "editing.el" lisp-d))
-(bind-key "C-c n" 'tidy-region-or-buffer)
-(bind-key "C-x a r" 'align-regexp)
-
-(bind-key "M-<up>" 'move-line-up)
-(bind-key "M-<down>" 'move-line-down)
-
-(bind-key "C-c +" 'my-increment-number-at-point)
-(bind-key "C-c -" 'my-decrement-number-at-point)
+(use-package jd-editing
+  :bind (("C-c n" . tidy-region-or-buffer)
+         ("C-x a r" . align-regexp)
+         ("M-<up>" . move-line-up)
+         ("M-<down>" . move-line-down)
+         ("C-c +" . my-increment-number-at-point)
+         ("C-c i" . my-decrement-number-at-point)))
 
 (use-package dired
   :init
-  (load-file (expand-file-name "dired.el" lisp-d))
+  (require 'jd-dired)
+  (autoload 'dired-jump "dired-x"
+    "Jump to Dired buffer corresponding to current buffer." t)
+  (autoload 'dired-jump-other-window "dired-x"
+    "Like \\[dired-jump] (dired-jump) but in other window." t)
   (add-hook 'dired-mode-hook #'dired-hide-details-mode)
-  :bind (:map dired-mode-map
-	      ("b" . dired-open-file)
-	      ("c" . dired-open-fm))
+  :bind (("C-x C-j" . dired-jump)
+         ("C-x 4 C-j" . dired-jump-other-window)
+         :map dired-mode-map
+         ("b" . dired-open-file)
+         ("c" . dired-open-fm))
   :config
   (setq-default insert-directory-program "gls")
   (setq-default dired-listing-switches "-lhva")
@@ -138,34 +118,26 @@
   :init (add-hook 'shell-mode-hook #'ansi-color-for-comint-mode-on)
   :bind (("C-c s" . shell)))
 
-(use-package unkillable-scratch
-  :ensure t
-  :init (unkillable-scratch))
-
+;; Ivy and Avy
 (use-package ivy
   :ensure t
-  :diminish ivy-mode
-  :bind (("C-c C-r" . ivy-resume))
-  :init (ivy-mode 1))
-
-(use-package counsel
-  :ensure t
-  :diminish counsel-mode
-  :bind (("C-c i" . counsel-imenu)
+  :diminish (ivy-mode counsel-mode)
+  :bind (("C-c C-r" . ivy-resume)
+         ("C-c i" . counsel-imenu)
          ("C-c g" . counsel-git)
          ("C-c j" . counsel-git-grep)
          ("C-c L" . counsel-git-log)
          ("C-c u" . counsel-unicode-char)
          ("C-x l" . counsel-locate)
          ("C-c l" . counsel-ag)
-         ("C-s" . counsel-grep-or-swiper)
-         ("C-r" . counsel-grep-or-swiper)
-         ("C-x j" . counsel-bookmark)
-         ([remap bookmark-jump] . counsel-bookmark)
+         ;; ("C-x j" . counsel-bookmark)
+         ;; ([remap bookmark-jump] . counsel-bookmark)
+         ;; ("C-r" . swiper)
+         ;; ("C-s" . counsel-grep-or-swiper)
          ;; :map isearch-mode-map ("M-o" . swiper-from-isearch)
          :map lisp-mode-shared-map ("M-i" . counsel-el))
   :init
-  (use-package swiper :ensure t)
+  (ivy-mode 1)
   (counsel-mode 1))
 
 (use-package avy
@@ -180,42 +152,42 @@
   :ensure t
   :bind (("C-M-;" . tiny-expand)))
 
+;; Load from here.
+(add-to-list 'load-path lisp-d)
+
+;; Additional Modes
 (use-package iedit
-  :ensure t
   :bind (("C-c ;" . iedit-mode)))
 
 (use-package markdown-mode
-  :ensure t
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-(use-package yaml-mode
-  :ensure t
-  :mode (("\\.yml\\'" . yaml-mode))
-  :bind (("C-m" . newline-and-indent)))
-
 (use-package web-mode
-  :ensure t
-  :init
   :mode (("\\.html?\\'" . web-mode)
 	 ("\\.css?\\'" . web-mode)))
 
-(use-package magit
-  :ensure t
+;; Version-control
+(use-package git-timemachine)
+(use-package vc
   :init
-  (add-hook 'magit-mode-hook #'magit-load-config-extensions)
-  :config
-  (use-package git-timemachine :ensure t)
-  :bind (("C-x g" . magit-status)))
-(use-package projectile
-  :ensure t
-  :bind (("C-c m" . projectile-compile-project)))
+  (require 'jd-git)
+  (require 'vc-dir)
+  :bind
+  (:map vc-prefix-map
+        ("r" . vc-revert-buffer)
+        ("a" . my-vc-git-add)
+        ("u" . my-vc-git-reset)
+        :map vc-dir-mode-map
+        ("r" . vc-revert-buffer)
+        ("a" . my-vc-git-add)
+        ("u" . my-vc-git-reset)
+        ("g" . my-vc-refresh)))
 
 (use-package ibuffer-vc
-  :ensure t
   :init
   (add-hook 'ibuffer-hook
             (lambda ()
@@ -226,90 +198,48 @@
 
 (use-package hydra :ensure t)
 (bind-key "M-p" 'bookmark-jump)
-(use-package ace-window :ensure t)
-(use-package ace-link :ensure t
-  :init (ace-link-setup-default))
-(use-package headlong
-  :ensure t
-  :bind (("M-o" . headlong-bookmark-jump)))
 
-(use-package key-chord
-  :ensure t
-  :init (key-chord-mode 1))
+(use-package ace-link :config (ace-link-setup-default))
+
+(bind-key "C-c m" 'compile)
 
 ;; Better manage window layouts with winner-mode.
 (winner-mode 1)
-
 (defhydra hydra-window ()
   "window"
   ("h" windmove-left "left")
   ("j" windmove-down "down")
   ("k" windmove-up "up")
   ("l" windmove-right "right")
-  ("a" ace-window "ace")
+  ("n" winner-undo "undo")
+  ("p" winner-redo "redo")
   ("u" hydra-universal-argument "universal")
-  ("s" (lambda () (interactive) (ace-window 4)) "swap")
-  ("d" (lambda () (interactive) (ace-window 16)) "delete")
   ("m" headlong-bookmark-jump))
-
-(key-chord-define-global "yy" 'hydra-window/body)
+(global-set-key (kbd "C-M-o") 'hydra-window/body)
 
 (defhydra hydra-next-error (global-map "C-x")
-    "
+  "
 Compilation errors:
 _j_: next error        _h_: first error    _q_uit
 _k_: previous error    _l_: last error
 "
-    ("`" next-error     nil)
-    ("j" next-error     nil :bind nil)
-    ("k" previous-error nil :bind nil)
-    ("h" first-error    nil :bind nil)
-    ("l" (condition-case err
-             (while t
-               (next-error))
-           (user-error nil))
-     nil :bind nil)
-    ("q" nil            nil :color blue))
-
-(defhydra hydra-vi (:color pink)
-  "vi"
-  ;; movement
-  ("w" forward-word)
-  ("b" backward-word)
-  ;; scrolling
-  ("C-v" scroll-up-command nil)
-  ("M-v" scroll-down-command nil)
-  ("v" recenter-top-bottom)
-  ;; arrows
-  ("h" backward-char)
-  ("j" next-line)
-  ("k" previous-line)
-  ("l" forward-char)
-  ;; delete
-  ("x" delete-char)
-  ("d" hydra-vi-del/body "del" :exit t)
-  ("u" undo)
-  ;; should be generic "open"
-  ("r" push-button "open")
-  ("." hydra-repeat)
-  ;; bad
-  ("m" set-mark-command "mark")
-  ("a" move-beginning-of-line "beg")
-  ("e" move-end-of-line "end")
-  ("y" kill-ring-save "yank" :exit t)
-  ;; exit points
-  ("q" nil "ins")
-  ("C-n" (forward-line 1) nil :exit t)
-  ("C-p" (forward-line -1) nil :exit t))
-
-(key-chord-define-global "vv" 'hydra-vi/body)
+  ("`" next-error     nil)
+  ("j" next-error     nil :bind nil)
+  ("k" previous-error nil :bind nil)
+  ("h" first-error    nil :bind nil)
+  ("l" (condition-case err
+           (while t
+             (next-error))
+         (user-error nil))
+   nil :bind nil)
+  ("q" nil            nil :color blue))
 
 (use-package octave
   :mode (("\\.m\\'" . octave-mode)))
 
 (use-package cc-mode
   :init
-  (load-file (expand-file-name "cc.el" lisp-d))
+  (require 'jd-cc)
   (add-hook 'c++-mode-hook (lambda ()
 			     (c-set-style "stroustrup")
 			     (c-set-offset 'namespace-open 0)
@@ -323,23 +253,12 @@ _k_: previous error    _l_: last error
 (use-package company
   :ensure t
   :diminish company-mode
-  :init
-  (add-hook 'after-init-hook #'global-company-mode))
+  :init (add-hook 'after-init-hook #'global-company-mode))
 
-(use-package flycheck
+(use-package ggtags
   :ensure t
-  :diminish flycheck-mode
-  :init
-  (add-hook 'after-init-hook #'global-flycheck-mode))
-
-(use-package function-args
-  :ensure t
-  :init (fa-config-default))
-
-(use-package aggressive-indent
-  :ensure t
-  :commands (aggressive-indent-mode)
-  :bind (("C-c a" . aggressive-indent-mode)))
+  :diminish ggtags-mode
+  :init (add-hook 'after-init-hook (ggtags-mode t)))
 
 (setq custom-file (expand-file-name "custom.el" config-d))
 (if (file-readable-p custom-file) (load-file custom-file))
