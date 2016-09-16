@@ -1,4 +1,4 @@
-;;; editing.el --- Functions for editing.
+;;; jd-editing.el --- Functions for editing.
 
 ;; Source: magnars/.emacs.d
 
@@ -11,11 +11,13 @@
         (search-backward (number-to-string number))
         (replace-match (number-to-string (funcall change number)))
         (goto-char point)))))
-(defun my-increment-number-at-point ()
+
+(defun increment-number-at-point ()
   "Increment number at point like vim's C-a"
   (interactive)
   (my-change-number-at-point '1+))
-(defun my-decrement-number-at-point ()
+
+(defun decrement-number-at-point ()
   "Decrement number at point like vim's C-x"
   (interactive)
   (my-change-number-at-point '1-))

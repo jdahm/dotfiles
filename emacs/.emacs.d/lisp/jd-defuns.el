@@ -1,31 +1,24 @@
-;; Source: sjrmanning/.emacs.d
+;; Sources:
+;;   * sjrmanning/.emacs.d
+;;   * muahah/emacs-profile
 
-(defun jd/emacs.d (path)
+(defun require-package (package)
+  "Install given PACKAGE."
+  (unless (package-installed-p package)
+    (unless (assoc package package-archive-contents)
+      (package-refresh-contents))
+    (package-install package)))
+
+(defun emacsd-path (path)
   "Return path inside user's `.emacs.d'."
   (expand-file-name path user-emacs-directory))
 
-(defun jd/cache-for (identifier)
+(defun cache-for (identifier)
   "Return cache directory for given identifier."
-  (expand-file-name identifier (jd/emacs.d "tmp")))
+  (expand-file-name identifier (emacsd-path "tmp")))
 
-(defun jd/mkdir-p (dir-path)
-  "Make directory if it doesn't exist."
-  (unless (file-exists-p dir-path)
-    (make-directory dir-path t)))
-
-(defun jd/load-directory (directory)
-  "Load recursively all `.el' files in DIRECTORY."
-  (dolist (element (directory-files-and-attributes directory nil nil nil))
-    (let* ((path (car element))
-           (fullpath (concat directory "/" path))
-           (isdir (car (cdr element)))
-           (ignore-dir (or (string= path ".") (string= path ".."))))
-      (cond
-       ((and (eq isdir t) (not ignore-dir))
-        (jd/load-directory fullpath))
-       ((and (eq isdir nil)
-             (string= (substring path -3) ".el")
-             (not (string-match "^\\." path)))
-        (load (file-name-sans-extension fullpath)))))))
+(defun etc-for (identifier)
+  "Return cache directory for given identifier."
+  (expand-file-name identifier (emacsd-path "etc")))
 
 (provide 'jd-defuns)

@@ -1,9 +1,15 @@
-;;; ~/.emacs.d/init.el: Emacs configuration
+;;; init.el --- Configuration for Emacs
 ;;
-;; Johann Dahm
+;;; Author: Johann Dahm <johann@jdahm.me>
+;;
+;;; Commentary:
+;;
+;; Configuration for Emacs
+;;
+;;; Code:
 
-(defvar config-d "~/.config/emacs/")
-(defvar lisp-d (expand-file-name "lisp/" user-emacs-directory))
+(defconst config-d "~/.config/emacs/")
+(defconst lisp-d (expand-file-name "lisp/" user-emacs-directory))
 
 ;; Set package archives and initialize
 (require 'package)
@@ -12,10 +18,6 @@
 
 ;; Load lisp from here
 (add-to-list 'load-path lisp-d)
-
-;; Require `use-package' and `bind-key'
-(require 'use-package)
-(require 'bind-key)
 
 ;; Load core functions
 (require 'jd-defuns)
@@ -28,31 +30,37 @@
 (set-selection-coding-system 'utf-8)
 
 ;; Create sub-directories
-(jd/mkdir-p (jd/emacs.d "tmp"))
-(jd/mkdir-p (jd/emacs.d "etc"))
+  (dolist (dir (list (cache-for "") (etc-for "")))
+    (when (not (file-directory-p dir))
+      (make-directory dir t)))
 
 ;; Keep backups and auto-saves in a separate directory
-(jd/mkdir-p (jd/cache-for "backups"))
-(jd/mkdir-p (jd/cache-for "auto-save-list"))
-(setq backup-directory-alist
-      `((".*" . ,(jd/cache-for "backups/"))))
-(setq auto-save-file-name-transforms
-      `((".*" ,(jd/cache-for "auto-save-list/") t)))
+;; Put backup files neatly away                                                 
+(let ((backup-dir (etc-for "backups"))
+      (auto-saves-dir (cache-for "auto-save-list")))
+  (dolist (dir (list backup-dir auto-saves-dir))
+    (when (not (file-directory-p dir))
+      (make-directory dir t)))
+  (setq auto-save-file-name-transforms `((".*" ,auto-saves-dir t))
+        auto-save-list-file-prefix (concat auto-saves-dir ".saves-")
+        tramp-auto-save-directory auto-saves-dir
+        backup-directory-alist `(("." . ,backup-dir))
+        tramp-backup-directory-alist `((".*" . ,backup-dir))))
 
 ;; Set location for savehist file
-(setq savehist-file (jd/cache-for "history"))
+(setq savehist-file (cache-for "history"))
 
 ;; Change bookmarks file location
-(setq bookmark-file (jd/emacs.d "etc/bookmarks"))
+(setq bookmark-file (etc-for "bookmarks"))
 
 ;; Change save-places file location
-(setq save-place-file (jd/cache-for "places"))
+(setq save-place-file (cache-for "places"))
 
 ;; Change eshell directory
-(setq eshell-directory-name (jd/cache-for "eshell"))
+(setq eshell-directory-name (cache-for "eshell"))
 
 ;; Change recentf file location
-(setq recentf-save-file (jd/cache-for "recentf"))
+(setq recentf-save-file (cache-for "recentf"))
 
 ;; Precaution: Move files to trash when deleting
 (setq delete-by-moving-to-trash t)
@@ -67,141 +75,116 @@
 			   (run-with-timer 0.1 nil 'invert-face 'mode-line)))
 
 ;; Add useful functions to help-map
-(bind-key "C-i" 'info-display-manual help-map)
-(bind-key "C-s" 'customize-apropos help-map)
+(define-key help-map "\C-i" 'info-display-manual)
+(define-key help-map "\C-s" 'customize-apropos)
 
 ;; Replace and add a few critical functions
-(use-package jd-buffer
-  :bind (("C-x a b" . create-scratch-buffer)
-         ("C-x k" . kill-current-buffer)))
+(require 'jd-buffer)
+(global-set-key (kbd "C-x a b") 'create-scratch-buffer)
+(global-set-key (kbd "C-x k") 'kill-current-buffer)
 
-(use-package jd-editing
-  :bind (("C-c n" . tidy-region-or-buffer)
-         ("C-x a r" . align-regexp)
-         ("M-<up>" . move-line-up)
-         ("M-<down>" . move-line-down)
-         ("C-c +" . my-increment-number-at-point)
-         ("C-c i" . my-decrement-number-at-point)))
+(require 'jd-editing)
+(global-set-key (kbd "C-x a r") 'align-regexp)
+(global-set-key (kbd "C-c n") 'tidy-region-or-buffer)
+(global-set-key (kbd "M-<up>") 'move-line-up)
+(global-set-key (kbd "M-<down>") 'move-line-down)
+(global-set-key (kbd "M-Q") 'unfill-paragraph)
+(global-set-key (kbd "C-c +") 'increment-number-at-point)
+(global-set-key (kbd "C-c -") 'decrement-number-at-point)
 
-(use-package dired
-  :init
-  (require 'jd-dired)
-  (autoload 'dired-jump "dired-x"
-    "Jump to Dired buffer corresponding to current buffer." t)
-  (autoload 'dired-jump-other-window "dired-x"
-    "Like \\[dired-jump] (dired-jump) but in other window." t)
-  (add-hook 'dired-mode-hook #'dired-hide-details-mode)
-  :bind (("C-x C-j" . dired-jump)
-         ("C-x 4 C-j" . dired-jump-other-window)
-         :map dired-mode-map
-         ("b" . dired-open-file)
-         ("c" . dired-open-fm))
-  :config
-  (setq-default insert-directory-program "gls")
-  (setq-default dired-listing-switches "-lhva")
-  (setq-default dired-clean-up-buffers-too t)
-  (setq-default dired-recursive-copies 'always)
-  (setq-default dired-recursive-deletes 'top))
+;; Dired
+(require 'jd-dired)
+(require 'dired)
+(autoload 'dired-jump "dired-x"
+  "Jump to Dired buffer corresponding to current buffer." t)
+(autoload 'dired-jump-other-window "dired-x"
+  "Like \\[dired-jump] (dired-jump) but in other window." t)
+(add-hook 'dired-mode-hook #'dired-hide-details-mode)
+(global-set-key (kbd "C-x C-j") 'dired-jump)
+(global-set-key (kbd "C-x 4 C-j") 'dired-jump-other-window)
+(define-key dired-mode-map "b" 'dired-open-file)
+(define-key dired-mode-map "c" 'dired-open-fm)
 
-;; Use C-h to delete char backward. This:
-;; * avoids having to hit DEL extending pinky
-;; * is consistent with terminals
-;; (define-key key-translation-map [?\C-h] [?\C-?])
-;; (bind-key "C-h" 'isearch-delete-char isearch-mode-map)
-;; (bind-key "C-?" 'isearch-delete-char help-mode-map)
-;; (bind-key "C-?" 'help-command)
-;; (bind-key "M-?" 'mark-paragraph)
-;; (bind-key "C-h" 'delete-backward-char)
-;; (bind-key "M-h" 'backward-kill-word)
+(setq-default dired-clean-up-buffers-too t)
+(setq-default dired-recursive-copies 'always)
+(setq-default dired-recursive-deletes 'top)
 
-(use-package shell
-  :init (add-hook 'shell-mode-hook #'ansi-color-for-comint-mode-on)
-  :bind (("C-c s" . shell)))
+;; Shell
+(add-hook 'shell-mode-hook #'ansi-color-for-comint-mode-on)
+(global-set-key (kbd "C-c s") 'shell)
 
 ;; Ivy and Avy
-(use-package ivy
-  :ensure t
-  :diminish (ivy-mode counsel-mode)
-  :bind (("C-c C-r" . ivy-resume)
-         ("C-c i" . counsel-imenu)
-         ("C-c g" . counsel-git)
-         ("C-c j" . counsel-git-grep)
-         ("C-c L" . counsel-git-log)
-         ("C-c u" . counsel-unicode-char)
-         ("C-x l" . counsel-locate)
-         ("C-c l" . counsel-ag)
-         ;; ("C-x j" . counsel-bookmark)
-         ;; ([remap bookmark-jump] . counsel-bookmark)
-         ;; ("C-r" . swiper)
-         ;; ("C-s" . counsel-grep-or-swiper)
-         ;; :map isearch-mode-map ("M-o" . swiper-from-isearch)
-         :map lisp-mode-shared-map ("M-i" . counsel-el))
-  :init
-  (ivy-mode 1)
-  (counsel-mode 1))
+(require 'diminish)
+(require-package 'ivy)
+(global-set-key (kbd "C-c C-r") 'ivy-resume)
+(global-set-key (kbd "C-c i") 'counsel-imenu)
+(global-set-key (kbd "C-c g") 'counsel-git)
+(global-set-key (kbd "C-c j") 'counsel-git-grep)
+(global-set-key (kbd "C-c L") 'counsel-git-log)
+(global-set-key (kbd "C-c u") 'counsel-unicode-char)
+(global-set-key (kbd "C-c l") 'counsel-ag)
+(global-set-key (kbd "C-x l") 'counsel-locate)
+(global-set-key (kbd "C-s") 'counsel-grep-or-swiper)
+(global-set-key (kbd "C-r") 'swiper)
+(define-key lisp-mode-shared-map "\M-i" 'counsel-el)
+;; ("C-x j" . counsel-bookmark)
+;; ([remap bookmark-jump] . counsel-bookmark)
+(ivy-mode 1)
+(diminish 'ivy-mode)
+(counsel-mode 1)
+(diminish 'counsel-mode)
 
-(use-package avy
-  :ensure t
-  :bind (("C-;" . avy-goto-char)
-	 ("C-'" . avy-goto-char-2)
-	 ("M-g a" . avy-goto-line)
-	 ("M-g w" . avy-goto-word-1)
-         ("C-M-s" . avy-goto-char-timer)))
+(require-package 'avy)
+(global-set-key (kbd "C-;") 'avy-goto-char)
+(global-set-key (kbd "C-'") 'avy-goto-char-2)
+(global-set-key (kbd "M-g a") 'avy-goto-line)
+(global-set-key (kbd "M-g w") 'avy-goto-word-1)
+(global-set-key (kbd "C-M-s") 'avy-goto-char-timer)
 
-(use-package tiny
-  :ensure t
-  :bind (("C-M-;" . tiny-expand)))
+(require-package 'tiny)
+(global-set-key (kbd "C-M-;") 'tiny-expand)
 
-;; Load from here.
-(add-to-list 'load-path lisp-d)
+(require 'iedit)
+(global-set-key (kbd "C-c ;") 'iedit-mode)
 
-;; Additional Modes
-(use-package iedit
-  :bind (("C-c ;" . iedit-mode)))
+(require 'markdown-mode)
+(setq markdown-command "multimarkdown")
+(dolist (item '(("README\\.md\\'" . gfm-mode)
+                ("\\.md\\'" . markdown-mode)
+                ("\\.markdown\\'" . markdown-mode)))
+  (add-to-list 'auto-mode-alist item))
 
-(use-package markdown-mode
-  :commands (markdown-mode gfm-mode)
-  :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
-
-(use-package web-mode
-  :mode (("\\.html?\\'" . web-mode)
-	 ("\\.css?\\'" . web-mode)))
+(require 'web-mode)
+(dolist (item '(("\\.html?\\'" . web-mode)
+                ("\\.css?\\'" . web-mode)))
+  (add-to-list 'auto-mode-alist item))
 
 ;; Version-control
-(use-package git-timemachine)
-(use-package vc
-  :init
-  (require 'jd-git)
-  (require 'vc-dir)
-  :bind
-  (:map vc-prefix-map
-        ("r" . vc-revert-buffer)
-        ("a" . my-vc-git-add)
-        ("u" . my-vc-git-reset)
-        :map vc-dir-mode-map
-        ("r" . vc-revert-buffer)
-        ("a" . my-vc-git-add)
-        ("u" . my-vc-git-reset)
-        ("g" . my-vc-refresh)))
+(require 'git-timemachine)
+(global-set-key (kbd "C-x v t") 'git-timemachine)
 
-(use-package ibuffer-vc
-  :init
-  (add-hook 'ibuffer-hook
-            (lambda ()
-              (ibuffer-vc-set-filter-groups-by-vc-root)
-              (unless (eq ibuffer-sorting-mode 'alphabetic)
-                (ibuffer-do-sort-by-alphabetic))))
-  :bind (("C-x C-b" . ibuffer)))
+(require 'jd-git)
+(require 'vc-dir)
+(define-key vc-prefix-map "r" 'vc-revert-buffer)
+(define-key vc-prefix-map "a" 'vc-git-add)
+(define-key vc-prefix-map "u" 'vc-git-reset)
+(define-key vc-dir-mode-map "r" 'vc-revert-buffer)
+(define-key vc-dir-mode-map "a" 'vc-git-add)
+(define-key vc-dir-mode-map "u" 'vc-git-reset)
+(define-key vc-dir-mode-map "g" 'vc-refresh)
 
-(use-package hydra :ensure t)
-(bind-key "M-p" 'bookmark-jump)
+(require 'ibuffer-vc)
+(add-hook 'ibuffer-hook #'ibuffer-vc-set-filter-groups-by-vc-root)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 
-(use-package ace-link :config (ace-link-setup-default))
+(require-package 'hydra)
+(global-set-key (kbd "M-p") 'bookmark-jump)
 
-(bind-key "C-c m" 'compile)
+(require 'ace-link)
+(ace-link-setup-default)
+
+;; Global `compile' keybinding
+(global-set-key (kbd "C-c m") 'compile)
 
 ;; Better manage window layouts with winner-mode.
 (winner-mode 1)
@@ -213,9 +196,8 @@
   ("l" windmove-right "right")
   ("n" winner-undo "undo")
   ("p" winner-redo "redo")
-  ("u" hydra-universal-argument "universal")
-  ("m" headlong-bookmark-jump))
-(global-set-key (kbd "C-M-o") 'hydra-window/body)
+  ("m" bookmark-jump "bmk"))
+(global-set-key (kbd "C-x w") 'hydra-window/body)
 
 (defhydra hydra-next-error (global-map "C-x")
   "
@@ -234,31 +216,26 @@ _k_: previous error    _l_: last error
    nil :bind nil)
   ("q" nil            nil :color blue))
 
-(use-package octave
-  :mode (("\\.m\\'" . octave-mode)))
+(add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
 
-(use-package cc-mode
-  :init
-  (require 'jd-cc)
-  (add-hook 'c++-mode-hook (lambda ()
-			     (c-set-style "stroustrup")
-			     (c-set-offset 'namespace-open 0)
-			     (c-set-offset 'namespace-close 0)
-			     (c-set-offset 'innamespace 0)))
-  (add-hook 'c-mode-common-hook
-	    (lambda ()
-	      (font-lock-add-keywords nil
-				      '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t))))))
+(require 'jd-cc)
+(add-hook 'c++-mode-hook (lambda ()
+                           (c-set-style "stroustrup")
+                           (c-set-offset 'namespace-open 0)
+                           (c-set-offset 'namespace-close 0)
+                           (c-set-offset 'innamespace 0)))
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (font-lock-add-keywords nil
+                                    '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
 
-(use-package company
-  :ensure t
-  :diminish company-mode
-  :init (add-hook 'after-init-hook #'global-company-mode))
+(require-package 'company)
+(add-hook 'after-init-hook #'global-company-mode)
 
-(use-package ggtags
-  :ensure t
-  :diminish ggtags-mode
-  :init (add-hook 'after-init-hook (ggtags-mode t)))
+(require-package 'ggtags)
+(add-hook 'after-init-hook #'ggtags-mode)
 
 (setq custom-file (expand-file-name "custom.el" config-d))
 (if (file-readable-p custom-file) (load-file custom-file))
+
+;;; init.el ends here
