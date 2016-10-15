@@ -229,8 +229,8 @@ _k_: previous error    _l_: last error
             (font-lock-add-keywords nil
                                     '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
 
-(require-package 'company)
-(add-hook 'after-init-hook #'global-company-mode)
+;; (require-package 'company)
+;; (add-hook 'after-init-hook #'global-company-mode)
 
 (require-package 'ggtags)
 (add-hook 'after-init-hook #'ggtags-mode)
