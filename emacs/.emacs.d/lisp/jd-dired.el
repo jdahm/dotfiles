@@ -23,4 +23,12 @@ xdg-open."
         (locate-dominating-file directory ".svn")
         (locate-dominating-file directory ".hg"))))
 
+(defun sudired ()
+  (interactive)
+  (require 'tramp)
+  (let ((dir (expand-file-name default-directory)))
+    (if (string-match "^/sudo:" dir)
+        (user-error "Already in sudo")
+      (dired (concat "/sudo::" dir)))))
+
 (provide 'jd-dired)

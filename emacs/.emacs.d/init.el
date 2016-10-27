@@ -102,6 +102,7 @@
 (add-hook 'dired-mode-hook #'dired-hide-details-mode)
 (global-set-key (kbd "C-x C-j") 'dired-jump)
 (global-set-key (kbd "C-x 4 C-j") 'dired-jump-other-window)
+(define-key dired-mode-map (kbd "C-c C-s") 'sudired)
 (define-key dired-mode-map "b" 'dired-open-file)
 (define-key dired-mode-map "c" 'dired-open-fm)
 
@@ -111,7 +112,12 @@
 
 ;; Shell
 (add-hook 'shell-mode-hook #'ansi-color-for-comint-mode-on)
-(global-set-key (kbd "C-c s") 'shell)
+(global-set-key (kbd "C-c s") 'eshell)
+(global-set-key (kbd "C-c S") 'shell)
+
+;; Vkill
+(autoload 'vkill "vkill" nil t)
+(autoload 'list-unix-processes "vkill" nil t)
 
 ;; Ivy and Avy
 (require 'diminish)
@@ -124,15 +130,20 @@
 (global-set-key (kbd "C-c u") 'counsel-unicode-char)
 (global-set-key (kbd "C-c l") 'counsel-ag)
 (global-set-key (kbd "C-x l") 'counsel-locate)
-(global-set-key (kbd "C-s") 'counsel-grep-or-swiper)
-(global-set-key (kbd "C-r") 'swiper)
 (define-key lisp-mode-shared-map "\M-i" 'counsel-el)
-;; ("C-x j" . counsel-bookmark)
-;; ([remap bookmark-jump] . counsel-bookmark)
+
 (ivy-mode 1)
 (diminish 'ivy-mode)
+
 (counsel-mode 1)
 (diminish 'counsel-mode)
+
+;; Go to swiper from isearch
+(define-key isearch-mode-map (kbd "M-i") 'swiper-from-isearch)
+
+;; Could also use entirely swiper instead of isearch
+;; (global-set-key (kbd "C-s") 'counsel-grep-or-swiper)
+;; (global-set-key (kbd "C-r") 'swiper)
 
 (require-package 'avy)
 (global-set-key (kbd "C-;") 'avy-goto-char)
