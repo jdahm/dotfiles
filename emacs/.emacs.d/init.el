@@ -29,39 +29,6 @@
 (set-terminal-coding-system 'utf-8)
 (set-selection-coding-system 'utf-8)
 
-;; Create sub-directories
-  (dolist (dir (list (cache-for "") (etc-for "")))
-    (when (not (file-directory-p dir))
-      (make-directory dir t)))
-
-;; Keep backups and auto-saves in a separate directory
-;; Put backup files neatly away                                                 
-(let ((backup-dir (etc-for "backups"))
-      (auto-saves-dir (cache-for "auto-save-list")))
-  (dolist (dir (list backup-dir auto-saves-dir))
-    (when (not (file-directory-p dir))
-      (make-directory dir t)))
-  (setq auto-save-file-name-transforms `((".*" ,auto-saves-dir t))
-        auto-save-list-file-prefix (concat auto-saves-dir ".saves-")
-        tramp-auto-save-directory auto-saves-dir
-        backup-directory-alist `(("." . ,backup-dir))
-        tramp-backup-directory-alist `((".*" . ,backup-dir))))
-
-;; Set location for savehist file
-(setq savehist-file (cache-for "history"))
-
-;; Change bookmarks file location
-(setq bookmark-file (etc-for "bookmarks"))
-
-;; Change save-places file location
-(setq save-place-file (cache-for "places"))
-
-;; Change eshell directory
-(setq eshell-directory-name (cache-for "eshell"))
-
-;; Change recentf file location
-(setq recentf-save-file (cache-for "recentf"))
-
 ;; Precaution: Move files to trash when deleting
 (setq delete-by-moving-to-trash t)
 
@@ -176,10 +143,10 @@
 
 (require 'jd-git)
 (require 'vc-dir)
-(define-key vc-prefix-map "r" 'vc-revert-buffer)
+(define-key vc-prefix-map "r" 'vc-revert)
 (define-key vc-prefix-map "a" 'vc-git-add)
 (define-key vc-prefix-map "u" 'vc-git-reset)
-(define-key vc-dir-mode-map "r" 'vc-revert-buffer)
+(define-key vc-dir-mode-map "r" 'vc-revert)
 (define-key vc-dir-mode-map "a" 'vc-git-add)
 (define-key vc-dir-mode-map "u" 'vc-git-reset)
 (define-key vc-dir-mode-map "g" 'vc-refresh)
@@ -240,11 +207,10 @@ _k_: previous error    _l_: last error
             (font-lock-add-keywords nil
                                     '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
 
+(define-key prog-mode-map (kbd "C-c t") 'tags-search)
+
 ;; (require-package 'company)
 ;; (add-hook 'after-init-hook #'global-company-mode)
-
-(require-package 'ggtags)
-(add-hook 'after-init-hook #'ggtags-mode)
 
 (setq custom-file (expand-file-name "custom.el" config-d))
 (if (file-readable-p custom-file) (load-file custom-file))

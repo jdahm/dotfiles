@@ -13,12 +13,4 @@
   "Return path inside user's `.emacs.d'."
   (expand-file-name path user-emacs-directory))
 
-(defun cache-for (identifier)
-  "Return cache directory for given identifier."
-  (expand-file-name identifier (emacsd-path "tmp")))
-
-(defun etc-for (identifier)
-  "Return cache directory for given identifier."
-  (expand-file-name identifier (emacsd-path "etc")))
-
 (provide 'jd-defuns)
