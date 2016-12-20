@@ -59,6 +59,14 @@
 (global-set-key (kbd "C-c +") 'increment-number-at-point)
 (global-set-key (kbd "C-c -") 'decrement-number-at-point)
 
+;; Let C-w execute `backward-kill-word' when region is not active
+(defadvice kill-region (before unix-werase activate compile)
+      "When called interactively with no active region, delete a single word
+    backwards instead."
+      (interactive
+       (if mark-active (list (region-beginning) (region-end))
+         (list (save-excursion (backward-word 1) (point)) (point)))))
+
 ;; Dired
 (require 'jd-dired)
 (require 'dired)
@@ -152,7 +160,12 @@
 (define-key vc-dir-mode-map "g" 'vc-refresh)
 
 (require 'ibuffer-vc)
-(add-hook 'ibuffer-hook #'ibuffer-vc-set-filter-groups-by-vc-root)
+(add-hook 'ibuffer-hook
+          (lambda ()
+            (ibuffer-vc-set-filter-groups-by-vc-root)
+            (unless (eq ibuffer-sorting-mode 'alphabetic)
+              ;; (ibuffer-do-sort-by-alphabetic))))
+              (ibuffer-do-sort-by-vc-status))))
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 (require-package 'hydra)
