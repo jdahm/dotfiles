@@ -13,6 +13,8 @@
 
 ;; Set package archives and initialize
 (require 'package)
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (setq package-enable-at-startup nil)
 (package-initialize)
 
@@ -97,6 +99,7 @@
 ;; Ivy and Avy
 (require 'diminish)
 (require-package 'ivy)
+(require-package 'counsel)
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
 (global-set-key (kbd "C-c i") 'counsel-imenu)
 (global-set-key (kbd "C-c g") 'counsel-git)
@@ -130,36 +133,29 @@
 (require-package 'tiny)
 (global-set-key (kbd "C-M-;") 'tiny-expand)
 
-(require 'iedit)
+(require-package 'iedit)
 (global-set-key (kbd "C-c ;") 'iedit-mode)
 
-(require 'markdown-mode)
+(require-package 'markdown-mode)
 (setq markdown-command "multimarkdown")
 (dolist (item '(("README\\.md\\'" . gfm-mode)
                 ("\\.md\\'" . markdown-mode)
                 ("\\.markdown\\'" . markdown-mode)))
   (add-to-list 'auto-mode-alist item))
 
-(require 'web-mode)
+(require-package 'web-mode)
 (dolist (item '(("\\.html?\\'" . web-mode)
                 ("\\.css?\\'" . web-mode)))
   (add-to-list 'auto-mode-alist item))
 
 ;; Version-control
-(require 'git-timemachine)
+(require-package 'magit)
+(global-set-key (kbd "C-x g") 'magit-status)
+
+(require-package 'git-timemachine)
 (global-set-key (kbd "C-x v t") 'git-timemachine)
 
-(require 'jd-git)
-(require 'vc-dir)
-(define-key vc-prefix-map "r" 'vc-revert)
-(define-key vc-prefix-map "a" 'vc-git-add)
-(define-key vc-prefix-map "u" 'vc-git-reset)
-(define-key vc-dir-mode-map "r" 'vc-revert)
-(define-key vc-dir-mode-map "a" 'vc-git-add)
-(define-key vc-dir-mode-map "u" 'vc-git-reset)
-(define-key vc-dir-mode-map "g" 'vc-refresh)
-
-(require 'ibuffer-vc)
+(require-package 'ibuffer-vc)
 (add-hook 'ibuffer-hook
           (lambda ()
             (ibuffer-vc-set-filter-groups-by-vc-root)
@@ -171,7 +167,7 @@
 (require-package 'hydra)
 (global-set-key (kbd "M-p") 'bookmark-jump)
 
-(require 'ace-link)
+(require-package 'ace-link)
 (ace-link-setup-default)
 
 ;; Global `compile' keybinding
@@ -179,6 +175,7 @@
 
 ;; Better manage window layouts with winner-mode.
 (winner-mode 1)
+(require-package 'hydra)
 (defhydra hydra-window ()
   "window"
   ("h" windmove-left "left")
