@@ -139,9 +139,9 @@ prompt_git() {
     # Print the prompt
     if [ -n "${branchName}" ]; then
         if [ -n "${s}" ]; then
-            echo -e "${1}[$branchName ${s}]${reset}"
+            echo -e "${1}[$branchName ${s}]"
         else
-            echo -e "${1}[$branchName]${reset}"
+            echo -e "${1}[$branchName]"
         fi
     fi
 }
@@ -198,7 +198,7 @@ if [ "${hostName}" != "localhost" ]; then
     PS1+="\[${hostStyle}\]${hostName}: "
 fi
 PS1+="\[${orange}\]\w "
-PS1+="\$(prompt_git \"${violet}\")\[${reset}\]"
+PS1+="\$(prompt_git \"${violet}\")"
 PS1+="\n"
 PS1+="\[${userStyle}\]${termChar}${reset} "
 export PS1
