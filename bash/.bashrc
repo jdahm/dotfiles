@@ -132,30 +132,49 @@ prompt_git() {
 			git rev-parse --short HEAD 2> /dev/null || \
 			echo '(unknown)')"
 
-	[ -n "${s}" ] && s=" [${s}]"
-
-	echo -e "${1}${branchName}${blue}${s}"
     elif [ "${isbare}" == "true" ]; then
-        echo -e " ${blue}[bare]"
+        branchName="bare"
+    fi
+
+    # Print the prompt
+    if [ -n "${branchName}" ]; then
+        if [ -n "${s}" ]; then
+            echo -e "${1}[$branchName ${s}]${reset}"
+        else
+            echo -e "${1}[$branchName]${reset}"
+        fi
     fi
 }
 
 # Highlight the user name when logged in as root.
 if [[ "${USER}" == "root" ]]; then
 	userStyle="${red}"
+        if [[ $LANG =~ UTF-8$ ]]; then
+            termChar="🗝"
+        else
+	    termChar="#"
+        fi
 else
-	userStyle="${orange}"
+	userStyle="${blue}"
+        if [[ $LANG =~ UTF-8$ ]]; then
+            termChar="❯"
+        else
+	    termChar="$"
+        fi
 fi
 
 # Highlight the hostname when connected via SSH.
 if [[ "${SSH_TTY}" ]]; then
-	hostStyle="${bold}${red}"
+    hostStyle="${red}"
+    hostName="\h"
 else
-	hostStyle="${yellow}"
+    hostStyle="${yellow}"
+    hostName="localhost"
 fi
 
 # Set the prompt
-set-prompt() {
+set-long-prompt() {
+    # An older unused version
     sepcolor=$1
     # Set the terminal title to the current working directory.
     # PS1="\[\033]0;\w\007\]"
@@ -174,9 +193,22 @@ set-prompt() {
     export PS2
 }
 
-# Prompt "themes"
-prompt-dark-theme() { set-prompt $white; }
-prompt-light-theme() { set-prompt $black; }
+PS1="\[${bold}\]" # begin bold
+if [ "${hostName}" != "localhost" ]; then
+    PS1+="\[${hostStyle}\]${hostName}: "
+fi
+PS1+="\[${orange}\]\w "
+PS1+="\$(prompt_git \"${violet}\")\[${reset}\]"
+PS1+="\n"
+PS1+="\[${userStyle}\]${termChar}${reset} "
+export PS1
+
+if [[ $LANG =~ UTF-8$ ]]; then
+    PS2="\[${yellow}\]→${reset} "
+else
+    PS2="\[${yellow}\]>${reset} "
+fi
+export PS2
 
 # Local config
 [ -f ~/.bashrc.local ] && . ~/.bashrc.local
