@@ -155,7 +155,7 @@ if [[ "${USER}" == "root" ]]; then
 	    termChar="#"
         fi
 else
-	userStyle="${blue}"
+	userStyle="${purple}"
         if [[ $LANG =~ UTF-8$ ]]; then
             termChar="❯"
         else
@@ -164,11 +164,10 @@ else
 fi
 
 # Highlight the hostname when connected via SSH.
+hostStyle="${green}"
 if [[ "${SSH_TTY}" ]]; then
-    hostStyle="${red}"
     hostName="\h"
 else
-    hostStyle="${yellow}"
     hostName="localhost"
 fi
 
@@ -193,20 +192,21 @@ set-long-prompt() {
     export PS2
 }
 
-PS1="\[${bold}\]" # begin bold
+# PS1="\[${bold}\]" # begin bold
+PS1=""
 if [ "${hostName}" != "localhost" ]; then
     PS1+="\[${hostStyle}\]${hostName}: "
 fi
-PS1+="\[${orange}\]\w "
-PS1+="\$(prompt_git \"${violet}\")"
+PS1+="\[${blue}\]\w "
+PS1+="\$(prompt_git \"${violet}\")\[${reset}\]"
 PS1+="\n"
-PS1+="\[${userStyle}\]${termChar}${reset} "
+PS1+="\[${userStyle}\]${termChar}\[${reset}\] "
 export PS1
 
 if [[ $LANG =~ UTF-8$ ]]; then
-    PS2="\[${yellow}\]→${reset} "
+    PS2="\[${red}\]→\[${reset}\] "
 else
-    PS2="\[${yellow}\]>${reset} "
+    PS2="\[${red}\]>\[${reset}\] "
 fi
 export PS2
 
