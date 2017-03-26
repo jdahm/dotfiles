@@ -22,19 +22,6 @@
   (interactive)
   (my-change-number-at-point '1-))
 
-(defun move-line-up ()
-  "Transposes the line at point with the line above."
-  (interactive)
-  (transpose-lines 1)
-  (forward-line -2))
-
-(defun move-line-down ()
-  "Transposes the line at point with the line below it."
-  (interactive)
-  (forward-line 1)
-  (transpose-lines 1)
-  (forward-line -1))
-
 (defun unfill-paragraph ()
   "Takes a multi-line paragraph and makes it into a single line of text."
   (interactive)

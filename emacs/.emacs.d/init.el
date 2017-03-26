@@ -43,23 +43,58 @@
 			   (invert-face 'mode-line)
 			   (run-with-timer 0.1 nil 'invert-face 'mode-line)))
 
-;; Add useful functions to help-map
-(define-key help-map "\C-i" 'info-display-manual)
-(define-key help-map "\C-s" 'customize-apropos)
+;; Load hydra for some of the keybindings below
+(require-package 'hydra)
 
-;; Replace and add a few critical functions
+;; Apropos commands on C-c a
+(defhydra hydra-apropos (:color blue)
+  "Apropos"
+  ("a" apropos "apropos")
+  ("c" apropos-command "cmd")
+  ("d" apropos-documentation "doc")
+  ("e" apropos-value "val")
+  ("l" apropos-library "lib")
+  ("u" apropos-user-option "option")
+  ("o" apropos-user-option "option")
+  ("v" apropos-variable "var")
+  ("i" info-apropos "info")
+  ("t" tags-apropos "tags")
+  ("z" hydra-customize-apropos/body "customize"))
+
+(defhydra hydra-customize-apropos (:color blue)
+  "Apropos (customize)"
+  ("a" customize-apropos "apropos")
+  ("f" customize-apropos-faces "faces")
+  ("g" customize-apropos-groups "groups")
+  ("o" customize-apropos-options "options"))
+
+(global-set-key (kbd "C-c a") #'hydra-apropos/body)
+
+;; Text toggles and operations on C-c t
+(defhydra hydra-toggle (:color blue)
+  "Toggle"
+  ("f" auto-fill-mode "fill")
+  ("a" abbrev-mode "abbrev")
+  ("l" linum-mode "linum")
+  ("w" whitespace-mode "whitespace")
+  ("t" toggle-truncate-lines "truncate")
+  ("d" toggle-debug-on-error "debug"))
+
+(global-set-key (kbd "C-c t") #'hydra-toggle/body)
+
 (require 'jd-buffer)
-(global-set-key (kbd "C-x a b") 'create-scratch-buffer)
-(global-set-key (kbd "C-x k") 'kill-current-buffer)
-
 (require 'jd-editing)
-(global-set-key (kbd "C-x a r") 'align-regexp)
-(global-set-key (kbd "C-c n") 'tidy-region-or-buffer)
-(global-set-key (kbd "M-<up>") 'move-line-up)
-(global-set-key (kbd "M-<down>") 'move-line-down)
 (global-set-key (kbd "M-Q") 'unfill-paragraph)
-(global-set-key (kbd "C-c +") 'increment-number-at-point)
-(global-set-key (kbd "C-c -") 'decrement-number-at-point)
+
+;; Buffer map
+(defhydra hydra-buffer (:color blue)
+  "Buffer"
+  ("b" create-scratch-buffer "scratch")
+  ("a" align-regexp "align")
+  ("t" tidy-region-or-buffer "tidy")
+  ("c" compile "compile"))
+
+(global-set-key (kbd "C-c b") #'hydra-buffer/body)
 
 ;; Let C-w execute `backward-kill-word' when region is not active
 (defadvice kill-region (before unix-werase activate compile)
@@ -77,8 +112,8 @@
 (autoload 'dired-jump-other-window "dired-x"
   "Like \\[dired-jump] (dired-jump) but in other window." t)
 (add-hook 'dired-mode-hook #'dired-hide-details-mode)
-(global-set-key (kbd "C-x C-j") 'dired-jump)
-(global-set-key (kbd "C-x 4 C-j") 'dired-jump-other-window)
+(global-set-key (kbd "C-x C-j") #'dired-jump)
+(global-set-key (kbd "C-x 4 C-j") #'dired-jump-other-window)
 (define-key dired-mode-map (kbd "C-c C-s") 'sudired)
 (define-key dired-mode-map "b" 'dired-open-file)
 (define-key dired-mode-map "c" 'dired-open-fm)
@@ -89,8 +124,8 @@
 
 ;; Shell
 (add-hook 'shell-mode-hook #'ansi-color-for-comint-mode-on)
-(global-set-key (kbd "C-c s") 'eshell)
-(global-set-key (kbd "C-c S") 'shell)
+(global-set-key (kbd "C-c s") 'shell)
+(global-set-key (kbd "C-c S") 'eshell)
 
 ;; Vkill
 (autoload 'vkill "vkill" nil t)
@@ -100,15 +135,17 @@
 (require 'diminish)
 (require-package 'ivy)
 (require-package 'counsel)
-(global-set-key (kbd "C-c C-r") 'ivy-resume)
-(global-set-key (kbd "C-c i") 'counsel-imenu)
-(global-set-key (kbd "C-c g") 'counsel-git)
-(global-set-key (kbd "C-c j") 'counsel-git-grep)
-(global-set-key (kbd "C-c L") 'counsel-git-log)
-(global-set-key (kbd "C-c u") 'counsel-unicode-char)
-(global-set-key (kbd "C-c l") 'counsel-ag)
-(global-set-key (kbd "C-x l") 'counsel-locate)
-(define-key lisp-mode-shared-map "\M-i" 'counsel-el)
+(defhydra hydra-counsel (:color blue)
+  ("r" ivy-resume "resume")
+  ("i" counsel-imenu "imenu")
+  ("g" counsel-git "git")
+  ("j" counsel-git-grep "grep")
+  ("u" counsel-unicode-char "unicode")
+  ("f" counsel-locate "find")
+  ("a" counsel-ag "ag")
+  ("l" counsel-info-lookup-symbol "symbol"))
+
+(global-set-key (kbd "C-x c") #'hydra-counsel/body)
 
 (ivy-mode 1)
 (diminish 'ivy-mode)
@@ -117,24 +154,17 @@
 (diminish 'counsel-mode)
 
 ;; Go to swiper from isearch
-(define-key isearch-mode-map (kbd "M-i") 'swiper-from-isearch)
-
-;; Could also use entirely swiper instead of isearch
-;; (global-set-key (kbd "C-s") 'counsel-grep-or-swiper)
-;; (global-set-key (kbd "C-r") 'swiper)
+(define-key isearch-mode-map (kbd "M-i") #'swiper-from-isearch)
 
 (require-package 'avy)
-(global-set-key (kbd "C-;") 'avy-goto-char)
-(global-set-key (kbd "C-'") 'avy-goto-char-2)
-(global-set-key (kbd "M-g a") 'avy-goto-line)
-(global-set-key (kbd "M-g w") 'avy-goto-word-1)
-(global-set-key (kbd "C-M-s") 'avy-goto-char-timer)
+(avy-setup-default)
+(global-set-key (kbd "C-'") #'avy-goto-char-timer)
 
 (require-package 'tiny)
-(global-set-key (kbd "C-M-;") 'tiny-expand)
+(global-set-key (kbd "C-M-;") #'tiny-expand)
 
 (require-package 'iedit)
-(global-set-key (kbd "C-c ;") 'iedit-mode)
+(global-set-key (kbd "C-c ;") #'iedit-mode)
 
 (require-package 'markdown-mode)
 (setq markdown-command "multimarkdown")
@@ -150,10 +180,10 @@
 
 ;; Version-control
 (require-package 'magit)
-(global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-x g") #'magit-status)
 
 (require-package 'git-timemachine)
-(global-set-key (kbd "C-x v t") 'git-timemachine)
+(global-set-key (kbd "C-x v t") #'git-timemachine)
 
 (require-package 'ibuffer-vc)
 (add-hook 'ibuffer-hook
@@ -162,20 +192,19 @@
             (unless (eq ibuffer-sorting-mode 'alphabetic)
               ;; (ibuffer-do-sort-by-alphabetic))))
               (ibuffer-do-sort-by-vc-status))))
-(global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-x C-b") #'ibuffer)
 
 (require-package 'hydra)
-(global-set-key (kbd "M-p") 'bookmark-jump)
+(global-set-key (kbd "M-p") #'bookmark-jump)
 
 (require-package 'ace-link)
 (ace-link-setup-default)
 
 ;; Global `compile' keybinding
-(global-set-key (kbd "C-c m") 'compile)
+(global-set-key (kbd "C-c m") #'compile)
 
 ;; Better manage window layouts with winner-mode.
 (winner-mode 1)
-(require-package 'hydra)
 (defhydra hydra-window ()
   "window"
   ("h" windmove-left "left")
@@ -185,7 +214,7 @@
   ("n" winner-undo "undo")
   ("p" winner-redo "redo")
   ("m" bookmark-jump "bmk"))
-(global-set-key (kbd "C-x w") 'hydra-window/body)
+(global-set-key (kbd "C-x w") #'hydra-window/body)
 
 (defhydra hydra-next-error (global-map "C-x")
   "
@@ -216,11 +245,6 @@ _k_: previous error    _l_: last error
           (lambda ()
             (font-lock-add-keywords nil
                                     '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
-
-(define-key prog-mode-map (kbd "C-c t") 'tags-search)
-
-;; (require-package 'company)
-;; (add-hook 'after-init-hook #'global-company-mode)
 
 (setq custom-file (expand-file-name "custom.el" config-d))
 (if (file-readable-p custom-file) (load-file custom-file))
