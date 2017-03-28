@@ -179,11 +179,12 @@
   (add-to-list 'auto-mode-alist item))
 
 ;; Version-control
-(require-package 'magit)
-(global-set-key (kbd "C-x g") #'magit-status)
+(when (not (version< emacs-version "24.4"))
+  (require-package 'magit)
+  (global-set-key (kbd "C-x g") #'magit-status)
 
-(require-package 'git-timemachine)
-(global-set-key (kbd "C-x v t") #'git-timemachine)
+  (require-package 'git-timemachine)
+  (global-set-key (kbd "C-x v t") #'git-timemachine))
 
 (require-package 'ibuffer-vc)
 (add-hook 'ibuffer-hook
