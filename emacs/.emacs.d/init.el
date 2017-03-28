@@ -111,7 +111,8 @@
   "Jump to Dired buffer corresponding to current buffer." t)
 (autoload 'dired-jump-other-window "dired-x"
   "Like \\[dired-jump] (dired-jump) but in other window." t)
-(add-hook 'dired-mode-hook #'dired-hide-details-mode)
+(when (not (version< emacs-version "24.4"))
+  (add-hook 'dired-mode-hook #'dired-hide-details-mode))
 (global-set-key (kbd "C-x C-j") #'dired-jump)
 (global-set-key (kbd "C-x 4 C-j") #'dired-jump-other-window)
 (define-key dired-mode-map (kbd "C-c C-s") 'sudired)
