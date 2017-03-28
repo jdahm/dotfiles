@@ -58,20 +58,20 @@ if infocmp xterm-256color >/dev/null 2>&1 && [ -n "${VTE_VERSION}" ]; then
 fi
 
 if tput setaf 1 &>/dev/null; then
-	tput sgr0 # reset colors
-	bold=$(tput bold)
-	reset=$(tput sgr0)
-	# Solarized colors, taken from http://git.io/solarized-colors.
-	black=$(tput setaf 0)
-	blue=$(tput setaf 33)
-	cyan=$(tput setaf 37)
-	green=$(tput setaf 64)
-	orange=$(tput setaf 166)
-	purple=$(tput setaf 125)
-	red=$(tput setaf 124)
-	violet=$(tput setaf 61)
-	white=$(tput setaf 15)
-	yellow=$(tput setaf 136)
+    tput sgr0 # reset colors
+    bold=$(tput bold)
+    reset=$(tput sgr0)
+    # Solarized colors, taken from http://git.io/solarized-colors.
+    black=$(tput setaf 0)
+    blue=$(tput setaf 33)
+    cyan=$(tput setaf 37)
+    green=$(tput setaf 64)
+    orange=$(tput setaf 166)
+    purple=$(tput setaf 125)
+    red=$(tput setaf 124)
+    violet=$(tput setaf 61)
+    white=$(tput setaf 15)
+    yellow=$(tput setaf 136)
 else
     bold=''
     reset="\e[0m"
@@ -148,19 +148,15 @@ prompt_git() {
 
 # Highlight the user name when logged in as root.
 if [[ "${USER}" == "root" ]]; then
-	userStyle="${red}"
-        if [[ $LANG =~ UTF-8$ ]]; then
-            termChar="🗝"
-        else
-	    termChar="#"
-        fi
+    userStyle="${red}"
+    termChar="#"
 else
-	userStyle="${purple}"
-        if [[ $LANG =~ UTF-8$ ]]; then
-            termChar="❯"
-        else
-	    termChar="$"
-        fi
+    userStyle="${purple}"
+    if [[ $LANG =~ UTF-8$ ]]; then
+        termChar="❯"
+    else
+	termChar="$"
+    fi
 fi
 
 # Highlight the hostname when connected via SSH.
@@ -192,23 +188,37 @@ set-long-prompt() {
     export PS2
 }
 
-# PS1="\[${bold}\]" # begin bold
-PS1=""
-if [ "${hostName}" != "localhost" ]; then
-    PS1+="\[${hostStyle}\]${hostName}: "
-fi
-PS1+="\[${blue}\]\w "
-PS1+="\$(prompt_git \"${violet}\")\[${reset}\]"
-PS1+="\n"
-PS1+="\[${userStyle}\]${termChar}\[${reset}\] "
-export PS1
+set-short-prompt() {
+    # PS1="\[${bold}\]" # begin bold
+    PS1=""
+    if [ "${hostName}" != "localhost" ]; then
+        PS1+="\[${hostStyle}\]${hostName}: "
+    fi
+    PS1+="\[${blue}\]\w "
+    PS1+="\$(prompt_git \"${violet}\")\[${reset}\]"
+    PS1+="\n"
+    PS1+="\[${userStyle}\]${termChar}\[${reset}\] "
+    export PS1
 
-if [[ $LANG =~ UTF-8$ ]]; then
-    PS2="\[${red}\]→\[${reset}\] "
-else
-    PS2="\[${red}\]>\[${reset}\] "
-fi
-export PS2
+    if [[ $LANG =~ UTF-8$ ]]; then
+        PS2="\[${red}\]→\[${reset}\] "
+    else
+        PS2="\[${red}\]>\[${reset}\] "
+    fi
+    export PS2
+}
+
+case "$TERM" in
+    "dumb")
+        export PS1="> "
+        ;;
+    xterm*|*vt*|eterm*|screen*)
+        set-short-prompt
+        ;;
+    *)
+        export PS1="> "
+        ;;
+esac
 
 # Local config
 [ -f ~/.bashrc.local ] && . ~/.bashrc.local
