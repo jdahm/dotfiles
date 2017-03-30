@@ -208,17 +208,13 @@ set-short-prompt() {
     export PS2
 }
 
-case "$TERM" in
-    "dumb")
-        export PS1="> "
-        ;;
-    xterm*|*vt*|eterm*|screen*)
-        set-short-prompt
-        ;;
-    *)
-        export PS1="> "
-        ;;
-esac
+if [[ "${SSH_TTY}" && "$TERM" == "dumb-tramp" ]]; then
+    # For Emacs tramp. NOTE: you must set tramp-terminal-type to
+    # 'dumb-tramp' to have this take effect
+    PS1="> "
+else
+    set-short-prompt
+fi
 
 # Local config
 [ -f ~/.bashrc.local ] && . ~/.bashrc.local
