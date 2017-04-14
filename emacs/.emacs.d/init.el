@@ -10,6 +10,7 @@
 
 (defconst config-d "~/.config/emacs/")
 (defconst lisp-d (expand-file-name "lisp/" user-emacs-directory))
+(setq custom-file (expand-file-name "custom.el" config-d))
 
 ;; Set package archives and initialize
 (require 'package)
@@ -144,7 +145,8 @@
   ("u" counsel-unicode-char "unicode")
   ("f" counsel-locate "find")
   ("a" counsel-ag "ag")
-  ("l" counsel-info-lookup-symbol "symbol"))
+  ("l" counsel-info-lookup-symbol "symbol")
+  ("m" bookmark-jump "bookmark"))
 
 (global-set-key (kbd "C-x c") #'hydra-counsel/body)
 
@@ -159,10 +161,10 @@
 
 (require-package 'avy)
 (avy-setup-default)
-(global-set-key (kbd "C-'") #'avy-goto-char-timer)
+(global-set-key (kbd "M-n") #'avy-goto-char-timer)
 
 (require-package 'tiny)
-(global-set-key (kbd "C-M-;") #'tiny-expand)
+(global-set-key (kbd "C-c C-t") #'tiny-expand)
 
 (require-package 'iedit)
 (global-set-key (kbd "C-c ;") #'iedit-mode)
@@ -182,7 +184,7 @@
 ;; Version-control
 (when (not (version< emacs-version "24.4"))
   (require-package 'magit)
-  (global-set-key (kbd "C-x g") #'magit-status)
+  (global-set-key (kbd "C-c g") #'magit-status)
 
   (require-package 'git-timemachine)
   (global-set-key (kbd "C-x v t") #'git-timemachine))
@@ -196,27 +198,25 @@
               (ibuffer-do-sort-by-vc-status))))
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 
-(require-package 'hydra)
-(global-set-key (kbd "M-p") #'bookmark-jump)
-
+;; Links
 (require-package 'ace-link)
 (ace-link-setup-default)
 
-;; Global `compile' keybinding
+;; Windows
+(require-package 'ace-window)
+(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+(setq aw-background nil)
+(global-set-key (kbd "M-p") #'ace-window)
+(winner-mode 1)
+
+;; Global `recompile' keybinding
 (global-set-key (kbd "C-c m") #'compile)
 
-;; Better manage window layouts with winner-mode.
-(winner-mode 1)
-(defhydra hydra-window ()
-  "window"
-  ("h" windmove-left "left")
-  ("j" windmove-down "down")
-  ("k" windmove-up "up")
-  ("l" windmove-right "right")
-  ("n" winner-undo "undo")
-  ("p" winner-redo "redo")
-  ("m" bookmark-jump "bmk"))
-(global-set-key (kbd "C-x w") #'hydra-window/body)
+;; Macros
+(global-set-key (kbd "C-c C-o") #'kmacro-start-macro-or-insert-counter)
+(global-set-key (kbd "C-c C-p") #'kmacro-end-macro)
+(global-set-key (kbd "C-z") #'kmacro-call-macro)
+(global-set-key (kbd "C-c C-z") #'save-kbd-macro)
 
 (defhydra hydra-next-error (global-map "C-x")
   "
@@ -248,7 +248,6 @@ _k_: previous error    _l_: last error
             (font-lock-add-keywords nil
                                     '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
 
-(setq custom-file (expand-file-name "custom.el" config-d))
 (if (file-readable-p custom-file) (load-file custom-file))
 
 ;;; init.el ends here
