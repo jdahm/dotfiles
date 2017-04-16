@@ -248,6 +248,11 @@ _k_: previous error    _l_: last error
             (font-lock-add-keywords nil
                                     '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
 
+;; Theme for GUI
+(when (display-graphic-p)
+  (load-theme 'default-black t))
+  ;; (set-background-color "pale goldenrod"))
+
 (if (file-readable-p custom-file) (load-file custom-file))
 
 ;;; init.el ends here
