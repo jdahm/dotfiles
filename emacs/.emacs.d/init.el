@@ -38,12 +38,6 @@
 ;; Enable y/n answers
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; ring-bell-function = `invert-face' on modeline
-(setq visible-bell nil)
-(setq ring-bell-function (lambda ()
-			   (invert-face 'mode-line)
-			   (run-with-timer 0.1 nil 'invert-face 'mode-line)))
-
 ;; Keep things clean
 (require 'no-littering)
 
