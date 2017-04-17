@@ -44,6 +44,9 @@
 			   (invert-face 'mode-line)
 			   (run-with-timer 0.1 nil 'invert-face 'mode-line)))
 
+;; Keep things clean
+(require 'no-littering)
+
 ;; Load hydra for some of the keybindings below
 (require-package 'hydra)
 
