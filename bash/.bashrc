@@ -152,11 +152,7 @@ if [[ "${USER}" == "root" ]]; then
     termChar="#"
 else
     userStyle="${purple}"
-    if [[ $LANG =~ UTF-8$ ]]; then
-        termChar="❯"
-    else
-	termChar="$"
-    fi
+    termChar="$"
 fi
 
 # Highlight the hostname when connected via SSH.
