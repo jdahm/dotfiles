@@ -26,11 +26,4 @@
   (newline)                             ; insert a newline
   (switch-to-buffer nil))               ; return to the initial buffer
 
-(defun end-call-or-save-macro ()
-    "End or call, or save a macro if you give the universal prefix."
-    (interactive)
-    (if current-prefix-arg
-        (save-kbd-macro)
-      (kmacro-end-or-call-macro)))
-
 (provide 'jd-defuns)

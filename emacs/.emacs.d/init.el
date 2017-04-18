@@ -206,14 +206,11 @@
 (global-set-key (kbd "M-p") #'ace-window)
 (winner-mode 1)
 
-;; Global `recompile' keybinding
-(global-set-key (kbd "C-c m") #'compile)
-
 ;; Macros
-(global-set-key (kbd "C-c C-o") #'kmacro-start-macro-or-insert-counter)
-(global-set-key (kbd "C-c C-p") #'kmacro-end-macro)
-(global-set-key (kbd "C-z") #'kmacro-call-macro)
+(global-set-key (kbd "C-c m") #'kmacro-start-macro-or-insert-counter)
+(global-set-key (kbd "C-z") #'kmacro-end-or-call-macro)
 (global-set-key (kbd "C-c C-z") #'save-kbd-macro)
+;; (global-set-key (kbd "C-c C-p") #'kmacro-end-macro)
 
 (defhydra hydra-next-error (global-map "C-x")
   "
