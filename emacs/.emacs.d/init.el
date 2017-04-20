@@ -116,6 +116,7 @@
 (define-key dired-mode-map (kbd "C-c C-s") 'sudired)
 (define-key dired-mode-map "b" 'dired-open-file)
 (define-key dired-mode-map "c" 'dired-open-fm)
+(define-key dired-mode-map "e" 'ora-ediff-files)
 
 (setq-default dired-clean-up-buffers-too t)
 (setq-default dired-recursive-copies 'always)
@@ -159,6 +160,10 @@
 (require-package 'avy)
 (avy-setup-default)
 (global-set-key (kbd "M-n") #'avy-goto-char-timer)
+;; (global-set-key (kbd "M-j") #'avy-goto-char-timer)
+(global-set-key (kbd "M-g t") #'avy-goto-char-timer)
+(global-set-key (kbd "M-g c") #'avy-goto-char-2)
+(global-set-key (kbd "M-g f") #'avy-goto-line)
 
 (require-package 'tiny)
 (global-set-key (kbd "C-c C-t") #'tiny-expand)
