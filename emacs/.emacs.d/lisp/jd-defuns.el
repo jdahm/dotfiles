@@ -1,5 +1,6 @@
 ;; Sources:
 ;;   * sjrmanning/.emacs.d
+;;   * magnars/.emacs.d
 ;;   * muahah/emacs-profile
 
 (defun require-package (package)
@@ -13,6 +14,80 @@
   "Return path inside user's `.emacs.d'."
   (expand-file-name path user-emacs-directory))
 
+(defun create-scratch-buffer ()
+  "Create a new scratch buffer to work in. (could be *scratch* - *scratchX*)"
+  (interactive)
+  (let ((n 0)
+        bufname)
+    (while (progn
+             (setq bufname (concat "*scratch"
+                                   (if (= n 0) "" (int-to-string n))
+                                   "*"))
+             (setq n (1+ n))
+             (get-buffer bufname)))
+    (switch-to-buffer (get-buffer-create bufname))
+    (emacs-lisp-mode)
+    ))
+
+(defun kill-current-buffer (arg)
+  "Kill the current buffer."
+  (interactive "P")
+  (if arg
+      (kill-buffer)
+    (kill-buffer (current-buffer))))
+
+(defun prev-buffer ()
+  "Switch to previous buffer."
+  (interactive)
+  (switch-to-buffer (other-buffer)))
+
+(defun my-change-number-at-point (change)
+  (let ((number (number-at-point))
+        (point (point)))
+    (when number
+      (progn
+        (forward-word)
+        (search-backward (number-to-string number))
+        (replace-match (number-to-string (funcall change number)))
+        (goto-char point)))))
+
+(defun increment-number-at-point ()
+  "Increment number at point like vim's C-a"
+  (interactive)
+  (my-change-number-at-point '1+))
+
+(defun decrement-number-at-point ()
+  "Decrement number at point like vim's C-x"
+  (interactive)
+  (my-change-number-at-point '1-))
+
+(defun unfill-paragraph ()
+  "Takes a multi-line paragraph and makes it into a single line of text."
+  (interactive)
+  (let ((fill-column (point-max)))
+    (fill-paragraph nil)))
+
+(defun date ()
+  "Inserts the current date in the format %Y-%m-%d."
+  (interactive)
+  (insert (format-time-string "%Y-%m-%d")))
+
+(defun time ()
+  "Inserts the current time in the format %H:%M:%S."
+  (interactive)
+  (insert (format-time-string "%H:%M:%S")))
+
+(defun tidy-region-or-buffer ()
+  "Indent, delete whitespace, and untabify the region or buffer."
+  (interactive)
+  (save-excursion
+    (let ((begin (point-min)) (end (point-max)))
+      (when (region-active-p)
+        (setq begin (region-beginning))
+        (setq end (region-end)))
+    (delete-trailing-whitespace begin end)
+    (indent-region begin end nil))))
+
 (defun save-kbd-macro (name)
   "save a macro. Take a name as argument
      and save the last defined macro under
@@ -25,5 +100,20 @@
   (insert-kbd-macro name)               ; copy the macro
   (newline)                             ; insert a newline
   (switch-to-buffer nil))               ; return to the initial buffer
+
+(defun create-and-refresh-tags (&optional files-cmd)
+  "Create tags file."
+  (interactive)
+  (if files-cmd
+      (let ((tags-revert-without-query t))
+        (call-process-shell-command (format "%s | etags -" files-cmd))
+        (visit-tags-table default-directory nil))
+    (let ((default-directory
+            (replace-regexp-in-string "\n$" ""
+                                      (shell-command-to-string "git rev-parse --show-toplevel")))
+          (tags-revert-without-query t))
+      (call-process-shell-command "git ls-files > thefiles")
+      (call-process-shell-command "git ls-files | etags -")
+      (visit-tags-table default-directory nil))))
 
 (provide 'jd-defuns)
