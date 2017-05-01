@@ -4,7 +4,7 @@
 ;;
 ;;; Commentary:
 ;;
-;; Configuration for Emacs
+;; Configuration for Emacs. Requires Emacs 24 for package.el, Magit.
 ;;
 ;;; Code:
 
@@ -101,6 +101,7 @@
 (require-package 'git-timemachine)
 (global-set-key (kbd "C-x v t") #'git-timemachine)
 
+
 ;; Buffer map
 (defhydra hydra-buffer (:color blue)
   "Buffer"
@@ -183,6 +184,10 @@
 (require-package 'tiny)
 (global-set-key (kbd "C-;") 'tiny-expand)
 ;; (tiny-setup-default)
+
+;; This overwrites `comment-set-column', but that is rarely used and
+;; the default binding for comment-line is not terminal-friendly.
+(global-set-key (kbd "C-x ;") 'comment-line)
 
 ;; Text and Web
 (require-package 'markdown-mode)
