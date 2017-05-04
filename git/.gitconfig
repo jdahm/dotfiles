@@ -5,17 +5,17 @@
 	ui = true
 [alias]
 	# Most of these from: http://durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples/
-	cp = cherry-pick	
+	cp = cherry-pick
 	br = branch
 	co = checkout
 	ci = commit
 	st = status -s
-	cl = clone	
+	cl = clone
 	oops = commit --all --amend
 	logtree = log --graph --oneline --decorate --all
 	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
-	lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short	
-	lnc = log --pretty=format:"%h\\ %s\\ [%cn]"	
+	lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+	lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
 	dl = "!git ll -1"
 	dlc = diff --cached HEAD^
 	dc = diff --cached
@@ -28,9 +28,9 @@
 	sl = stash list
 	sa = stash apply
 	ss = stash save
-	lasttag = describe --tags --abbrev=0	
+	lasttag = describe --tags --abbrev=0
 	stash-rename = "!_() { rev=$(git rev-parse $1) && git stash drop $1 || exit 1 ; git diff-index --quiet HEAD; s=$?; [ $s != 0 ] && git stash save \"tmp stash from stash-rename\"; git stash apply $rev && shift && git stash save \"$@\" && [ $s != 0 ] && git stash pop stash@{1}; }; _"
-[apply]
+	compare = log --left-right --graph --cherry-pick --oneline[apply]
 	whitespace = fix
 [include]
 	path = ~/.config/git/identity
