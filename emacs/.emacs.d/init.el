@@ -244,4 +244,7 @@ _k_: previous error    _l_: last error
 
 (if (file-readable-p custom-file) (load-file custom-file))
 
+;; Enable disabled commands
+(put 'set-goal-column 'disabled nil)
+
 ;;; init.el ends here
