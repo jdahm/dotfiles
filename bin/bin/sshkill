@@ -1,6 +1,6 @@
 #!/bin/sh
 killall ssh &> /dev/null
-pids=`ps -ef|grep ssh: | grep -v grep | awk 'print $2'`
+pids=`ps -ef | grep ssh: | grep -v grep | awk '{print $2}'`
 if [ ! -z "$pids" ]; then
     for pid in $pids; do
         kill $pid &> /dev/null
