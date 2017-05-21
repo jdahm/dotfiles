@@ -53,9 +53,9 @@ if [ -d $configdir ]; then
 fi
 
 # # Prompt
-if infocmp xterm-256color >/dev/null 2>&1 && [ -n "${VTE_VERSION}" ]; then
-    export TERM='xterm-256color'
-fi
+# if infocmp xterm-256color >/dev/null 2>&1 && [ -n "${VTE_VERSION}" ]; then
+#     export TERM='xterm-256color'
+# fi
 
 if tput setaf 1 &>/dev/null; then
     tput sgr0 # reset colors
@@ -204,9 +204,8 @@ set-short-prompt() {
     export PS2
 }
 
-if [[ "${SSH_TTY}" && "$TERM" == "dumb-tramp" ]]; then
-    # For Emacs tramp. NOTE: you must set tramp-terminal-type to
-    # 'dumb-tramp' to have this take effect
+if [[ "${SSH_TTY}" && "$TERM" == "dumb" ]]; then
+    # For Emacs tramp
     PS1="> "
 else
     set-short-prompt

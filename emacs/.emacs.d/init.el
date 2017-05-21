@@ -45,7 +45,7 @@
 ;; Load hydra for some of the keybindings below
 (require-package 'hydra)
 
-;; Apropos commands on C-c a
+;; Apropos commands
 (defhydra hydra-apropos (:color blue)
   "Apropos"
   ("a" apropos "apropos")
@@ -67,9 +67,9 @@
   ("g" customize-apropos-groups "groups")
   ("o" customize-apropos-options "options"))
 
-(global-set-key (kbd "C-c a") #'hydra-apropos/body)
+(global-set-key (kbd "C-c p") #'hydra-apropos/body)
 
-;; Text toggles and operations on C-c t
+;; Text toggles and operations
 (defhydra hydra-toggle (:color blue)
   "Toggle"
   ("f" auto-fill-mode "fill")
@@ -114,7 +114,7 @@
   ("s" shell "shell")
   ("t" tidy-region-or-buffer "tidy"))
 
-(global-set-key (kbd "C-c b") #'hydra-buffer/body)
+(global-set-key (kbd "C-c j") #'hydra-buffer/body)
 
 ;; Dired
 (require 'jd-dired)
@@ -151,7 +151,7 @@
 (require-package 'ivy)
 (require-package 'counsel)
 
-;; Ivy-related commands on C-c x
+;; Ivy-related commands
 (defhydra hydra-counsel (:color blue)
   ("r" ivy-resume "resume")
   ("i" counsel-imenu "imenu")
@@ -162,7 +162,12 @@
   ("a" counsel-ag "ag")
   ("l" counsel-info-lookup-symbol "symbol"))
 
-(global-set-key (kbd "C-c x") #'hydra-counsel/body)
+(global-set-key (kbd "C-c o") #'hydra-counsel/body)
+
+;; Enable repeated M-y
+;; Source: http://pragmaticemacs.com/emacs/counsel-yank-pop-with-a-tweak/
+(require 'ivy)
+(define-key ivy-minibuffer-map (kbd "M-y") #'ivy-next-line)
 
 (ivy-mode 1)
 (diminish 'ivy-mode)
@@ -240,7 +245,10 @@ _k_: previous error    _l_: last error
 (add-hook 'c-mode-common-hook
           (lambda ()
             (font-lock-add-keywords nil
-                                    '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
+                                    '(("\\<\\(FIXME\\|TODO\\|BUG\\|\\MISSING\\)" 1 font-lock-warning-face t)))))
+
+(add-hook 'c-mode-common-hook
+          (lambda () (define-key c-mode-base-map (kbd "M-o") 'ff-find-other-file)))
 
 (if (file-readable-p custom-file) (load-file custom-file))
 
