@@ -42,44 +42,9 @@
       kept-old-versions 2
       version-control t)
 
-;; Load hydra for some of the keybindings below
-(require-package 'hydra)
-
-;; Apropos commands
-(defhydra hydra-apropos (:color blue)
-  "Apropos"
-  ("a" apropos "apropos")
-  ("c" apropos-command "cmd")
-  ("d" apropos-documentation "doc")
-  ("e" apropos-value "val")
-  ("l" apropos-library "lib")
-  ("u" apropos-user-option "option")
-  ("o" apropos-user-option "option")
-  ("v" apropos-variable "var")
-  ("i" info-apropos "info")
-  ("t" tags-apropos "tags")
-  ("z" hydra-customize-apropos/body "customize"))
-
-(defhydra hydra-customize-apropos (:color blue)
-  "Apropos (customize)"
-  ("a" customize-apropos "apropos")
-  ("f" customize-apropos-faces "faces")
-  ("g" customize-apropos-groups "groups")
-  ("o" customize-apropos-options "options"))
-
-(global-set-key (kbd "C-c p") #'hydra-apropos/body)
-
-;; Text toggles and operations
-(defhydra hydra-toggle (:color blue)
-  "Toggle"
-  ("f" auto-fill-mode "fill")
-  ("a" abbrev-mode "abbrev")
-  ("l" linum-mode "linum")
-  ("w" whitespace-mode "whitespace")
-  ("t" toggle-truncate-lines "truncate")
-  ("d" toggle-debug-on-error "debug"))
-
 (global-set-key (kbd "C-c t") #'hydra-toggle/body)
+
+(global-set-key (kbd "C-c w") #'whitespace-mode)
 
 ;; Keybinding for unfill-paragraph
 (global-set-key (kbd "M-Q") #'unfill-paragraph)
@@ -102,19 +67,19 @@
 (global-set-key (kbd "C-x v t") #'git-timemachine)
 
 
-;; Buffer map
-(defhydra hydra-buffer (:color blue)
-  "Buffer"
-  ("a" align-regexp "align")
-  ("b" create-scratch-buffer "scratch")
-  ("c" compile "compile")
-  ("e" eshell "eshell")
-  ("g" magit-status "magit")
-  ("m" bookmark-jump "bookmark")
-  ("s" shell "shell")
-  ("t" tidy-region-or-buffer "tidy"))
+(global-set-key (kbd "C-c a") #'align-regexp)
 
-(global-set-key (kbd "C-c j") #'hydra-buffer/body)
+(global-set-key (kbd "C-c b") #'create-scratch-buffer)
+
+(global-set-key (kbd "C-c s") #'shell)
+
+(global-set-key (kbd "C-c t") #'tidy-region-or-buffer)
+
+(global-set-key (kbd "C-c g") #'magit-status)
+
+;; Ido
+(ido-mode 1)
+(recentf-mode 1)
 
 ;; Dired
 (require 'jd-dired)
@@ -134,6 +99,7 @@
 (define-key dired-mode-map "b" 'dired-open-file)
 (define-key dired-mode-map "c" 'dired-open-fm)
 (define-key dired-mode-map "e" 'ora-ediff-files)
+(define-key dired-mode-map "Q" 'dired-do-query-replace-regexp)
 
 (setq-default dired-clean-up-buffers-too t
               dired-recursive-copies 'always
@@ -146,45 +112,9 @@
 (autoload 'vkill "vkill" nil t)
 (autoload 'list-unix-processes "vkill" nil t)
 
-;; Ivy and Avy
 (require-package 'diminish)
-(require-package 'ivy)
-(require-package 'counsel)
 
-;; Ivy-related commands
-(defhydra hydra-counsel (:color blue)
-  ("r" ivy-resume "resume")
-  ("i" counsel-imenu "imenu")
-  ("g" counsel-git "git")
-  ("j" counsel-git-grep "grep")
-  ("u" counsel-unicode-char "unicode")
-  ("f" counsel-locate "find")
-  ("a" counsel-ag "ag")
-  ("l" counsel-info-lookup-symbol "symbol"))
-
-(global-set-key (kbd "C-c o") #'hydra-counsel/body)
-
-;; Enable repeated M-y
-;; Source: http://pragmaticemacs.com/emacs/counsel-yank-pop-with-a-tweak/
-(require 'ivy)
-(define-key ivy-minibuffer-map (kbd "M-y") #'ivy-next-line)
-
-(ivy-mode 1)
-(diminish 'ivy-mode)
-
-(counsel-mode 1)
-(diminish 'counsel-mode)
-
-;; Go to swiper from isearch
-(define-key isearch-mode-map (kbd "M-i") #'swiper-from-isearch)
-
-(require-package 'avy)
-(avy-setup-default)
-(global-set-key (kbd "M-n") #'avy-goto-char-timer)
-;; (global-set-key (kbd "M-j") #'avy-goto-char-timer)
-(global-set-key (kbd "M-g t") #'avy-goto-char-timer)
-(global-set-key (kbd "M-g c") #'avy-goto-char-2)
-(global-set-key (kbd "M-g f") #'avy-goto-line)
+(global-set-key (kbd "M-y") 'yank-pop)
 
 (require-package 'tiny)
 (global-set-key (kbd "C-;") 'tiny-expand)
@@ -207,10 +137,6 @@
                 ("\\.css?\\'" . web-mode)))
   (add-to-list 'auto-mode-alist item))
 
-;; Links
-(require-package 'ace-link)
-(ace-link-setup-default)
-
 ;; Windows
 (winner-mode 1)
 (global-set-key (kbd "C-x p") (lambda () (interactive) (other-window -1)))
@@ -219,23 +145,6 @@
 (global-set-key (kbd "C-c m") #'kmacro-start-macro-or-insert-counter)
 (global-set-key (kbd "C-z") #'kmacro-end-or-call-macro)
 (global-set-key (kbd "C-c C-z") #'save-kbd-macro)
-
-(defhydra hydra-next-error (global-map "C-x")
-  "
-Compilation errors:
-_j_: next error        _h_: first error    _q_uit
-_k_: previous error    _l_: last error
-"
-  ("`" next-error     nil)
-  ("j" next-error     nil :bind nil)
-  ("k" previous-error nil :bind nil)
-  ("h" first-error    nil :bind nil)
-  ("l" (condition-case err
-           (while t
-             (next-error))
-         (user-error nil))
-   nil :bind nil)
-  ("q" nil            nil :color blue))
 
 ;; Octave
 (add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
