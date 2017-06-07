@@ -31,10 +31,6 @@
 ;; Enable y/n answers
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; Keep things clean
-(require-package 'no-littering)
-(require 'no-littering)
-
 ;; Backups - better to be safe
 (setq backup-by-copying t
       delete-old-versions t
