@@ -41,25 +41,25 @@
   (interactive)
   (switch-to-buffer (other-buffer)))
 
-(defun my-change-number-at-point (change)
-  (let ((number (number-at-point))
-        (point (point)))
-    (when number
-      (progn
-        (forward-word)
-        (search-backward (number-to-string number))
-        (replace-match (number-to-string (funcall change number)))
-        (goto-char point)))))
+;; vim-style increment/decrement numbers
+;; Source: https://gist.github.com/d11wtq/5836174
+(defun inc-number-at-point (n)
+  "Increment the number under the point, if present.
+Called with a prefix argument, changes the number by N."
+  (interactive "p")
+  (let ((amt (or n 1))
+        (word (thing-at-point 'word))
+        (bounds (bounds-of-thing-at-point 'word)))
+    (when (string-match "^[0-9]+$" word)
+      (replace-string word
+                      (format "%d" (+ amt (string-to-int word)))
+                      nil (car bounds) (cdr bounds))
+      (forward-char -1))))
 
-(defun increment-number-at-point ()
+(defun dec-number-at-point (n)
   "Increment number at point like vim's C-a"
-  (interactive)
-  (my-change-number-at-point '1+))
-
-(defun decrement-number-at-point ()
-  "Decrement number at point like vim's C-x"
-  (interactive)
-  (my-change-number-at-point '1-))
+  (interactive "p")
+  (inc-number-at-point (- n)))
 
 (defun unfill-paragraph ()
   "Takes a multi-line paragraph and makes it into a single line of text."

@@ -43,11 +43,16 @@
       version-control t)
 
 (global-set-key (kbd "C-c t") #'hydra-toggle/body)
-
 (global-set-key (kbd "C-c w") #'whitespace-mode)
 
 ;; Keybinding for unfill-paragraph
 (global-set-key (kbd "M-Q") #'unfill-paragraph)
+
+;; Ivy
+(require-package 'ivy)
+(ivy-mode 1)
+(counsel-mode 1)
+(global-set-key (kbd "C-c j") #'counsel-git-grep)
 
 ;; IBuffer
 (require-package 'ibuffer-vc)
@@ -61,25 +66,14 @@
 
 ;; Version-control
 (require-package 'magit)
-;; (global-set-key (kbd "C-c g") #'magit-status)
-
 (require-package 'git-timemachine)
+
 (global-set-key (kbd "C-x v t") #'git-timemachine)
-
-
 (global-set-key (kbd "C-c a") #'align-regexp)
-
 (global-set-key (kbd "C-c b") #'create-scratch-buffer)
-
 (global-set-key (kbd "C-c s") #'shell)
-
 (global-set-key (kbd "C-c t") #'tidy-region-or-buffer)
-
 (global-set-key (kbd "C-c g") #'magit-status)
-
-;; Ido
-(ido-mode 1)
-(recentf-mode 1)
 
 ;; Dired
 (require 'jd-dired)
@@ -124,6 +118,10 @@
 ;; the default binding for comment-line is not terminal-friendly.
 (global-set-key (kbd "C-x ;") 'comment-line)
 
+;; Increment and decremenet
+(global-set-key (kbd "C-c +") 'inc-number-at-point)
+(global-set-key (kbd "C-c -") 'dec-number-at-point)
+
 ;; Text and Web
 (require-package 'markdown-mode)
 (setq markdown-command "multimarkdown")
@@ -136,6 +134,9 @@
 (dolist (item '(("\\.html?\\'" . web-mode)
                 ("\\.css?\\'" . web-mode)))
   (add-to-list 'auto-mode-alist item))
+
+;; Compile
+(global-set-key (kbd "C-c C-m") 'compile)
 
 ;; Windows
 (winner-mode 1)
