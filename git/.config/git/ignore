@@ -25,6 +25,7 @@ tramp
 # Org-mode
 .org-id-locations
 *_archive
+BROWSE
 
 # Vim
 .*.sw[a-z]
@@ -38,7 +39,6 @@ __pycache__/
 
 # Tags
 TAGS
-tags
 
 # CScope
 cscope.files
@@ -83,7 +83,7 @@ local.properties
 *.m~
 # Compiled MEX binaries (all platforms)
 *.mex*
-# Simulink Code Generation	
+# Simulink Code Generation
 slprj/
 
 # LaTeX
