@@ -2,7 +2,10 @@
 # * https://github.com/mathiasbynens/dotfiles/blob/master/.bash_prompt
 
 # If not running interactively, don't do anything
-[ -z "$PS1" ] && return
+if [ -z "$PS1" ]; then
+    source ~/.profile.local &>/dev/null
+    return
+fi
 
 # Set mode
 set -o emacs
