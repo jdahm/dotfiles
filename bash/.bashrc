@@ -46,6 +46,50 @@ alias psc='ps xawf -eo pid,user,cgroup,args'
 # Functions
 mkdircd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
 
+uniquify-version () {
+    local name=$1
+    local extension=${2:-}
+
+    if compgen -G $name-v*$extension >/dev/null; then
+        let i=0
+        while [ -e $name-v$i$extension ]; do let i++; done
+        echo $name-v$i$extension
+    else
+        echo $name$extension
+    fi
+}
+
+mkold() {
+    local fullname=$1
+    local bname=$(basename $fullname)
+    local extension=""
+    [[ $fullname == *.* ]] && extension=".${bname#*.}"
+    local fnoext="${fullname%$extension}"
+    local suffix=$(date "+%Y-%m-%d")
+    if [ -e $fnoext-$suffix$extension ]; then
+        mv $fnoext-$suffix$extension $fnoext-$suffix-v0$extension
+    fi
+    local name=$(uniquify-version $fnoext-$suffix $extension)
+    cp -a $fullname $name
+    echo Created $name
+}
+
+cod() {
+    local ctype="tgz"
+    local fname=$1
+    [[ $1 == "-"* ]] && {
+        fname=$2; ctype=${1:1}
+    }
+    local cname=""
+    case $ctype in
+        tgz) cname=$fname.tar.gz && tar czf $cname $fname;;
+        txz) cname=$fname.tar.xz && tar cJf $cname $fname;;
+        *) echo "Cannot parse compression type"; return;;
+    esac
+    mkold $cname
+    rm $cname
+}
+
 # Add shell config files
 configdir=~/.config/bash
 if [ -d $configdir ]; then
