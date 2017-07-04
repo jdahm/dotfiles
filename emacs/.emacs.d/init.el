@@ -50,6 +50,7 @@
 
 ;; Ivy
 (require-package 'ivy)
+(require-package 'counsel)
 (ivy-mode 1)
 (counsel-mode 1)
 (global-set-key (kbd "C-c j") #'counsel-git-grep)
