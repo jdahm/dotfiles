@@ -10,6 +10,7 @@
 
 (defconst config-d "~/.config/emacs/")
 (defconst lisp-d (expand-file-name "lisp/" user-emacs-directory))
+(defconst backup-d (expand-file-name "backups/" user-emacs-directory))
 (setq custom-file (expand-file-name "custom.el" config-d))
 
 ;; Set package archives and initialize
@@ -25,25 +26,20 @@
 ;; Load some defuns
 (require 'jd-defuns)
 
-;; Precaution: Move files to trash when deleting
-(setq delete-by-moving-to-trash t)
-
 ;; Enable y/n answers
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; Keep things clean
-(require-package 'no-littering)
-(require 'no-littering)
-
 ;; Backups - better to be safe
-(setq backup-by-copying t
+(when (not (file-exists-p backup-d))
+  (make-directory backup-d t))
+
+(setq delete-by-moving-to-trash t
+      backup-by-copying t      ; don't clobber symlinks
       delete-old-versions t
+      backup-directory-alist `(("." . ,backup-d))
       kept-new-versions 6
       kept-old-versions 2
-      version-control t)
-
-(global-set-key (kbd "C-c t") #'hydra-toggle/body)
-(global-set-key (kbd "C-c w") #'whitespace-mode)
+      version-control t)       ; use versioned backups
 
 ;; Keybinding for unfill-paragraph
 (global-set-key (kbd "M-Q") #'unfill-paragraph)
@@ -90,11 +86,11 @@
 (global-set-key (kbd "C-x C-j") #'dired-jump)
 (global-set-key (kbd "C-x 4 C-j") #'dired-jump-other-window)
 
-(define-key dired-mode-map (kbd "C-c C-s") 'sudired)
-(define-key dired-mode-map "b" 'dired-open-file)
-(define-key dired-mode-map "c" 'dired-open-fm)
-(define-key dired-mode-map "e" 'ora-ediff-files)
-(define-key dired-mode-map "Q" 'dired-do-query-replace-regexp)
+(define-key dired-mode-map (kbd "C-c C-s") #'sudired)
+(define-key dired-mode-map "b" #'dired-open-file)
+(define-key dired-mode-map "c" #'dired-open-fm)
+(define-key dired-mode-map "e" #'ora-ediff-files)
+(define-key dired-mode-map "Q" #'dired-do-query-replace-regexp)
 
 (setq-default dired-clean-up-buffers-too t
               dired-recursive-copies 'always
@@ -107,13 +103,7 @@
 (autoload 'vkill "vkill" nil t)
 (autoload 'list-unix-processes "vkill" nil t)
 
-(require-package 'diminish)
-
 (global-set-key (kbd "M-y") 'yank-pop)
-
-(require-package 'tiny)
-(global-set-key (kbd "C-;") 'tiny-expand)
-;; (tiny-setup-default)
 
 ;; This overwrites `comment-set-column', but that is rarely used and
 ;; the default binding for comment-line is not terminal-friendly.
@@ -160,6 +150,8 @@
 
 (add-hook 'c-mode-common-hook
           (lambda () (define-key c-mode-base-map (kbd "M-o") 'ff-find-other-file)))
+
+(global-set-key (kbd "C-c w") #'whitespace-mode)
 
 (if (file-readable-p custom-file) (load-file custom-file))
 
