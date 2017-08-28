@@ -4,7 +4,7 @@
 ;;
 ;;; Commentary:
 ;;
-;; Configuration for Emacs. Requires Emacs 24 for package.el, Magit.
+;; Configuration for Emacs. Requires Emacs 24 for package.el.
 ;;
 ;;; Code:
 
@@ -44,12 +44,24 @@
 ;; Keybinding for unfill-paragraph
 (global-set-key (kbd "M-Q") #'unfill-paragraph)
 
-;; Ivy
-(require-package 'ivy)
-(require-package 'counsel)
-(ivy-mode 1)
-(counsel-mode 1)
-(global-set-key (kbd "C-c j") #'counsel-git-grep)
+(global-set-key (kbd "C-c e") #'rgrep)
+(global-set-key (kbd "C-x 9") #'bury-buffer)
+
+(require 'recentf)
+(recentf-mode 1)
+(setq recentf-max-menu-items 25)
+
+;; Ido
+(require-package 'ido-completing-read+)
+(require 'ido)
+(ido-mode 1)
+(ido-everywhere 1)
+(ido-ubiquitous-mode 1)
+
+(require-package 'find-file-in-project)
+(global-set-key (kbd "C-x M-f")   #'ido-find-file-other-window)
+(global-set-key (kbd "C-x C-g") #'find-file-in-project)
+(setq ffip-prefer-ido-mode t)
 
 ;; IBuffer
 (require-package 'ibuffer-vc)
@@ -103,15 +115,15 @@
 (autoload 'vkill "vkill" nil t)
 (autoload 'list-unix-processes "vkill" nil t)
 
-(global-set-key (kbd "M-y") 'yank-pop)
+(global-set-key (kbd "M-y") #'yank-pop)
 
 ;; This overwrites `comment-set-column', but that is rarely used and
 ;; the default binding for comment-line is not terminal-friendly.
-(global-set-key (kbd "C-x ;") 'comment-line)
+(global-set-key (kbd "C-x ;") #'comment-line)
 
 ;; Increment and decremenet
-(global-set-key (kbd "C-c +") 'inc-number-at-point)
-(global-set-key (kbd "C-c -") 'dec-number-at-point)
+(global-set-key (kbd "C-c +") #'inc-number-at-point)
+(global-set-key (kbd "C-c -") #'dec-number-at-point)
 
 ;; Text and Web
 (require-package 'markdown-mode)
