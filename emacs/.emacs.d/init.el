@@ -57,10 +57,10 @@
 (ido-mode 1)
 (ido-everywhere 1)
 (ido-ubiquitous-mode 1)
+(global-set-key (kbd "C-x M-f")   #'ido-find-file-other-window)
 
 (require-package 'find-file-in-project)
-(global-set-key (kbd "C-x M-f")   #'ido-find-file-other-window)
-(global-set-key (kbd "C-x C-g") #'find-file-in-project)
+(global-set-key (kbd "C-c f") #'find-file-in-project)
 (setq ffip-prefer-ido-mode t)
 
 ;; IBuffer
@@ -73,16 +73,10 @@
               (ibuffer-do-sort-by-vc-status))))
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 
-;; Version-control
-(require-package 'magit)
-(require-package 'git-timemachine)
-
-(global-set-key (kbd "C-x v t") #'git-timemachine)
 (global-set-key (kbd "C-c a") #'align-regexp)
 (global-set-key (kbd "C-c b") #'create-scratch-buffer)
 (global-set-key (kbd "C-c s") #'shell)
 (global-set-key (kbd "C-c t") #'tidy-region-or-buffer)
-(global-set-key (kbd "C-c g") #'magit-status)
 
 ;; Dired
 (require 'jd-dired)
