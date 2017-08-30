@@ -41,27 +41,13 @@
       kept-old-versions 2
       version-control t)       ; use versioned backups
 
-;; Keybinding for unfill-paragraph
-(global-set-key (kbd "M-Q") #'unfill-paragraph)
+;; Buffers
+(winner-mode 1)
+(global-set-key (kbd "C-x p") (lambda () (interactive) (other-window -1)))
+(global-set-key (kbd "C-x |") #'toggle-window-split)
 
 (global-set-key (kbd "C-c e") #'rgrep)
 (global-set-key (kbd "C-x 9") #'bury-buffer)
-
-(require 'recentf)
-(recentf-mode 1)
-(setq recentf-max-menu-items 25)
-
-;; Ido
-(require-package 'ido-completing-read+)
-(require 'ido)
-(ido-mode 1)
-(ido-everywhere 1)
-(ido-ubiquitous-mode 1)
-(global-set-key (kbd "C-x M-f") #'ido-find-file-other-window)
-
-(require-package 'find-file-in-project)
-(global-set-key (kbd "C-c f") #'find-file-in-project)
-(setq ffip-prefer-ido-mode t)
 
 ;; IBuffer
 (require-package 'ibuffer-vc)
@@ -77,6 +63,35 @@
 (global-set-key (kbd "C-c b") #'create-scratch-buffer)
 (global-set-key (kbd "C-c s") #'shell)
 (global-set-key (kbd "C-c t") #'tidy-region-or-buffer)
+
+(require 'recentf)
+(recentf-mode 1)
+(setq recentf-max-menu-items 25)
+
+;; Editing
+
+(global-set-key (kbd "M-Q") #'unfill-paragraph)
+(global-set-key (kbd "M-y") #'yank-pop)
+(global-set-key (kbd "C-c y") (lambda () (interactive) (popup-menu 'yank-menu)))
+
+;; This overwrites `comment-set-column', but that is rarely used and
+;; the default binding for comment-line is not terminal-friendly.
+(global-set-key (kbd "C-x ;") #'comment-line)
+
+(global-set-key (kbd "C-c +") #'inc-number-at-point)
+(global-set-key (kbd "C-c -") #'dec-number-at-point)
+
+;; Ido
+(require-package 'ido-completing-read+)
+(require 'ido)
+(ido-mode 1)
+(ido-everywhere 1)
+(ido-ubiquitous-mode 1)
+(global-set-key (kbd "C-x M-f") #'ido-find-file-other-window)
+
+(require-package 'find-file-in-project)
+(global-set-key (kbd "C-c f") #'find-file-in-project)
+(setq ffip-prefer-ido-mode t)
 
 ;; Dired
 (require 'jd-dired)
@@ -109,16 +124,6 @@
 (autoload #'vkill "vkill" nil t)
 (autoload #'list-unix-processes "vkill" nil t)
 
-(global-set-key (kbd "M-y") #'yank-pop)
-
-;; This overwrites `comment-set-column', but that is rarely used and
-;; the default binding for comment-line is not terminal-friendly.
-(global-set-key (kbd "C-x ;") #'comment-line)
-
-;; Increment and decremenet
-(global-set-key (kbd "C-c +") #'inc-number-at-point)
-(global-set-key (kbd "C-c -") #'dec-number-at-point)
-
 ;; Text and Web
 (require-package 'markdown-mode)
 (setq markdown-command "multimarkdown")
@@ -134,10 +139,6 @@
 
 ;; Compile
 (global-set-key (kbd "C-c C-m") #'compile)
-
-;; Windows
-(winner-mode 1)
-(global-set-key (kbd "C-x p") (lambda () (interactive) (other-window -1)))
 
 ;; Macros
 (global-set-key (kbd "C-c m") #'kmacro-start-macro-or-insert-counter)
@@ -167,10 +168,10 @@
 (global-set-key (kbd "C-c g") #'git-status)
 (global-set-key (kbd "C-c j") #'vc-git-grep)
 
-;; Load custom file
-(if (file-readable-p custom-file) (load-file custom-file))
-
 ;; Enable disabled commands
 (put 'set-goal-column 'disabled nil)
+
+;; Load custom file
+(if (file-readable-p custom-file) (load-file custom-file))
 
 ;;; init.el ends here
