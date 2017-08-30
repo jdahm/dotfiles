@@ -57,7 +57,7 @@
 (ido-mode 1)
 (ido-everywhere 1)
 (ido-ubiquitous-mode 1)
-(global-set-key (kbd "C-x M-f")   #'ido-find-file-other-window)
+(global-set-key (kbd "C-x M-f") #'ido-find-file-other-window)
 
 (require-package 'find-file-in-project)
 (global-set-key (kbd "C-c f") #'find-file-in-project)
@@ -82,9 +82,9 @@
 (require 'jd-dired)
 (require 'dired)
 
-(autoload 'dired-jump "dired-x"
+(autoload #'dired-jump "dired-x"
   "Jump to Dired buffer corresponding to current buffer." t)
-(autoload 'dired-jump-other-window "dired-x"
+(autoload #'dired-jump-other-window "dired-x"
   "Like \\[dired-jump] (dired-jump) but in other window." t)
 
 (add-hook 'dired-mode-hook #'dired-hide-details-mode)
@@ -106,8 +106,8 @@
 (add-hook 'shell-mode-hook #'ansi-color-for-comint-mode-on)
 
 ;; Vkill
-(autoload 'vkill "vkill" nil t)
-(autoload 'list-unix-processes "vkill" nil t)
+(autoload #'vkill "vkill" nil t)
+(autoload #'list-unix-processes "vkill" nil t)
 
 (global-set-key (kbd "M-y") #'yank-pop)
 
@@ -133,7 +133,7 @@
   (add-to-list 'auto-mode-alist item))
 
 ;; Compile
-(global-set-key (kbd "C-c C-m") 'compile)
+(global-set-key (kbd "C-c C-m") #'compile)
 
 ;; Windows
 (winner-mode 1)
@@ -155,10 +155,19 @@
                                     '(("\\<\\(FIXME\\|TODO\\|BUG\\|\\MISSING\\)" 1 font-lock-warning-face t)))))
 
 (add-hook 'c-mode-common-hook
-          (lambda () (define-key c-mode-base-map (kbd "M-o") 'ff-find-other-file)))
+          (lambda () (define-key c-mode-base-map (kbd "M-o") #'ff-find-other-file)))
 
 (global-set-key (kbd "C-c w") #'whitespace-mode)
 
+;; Git and VC
+;; These are distributed with git: contrib/emacs/git{,-blame}.el
+(autoload #'git-status "git" "An interface to git." t)
+(autoload #'git-blame-mode "git-blame"
+  "Minor mode for incremental blame for Git." t)
+(global-set-key (kbd "C-c g") #'git-status)
+(global-set-key (kbd "C-c j") #'vc-git-grep)
+
+;; Load custom file
 (if (file-readable-p custom-file) (load-file custom-file))
 
 ;; Enable disabled commands
