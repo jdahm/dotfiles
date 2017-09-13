@@ -142,4 +142,15 @@ Called with a prefix argument, changes the number by N."
       (select-window first-win)
       (if this-win-2nd (other-window 1))))))
 
+;; Source: https://stackoverflow.com/questions/2416655/file-path-to-clipboard-in-emacs
+(defun prelude-copy-file-name-to-clipboard ()
+  "Copy the current buffer file name to the clipboard."
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (kill-new filename)
+      (message "Copied buffer file name '%s' to the clipboard." filename))))
+
 (provide 'jd-defuns)

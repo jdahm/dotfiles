@@ -74,6 +74,8 @@
 (global-set-key (kbd "M-y") #'yank-pop)
 (global-set-key (kbd "C-c y") (lambda () (interactive) (popup-menu 'yank-menu)))
 
+(global-set-key (kbd "C-c C-f") #'prelude-copy-file-name-to-clipboard)
+
 ;; This overwrites `comment-set-column', but that is rarely used and
 ;; the default binding for comment-line is not terminal-friendly.
 (global-set-key (kbd "C-x ;") #'comment-line)
