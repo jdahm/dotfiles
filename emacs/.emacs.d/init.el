@@ -26,9 +26,6 @@
 ;; Load some defuns
 (require 'jd-defuns)
 
-;; Enable y/n answers
-(defalias 'yes-or-no-p 'y-or-n-p)
-
 ;; Backups - better to be safe
 (when (not (file-exists-p backup-d))
   (make-directory backup-d t))
