@@ -66,7 +66,6 @@
 (setq recentf-max-menu-items 25)
 
 ;; Editing
-
 (global-set-key (kbd "M-Q") #'unfill-paragraph)
 (global-set-key (kbd "M-y") #'yank-pop)
 (global-set-key (kbd "C-c y") (lambda () (interactive) (popup-menu 'yank-menu)))
