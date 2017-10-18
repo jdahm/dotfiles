@@ -47,6 +47,7 @@
 (global-set-key (kbd "C-x 9") #'bury-buffer)
 
 ;; IBuffer
+(require 'ibuffer-tramp)
 (require-package 'ibuffer-vc)
 (add-hook 'ibuffer-hook
           (lambda ()
@@ -55,6 +56,8 @@
               ;; (ibuffer-do-sort-by-alphabetic))))
               (ibuffer-do-sort-by-vc-status))))
 (global-set-key (kbd "C-x C-b") #'ibuffer)
+(define-key ibuffer-mode-map (kbd "s r") #'ibuffer-tramp-set-filter-groups-by-tramp-connection)
+(define-key ibuffer-mode-map (kbd "s g") #'ibuffer-vc-set-filter-groups-by-vc-root)
 
 (global-set-key (kbd "C-c a") #'align-regexp)
 (global-set-key (kbd "C-c b") #'create-scratch-buffer)
