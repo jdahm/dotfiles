@@ -82,17 +82,16 @@
 (global-set-key (kbd "C-c +") #'inc-number-at-point)
 (global-set-key (kbd "C-c -") #'dec-number-at-point)
 
-;; Ido
-(require-package 'ido-completing-read+)
-(require 'ido)
-(ido-mode 1)
-(ido-everywhere 1)
-(ido-ubiquitous-mode 1)
-(global-set-key (kbd "C-x M-f") #'ido-find-file-other-window)
-
+;; Find-file-in-project
 (require-package 'find-file-in-project)
 (global-set-key (kbd "C-c f") #'find-file-in-project)
 (setq ffip-prefer-ido-mode t)
+
+;; Recentf
+(recentf-mode 1)
+(global-set-key (kbd "C-c C-e") #'recentf-open-files)
+;; Run every 10 minutes
+(run-at-time nil (* 10 60) #'recentf-save-list)
 
 ;; Dired
 (require 'jd-dired)
