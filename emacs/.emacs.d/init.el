@@ -47,26 +47,25 @@
 (global-set-key (kbd "C-x 9") #'bury-buffer)
 
 ;; IBuffer
-(require 'ibuffer-tramp)
-(require-package 'ibuffer-vc)
-(add-hook 'ibuffer-hook
-          (lambda ()
-            (ibuffer-vc-set-filter-groups-by-vc-root)
-            (unless (eq ibuffer-sorting-mode 'alphabetic)
-              ;; (ibuffer-do-sort-by-alphabetic))))
-              (ibuffer-do-sort-by-vc-status))))
 (global-set-key (kbd "C-x C-b") #'ibuffer)
-(define-key ibuffer-mode-map (kbd "s r") #'ibuffer-tramp-set-filter-groups-by-tramp-connection)
-(define-key ibuffer-mode-map (kbd "s g") #'ibuffer-vc-set-filter-groups-by-vc-root)
+(after 'ibuffer
+       (require 'ibuffer-tramp)
+       (require-package 'ibuffer-vc)
+       (define-key ibuffer-mode-map (kbd "s r")
+         #'ibuffer-tramp-set-filter-groups-by-tramp-connection)
+       (define-key ibuffer-mode-map (kbd "s g")
+         #'ibuffer-vc-set-filter-groups-by-vc-root)
+       (add-hook 'ibuffer-hook
+                 (lambda ()
+                   (ibuffer-vc-set-filter-groups-by-vc-root)
+                   (unless (eq ibuffer-sorting-mode 'alphabetic)
+                     ;; (ibuffer-do-sort-by-alphabetic))))
+                     (ibuffer-do-sort-by-vc-status)))))
 
-(global-set-key (kbd "C-c a") #'align-regexp)
-(global-set-key (kbd "C-c b") #'create-scratch-buffer)
-(global-set-key (kbd "C-c s") #'shell)
-(global-set-key (kbd "C-c t") #'tidy-region-or-buffer)
-
-(require 'recentf)
-(recentf-mode 1)
-(setq recentf-max-menu-items 25)
+(global-set-key (kbd "C-M-\\") #'tidy-region-or-buffer)
+(global-set-key (kbd "C-x C-a") #'align-regexp)
+(global-set-key (kbd "C-c n") #'create-scratch-buffer)
+(global-set-key (kbd "C-c s") #'eshell)
 
 ;; Editing
 (global-set-key (kbd "M-Q") #'unfill-paragraph)
@@ -82,40 +81,32 @@
 (global-set-key (kbd "C-c +") #'inc-number-at-point)
 (global-set-key (kbd "C-c -") #'dec-number-at-point)
 
-;; Find-file-in-project
-(require-package 'find-file-in-project)
-(global-set-key (kbd "C-c f") #'find-file-in-project)
-(setq ffip-prefer-ido-mode t)
-
-;; Recentf
+;; Recentf -- run every 10 minutes
 (recentf-mode 1)
-(global-set-key (kbd "C-c C-e") #'recentf-open-files)
-;; Run every 10 minutes
-(run-at-time nil (* 10 60) #'recentf-save-list)
+;; This overwrites `isearch-backward-regexp' but that is virtually
+;; never needed.
+(global-set-key (kbd "C-M-r") #'recentf-open-files)
+;; (run-at-time nil (* 10 60) #'recentf-save-list)
 
 ;; Dired
-(require 'jd-dired)
-(require 'dired)
-
+(add-hook 'dired-mode-hook #'dired-hide-details-mode)
+(global-set-key (kbd "C-x C-j") #'dired-jump)
+(global-set-key (kbd "C-x 4 C-j") #'dired-jump-other-window)
+(setq-default dired-clean-up-buffers-too t
+              dired-recursive-copies 'always
+              dired-recursive-deletes 'top)
 (autoload #'dired-jump "dired-x"
   "Jump to Dired buffer corresponding to current buffer." t)
 (autoload #'dired-jump-other-window "dired-x"
   "Like \\[dired-jump] (dired-jump) but in other window." t)
 
-(add-hook 'dired-mode-hook #'dired-hide-details-mode)
-
-(global-set-key (kbd "C-x C-j") #'dired-jump)
-(global-set-key (kbd "C-x 4 C-j") #'dired-jump-other-window)
-
-(define-key dired-mode-map (kbd "C-c C-s") #'sudired)
-(define-key dired-mode-map "b" #'dired-open-file)
-(define-key dired-mode-map "c" #'dired-open-fm)
-(define-key dired-mode-map "e" #'ora-ediff-files)
-(define-key dired-mode-map "Q" #'dired-do-query-replace-regexp)
-
-(setq-default dired-clean-up-buffers-too t
-              dired-recursive-copies 'always
-              dired-recursive-deletes 'top)
+(after 'dired
+       (require 'jd-dired)
+       (define-key dired-mode-map (kbd "C-c C-s") #'sudired)
+       (define-key dired-mode-map "b" #'dired-open-file)
+       (define-key dired-mode-map "c" #'dired-open-fm)
+       (define-key dired-mode-map "e" #'ora-ediff-files)
+       (define-key dired-mode-map "Q" #'dired-do-query-replace-regexp))
 
 ;; Shell
 (add-hook 'shell-mode-hook #'ansi-color-for-comint-mode-on)
