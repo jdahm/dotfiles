@@ -3,12 +3,6 @@
 ;;   * magnars/.emacs.d
 ;;   * muahah/emacs-profile
 
-(defmacro after (mode &rest body)
-  "`eval-after-load' MODE evaluate BODY."
-  (declare (indent defun))
-  `(eval-after-load ,mode
-     '(progn ,@body)))
-
 (defun require-package (package)
   "Install given PACKAGE."
   (unless (package-installed-p package)
