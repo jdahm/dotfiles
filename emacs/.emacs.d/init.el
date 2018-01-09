@@ -162,9 +162,8 @@
 
 ;; Git and VC
 ;; These are distributed with git: contrib/emacs/git{,-blame}.el
-(autoload #'git-status "git" "An interface to git." t)
-(autoload #'git-blame-mode "git-blame"
-  "Minor mode for incremental blame for Git." t)
+(autoload #'git-status "git""An interface to git." t)
+(autoload #'git-blame-mode "git-blame" "Minor mode for incremental blame for Git." t)
 (global-set-key (kbd "C-c g") #'git-status)
 (global-set-key (kbd "C-c j") #'vc-git-grep)
 
@@ -182,9 +181,6 @@
 (global-set-key (kbd "C-c b") #'org-iswitchb)
 (add-hook 'org-mode-hook #'turn-on-visual-line-mode)
 (add-hook 'org-mode-hook #'turn-on-flyspell)
-
-;; Theme
-(require-package 'nord-theme)
 
 ;; Auctex
 (require-package 'auctex)
@@ -278,6 +274,14 @@ Otherwise split the current paragraph into one sentence per line."
 ;; ;; Tramp ssh control is correctly setup in ~/.ssh/config
 ;; ;; Source: https://lists.gnu.org/archive/html/help-gnu-emacs/2013-04/msg00323.html
 ;; (setq tramp-ssh-controlmaster-options "")
+
+;; Use shell-like backspace C-h, rebind help to F1
+;; Source: magnars/hardcore-mode.el
+(define-key key-translation-map [?\C-h] [?\C-?])
+(global-set-key (kbd "C-x ?") 'help-command)
+
+;; Themes
+(add-to-list 'load-path (expand-file-name "themes/" user-emacs-directory))
 
 ;; Load custom file
 (if (file-readable-p custom-file) (load-file custom-file))
