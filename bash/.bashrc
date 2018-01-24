@@ -7,6 +7,14 @@ if [ -z "$PS1" ]; then
     return
 fi
 
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+if [ -f /etc/bash.bashrc ]; then # variation for ubuntu
+    . /etc/bash.bashrc
+fi
+
 # Set mode
 set -o emacs
 
