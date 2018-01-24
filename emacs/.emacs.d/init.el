@@ -134,6 +134,31 @@
 ;; Compile
 (global-set-key (kbd "<f9>") #'compile)
 
+;; Source: purcell/emacs.d
+(defvar jdahm/last-compilation-buffer nil
+  "The last buffer in which compilation took place.")
+
+(after 'compile
+  (defadvice compilation-start (after jdahm/save-compilation-buffer activate)
+    "Save the compilation buffer to find it later."
+    (setq jdahm/last-compilation-buffer next-error-last-buffer))
+
+  (defadvice compile (around use-bashrc activate)
+    "Load .bashrc in any calls to bash (e.g. so we can use aliases)"
+    (let ((shell-command-switch "-lc"))
+      ad-do-it))
+
+  (defadvice recompile (around jdahm/find-prev-compilation-use-bash (&optional edit-command) activate)
+    "Load .bashrc in any calls to bash (e.g. so we can use aliases)"
+    (let ((shell-command-switch "-lc"))
+      (if (and (null edit-command)
+               (not (derived-mode-p 'compilation-mode))
+               jdahm/last-compilation-buffer
+               (buffer-live-p (get-buffer jdahm/last-compilation-buffer)))
+          (with-current-buffer jdahm/last-compilation-buffer
+            ad-do-it)
+        ad-do-it))))
+
 ;; Macros
 (global-set-key (kbd "C-c m") #'kmacro-start-macro-or-insert-counter)
 (global-set-key (kbd "C-z") #'kmacro-end-or-call-macro)
@@ -250,7 +275,7 @@ Otherwise split the current paragraph into one sentence per line."
                                              " "
                                              (format "%-15s" buffer-name)
                                              "    "
-                                             (if vc-mode (concat "" vc-mode " (" (symbol-name (vc-state (buffer-file-name))) ")") "")
+                                             (if vc-mode (concat vc-mode " (" (symbol-name (vc-state (buffer-file-name))) ")") "")
                                              "  "
                                              (format-mode-line mode-line-misc-info)))
                                (right (concat "("
@@ -269,16 +294,16 @@ Otherwise split the current paragraph into one sentence per line."
                     (dired-directory dired-directory "%b")))))
 
 ;; Whitespace
-(add-hook 'before-save-hook 'whitespace-cleanup)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-;; ;; Tramp ssh control is correctly setup in ~/.ssh/config
-;; ;; Source: https://lists.gnu.org/archive/html/help-gnu-emacs/2013-04/msg00323.html
-;; (setq tramp-ssh-controlmaster-options "")
+;; Tramp ssh control is correctly setup in ~/.ssh/config
+;; Source: https://lists.gnu.org/archive/html/help-gnu-emacs/2013-04/msg00323.html
+(setq tramp-ssh-controlmaster-options "")
 
-;; Use shell-like backspace C-h, rebind help to F1
-;; Source: magnars/hardcore-mode.el
-(define-key key-translation-map [?\C-h] [?\C-?])
-(global-set-key (kbd "C-x ?") 'help-command)
+;; ;; Use shell-like backspace C-h, rebind help to F1
+;; ;; Source: magnars/hardcore-mode.el
+;; (define-key key-translation-map [?\C-h] [?\C-?])
+;; (global-set-key (kbd "C-x ?") 'help-command)
 
 ;; Themes
 (add-to-list 'load-path (expand-file-name "themes/" user-emacs-directory))
