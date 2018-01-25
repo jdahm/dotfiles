@@ -300,10 +300,11 @@ Otherwise split the current paragraph into one sentence per line."
 ;; Source: https://lists.gnu.org/archive/html/help-gnu-emacs/2013-04/msg00323.html
 (setq tramp-ssh-controlmaster-options "")
 
-;; ;; Use shell-like backspace C-h, rebind help to F1
-;; ;; Source: magnars/hardcore-mode.el
-;; (define-key key-translation-map [?\C-h] [?\C-?])
-;; (global-set-key (kbd "C-x ?") 'help-command)
+;; Use shell-like backspace C-h, rebind help to F1
+;; Source: magnars/hardcore-mode.el
+(define-key key-translation-map [?\C-h] [?\C-?])
+(global-set-key (kbd "C-x ?") 'help-command)
+(global-set-key (kbd  "<f1>") 'help-command)
 
 ;; Themes
 (add-to-list 'load-path (expand-file-name "themes/" user-emacs-directory))
