@@ -29,7 +29,8 @@
 ;; Some extra functions
 (require 'jd-extra)
 
-(global-set-key (kbd "C-x p") (lambda () (interactive) (other-window -1))) ; Complement to C-x o
+;; Complement to C-x o
+(global-set-key (kbd "C-x p") (lambda () (interactive) (other-window -1)))
 
 (autoload 'ibuffer "ibuffer" "ibuffer mode" t)
 (global-set-key (kbd "C-x C-b") #'ibuffer)
@@ -145,6 +146,10 @@
                     "%f"
                     (dired-directory dired-directory "%b")))))
 
+;; Git
+(require-package 'magit)
+(global-set-key (kbd "C-x g") #'magit-status)
+
 ;; Source: http://endlessparentheses.com/the-toggle-map-and-wizardry.html
 (define-prefix-command 'jd/toggle-map)
 ;; The manual recommends C-c for user keys, but C-x t is
@@ -175,8 +180,8 @@
 ;; Conf mode for .job files
 (add-to-list 'auto-mode-alist '("\\.job\\'" . conf-mode))
 
-;; Theme
-(require-package 'zenburn-theme)
+;; c-mode for okl
+(add-to-list 'auto-mode-alist '("\\.okl\\'" . c-mode))
 
 ;; Other modes
 (require-package 'cmake-mode)
@@ -195,6 +200,8 @@
  '(TeX-auto-save nil)
  '(TeX-engine (quote luatex))
  '(TeX-parse-self t)
+ '(ansi-color-names-vector
+   ["#3F3F3F" "#CC9393" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
  '(backup-by-copying t)
  '(backup-directory-alist (\` (("." \, backup-d))))
  '(blink-cursor-mode nil)
@@ -212,18 +219,25 @@
  '(comint-scroll-to-bottom-on-input (quote all))
  '(compilation-message-face (quote default))
  '(compilation-scroll-output (quote first-error))
- '(custom-enabled-themes (quote (zenburn)))
+ '(custom-enabled-themes (quote (nord)))
  '(custom-safe-themes
    (quote
-    ("bfdcbf0d33f3376a956707e746d10f3ef2d8d9caa1c214361c9c08f00a1c8409" default)))
+    ("a4d11382b57e6c08c26db2793670642b1fbb828e642cf41ae58685b4e37aeca9" "b97a01622103266c1a26a032567e02d920b2c697ff69d40b7d9956821ab666cc" "40da996f3246a3e99a2dff2c6b78e65307382f23db161b8316a5440b037eb72c" "bfdcbf0d33f3376a956707e746d10f3ef2d8d9caa1c214361c9c08f00a1c8409" default)))
  '(delete-by-moving-to-trash t)
  '(delete-old-versions t)
  '(ediff-cmp-options (quote ("-w")))
  '(ediff-split-window-function (quote split-window-horizontally))
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
  '(enable-remote-dir-locals t)
+ '(fci-rule-color "#383838")
  '(initial-scratch-message "")
  '(ispell-program-name "/usr/local/bin/aspell")
+ '(midnight-mode t)
+ '(nord-comment-brightness 20)
+ '(nord-uniform-mode-lines t)
+ '(nrepl-message-colors
+   (quote
+    ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(org-agenda-files jd-default-notes-file)
  '(org-capture-templates
    (quote
@@ -252,7 +266,8 @@ DEADLINE: %t"))))
  '(org-log-done (quote time))
  '(package-selected-packages
    (quote
-    (cuda-mode rust-mode cmake-mode ibuffer-vc ibuffer-tramp zenburn-theme modern-cpp-font-lock web-mode markdown-mode)))
+    (dracula-theme magit cuda-mode rust-mode cmake-mode ibuffer-vc ibuffer-tramp modern-cpp-font-lock web-mode markdown-mode)))
+ '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(recentf-max-menu-items 25)
  '(recentf-mode t)
  '(savehist-mode t)
@@ -262,6 +277,28 @@ DEADLINE: %t"))))
  '(show-paren-mode t)
  '(tool-bar-mode nil)
  '(use-dialog-box nil)
+ '(vc-annotate-background "#2B2B2B")
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#BC8383")
+     (40 . "#CC9393")
+     (60 . "#DFAF8F")
+     (80 . "#D0BF8F")
+     (100 . "#E0CF9F")
+     (120 . "#F0DFAF")
+     (140 . "#5F7F5F")
+     (160 . "#7F9F7F")
+     (180 . "#8FB28F")
+     (200 . "#9FC59F")
+     (220 . "#AFD8AF")
+     (240 . "#BFEBBF")
+     (260 . "#93E0E3")
+     (280 . "#6CA0A3")
+     (300 . "#7CB8BB")
+     (320 . "#8CD0D3")
+     (340 . "#94BFF3")
+     (360 . "#DC8CC3"))))
+ '(vc-annotate-very-old-color "#DC8CC3")
  '(version-control t)
  '(winner-mode t))
 (custom-set-faces
@@ -269,4 +306,4 @@ DEADLINE: %t"))))
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:weight normal :height 140 :width normal :foundry "nil" :family "Iosevka Term")))))
+ '(default ((t (:height 140 :family "Iosevka Term")))))
