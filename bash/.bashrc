@@ -221,6 +221,8 @@ fi
 # Set the prompt
 set-long-prompt() {
     # An older unused version
+    export PROMPT_COMMAND=""
+
     sepcolor=$1
     # Set the terminal title to the current working directory.
     # PS1="\[\033]0;\w\007\]"
@@ -240,6 +242,8 @@ set-long-prompt() {
 }
 
 set-short-prompt() {
+    export PROMPT_COMMAND=""
+
     # PS1="\[${bold}\]" # begin bold
     PS1=""
     if [ "${hostName}" != "localhost" ]; then
