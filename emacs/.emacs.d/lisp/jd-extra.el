@@ -1,9 +1,3 @@
-(defmacro after (mode &rest body)
-  "`eval-after-load' MODE evaluate BODY."
-  (declare (indent defun))
-  `(eval-after-load ,mode
-     '(progn ,@body)))
-
 (defun require-package (package)
   "Install given PACKAGE."
   (unless (package-installed-p package)
@@ -12,12 +6,25 @@
     (package-install package)))
 
 (defun create-scratch-buffer nil
-  "create a scratch buffer"
+  "create a scratch buffer."
   (interactive)
   (switch-to-buffer (get-buffer-create "*scratch*"))
-  (lisp-interaction-mode))             
+  (lisp-interaction-mode))
 
-;; Stefan Monnier <foo at acm.org>. It is the opposite of fill-paragraph    
+(defun tidy-region-or-buffer ()
+  "Indent a region if selected, otherwise the whole buffer."
+  (interactive)
+    (if (region-active-p)
+        (progn
+	  (delete-trailing-whitespace (region-beginning) (region-end))
+          (indent-region (region-beginning) (region-end) nil)
+	  (untabify (point-min) (point-max)))
+      (progn
+	(delete-trailing-whitespace)
+	(indent-region (point-min) (point-max) nil)
+	(untabify (point-min) (point-max)))))
+
+;; Stefan Monnier <foo at acm.org>. It is the opposite of fill-paragraph
 (defun unfill-paragraph (&optional region)
   "Takes a multi-line paragraph and makes it into a single line of text."
   (interactive (progn (barf-if-buffer-read-only) '(t)))

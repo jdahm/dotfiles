@@ -18,8 +18,8 @@
 
 ;; Set package archives and initialize
 (require 'package)
-(add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/"))
 (setq package-enable-at-startup nil)
 (package-initialize)
 
@@ -38,7 +38,7 @@
 (require-package 'ibuffer-tramp)
 (require-package 'ibuffer-vc)
 
-(after 'ibuffer
+(with-eval-after-load "ibuffer"
   (define-key ibuffer-mode-map (kbd "s r") #'ibuffer-tramp-set-filter-groups-by-tramp-connection)
   (define-key ibuffer-mode-map (kbd "s g") #'ibuffer-vc-set-filter-groups-by-vc-root)
   (add-hook 'ibuffer-hook
@@ -75,7 +75,7 @@
 (autoload #'dired-jump-other-window "dired-x"
   "Like \\[dired-jump] (dired-jump) but in other window." t)
 
-(after 'dired
+(with-eval-after-load "dired"
   (define-key dired-mode-map "b" #'dired-open-file)
   (define-key dired-mode-map "c" #'dired-open-fm)
   (define-key dired-mode-map "Q" #'dired-do-query-replace-regexp))
@@ -104,15 +104,15 @@
 ;; Flyspell
 (require 'flyspell)
 (add-hook 'text-mode-hook #'turn-on-flyspell)
-(after 'flyspell
+(with-eval-after-load "flyspell"
   (define-key flyspell-mode-map (kbd "<C-f12>") 'flyspell-goto-next-error))
-(after 'auto-complete (ac-flyspell-workaround))
+(with-eval-after-load "auto-complete" (ac-flyspell-workaround))
 
 ;; Org
+(require-package 'org-plus-contrib)
 (global-set-key (kbd "C-c l") #'org-store-link)
 (global-set-key (kbd "C-c c") #'org-capture)
 (global-set-key (kbd "C-c a") #'org-agenda)
-(global-set-key (kbd "C-c b") #'org-iswitchb)
 (add-hook 'org-mode-hook #'turn-on-visual-line-mode)
 (add-hook 'org-mode-hook #'turn-on-flyspell)
 
@@ -130,30 +130,20 @@
             (LaTeX-math-mode 1)
             (reftex-mode 1)))
 
-(add-hook 'after-init-hook
-          (lambda ()
-            (setq frame-title-format
-                  '(buffer-file-name
-                    "%f"
-                    (dired-directory dired-directory "%b")))))
-
 ;; Git
+(require-package 'hl-todo)
 (require-package 'magit)
 (global-set-key (kbd "C-x g") #'magit-status)
 (add-hook 'magit-update-uncommitted-buffer-hook 'vc-refresh-state)
 
 ;; Programming
-(require-package 'nlinum)
-(add-hook 'prog-mode-hook #'nlinum-mode)
+(define-key prog-mode-map (kbd "M-`") #'imenu)
+(global-set-key (kbd "M-o") #'ff-find-other-file)
 
 ;; C/C++
 (require-package 'modern-cpp-font-lock)
 (add-hook 'c++-mode-hook #'modern-c++-font-lock-mode)
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (local-set-key (kbd "M-o") #'ff-find-other-file)
-            (font-lock-add-keywords nil
-                                    '(("\\<\\(FIXME\\|TODO\\|BUG\\|\\MISSING\\)" 1 font-lock-warning-face t)))))
+
 ;; Dont indent namespaces by default
 (c-set-offset 'innamespace 0)
 
@@ -166,7 +156,9 @@
 (define-key jd/toggle-map "d" #'toggle-debug-on-error)
 (define-key jd/toggle-map "f" #'auto-fill-mode)
 (define-key jd/toggle-map "t" #'toggle-truncate-lines)
-(define-key jd/toggle-map "l" #'nlinum-mode)
+(define-key jd/toggle-map "l" #'linum-mode)
+(define-key jd/toggle-map "s" #'subword-mode)
+(define-key jd/toggle-map "S" #'superword-mode)
 (define-key jd/toggle-map "q" #'toggle-debug-on-quit)
 ;;; Generalized version of `read-only-mode'.
 (define-key jd/toggle-map "r" #'dired-toggle-read-only)
@@ -197,10 +189,20 @@
 (require-package 'rust-mode)
 
 ;; Theme
-(require-package 'zenburn-theme)
+(require-package 'doom-themes)
 
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
+
+;; Fancy titlebar for MacOS
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
+(add-hook 'after-init-hook
+          (lambda ()
+            (setq frame-title-format
+                  '(buffer-file-name
+                    "%f"
+                    (dired-directory dired-directory "%b")))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -211,6 +213,10 @@
  '(TeX-auto-save nil)
  '(TeX-engine (quote luatex))
  '(TeX-parse-self t)
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["#2e3436" "#a40000" "#4e9a06" "#c4a000" "#204a87" "#5c3566" "#729fcf" "#eeeeec"])
  '(backup-by-copying t)
  '(backup-directory-alist (\` (("." \, backup-d))))
  '(blink-cursor-mode nil)
@@ -228,16 +234,17 @@
  '(comint-scroll-to-bottom-on-input (quote all))
  '(compilation-message-face (quote default))
  '(compilation-scroll-output (quote first-error))
- '(custom-enabled-themes (quote (zenburn)))
+ '(custom-enabled-themes (quote (doom-one)))
  '(custom-safe-themes
    (quote
-    ("bfdcbf0d33f3376a956707e746d10f3ef2d8d9caa1c214361c9c08f00a1c8409" default)))
+    ("2af26301bded15f5f9111d3a161b6bfb3f4b93ec34ffa95e42815396da9cb560" "bfdcbf0d33f3376a956707e746d10f3ef2d8d9caa1c214361c9c08f00a1c8409" default)))
  '(delete-by-moving-to-trash t)
  '(delete-old-versions t)
  '(ediff-cmp-options (quote ("-w")))
  '(ediff-split-window-function (quote split-window-horizontally))
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
  '(enable-remote-dir-locals t)
+ '(fci-rule-color "#383838")
  '(ibuffer-saved-filter-groups nil)
  '(ibuffer-saved-filters
    (quote
@@ -246,22 +253,27 @@
        (name . "^[^*]")))
      ("gnus"
       ((or
-	(mode . message-mode)
-	(mode . mail-mode)
-	(mode . gnus-group-mode)
-	(mode . gnus-summary-mode)
-	(mode . gnus-article-mode))))
+        (mode . message-mode)
+        (mode . mail-mode)
+        (mode . gnus-group-mode)
+        (mode . gnus-summary-mode)
+        (mode . gnus-article-mode))))
      ("programming"
       ((or
-	(mode . emacs-lisp-mode)
-	(mode . cperl-mode)
-	(mode . c-mode)
-	(mode . java-mode)
-	(mode . idl-mode)
-	(mode . lisp-mode)))))))
+        (mode . emacs-lisp-mode)
+        (mode . cperl-mode)
+        (mode . c-mode)
+        (mode . java-mode)
+        (mode . idl-mode)
+        (mode . lisp-mode)))))))
+ '(ibuffer-use-other-window t)
+ '(indent-tabs-mode nil)
  '(initial-scratch-message "")
  '(ispell-program-name "/usr/local/bin/aspell")
  '(midnight-mode t)
+ '(nrepl-message-colors
+   (quote
+    ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(org-agenda-files jd-default-notes-file)
  '(org-capture-templates
    (quote
@@ -281,13 +293,14 @@
       (file+headline org-default-notes-file "Tasks")
       "** NEXT %?
 DEADLINE: %t"))))
- '(org-clock-idle-time 15)
+ '(org-clock-idle-time 45)
  '(org-default-notes-file jd-default-notes-file)
  '(org-directory "~/org/")
  '(org-log-done (quote time))
  '(package-selected-packages
    (quote
-    (olivetti magit cuda-mode rust-mode cmake-mode ibuffer-vc ibuffer-tramp modern-cpp-font-lock web-mode markdown-mode)))
+    (doom-themes hl-todo org-plus-contrib bbdb olivetti magit cuda-mode rust-mode cmake-mode ibuffer-vc ibuffer-tramp modern-cpp-font-lock web-mode markdown-mode)))
+ '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(recentf-max-menu-items 25)
  '(recentf-mode t)
  '(savehist-mode t)
@@ -297,6 +310,28 @@ DEADLINE: %t"))))
  '(show-paren-mode t)
  '(tool-bar-mode nil)
  '(use-dialog-box nil)
+ '(vc-annotate-background "#2B2B2B")
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#BC8383")
+     (40 . "#CC9393")
+     (60 . "#DFAF8F")
+     (80 . "#D0BF8F")
+     (100 . "#E0CF9F")
+     (120 . "#F0DFAF")
+     (140 . "#5F7F5F")
+     (160 . "#7F9F7F")
+     (180 . "#8FB28F")
+     (200 . "#9FC59F")
+     (220 . "#AFD8AF")
+     (240 . "#BFEBBF")
+     (260 . "#93E0E3")
+     (280 . "#6CA0A3")
+     (300 . "#7CB8BB")
+     (320 . "#8CD0D3")
+     (340 . "#94BFF3")
+     (360 . "#DC8CC3"))))
+ '(vc-annotate-very-old-color "#DC8CC3")
  '(version-control t)
  '(winner-mode t))
 (custom-set-faces
@@ -304,4 +339,4 @@ DEADLINE: %t"))))
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:height 140 :family "Iosevka Term")))))
+ '(default ((t (:height 130 :family "Iosevka Term")))))
