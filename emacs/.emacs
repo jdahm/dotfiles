@@ -42,11 +42,11 @@
   (define-key ibuffer-mode-map (kbd "s r") #'ibuffer-tramp-set-filter-groups-by-tramp-connection)
   (define-key ibuffer-mode-map (kbd "s g") #'ibuffer-vc-set-filter-groups-by-vc-root)
   (add-hook 'ibuffer-hook
-	    (lambda ()
-	      (ibuffer-vc-set-filter-groups-by-vc-root)
-	      (unless (eq ibuffer-sorting-mode 'alphabetic)
-		;; (ibuffer-do-sort-by-alphabetic))))
-		(ibuffer-do-sort-by-vc-status)))))
+            (lambda ()
+              (ibuffer-vc-set-filter-groups-by-vc-root)
+              (unless (eq ibuffer-sorting-mode 'alphabetic)
+                ;; (ibuffer-do-sort-by-alphabetic))))
+                (ibuffer-do-sort-by-vc-status)))))
 
 (global-set-key (kbd "C-x C-a") #'align-regexp)
 (global-set-key (kbd "C-M-\\") #'tidy-region-or-buffer)
@@ -101,35 +101,6 @@
 ;; Compile
 (global-set-key (kbd "<f9>") #'compile)
 
-;; Flyspell
-(require 'flyspell)
-(add-hook 'text-mode-hook #'turn-on-flyspell)
-(with-eval-after-load "flyspell"
-  (define-key flyspell-mode-map (kbd "<C-f12>") 'flyspell-goto-next-error))
-(with-eval-after-load "auto-complete" (ac-flyspell-workaround))
-
-;; Org
-(require-package 'org-plus-contrib)
-(global-set-key (kbd "C-c l") #'org-store-link)
-(global-set-key (kbd "C-c c") #'org-capture)
-(global-set-key (kbd "C-c a") #'org-agenda)
-(add-hook 'org-mode-hook #'turn-on-visual-line-mode)
-(add-hook 'org-mode-hook #'turn-on-flyspell)
-
-(defconst jd-default-notes-file "~/Documents/todo.org")
-(defconst jd-diary-file "~/Documents/diary.org")
-
-;; Auctex
-(require-package 'auctex)
-(require-package 'auctex-latexmk)
-(auctex-latexmk-setup)
-
-(add-hook 'LaTeX-mode-hook
-          (lambda ()
-            (visual-line-mode 1)
-            (LaTeX-math-mode 1)
-            (reftex-mode 1)))
-
 ;; Git
 (require-package 'hl-todo)
 (global-hl-todo-mode)
@@ -152,7 +123,7 @@
 (define-prefix-command 'jd/toggle-map)
 ;; The manual recommends C-c for user keys, but C-x t is
 ;; always free, whereas C-c t is used by some modes.
-(define-key ctl-x-map "t" 'jd/toggle-map)
+(global-set-key (kbd "C-c t") #'jd/toggle-map)
 (define-key jd/toggle-map "c" #'column-number-mode)
 (define-key jd/toggle-map "d" #'toggle-debug-on-error)
 (define-key jd/toggle-map "f" #'auto-fill-mode)
@@ -161,7 +132,6 @@
 (define-key jd/toggle-map "s" #'subword-mode)
 (define-key jd/toggle-map "S" #'superword-mode)
 (define-key jd/toggle-map "q" #'toggle-debug-on-quit)
-;;; Generalized version of `read-only-mode'.
 (define-key jd/toggle-map "r" #'dired-toggle-read-only)
 (autoload 'dired-toggle-read-only "dired" nil t)
 (define-key jd/toggle-map "w" #'whitespace-mode)
@@ -174,20 +144,55 @@
 ;; Source: https://lists.gnu.org/archive/html/help-gnu-emacs/2013-04/msg00323.html
 (setq tramp-ssh-controlmaster-options "")
 
-;; Conf mode for .job files
-(add-to-list 'auto-mode-alist '("\\.job\\'" . conf-mode))
+;; Disable version control to avoid delays
+(setq vc-ignore-dir-regexp
+      (format "\\(%s\\)\\|\\(%s\\)"
+              vc-ignore-dir-regexp
+              tramp-file-name-regexp))
 
-;; c-mode for okl
-(add-to-list 'auto-mode-alist '("\\.okl\\'" . c-mode))
+;; Spelling
+(require 'flyspell)
+(add-hook 'text-mode-hook #'turn-on-flyspell)
+(with-eval-after-load "flyspell"
+  (define-key flyspell-mode-map (kbd "<C-f12>") #'flyspell-goto-next-error))
+(with-eval-after-load "auto-complete" (ac-flyspell-workaround))
+
+;; Org
+(defconst jd-default-notes-file "~/Documents/todo.org")
+(defconst jd-diary-file "~/Documents/diary.org")
+
+(require-package 'org-plus-contrib)
+(global-set-key (kbd "C-c l") #'org-store-link)
+(global-set-key (kbd "C-c c") #'org-capture)
+(global-set-key (kbd "C-c a") #'org-agenda)
+(add-hook 'org-mode-hook #'turn-on-visual-line-mode)
+(add-hook 'org-mode-hook #'turn-on-flyspell)
+
+;; Auctex
+(require-package 'auctex)
+(require-package 'auctex-latexmk)
+(auctex-latexmk-setup)
+
+(add-hook 'LaTeX-mode-hook
+          (lambda ()
+            (visual-line-mode 1)
+            (LaTeX-math-mode 1)
+            (reftex-mode 1)))
 
 ;; Other modes
 (require-package 'cmake-mode)
 (require-package 'cuda-mode)
 (require-package 'rust-mode)
 
+;; Conf mode for .job files
+(add-to-list 'auto-mode-alist '("\\.job\\'" . conf-mode))
+
+;; c-mode for okl
+(add-to-list 'auto-mode-alist '("\\.okl\\'" . c-mode))
+
 ;; Fancy titlebar for MacOS
-(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-(add-to-list 'default-frame-alist '(ns-appearance . dark))
+;; (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+;; (add-to-list 'default-frame-alist '(ns-appearance . dark))
 (add-hook 'after-init-hook
           (lambda ()
             (setq frame-title-format
@@ -228,7 +233,7 @@
  '(custom-enabled-themes (quote (zenburn)))
  '(custom-safe-themes
    (quote
-    ("bfdcbf0d33f3376a956707e746d10f3ef2d8d9caa1c214361c9c08f00a1c8409" default)))
+    ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "bfdcbf0d33f3376a956707e746d10f3ef2d8d9caa1c214361c9c08f00a1c8409" default)))
  '(delete-by-moving-to-trash t)
  '(delete-old-versions t)
  '(ediff-cmp-options (quote ("-w")))
@@ -284,14 +289,20 @@ DEADLINE: %t"))))
  '(org-default-notes-file jd-default-notes-file)
  '(org-directory "~/org/")
  '(org-log-done (quote time))
+ '(package-selected-packages
+   (quote
+    (zenburn-theme web-mode solarized-theme rust-mode projectile org-plus-contrib olivetti modern-cpp-font-lock markdown-mode magit ibuffer-vc ibuffer-tramp hl-todo cuda-mode cmake-mode auctex-latexmk)))
+ '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(recentf-max-menu-items 25)
  '(recentf-mode t)
+ '(remote-file-name-inhibit-cache 3600)
  '(savehist-mode t)
  '(scroll-bar-mode nil)
  '(sentence-end-double-space nil)
  '(set-mark-command-repeat-pop t)
  '(show-paren-mode t)
  '(tool-bar-mode nil)
+ '(tramp-completion-reread-directory-timeout 3600 nil (tramp))
  '(use-dialog-box nil)
  '(use-file-dialog nil)
  '(version-control t)
