@@ -38,7 +38,7 @@
 (require-package 'ibuffer-tramp)
 (require-package 'ibuffer-vc)
 
-(with-eval-after-load "ibuffer"
+(with-eval-after-load 'ibuffer
   (define-key ibuffer-mode-map (kbd "s r") #'ibuffer-tramp-set-filter-groups-by-tramp-connection)
   (define-key ibuffer-mode-map (kbd "s g") #'ibuffer-vc-set-filter-groups-by-vc-root)
   (add-hook 'ibuffer-hook
@@ -65,6 +65,10 @@
 ;; Recentf
 (global-set-key (kbd "C-M-r") #'recentf-open-files)
 
+;; Dired
+(setq ls-lisp-use-insert-directory-program nil)
+(require 'ls-lisp)
+
 (add-hook 'dired-mode-hook #'dired-hide-details-mode)
 (global-set-key (kbd "C-x C-j") #'dired-jump)
 (global-set-key (kbd "C-x 4 C-j") #'dired-jump-other-window)
@@ -75,7 +79,7 @@
 (autoload #'dired-jump-other-window "dired-x"
   "Like \\[dired-jump] (dired-jump) but in other window." t)
 
-(with-eval-after-load "dired"
+(with-eval-after-load 'dired
   (define-key dired-mode-map "b" #'dired-open-file)
   (define-key dired-mode-map "c" #'dired-open-fm)
   (define-key dired-mode-map "Q" #'dired-do-query-replace-regexp))
@@ -116,8 +120,10 @@
 (require-package 'modern-cpp-font-lock)
 (add-hook 'c++-mode-hook #'modern-c++-font-lock-mode)
 
-;; Dont indent namespaces by default
-(c-set-offset 'innamespace 0)
+(c-add-style "mybsd" '("bsd"
+                       (c-offsets-alist
+                        (inlambda . 0) ; no extra indent for lambda
+                        (innamespace . 0)))) ; no indent for namespaces
 
 ;; Source: http://endlessparentheses.com/the-toggle-map-and-wizardry.html
 (define-prefix-command 'jd/toggle-map)
@@ -153,9 +159,9 @@
 ;; Spelling
 (require 'flyspell)
 (add-hook 'text-mode-hook #'turn-on-flyspell)
-(with-eval-after-load "flyspell"
+(with-eval-after-load 'flyspell
   (define-key flyspell-mode-map (kbd "<C-f12>") #'flyspell-goto-next-error))
-(with-eval-after-load "auto-complete" (ac-flyspell-workaround))
+(with-eval-after-load 'auto-complete (ac-flyspell-workaround))
 
 ;; Org
 (defconst jd-default-notes-file "~/Documents/todo.org")
@@ -222,7 +228,7 @@
    (quote
     ((java-mode . "java")
      (awk-mode . "awk")
-     (other . "bsd"))))
+     (other . "mybsd"))))
  '(column-number-mode t)
  '(comint-input-ignoredups t)
  '(comint-prompt-read-only t)
