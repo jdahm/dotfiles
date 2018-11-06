@@ -10,6 +10,7 @@
 ;;   * sjrmanning/.emacs.d
 ;;   * magnars/.emacs.d
 ;;   * muahah/emacs-profile
+;;   * bbatsov/emacs.d
 ;;
 ;;; Code:
 
@@ -20,7 +21,7 @@
 (require 'package)
 (let* ((ssl (gnutls-available-p))
        (proto (if ssl "https://" "http://")))
-  (add-to-list 'package-archives (cons "melpa-stable" (concat proto "stable.melpa.org/packages/")) t))
+  (add-to-list 'package-archives (cons "melpa" (concat proto "melpa.org/packages/")) t))
 (package-initialize)
 
 ;; Load lisp from here
@@ -55,6 +56,9 @@
 ;; Editing
 (global-set-key (kbd "M-Q") #'unfill-paragraph)
 
+;; delete the selection with a keypress
+(delete-selection-mode t)
+
 ;; This overwrites `comment-set-column', but that is rarely used and
 ;; the default binding for comment-line is not terminal-friendly.
 (global-set-key (kbd "C-x ;") #'comment-line)
@@ -86,6 +90,13 @@
 
 ;; Shell
 (add-hook 'shell-mode-hook #'ansi-color-for-comint-mode-on)
+
+;; Completion
+(require-package 'company)
+(add-hook 'after-init-hook 'global-company-mode)
+(with-eval-after-load 'company
+  (define-key company-active-map (kbd "C-n") #'company-select-next)
+  (define-key company-active-map (kbd "C-p") #'company-select-previous))
 
 ;; Text and Web
 (require-package 'olivetti)
@@ -167,7 +178,6 @@
 (defconst jd-default-notes-file "~/Documents/todo.org")
 (defconst jd-diary-file "~/Documents/diary.org")
 
-(require-package 'org-plus-contrib)
 (global-set-key (kbd "C-c l") #'org-store-link)
 (global-set-key (kbd "C-c c") #'org-capture)
 (global-set-key (kbd "C-c a") #'org-agenda)
@@ -184,6 +194,15 @@
             (visual-line-mode 1)
             (LaTeX-math-mode 1)
             (reftex-mode 1)))
+
+;; Theme
+
+;; set some options before loading
+(setq zenburn-use-variable-pitch t)
+(setq zenburn-scale-org-headlines t)
+(setq zenburn-scale-outline-headlines t)
+
+(require-package 'zenburn-theme)
 
 ;; Other modes
 (require-package 'cmake-mode)
@@ -239,7 +258,7 @@
  '(custom-enabled-themes (quote (zenburn)))
  '(custom-safe-themes
    (quote
-    ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "bfdcbf0d33f3376a956707e746d10f3ef2d8d9caa1c214361c9c08f00a1c8409" default)))
+    ("ec5f697561eaf87b1d3b087dd28e61a2fc9860e4c862ea8e6b0b77bd4967d0ba" default)))
  '(delete-by-moving-to-trash t)
  '(delete-old-versions t)
  '(ediff-cmp-options (quote ("-w")))
@@ -297,7 +316,7 @@ DEADLINE: %t"))))
  '(org-log-done (quote time))
  '(package-selected-packages
    (quote
-    (zenburn-theme web-mode solarized-theme rust-mode projectile org-plus-contrib olivetti modern-cpp-font-lock markdown-mode magit ibuffer-vc ibuffer-tramp hl-todo cuda-mode cmake-mode auctex-latexmk)))
+    (company zenburn-theme web-mode rust-mode olivetti modern-cpp-font-lock markdown-mode magit ibuffer-vc ibuffer-tramp hl-todo cuda-mode cmake-mode auctex-latexmk)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(recentf-max-menu-items 25)
  '(recentf-mode t)
