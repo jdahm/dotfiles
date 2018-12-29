@@ -2,43 +2,196 @@
 	excludesfile = ~/.config/git/ignore
 	whitespace = trailing-space,space-before-tab
 [color]
-	ui = true
+	ui = auto
 [alias]
-	# Most of these from: http://durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples/
-	cp = cherry-pick
-	br = branch
-	co = checkout
-	ci = commit
-	st = status -s
+	a = add --all
+	ai = add -i
+	#############
+	ap = apply
+	as = apply --stat
+	ac = apply --check
+	#############
+	ama = am --abort
+	amr = am --resolved
+	ams = am --skip
+	#############
+	b = branch
+	ba = branch -a
+	bd = branch -d
+	bdd = branch -D
+	br = branch -r
+	bc = rev-parse --abbrev-ref HEAD
+	bu = !git rev-parse --abbrev-ref --symbolic-full-name "@{u}"
+	#############
+	c = commit
+	ca = commit -a
+	cm = commit -m
+	cam = commit -am
+	cem = commit --allow-empty -m
+	cd = commit --amend
+	cad = commit -a --amend
+	ced = commit --allow-empty --amend
+	#############
 	cl = clone
-	oops = commit --all --amend
-	logtree = log --graph --oneline --decorate --all
-	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
-	lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
-	lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
-	dl = "!git ll -1"
-	dlc = diff --cached HEAD^
+	cld = clone --depth 1
+	clg = !sh -c 'git clone git://github.com/$1 $(basename $1)' -
+	clgp = !sh -c 'git clone git@github.com:$(git config --get user.username)/$1 $1' -
+	#############
+	cp = cherry-pick
+	cpa = cherry-pick --abort
+	cpc = cherry-pick --continue
+	#############
+	d = diff
+	dp = diff --patience
 	dc = diff --cached
-	r = reset
-	r1 = reset HEAD^
-	r2 = reset HEAD^^
-	rh = reset --hard
-	rh1 = reset HEAD^ --hard
-	rh2 = reset HEAD^^ --hard
-	sl = stash list
+	dk = diff --check
+	dck = diff --cached --check
+	dt = difftool
+	dct = difftool --cached
+	#############
+	f = fetch
+	fo = fetch origin
+	fu = fetch upstream
+	#############
+	fp = format-patch
+	#############
+	fk = fsck
+	#############
+	g = grep -p
+	#############
+	l = log --oneline
+	lg = log --oneline --graph --decorate
+	#############
+	ls = ls-files
+	lsf = !git ls-files | grep -i
+	#############
+	m = merge
+	ma = merge --abort
+	mc = merge --continue
+	ms = merge --skip
+	#############
+	o = checkout
+	ob = checkout -b
+	#############
+	pr = prune -v
+	#############
+	ps = push
+	psf = push -f
+	psu = push -u
+	pst = push --tags
+	#############
+	pso = push origin
+	psao = push --all origin
+	psfo = push -f origin
+	psuo = push -u origin
+	#############
+	psom = push origin master
+	psaom = push --all origin master
+	psfom = push -f origin master
+	psuom = push -u origin master
+	psoc = !git push origin $(git bc)
+	psaoc = !git push --all origin $(git bc)
+	psfoc = !git push -f origin $(git bc)
+	psuoc = !git push -u origin $(git bc)
+	psdc = !git push origin :$(git bc)
+	#############
+	pl = pull
+	pb = pull --rebase
+	#############
+	plo = pull origin
+	pbo = pull --rebase origin
+	plom = pull origin master
+	ploc = !git pull origin $(git bc)
+	pbom = pull --rebase origin master
+	pboc = !git pull --rebase origin $(git bc)
+	#############
+	plu = pull upstream
+	plum = pull upstream master
+	pluc = !git pull upstream $(git bc)
+	pbum = pull --rebase upstream master
+	pbuc = !git pull --rebase upstream $(git bc)
+	#############
+	rb = rebase
+	rba = rebase --abort
+	rbc = rebase --continue
+	rbi = rebase --interactive
+	rbs = rebase --skip
+	#############
+	re = reset
+	rh = reset HEAD
+	reh = reset --hard
+	rem = reset --mixed
+	res = reset --soft
+	rehh = reset --hard HEAD
+	remh = reset --mixed HEAD
+	resh = reset --soft HEAD
+	#############
+	r = remote
+	ra = remote add
+	rr = remote rm
+	rv = remote -v
+	rn = remote rename
+	rp = remote prune
+	rs = remote show
+	rao = remote add origin
+	rau = remote add upstream
+	rro = remote remove origin
+	rru = remote remove upstream
+	rso = remote show origin
+	rsu = remote show upstream
+	rpo = remote prune origin
+	rpu = remote prune upstream
+	#############
+	rmf = rm -f
+	rmrf = rm -r -f
+	#############
+	s = status
+	sb = status -s -b
+	#############
 	sa = stash apply
+	sc = stash clear
+	sd = stash drop
+	sl = stash list
+	sp = stash pop
 	ss = stash save
-	lasttag = describe --tags --abbrev=0
-	stash-rename = "!_() { rev=$(git rev-parse $1) && git stash drop $1 || exit 1 ; git diff-index --quiet HEAD; s=$?; [ $s != 0 ] && git stash save \"tmp stash from stash-rename\"; git stash apply $rev && shift && git stash save \"$@\" && [ $s != 0 ] && git stash pop stash@{1}; }; _"
-	compare = log --left-right --graph --cherry-pick --oneline[apply]
-	whitespace = fix
+	ssk = stash save -k
+	sw = stash show
+	st = !git stash list | wc -l 2>/dev/null | grep -oEi '[0-9][0-9]*'
+	#############
+	t = tag
+	td = tag -d
+	#############
+	w = show
+	wp = show -p
+	wr = show -p --no-color
+	#############
+	assume = update-index --assume-unchanged
+	unassume = update-index --no-assume-unchanged
+	assumed = !git ls -v | grep ^h | cut -c 3-
+	unassumeall = !git assumed | xargs git unassume
+	assumeall = !git status -s | awk {'print $2'} | xargs git assume
+	#############
+	bump = !sh -c 'git commit -am \"Version bump v$1\" && git psuoc && git release $1' -
+	release = !sh -c 'git tag v$1 && git pst' -
+	unrelease = !sh -c 'git tag -d v$1 && git pso :v$1' -
+	merged = !sh -c 'git o master && git plom && git bd $1 && git rpo' -
+	aliases = !git config -l | grep alias | cut -c 7-
+	snap = !git stash save 'snapshot: $(date)' && git stash apply 'stash@{0}'
+	bare = !sh -c 'git symbolic-ref HEAD refs/heads/$1 && git rm --cached -r . && git clean -xfd' -
+	whois = !sh -c 'git log -i -1 --author=\"$1\" --pretty=\"format:%an <%ae>\"' -
+	serve = daemon --reuseaddr --verbose --base-path=. --export-all ./.git
+	#############
+	behind = !git rev-list --left-only --count $(git bu)...HEAD
+	ahead = !git rev-list --right-only --count $(git bu)...HEAD
+	#############
+	ours = "!f() { git checkout --ours $@ && git add $@; }; f"
+	theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"
+	subrepo = !sh -c 'git filter-branch --prune-empty --subdirectory-filter $1 master' -
+	human = name-rev --name-only --refs=refs/heads/*
+	#############
+	hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
 [include]
 	path = ~/.config/git/identity
 	path = ~/.config/git/config
 [push]
 	default = current
-[filter "lfs"]
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
