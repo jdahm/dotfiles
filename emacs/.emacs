@@ -22,7 +22,7 @@
 (let* ((ssl (gnutls-available-p))
        (proto (if ssl "https://" "http://")))
   (add-to-list 'package-archives (cons "melpa" (concat proto "melpa.org/packages/")) t))
-(package-initialize)
+(unless package--initialized (package-initialize t))
 
 ;; Load lisp from here
 (add-to-list 'load-path lisp-d)
@@ -236,39 +236,36 @@
  ;; If there is more than one, they won't work right.
  '(TeX-PDF-mode t)
  '(TeX-auto-save nil)
- '(TeX-engine (quote luatex))
+ '(TeX-engine 'luatex)
  '(TeX-parse-self t)
  '(backup-by-copying t)
- '(backup-directory-alist (\` (("." \, backup-d))))
+ '(backup-directory-alist `(("." \, backup-d)))
  '(blink-cursor-mode nil)
  '(bury-successful-compilation-precompile-window-state t)
  '(bury-successful-compilation-save-windows t)
  '(c-default-style
-   (quote
-    ((java-mode . "java")
+   '((java-mode . "java")
      (awk-mode . "awk")
-     (other . "mybsd"))))
+     (other . "mybsd")))
  '(column-number-mode t)
  '(comint-input-ignoredups t)
  '(comint-prompt-read-only t)
  '(comint-scroll-show-maximum-output nil)
- '(comint-scroll-to-bottom-on-input (quote all))
- '(compilation-message-face (quote default))
- '(compilation-scroll-output (quote first-error))
- '(custom-enabled-themes (quote (zenburn)))
+ '(comint-scroll-to-bottom-on-input 'all)
+ '(compilation-message-face 'default)
+ '(compilation-scroll-output 'first-error)
+ '(custom-enabled-themes '(zenburn))
  '(custom-safe-themes
-   (quote
-    ("ec5f697561eaf87b1d3b087dd28e61a2fc9860e4c862ea8e6b0b77bd4967d0ba" default)))
+   '("ec5f697561eaf87b1d3b087dd28e61a2fc9860e4c862ea8e6b0b77bd4967d0ba" default))
  '(delete-by-moving-to-trash t)
  '(delete-old-versions t)
- '(ediff-cmp-options (quote ("-w")))
- '(ediff-split-window-function (quote split-window-horizontally))
- '(ediff-window-setup-function (quote ediff-setup-windows-plain))
+ '(ediff-cmp-options '("-w"))
+ '(ediff-split-window-function 'split-window-horizontally)
+ '(ediff-window-setup-function 'ediff-setup-windows-plain)
  '(enable-remote-dir-locals t)
  '(ibuffer-saved-filter-groups nil)
  '(ibuffer-saved-filters
-   (quote
-    (("only-files"
+   '(("only-files"
       ((not mode . dired-mode)
        (name . "^[^*]")))
      ("gnus"
@@ -285,7 +282,7 @@
         (mode . c-mode)
         (mode . java-mode)
         (mode . idl-mode)
-        (mode . lisp-mode)))))))
+        (mode . lisp-mode))))))
  '(ibuffer-use-other-window t)
  '(indent-tabs-mode nil)
  '(initial-scratch-message "")
@@ -293,8 +290,7 @@
  '(midnight-mode t)
  '(org-agenda-files jd-default-notes-file)
  '(org-capture-templates
-   (quote
-    (("t" "Todo" entry
+   '(("t" "Todo" entry
       (file org-default-notes-file)
       "* TODO %?\\n%u\\n%a\\n")
      ("m" "Meeting" entry
@@ -309,15 +305,13 @@
      ("n" "Next Task" entry
       (file+headline org-default-notes-file "Tasks")
       "** NEXT %?
-DEADLINE: %t"))))
+DEADLINE: %t")))
  '(org-clock-idle-time 45)
  '(org-default-notes-file jd-default-notes-file)
  '(org-directory "~/org/")
- '(org-log-done (quote time))
+ '(org-log-done 'time)
  '(package-selected-packages
-   (quote
-    (company zenburn-theme web-mode rust-mode olivetti modern-cpp-font-lock markdown-mode magit ibuffer-vc ibuffer-tramp hl-todo cuda-mode cmake-mode auctex-latexmk)))
- '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
+   '(company zenburn-theme web-mode rust-mode olivetti modern-cpp-font-lock markdown-mode magit ibuffer-vc ibuffer-tramp hl-todo cuda-mode cmake-mode auctex-latexmk))
  '(recentf-max-menu-items 25)
  '(recentf-mode t)
  '(remote-file-name-inhibit-cache 3600)
@@ -338,4 +332,4 @@ DEADLINE: %t"))))
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:height 140 :family "Ubuntu Mono"))))
- '(variable-pitch ((t (:family "ETBembo")))))
+ '(variable-pitch ((t (:family "Ubuntu")))))
