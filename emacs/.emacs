@@ -55,6 +55,12 @@
 ;; Editing
 (global-set-key (kbd "M-Q") #'unfill-paragraph)
 
+(require-package 'emojify)
+(add-hook 'after-init-hook #'global-emojify-mode)
+
+(require-package 'bool-flip)
+(global-set-key (kbd "C-c b") #'bool-flip-do-flip)
+
 ;; delete the selection with a keypress
 (delete-selection-mode t)
 
@@ -108,6 +114,7 @@
   (add-to-list 'auto-mode-alist item))
 
 (require-package 'web-mode)
+(require-package 'ssass-mode)
 (dolist (item '(("\\.html?\\'" . web-mode)
                 ("\\.css?\\'" . web-mode)))
   (add-to-list 'auto-mode-alist item))
@@ -201,6 +208,7 @@
 (require-package 'cmake-mode)
 (require-package 'cuda-mode)
 (require-package 'rust-mode)
+(require-package 'dockerfile-mode)
 
 ;; Conf mode for .job files
 (add-to-list 'auto-mode-alist '("\\.job\\'" . conf-mode))
@@ -249,13 +257,13 @@
  '(comint-scroll-to-bottom-on-input (quote all))
  '(company-backends
    (quote
-    (company-capf company-dabbrev-code company-files company-gtags company-etags company-abbrev company-dabbrev)))
+    (company-capf company-dabbrev-code company-abbrev company-etags company-dabbrev)))
  '(compilation-message-face (quote default))
  '(compilation-scroll-output (quote first-error))
  '(custom-enabled-themes (quote (almost-default)))
  '(custom-safe-themes
    (quote
-    ("465f7909814452b8add2c4ceeeb3d1553418f09d5b4e257e7be2409f368fe7c6" default)))
+    ("044e80d4652639bbec2845cdb8faf4c3109088d3b3c2cd2d0c674b294ca1f5b7" "7a3ac2725eca1c5223d8d7805686a815fb3148a708733f0e3caf1c7d34f086e1" "fd5aa9b38906f32d4d6ef1eb28405b0b9e216b1776ea92c8ccec46579280e693" "ffbd113fc3af8af1726448f1a154a021e1e41ab090824d3124092a05001f5a9c" "d848e882dcb412d14e6e9bafc43627604a95c8d7826e3d5e15674465fedb3712" "3556543ddcfb02aa200e68e429f9fc73c4b5e53d065a096c0bb6e76038d3c054" "e13d11cbfecb15c96c203e920c794861a6e9494ab6f27d2c6e44af96b65451f0" "4a0a358ff055f36750189f24e612598a4d7be5c7481a19c0d09cff7ae3719bd4" "465f7909814452b8add2c4ceeeb3d1553418f09d5b4e257e7be2409f368fe7c6" default)))
  '(custom-theme-directory themes-d)
  '(delete-by-moving-to-trash t)
  '(delete-old-versions t)
@@ -306,10 +314,11 @@
  '(org-log-done (quote time))
  '(package-selected-packages
    (quote
-    (rust-mode cuda-mode cmake-mode auctex-latexmk auctex modern-cpp-font-lock magit hl-todo web-mode markdown-mode olivetti company ibuffer-vc ibuffer-tramp)))
+    (bool-flip ssass-mode dockerfile-mode emojify rust-mode cuda-mode cmake-mode auctex-latexmk auctex modern-cpp-font-lock magit hl-todo web-mode markdown-mode olivetti company ibuffer-vc ibuffer-tramp)))
  '(recentf-max-menu-items 25)
  '(recentf-mode t)
  '(remote-file-name-inhibit-cache 3600)
+ '(ring-bell-function (quote ignore))
  '(savehist-mode t)
  '(scroll-bar-mode nil)
  '(sentence-end-double-space nil)
@@ -317,10 +326,11 @@
  '(show-paren-mode t)
  '(tool-bar-mode nil)
  '(tramp-completion-reread-directory-timeout 3600 nil (tramp))
+ '(tramp-connection-timeout 5 nil (tramp))
  '(use-dialog-box nil)
  '(use-file-dialog nil)
  '(version-control t)
- '(visible-bell t)
+ '(visible-bell nil)
  '(winner-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
