@@ -1,11 +1,11 @@
 (deftheme almost-default
-  "Created 2019-02-15.")
+  "Default theme with a few customizations.")
 
 (custom-theme-set-faces
  'almost-default
  '(cursor ((t (:background "black"))))
  '(fixed-pitch ((t (:family "Monospace"))))
- '(variable-pitch ((((type w32)) (:foundry "outline" :family "Arial")) (t (:family "Sans Serif"))))
+ '(variable-pitch ((t (:family "ETBembo"))))
  '(escape-glyph ((((background dark)) (:foreground "cyan")) (((type pc)) (:foreground "magenta")) (t (:foreground "brown"))))
  '(homoglyph ((((background dark)) (:foreground "cyan")) (((type pc)) (:foreground "magenta")) (t (:foreground "brown"))))
  '(minibuffer-prompt ((((background dark)) (:foreground "cyan")) (((type pc)) (:foreground "magenta")) (t (:foreground "medium blue"))))

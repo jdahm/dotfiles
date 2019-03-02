@@ -202,7 +202,12 @@
             (LaTeX-math-mode 1)
             (reftex-mode 1)))
 
-;; Theme
+;; Feed Reader
+(let ((feeds-file "~/feeds.el"))
+  (when (file-exists-p feeds-file)
+    (require-package 'elfeed)
+    (load-file feeds-file)
+    (global-set-key (kbd "C-x w") 'elfeed)))
 
 ;; Other modes
 (require-package 'cmake-mode)
@@ -263,7 +268,7 @@
  '(custom-enabled-themes (quote (almost-default)))
  '(custom-safe-themes
    (quote
-    ("044e80d4652639bbec2845cdb8faf4c3109088d3b3c2cd2d0c674b294ca1f5b7" "7a3ac2725eca1c5223d8d7805686a815fb3148a708733f0e3caf1c7d34f086e1" "fd5aa9b38906f32d4d6ef1eb28405b0b9e216b1776ea92c8ccec46579280e693" "ffbd113fc3af8af1726448f1a154a021e1e41ab090824d3124092a05001f5a9c" "d848e882dcb412d14e6e9bafc43627604a95c8d7826e3d5e15674465fedb3712" "3556543ddcfb02aa200e68e429f9fc73c4b5e53d065a096c0bb6e76038d3c054" "e13d11cbfecb15c96c203e920c794861a6e9494ab6f27d2c6e44af96b65451f0" "4a0a358ff055f36750189f24e612598a4d7be5c7481a19c0d09cff7ae3719bd4" "465f7909814452b8add2c4ceeeb3d1553418f09d5b4e257e7be2409f368fe7c6" default)))
+    ("5ecf30f9c9b39545b62b5e478bbd5bcc9025af04b83e3499d647c2af0e27c860" default)))
  '(custom-theme-directory themes-d)
  '(delete-by-moving-to-trash t)
  '(delete-old-versions t)
@@ -314,7 +319,7 @@
  '(org-log-done (quote time))
  '(package-selected-packages
    (quote
-    (bool-flip ssass-mode dockerfile-mode emojify rust-mode cuda-mode cmake-mode auctex-latexmk auctex modern-cpp-font-lock magit hl-todo web-mode markdown-mode olivetti company ibuffer-vc ibuffer-tramp)))
+    (elfeed bool-flip ssass-mode dockerfile-mode emojify rust-mode cuda-mode cmake-mode auctex-latexmk auctex modern-cpp-font-lock magit hl-todo web-mode markdown-mode olivetti company ibuffer-vc ibuffer-tramp)))
  '(recentf-max-menu-items 25)
  '(recentf-mode t)
  '(remote-file-name-inhibit-cache 3600)
