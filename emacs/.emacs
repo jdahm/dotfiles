@@ -107,7 +107,6 @@
 (require-package 'olivetti)
 
 (require-package 'markdown-mode)
-(setq markdown-command "multimarkdown")
 (dolist (item '(("README\\.md\\'" . gfm-mode)
                 ("\\.md\\'" . markdown-mode)
                 ("\\.markdown\\'" . markdown-mode)))
@@ -231,6 +230,22 @@
                     "%f"
                     (dired-directory dired-directory "%b")))))
 
+;; Themes
+
+(require-package 'zenburn-theme)
+
+;; use variable-pitch fonts for some headings and titles
+(setq zenburn-use-variable-pitch t)
+;; scale headings in org-mode
+(setq zenburn-scale-org-headlines t)
+;; scale headings in outline-mode
+(setq zenburn-scale-outline-headlines t)
+
+(require-package 'nord-theme)
+
+;; readable comments
+(setq nord-comment-brightness 20)
+
 ;; Enable disabled functions
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
@@ -244,6 +259,7 @@
  '(TeX-auto-save nil)
  '(TeX-engine (quote luatex))
  '(TeX-parse-self t)
+ '(auto-revert-buffer-list-filter (quote magit-auto-revert-repository-buffer-p))
  '(backup-by-copying t)
  '(backup-directory-alist (\` (("." \, backup-d))))
  '(beginend-global-mode t)
@@ -265,10 +281,10 @@
     (company-capf company-dabbrev-code company-abbrev company-etags company-dabbrev)))
  '(compilation-message-face (quote default))
  '(compilation-scroll-output (quote first-error))
- '(custom-enabled-themes (quote (almost-default)))
+ '(custom-enabled-themes (quote (zenburn)))
  '(custom-safe-themes
    (quote
-    ("5ecf30f9c9b39545b62b5e478bbd5bcc9025af04b83e3499d647c2af0e27c860" default)))
+    ("04232a0bfc50eac64c12471607090ecac9d7fd2d79e388f8543d1c5439ed81f5" "bf390ecb203806cbe351b966a88fc3036f3ff68cd2547db6ee3676e87327b311" "5ecf30f9c9b39545b62b5e478bbd5bcc9025af04b83e3499d647c2af0e27c860" default)))
  '(custom-theme-directory themes-d)
  '(delete-by-moving-to-trash t)
  '(delete-old-versions t)
@@ -301,6 +317,7 @@
  '(indent-tabs-mode nil)
  '(initial-scratch-message "")
  '(ispell-program-name "/usr/local/bin/aspell")
+ '(markdown-command "multimarkdown")
  '(midnight-mode t)
  '(org-agenda-files jd-default-notes-file)
  '(org-capture-templates
