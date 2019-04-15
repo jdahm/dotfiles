@@ -161,7 +161,14 @@
 (define-key jd/toggle-map "|" #'toggle-window-split)
 
 ;; Whitespace
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(defvar jdahm/inhibit-dtw nil)
+(defun jdahm/delete-trailing-whitespace ()
+  (unless my-inhibit-dtw (delete-trailing-whitespace)))
+(add-hook 'before-save-hook #'jdahm/delete-trailing-whitespace)
+
+(defun jdahm/inhibit-dtw ()
+  (interactive)
+  (set (make-local-variable 'jdahm/inhibit-dtw) t))
 
 ;; Tramp ssh control is correctly setup in ~/.ssh/config
 ;; Source: https://lists.gnu.org/archive/html/help-gnu-emacs/2013-04/msg00323.html
