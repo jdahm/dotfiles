@@ -18,16 +18,61 @@
 (defconst backup-d (expand-file-name "backups/" user-emacs-directory))
 (defconst themes-d (expand-file-name "themes/" user-emacs-directory))
 
+;; -------------------- Package.el --------------------
+;; Prefer newer versions of files
+(setq load-prefer-newer t)
+
 ;; Set package archives and initialize
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(dolist (source '(("org" . "https://orgmode.org/elpa/")
+                  ("melpa" . "https://melpa.org/packages/")
+                  ))
+  (add-to-list 'package-archives source t))
+
 (unless package--initialized (package-initialize))
+
+(defun require-package (package)
+  "Install given PACKAGE."
+  (unless (package-installed-p package)
+    (unless (assoc package package-archive-contents)
+      (package-refresh-contents))
+    (package-install package)))
 
 ;; Load lisp from here
 (add-to-list 'load-path lisp-d)
 
-;; Some extra functions
-(require 'jd-extra)
+;; -------------------- Buffer Management --------------------
+(defun create-scratch-buffer nil
+  "create a scratch buffer."
+  (interactive)
+  (switch-to-buffer (get-buffer-create "*scratch*"))
+  (lisp-interaction-mode))
+
+(defun toggle-window-split ()
+  "Toggle between horizontal and vertical splits."
+  (interactive)
+  (if (= (count-windows) 2)
+      (let* ((this-win-buffer (window-buffer))
+	     (next-win-buffer (window-buffer (next-window)))
+	     (this-win-edges (window-edges (selected-window)))
+	     (next-win-edges (window-edges (next-window)))
+	     (this-win-2nd (not (and (<= (car this-win-edges)
+					 (car next-win-edges))
+				     (<= (cadr this-win-edges)
+					 (cadr next-win-edges)))))
+	     (splitter
+	      (if (= (car this-win-edges)
+		     (car (window-edges (next-window))))
+		  'split-window-horizontally
+		'split-window-vertically)))
+	(delete-other-windows)
+	(let ((first-win (selected-window)))
+	  (funcall splitter)
+	  (if this-win-2nd (other-window 1))
+	  (set-window-buffer (selected-window) this-win-buffer)
+	  (set-window-buffer (next-window) next-win-buffer)
+	  (select-window first-win)
+	  (if this-win-2nd (other-window 1))))))
 
 ;; Complement to C-x o
 (global-set-key (kbd "C-x p") (lambda () (interactive) (other-window -1)))
@@ -48,11 +93,31 @@
                 ;; (ibuffer-do-sort-by-alphabetic))))
                 (ibuffer-do-sort-by-vc-status)))))
 
+;; -------------------- Editing Commands --------------------
 (global-set-key (kbd "C-x C-a") #'align-regexp)
-(global-set-key (kbd "C-M-\\") #'tidy-region-or-buffer)
-(global-set-key (kbd "C-c s") #'eshell)
 
-;; Editing
+(defun tidy-region-or-buffer ()
+  "Indent a region if selected, otherwise the whole buffer."
+  (interactive)
+    (if (region-active-p)
+        (progn
+	  (delete-trailing-whitespace (region-beginning) (region-end))
+          (indent-region (region-beginning) (region-end) nil)
+	  (untabify (point-min) (point-max)))
+      (progn
+	(delete-trailing-whitespace)
+	(indent-region (point-min) (point-max) nil)
+	(untabify (point-min) (point-max)))))
+(global-set-key (kbd "C-M-\\") #'tidy-region-or-buffer)
+
+;; Stefan Monnier <foo at acm.org>. Opposite of `fill-paragraph'
+(defun unfill-paragraph (&optional region)
+  "Takes a multi-line paragraph and makes it into a single line of text."
+  (interactive (progn (barf-if-buffer-read-only) '(t)))
+  (let ((fill-column (point-max))
+	;; This would override `fill-column' if it's an integer.
+	(emacs-lisp-docstring-fill-column t))
+    (fill-paragraph nil region)))
 (global-set-key (kbd "M-Q") #'unfill-paragraph)
 
 (require-package 'emojify)
@@ -61,7 +126,7 @@
 (require-package 'bool-flip)
 (global-set-key (kbd "C-c b") #'bool-flip-do-flip)
 
-;; delete the selection with a keypress
+;; delete the active region with DEL
 (delete-selection-mode t)
 
 ;; This overwrites `comment-set-column', but that is rarely used and
@@ -74,7 +139,52 @@
 ;; Recentf
 (global-set-key (kbd "C-M-r") #'recentf-open-files)
 
-;; Dired
+;; -------------------- Text --------------------
+(require-package 'markdown-mode)
+(dolist (item '(("README\\.md\\'" . gfm-mode)
+                ("\\.md\\'" . markdown-mode)
+                ("\\.markdown\\'" . markdown-mode)))
+  (add-to-list 'auto-mode-alist item))
+
+;; Spelling
+(require 'flyspell)
+(add-hook 'text-mode-hook #'turn-on-flyspell)
+
+(with-eval-after-load 'flyspell
+  (define-key flyspell-mode-map (kbd "<C-f12>") #'flyspell-goto-next-error))
+
+(with-eval-after-load 'auto-complete (ac-flyspell-workaround))
+
+;; Conf mode for .job files
+(add-to-list 'auto-mode-alist '("\\.job\\'" . conf-mode))
+
+;; -------------------- Programming --------------------
+;; Completion
+(require-package 'company)
+(add-hook 'after-init-hook 'global-company-mode)
+(with-eval-after-load 'company
+  (define-key company-active-map (kbd "C-n") #'company-select-next)
+  (define-key company-active-map (kbd "C-p") #'company-select-previous))
+
+;; Compile
+(global-set-key (kbd "C-c m") #'compile)
+
+;; Programming mode mappings
+(define-key prog-mode-map (kbd "M-`") #'imenu)
+(define-key prog-mode-map (kbd "M-o") #'ff-find-other-file)
+
+;; Whitespace
+(defvar jdahm/inhibit-dtw nil)
+(defun jdahm/delete-trailing-whitespace ()
+  (unless jdahm/inhibit-dtw (delete-trailing-whitespace)))
+(add-hook 'before-save-hook #'jdahm/delete-trailing-whitespace)
+
+(defun jdahm/inhibit-dtw ()
+  (interactive)
+  (set (make-local-variable 'jdahm/inhibit-dtw) t))
+
+;; -------------------- Dired --------------------
+;; Use a replacement ls
 (setq ls-lisp-use-insert-directory-program nil)
 (require 'ls-lisp)
 
@@ -88,52 +198,61 @@
 (autoload #'dired-jump-other-window "dired-x"
   "Like \\[dired-jump] (dired-jump) but in other window." t)
 
+;; vim-style increment/decrement numbers
+;; Source: https://gist.github.com/d11wtq/5836174
+(defun inc-number-at-point (n)
+  "Increment the number under the point, if present.
+Called with a prefix argument, changes the number by N."
+  (interactive "p")
+  (let ((amt (or n 1))
+        (word (thing-at-point 'word))
+        (bounds (bounds-of-thing-at-point 'word)))
+    (when (string-match "^[0-9]+$" word)
+      (replace-string word
+                      (format "%d" (+ amt (string-to-int word)))
+                      nil (car bounds) (cdr bounds))
+      (forward-char -1))))
+
+(defun dec-number-at-point (n)
+  "Increment number at point like vim's C-a"
+  (interactive "p")
+  (inc-number-at-point (- n)))
+
+(defun dired-open-fm ()
+  "Open a GUI file manager at (dired-current-directory) using
+xdg-open."
+  (interactive)
+  (if (string-equal system-type "darwin")
+      (call-process "open" nil 0 nil (dired-current-directory))
+    (call-process "xdg-open" nil 0 nil (dired-current-directory))))
+
+(defun dired-open-file ()
+  "In dired, open the file named on this line."
+  (interactive)
+  (let* ((file (dired-get-filename nil t)))
+    (message "Opening %s..." file)
+    (if (string-equal system-type "darwin")
+	(call-process "open" nil 0 nil file)
+      (call-process "xdg-open" nil 0 nil file))
+    (message "Opening %s done" file)))
+
 (with-eval-after-load 'dired
   (define-key dired-mode-map "b" #'dired-open-file)
   (define-key dired-mode-map "c" #'dired-open-fm)
   (define-key dired-mode-map "Q" #'dired-do-query-replace-regexp))
 
-;; Shell
+;; -------------------- Shell --------------------
+(global-set-key (kbd "C-c s") #'eshell)
 (add-hook 'shell-mode-hook #'ansi-color-for-comint-mode-on)
 
-;; Completion
-(require-package 'company)
-(add-hook 'after-init-hook 'global-company-mode)
-(with-eval-after-load 'company
-  (define-key company-active-map (kbd "C-n") #'company-select-next)
-  (define-key company-active-map (kbd "C-p") #'company-select-previous))
-
-;; Text and Web
-(require-package 'olivetti)
-
-(require-package 'markdown-mode)
-(dolist (item '(("README\\.md\\'" . gfm-mode)
-                ("\\.md\\'" . markdown-mode)
-                ("\\.markdown\\'" . markdown-mode)))
-  (add-to-list 'auto-mode-alist item))
-
+;; -------------------- Web --------------------
 (require-package 'web-mode)
 (require-package 'ssass-mode)
 (dolist (item '(("\\.html?\\'" . web-mode)
                 ("\\.css?\\'" . web-mode)))
   (add-to-list 'auto-mode-alist item))
 
-;; Compile
-(global-set-key (kbd "<f9>") #'compile)
-
-;; Git
-(require-package 'hl-todo)
-(global-hl-todo-mode)
-
-(require-package 'magit)
-(global-set-key (kbd "C-x g") #'magit-status)
-(add-hook 'magit-update-uncommitted-buffer-hook 'vc-refresh-state)
-
-;; Programming
-(define-key prog-mode-map (kbd "M-`") #'imenu)
-(global-set-key (kbd "M-o") #'ff-find-other-file)
-
-;; C/C++
+;; -------------------- Compiled languages --------------------
 (require-package 'modern-cpp-font-lock)
 (add-hook 'c++-mode-hook #'modern-c++-font-lock-mode)
 
@@ -142,14 +261,35 @@
                         (inlambda . 0) ; no extra indent for lambda
                         (innamespace . 0)))) ; no indent for namespaces
 
+(require-package 'cmake-mode)
+(require-package 'cmake-project)
+
+(require-package 'cuda-mode)
+(require-package 'rust-mode)
+
+;; c-mode for okl
+(add-to-list 'auto-mode-alist '("\\.okl\\'" . c-mode))
+
+;; -------------------- Dev Ops --------------------
+(require-package 'dockerfile-mode)
+
+;; -------------------- Version tracking --------------------
+(require-package 'hl-todo)
+(global-hl-todo-mode)
+
+(require-package 'magit)
+(global-set-key (kbd "C-c g") #'magit-status)
+
+;; -------------------- Global toggle mapping --------------------
 ;; Source: http://endlessparentheses.com/the-toggle-map-and-wizardry.html
 (define-prefix-command 'jd/toggle-map)
 ;; The manual recommends C-c for user keys, but C-x t is
 ;; always free, whereas C-c t is used by some modes.
 (global-set-key (kbd "C-c t") #'jd/toggle-map)
+(define-key jd/toggle-map "a" #'auto-fill-mode)
 (define-key jd/toggle-map "c" #'column-number-mode)
 (define-key jd/toggle-map "d" #'toggle-debug-on-error)
-(define-key jd/toggle-map "f" #'auto-fill-mode)
+(define-key jd/toggle-map "f" #'focus-mode)
 (define-key jd/toggle-map "t" #'toggle-truncate-lines)
 (define-key jd/toggle-map "l" #'linum-mode)
 (define-key jd/toggle-map "s" #'subword-mode)
@@ -159,16 +299,6 @@
 (autoload 'dired-toggle-read-only "dired" nil t)
 (define-key jd/toggle-map "w" #'whitespace-mode)
 (define-key jd/toggle-map "|" #'toggle-window-split)
-
-;; Whitespace
-(defvar jdahm/inhibit-dtw nil)
-(defun jdahm/delete-trailing-whitespace ()
-  (unless my-inhibit-dtw (delete-trailing-whitespace)))
-(add-hook 'before-save-hook #'jdahm/delete-trailing-whitespace)
-
-(defun jdahm/inhibit-dtw ()
-  (interactive)
-  (set (make-local-variable 'jdahm/inhibit-dtw) t))
 
 ;; Tramp ssh control is correctly setup in ~/.ssh/config
 ;; Source: https://lists.gnu.org/archive/html/help-gnu-emacs/2013-04/msg00323.html
@@ -180,13 +310,6 @@
               vc-ignore-dir-regexp
               tramp-file-name-regexp))
 
-;; Spelling
-(require 'flyspell)
-(add-hook 'text-mode-hook #'turn-on-flyspell)
-(with-eval-after-load 'flyspell
-  (define-key flyspell-mode-map (kbd "<C-f12>") #'flyspell-goto-next-error))
-(with-eval-after-load 'auto-complete (ac-flyspell-workaround))
-
 ;; Org
 (defconst jd-default-notes-file "~/Documents/todo.org")
 (defconst jd-diary-file "~/Documents/diary.org")
@@ -197,61 +320,59 @@
 (add-hook 'org-mode-hook #'turn-on-visual-line-mode)
 (add-hook 'org-mode-hook #'turn-on-flyspell)
 
-;; Auctex
+;; -------------------- LaTeX --------------------
 (require-package 'auctex)
 (require-package 'auctex-latexmk)
 (auctex-latexmk-setup)
 
+(defun auctex-fill-sentence ()
+  (interactive)
+  (save-excursion
+    (or (eq (point) (point-max)) (forward-char))
+    (forward-sentence -1)
+    (indent-relative t)
+    (let ((beg (point))
+          (ix (string-match "LaTeX" mode-name)))
+      (forward-sentence)
+      (if (and ix (equal "LaTeX" (substring mode-name ix)))
+          (LaTeX-fill-region-as-paragraph beg (point))
+        (fill-region-as-paragraph beg (point))))))
+
 (add-hook 'LaTeX-mode-hook
           (lambda ()
+            (define-key LaTeX-mode-map (kbd "M-j") #'auctex-fill-sentence)
             (visual-line-mode 1)
             (LaTeX-math-mode 1)
             (reftex-mode 1)))
 
-;; Feed Reader
+;; -------------------- Feed Reader --------------------
 (let ((feeds-file "~/feeds.el"))
   (when (file-exists-p feeds-file)
     (require-package 'elfeed)
     (load-file feeds-file)
     (global-set-key (kbd "C-x w") 'elfeed)))
 
-;; Other modes
-(require-package 'cmake-mode)
-(require-package 'cuda-mode)
-(require-package 'rust-mode)
-(require-package 'dockerfile-mode)
+;; -------------------- Appearance --------------------
+;; Zenburn theme
+(require-package 'zenburn-theme)
 
-;; Conf mode for .job files
-(add-to-list 'auto-mode-alist '("\\.job\\'" . conf-mode))
-
-;; c-mode for okl
-(add-to-list 'auto-mode-alist '("\\.okl\\'" . c-mode))
+;; Use variable-pitch fonts for some headings and titles
+(setq zenburn-use-variable-pitch t)
+;; Scale headings in org-mode
+(setq zenburn-scale-org-headlines t)
+;; Scale headings in outline-mode
+(setq zenburn-scale-outline-headlines t)
 
 ;; Fancy titlebar for MacOS
 ;; (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-;; (add-to-list 'default-frame-alist '(ns-appearance . dark))
-(add-hook 'after-init-hook
-          (lambda ()
-            (setq frame-title-format
-                  '(buffer-file-name
-                    "%f"
-                    (dired-directory dired-directory "%b")))))
 
-;; Themes
+;; Frame title = absolute path to file (if exists)
+(setq frame-title-format
+      '(buffer-file-name "%f"
+        (dired-directory dired-directory "%b")))
 
-(require-package 'zenburn-theme)
-
-;; use variable-pitch fonts for some headings and titles
-(setq zenburn-use-variable-pitch t)
-;; scale headings in org-mode
-(setq zenburn-scale-org-headlines t)
-;; scale headings in outline-mode
-(setq zenburn-scale-outline-headlines t)
-
-(require-package 'nord-theme)
-
-;; readable comments
-(setq nord-comment-brightness 20)
+;; Dark titlebar
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
 
 ;; Enable disabled functions
 (put 'dired-find-alternate-file 'disabled nil)
@@ -266,7 +387,6 @@
  '(TeX-auto-save nil)
  '(TeX-engine (quote luatex))
  '(TeX-parse-self t)
- '(auto-revert-buffer-list-filter (quote magit-auto-revert-repository-buffer-p))
  '(backup-by-copying t)
  '(backup-directory-alist (\` (("." \, backup-d))))
  '(beginend-global-mode t)
@@ -291,7 +411,7 @@
  '(custom-enabled-themes (quote (zenburn)))
  '(custom-safe-themes
    (quote
-    ("04232a0bfc50eac64c12471607090ecac9d7fd2d79e388f8543d1c5439ed81f5" "bf390ecb203806cbe351b966a88fc3036f3ff68cd2547db6ee3676e87327b311" "5ecf30f9c9b39545b62b5e478bbd5bcc9025af04b83e3499d647c2af0e27c860" default)))
+    ("04232a0bfc50eac64c12471607090ecac9d7fd2d79e388f8543d1c5439ed81f5" default)))
  '(custom-theme-directory themes-d)
  '(delete-by-moving-to-trash t)
  '(delete-old-versions t)
@@ -324,6 +444,8 @@
  '(indent-tabs-mode nil)
  '(initial-scratch-message "")
  '(ispell-program-name "/usr/local/bin/aspell")
+ '(magit-blame-mode-lighter "🔥")
+ '(magit-diff-refine-hunk t)
  '(markdown-command "multimarkdown")
  '(midnight-mode t)
  '(org-agenda-files jd-default-notes-file)
