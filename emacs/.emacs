@@ -278,7 +278,7 @@ xdg-open."
 (global-hl-todo-mode)
 
 (require-package 'magit)
-(global-set-key (kbd "C-c g") #'magit-status)
+(global-set-key (kbd "C-x g") #'magit-status)
 
 ;; -------------------- Global toggle mapping --------------------
 ;; Source: http://endlessparentheses.com/the-toggle-map-and-wizardry.html
