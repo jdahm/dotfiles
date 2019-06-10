@@ -93,6 +93,18 @@
                 ;; (ibuffer-do-sort-by-alphabetic))))
                 (ibuffer-do-sort-by-vc-status)))))
 
+;; https://github.com/ianpan870102/.emacs.d/blob/master/config.org
+(defun split-and-follow-horizontally ()
+  (interactive)
+  (split-window-below)
+  (other-window 1))
+(global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
+(defun split-and-follow-vertically ()
+  (interactive)
+  (split-window-right)
+  (other-window 1))
+(global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
+
 ;; -------------------- Editing Commands --------------------
 (global-set-key (kbd "C-x C-a") #'align-regexp)
 
@@ -138,6 +150,9 @@
 
 ;; Recentf
 (global-set-key (kbd "C-M-r") #'recentf-open-files)
+
+;; Diff file
+(global-set-key (kbd "C-c D") 'diff-buffer-with-file)
 
 ;; -------------------- Text --------------------
 (require-package 'markdown-mode)
@@ -291,7 +306,7 @@ xdg-open."
 (define-key jd/toggle-map "d" #'toggle-debug-on-error)
 (define-key jd/toggle-map "f" #'focus-mode)
 (define-key jd/toggle-map "t" #'toggle-truncate-lines)
-(define-key jd/toggle-map "l" #'linum-mode)
+(define-key jd/toggle-map "l" #'display-line-numbers-mode)
 (define-key jd/toggle-map "s" #'subword-mode)
 (define-key jd/toggle-map "S" #'superword-mode)
 (define-key jd/toggle-map "q" #'toggle-debug-on-quit)
@@ -387,10 +402,11 @@ xdg-open."
  '(TeX-auto-save nil)
  '(TeX-engine (quote luatex))
  '(TeX-parse-self t)
+ '(auto-revert-buffer-list-filter (quote magit-auto-revert-repository-buffer-p))
  '(backup-by-copying t)
  '(backup-directory-alist (\` (("." \, backup-d))))
  '(beginend-global-mode t)
- '(blink-cursor-mode nil)
+ '(blink-cursor-mode t)
  '(bury-successful-compilation-precompile-window-state t)
  '(bury-successful-compilation-save-windows t)
  '(c-default-style
@@ -476,8 +492,8 @@ xdg-open."
  '(set-mark-command-repeat-pop t)
  '(show-paren-mode t)
  '(tool-bar-mode nil)
- '(tramp-completion-reread-directory-timeout 3600 nil (tramp))
- '(tramp-connection-timeout 5 nil (tramp))
+ '(tramp-completion-reread-directory-timeout 3600)
+ '(tramp-connection-timeout 5)
  '(use-dialog-box nil)
  '(use-file-dialog nil)
  '(version-control t)
