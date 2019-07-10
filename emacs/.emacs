@@ -41,7 +41,17 @@
 ;; Load lisp from here
 (add-to-list 'load-path lisp-d)
 
+;; -------------------- Movement --------------------
+
+;; List editing
+(global-set-key (kbd "C-M-o") #'up-list)
+(global-set-key (kbd "C-M-<BACKSPACE>") #'kill-backward-up-list)
+(global-set-key (kbd "M-R") #'raise-sexp)
+
 ;; -------------------- Buffer Management --------------------
+(define-key ctl-x-map "k" #'kill-current-buffer)
+(define-key ctl-x-map "K" #'kill-buffer)
+
 (defun create-scratch-buffer nil
   "create a scratch buffer."
   (interactive)
@@ -132,14 +142,16 @@
     (fill-paragraph nil region)))
 (global-set-key (kbd "M-Q") #'unfill-paragraph)
 
-(require-package 'emojify)
-(add-hook 'after-init-hook #'global-emojify-mode)
-
 (require-package 'bool-flip)
 (global-set-key (kbd "C-c b") #'bool-flip-do-flip)
 
 ;; delete the active region with DEL
 (delete-selection-mode t)
+
+;; The command ‘delete-forward-char’ is preferable for interactive
+;; use, e.g. because it respects values of ‘delete-active-region’ and
+;; ‘overwrite-mode’.
+(global-set-key (kbd "C-d") #'delete-forward-char)
 
 ;; This overwrites `comment-set-column', but that is rarely used and
 ;; the default binding for comment-line is not terminal-friendly.
@@ -153,6 +165,19 @@
 
 ;; Diff file
 (global-set-key (kbd "C-c D") 'diff-buffer-with-file)
+
+;; Transpose
+(global-set-key (kbd "M-K") #'kill-paragraph)
+(global-set-key (kbd "M-E") #'mark-end-of-sentence)
+(global-set-key (kbd "M-T") #'transpose-sentences)
+(define-key ctl-x-map "t" #'transpose-paragraphs)
+
+(global-set-key (kbd "M-z") #'zap-up-to-char)
+(global-set-key (kbd "M-Z") #'zap-to-char)
+
+(define-key global-map [remap capitalize-word] #'capitalize-dwim)
+(define-key global-map [remap downcase-word] #'downcase-dwim)
+(define-key global-map [remap upcase-word] #'upcase-dwim)
 
 ;; -------------------- Text --------------------
 (require-package 'markdown-mode)
@@ -197,6 +222,15 @@
 (defun jdahm/inhibit-dtw ()
   (interactive)
   (set (make-local-variable 'jdahm/inhibit-dtw) t))
+
+(define-advice eval-print-last-sexp (:around (old-fun &rest args) add-prefix)
+  "Prepend ;; =>."
+  (let ((op (point)))
+    (apply old-fun args)
+    (save-excursion
+      (goto-char op)
+      (forward-line 1)
+      (insert ";; => "))))
 
 ;; -------------------- Dired --------------------
 ;; Use a replacement ls
@@ -260,6 +294,8 @@ xdg-open."
 (global-set-key (kbd "C-c s") #'eshell)
 (add-hook 'shell-mode-hook #'ansi-color-for-comint-mode-on)
 
+(define-key ctl-x-map "C-p" #'proced)
+
 ;; -------------------- Web --------------------
 (require-package 'web-mode)
 (require-package 'ssass-mode)
@@ -294,6 +330,10 @@ xdg-open."
 
 (require-package 'magit)
 (global-set-key (kbd "C-x g") #'magit-status)
+
+;; -------------------- Help --------------------
+(with-eval-after-load 'help
+  (define-key help-map "A" #'info-apropos))
 
 ;; -------------------- Global toggle mapping --------------------
 ;; Source: http://endlessparentheses.com/the-toggle-map-and-wizardry.html
@@ -340,22 +380,38 @@ xdg-open."
 (require-package 'auctex-latexmk)
 (auctex-latexmk-setup)
 
-(defun auctex-fill-sentence ()
+(defun fill-sentences ()
+  "Fills the current paragraph or region, starting each sentence on a new line."
   (interactive)
   (save-excursion
-    (or (eq (point) (point-max)) (forward-char))
-    (forward-sentence -1)
-    (indent-relative t)
-    (let ((beg (point))
+    ;; Determine region to operate on
+    (let ((beginning-of-region (if (and transient-mark-mode mark-active)
+                                   (region-beginning)
+                                 (save-excursion (backward-paragraph) (point))))
+          (end-of-region (if (and transient-mark-mode mark-active)
+                             (region-end)
+                           (save-excursion (forward-paragraph) (point))))
           (ix (string-match "LaTeX" mode-name)))
-      (forward-sentence)
-      (if (and ix (equal "LaTeX" (substring mode-name ix)))
-          (LaTeX-fill-region-as-paragraph beg (point))
-        (fill-region-as-paragraph beg (point))))))
+      (goto-char beginning-of-region)
+      ;; Loop over each sentence in the region
+      (while (< (point) end-of-region)
+        ;; Determine the sentence bounds
+        (let ((start-of-sentence (point)))
+          (forward-sentence)
+          ;; Fill the sentence, breaking at `fill-column'
+          (if (and ix (equal "LaTeX" (substring mode-name ix)))
+              (LaTeX-fill-region start-of-sentence (point))
+            (fill-region start-of-sentence (point)))
+          ;; Delete extra space
+          (delete-horizontal-space)
+          ;; If this does not end with a newline, add one and indent
+          (if (and (not (equal (point) end-of-region))
+                   (not (char-equal (char-after) ?\n)))
+              (newline-and-indent)))))))
 
 (add-hook 'LaTeX-mode-hook
           (lambda ()
-            (define-key LaTeX-mode-map (kbd "M-j") #'auctex-fill-sentence)
+            (define-key LaTeX-mode-map (kbd "M-j") #'fill-sentences)
             (visual-line-mode 1)
             (LaTeX-math-mode 1)
             (reftex-mode 1)))
