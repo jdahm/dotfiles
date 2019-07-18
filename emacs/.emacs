@@ -198,6 +198,8 @@
 ;; Conf mode for .job files
 (add-to-list 'auto-mode-alist '("\\.job\\'" . conf-mode))
 
+(require-package 'yaml-mode)
+
 ;; -------------------- Programming --------------------
 ;; Completion
 (require-package 'company)
@@ -323,6 +325,7 @@ xdg-open."
 
 ;; -------------------- Dev Ops --------------------
 (require-package 'dockerfile-mode)
+(require-package 'nix-mode)
 
 ;; -------------------- Version tracking --------------------
 (require-package 'hl-todo)
@@ -385,13 +388,10 @@ xdg-open."
   (interactive)
   (save-excursion
     ;; Determine region to operate on
-    (let ((beginning-of-region (if (and transient-mark-mode mark-active)
-                                   (region-beginning)
+    (let ((beginning-of-region (if (use-region-p) (region-beginning)
                                  (save-excursion (backward-paragraph) (point))))
-          (end-of-region (if (and transient-mark-mode mark-active)
-                             (region-end)
-                           (save-excursion (forward-paragraph) (point))))
-          (ix (string-match "LaTeX" mode-name)))
+          (end-of-region (if (use-region-p) (region-end)
+                           (save-excursion (forward-paragraph) (point)))))
       (goto-char beginning-of-region)
       ;; Loop over each sentence in the region
       (while (< (point) end-of-region)
@@ -399,7 +399,7 @@ xdg-open."
         (let ((start-of-sentence (point)))
           (forward-sentence)
           ;; Fill the sentence, breaking at `fill-column'
-          (if (and ix (equal "LaTeX" (substring mode-name ix)))
+          (if (derived-mode-p 'LaTex-mode)
               (LaTeX-fill-region start-of-sentence (point))
             (fill-region start-of-sentence (point)))
           ;; Delete extra space
@@ -537,7 +537,7 @@ xdg-open."
  '(org-log-done (quote time))
  '(package-selected-packages
    (quote
-    (elfeed bool-flip ssass-mode dockerfile-mode emojify rust-mode cuda-mode cmake-mode auctex-latexmk auctex modern-cpp-font-lock magit hl-todo web-mode markdown-mode olivetti company ibuffer-vc ibuffer-tramp)))
+    (nix-mode yaml-mode elfeed bool-flip ssass-mode dockerfile-mode emojify rust-mode cuda-mode cmake-mode auctex-latexmk auctex modern-cpp-font-lock magit hl-todo web-mode markdown-mode olivetti company ibuffer-vc ibuffer-tramp)))
  '(recentf-max-menu-items 25)
  '(recentf-mode t)
  '(remote-file-name-inhibit-cache 3600)
