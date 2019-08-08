@@ -48,6 +48,13 @@
 (global-set-key (kbd "C-M-<BACKSPACE>") #'kill-backward-up-list)
 (global-set-key (kbd "M-R") #'raise-sexp)
 
+(define-key isearch-mode-map (kbd "C-<return>") #'isearch-exit-other-end)
+(defun isearch-exit-other-end ()
+  "Exit isearch, at the opposite end of the string."
+  (interactive)
+  (isearch-exit)
+  (goto-char isearch-other-end))
+
 ;; -------------------- Buffer Management --------------------
 (define-key ctl-x-map "k" #'kill-current-buffer)
 (define-key ctl-x-map "K" #'kill-buffer)
@@ -116,7 +123,7 @@
 (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
 
 ;; -------------------- Editing Commands --------------------
-(global-set-key (kbd "C-x C-a") #'align-regexp)
+(global-set-key (kbd "C-x \\") #'align-regexp)
 
 (defun tidy-region-or-buffer ()
   "Indent a region if selected, otherwise the whole buffer."
@@ -233,6 +240,9 @@
       (goto-char op)
       (forward-line 1)
       (insert ";; => "))))
+
+(require-package 'editorconfig)
+(editorconfig-mode 1)
 
 ;; -------------------- Dired --------------------
 ;; Use a replacement ls
@@ -454,10 +464,14 @@ xdg-open."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(LaTeX-command-style
+   (quote
+    (("" "%(PDF)%(latex) %(file-line-error) %(extraopts) -shell-escape %S%(PDFout)"))))
  '(TeX-PDF-mode t)
  '(TeX-auto-save nil)
  '(TeX-engine (quote luatex))
  '(TeX-parse-self t)
+ '(auctex-latexmk-inherit-TeX-PDF-mode t)
  '(auto-revert-buffer-list-filter (quote magit-auto-revert-repository-buffer-p))
  '(backup-by-copying t)
  '(backup-directory-alist (\` (("." \, backup-d))))
@@ -483,7 +497,7 @@ xdg-open."
  '(custom-enabled-themes (quote (zenburn)))
  '(custom-safe-themes
    (quote
-    ("04232a0bfc50eac64c12471607090ecac9d7fd2d79e388f8543d1c5439ed81f5" default)))
+    ("c82d24bfba431e8104219bfd8e90d47f1ad6b80a504a7900cbee002a8f04392f" default)))
  '(custom-theme-directory themes-d)
  '(delete-by-moving-to-trash t)
  '(delete-old-versions t)
@@ -491,6 +505,7 @@ xdg-open."
  '(ediff-split-window-function (quote split-window-horizontally))
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
  '(enable-remote-dir-locals t)
+ '(fill-column 80)
  '(ibuffer-saved-filter-groups nil)
  '(ibuffer-saved-filters
    (quote
@@ -537,7 +552,7 @@ xdg-open."
  '(org-log-done (quote time))
  '(package-selected-packages
    (quote
-    (nix-mode yaml-mode elfeed bool-flip ssass-mode dockerfile-mode emojify rust-mode cuda-mode cmake-mode auctex-latexmk auctex modern-cpp-font-lock magit hl-todo web-mode markdown-mode olivetti company ibuffer-vc ibuffer-tramp)))
+    (nix-shell editorconfig nix-mode yaml-mode elfeed bool-flip ssass-mode dockerfile-mode emojify rust-mode cuda-mode cmake-mode auctex-latexmk auctex modern-cpp-font-lock magit hl-todo web-mode markdown-mode olivetti company ibuffer-vc ibuffer-tramp)))
  '(recentf-max-menu-items 25)
  '(recentf-mode t)
  '(remote-file-name-inhibit-cache 3600)
