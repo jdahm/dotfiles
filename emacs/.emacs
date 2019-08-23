@@ -234,14 +234,8 @@ There are two things you can do about this warning:
 (define-key prog-mode-map (kbd "M-o") #'ff-find-other-file)
 
 ;; Whitespace
-(defvar jdahm/inhibit-dtw nil)
-(defun jdahm/delete-trailing-whitespace ()
-  (unless jdahm/inhibit-dtw (delete-trailing-whitespace)))
-(add-hook 'before-save-hook #'jdahm/delete-trailing-whitespace)
-
-(defun jdahm/inhibit-dtw ()
-  (interactive)
-  (set (make-local-variable 'jdahm/inhibit-dtw) t))
+(package-install 'ws-butler)
+(add-hook 'prog-mode-hook #'ws-butler-mode)
 
 (define-advice eval-print-last-sexp (:around (old-fun &rest args) add-prefix)
   "Prepend ;; =>."
@@ -560,7 +554,7 @@ xdg-open."
  '(org-log-done (quote time))
  '(package-selected-packages
    (quote
-    (auctex zenburn-theme elfeed yaml-mode web-mode ssass-mode rust-mode nix-mode modern-cpp-font-lock markdown-mode magit ibuffer-vc ibuffer-tramp hl-todo editorconfig dockerfile-mode cuda-mode company cmake-project cmake-mode bool-flip)))
+    (ws-butler auctex zenburn-theme elfeed yaml-mode web-mode ssass-mode rust-mode nix-mode modern-cpp-font-lock markdown-mode magit ibuffer-vc ibuffer-tramp hl-todo editorconfig dockerfile-mode cuda-mode company cmake-project cmake-mode bool-flip)))
  '(recentf-max-menu-items 25)
  '(recentf-mode t)
  '(remote-file-name-inhibit-cache 3600)
