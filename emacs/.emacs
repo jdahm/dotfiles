@@ -24,19 +24,30 @@
 
 ;; Set package archives and initialize
 (require 'package)
-(dolist (source '(("org" . "https://orgmode.org/elpa/")
-                  ("melpa" . "https://melpa.org/packages/")
-                  ))
-  (add-to-list 'package-archives source t))
-
-(unless package--initialized (package-initialize))
-
-(defun require-package (package)
-  "Install given PACKAGE."
-  (unless (package-installed-p package)
-    (unless (assoc package package-archive-contents)
-      (package-refresh-contents))
-    (package-install package)))
+; Some combination of GNU TLS and Emacs fail to retrieve archive
+; contents over https.
+; https://www.reddit.com/r/emacs/comments/cdei4p/failed_to_download_gnu_archive_bad_request/etw48ux
+; https://debbugs.gnu.org/cgi/bugreport.cgi?bug=34341
+(if (and (version< emacs-version "26.3") (>= libgnutls-version 30600))
+    (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
+(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
+                    (not (gnutls-available-p))))
+       (proto (if no-ssl "http" "https")))
+  (when no-ssl
+    (warn "\
+Your version of Emacs does not support SSL connections,
+which is unsafe because it allows man-in-the-middle attacks.
+There are two things you can do about this warning:
+1. Install an Emacs version that does support SSL and be safe.
+2. Remove this warning from your init file so you won't see it again."))
+  ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable as desired
+  (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
+  ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
+  (when (< emacs-major-version 24)
+    ;; For important compatibility libraries like cl-lib
+    (add-to-list 'package-archives (cons "gnu" (concat proto "://elpa.gnu.org/packages/")))))
+(package-initialize)
+(package-refresh-contents)
 
 ;; Load lisp from here
 (add-to-list 'load-path lisp-d)
@@ -97,8 +108,8 @@
 (autoload 'ibuffer "ibuffer" "ibuffer mode" t)
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 
-(require-package 'ibuffer-tramp)
-(require-package 'ibuffer-vc)
+(package-install 'ibuffer-tramp)
+(package-install 'ibuffer-vc)
 
 (with-eval-after-load 'ibuffer
   (define-key ibuffer-mode-map (kbd "s r") #'ibuffer-tramp-set-filter-groups-by-tramp-connection)
@@ -149,7 +160,7 @@
     (fill-paragraph nil region)))
 (global-set-key (kbd "M-Q") #'unfill-paragraph)
 
-(require-package 'bool-flip)
+(package-install 'bool-flip)
 (global-set-key (kbd "C-c b") #'bool-flip-do-flip)
 
 ;; delete the active region with DEL
@@ -187,7 +198,7 @@
 (define-key global-map [remap upcase-word] #'upcase-dwim)
 
 ;; -------------------- Text --------------------
-(require-package 'markdown-mode)
+(package-install 'markdown-mode)
 (dolist (item '(("README\\.md\\'" . gfm-mode)
                 ("\\.md\\'" . markdown-mode)
                 ("\\.markdown\\'" . markdown-mode)))
@@ -205,11 +216,11 @@
 ;; Conf mode for .job files
 (add-to-list 'auto-mode-alist '("\\.job\\'" . conf-mode))
 
-(require-package 'yaml-mode)
+(package-install 'yaml-mode)
 
 ;; -------------------- Programming --------------------
 ;; Completion
-(require-package 'company)
+(package-install 'company)
 (add-hook 'after-init-hook 'global-company-mode)
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "C-n") #'company-select-next)
@@ -241,7 +252,7 @@
       (forward-line 1)
       (insert ";; => "))))
 
-(require-package 'editorconfig)
+(package-install 'editorconfig)
 (editorconfig-mode 1)
 
 ;; -------------------- Dired --------------------
@@ -309,14 +320,14 @@ xdg-open."
 (define-key ctl-x-map "C-p" #'proced)
 
 ;; -------------------- Web --------------------
-(require-package 'web-mode)
-(require-package 'ssass-mode)
+(package-install 'web-mode)
+(package-install 'ssass-mode)
 (dolist (item '(("\\.html?\\'" . web-mode)
                 ("\\.css?\\'" . web-mode)))
   (add-to-list 'auto-mode-alist item))
 
 ;; -------------------- Compiled languages --------------------
-(require-package 'modern-cpp-font-lock)
+(package-install 'modern-cpp-font-lock)
 (add-hook 'c++-mode-hook #'modern-c++-font-lock-mode)
 
 (c-add-style "mybsd" '("bsd"
@@ -324,24 +335,24 @@ xdg-open."
                         (inlambda . 0) ; no extra indent for lambda
                         (innamespace . 0)))) ; no indent for namespaces
 
-(require-package 'cmake-mode)
-(require-package 'cmake-project)
+(package-install 'cmake-mode)
+(package-install 'cmake-project)
 
-(require-package 'cuda-mode)
-(require-package 'rust-mode)
+(package-install 'cuda-mode)
+(package-install 'rust-mode)
 
 ;; c-mode for okl
 (add-to-list 'auto-mode-alist '("\\.okl\\'" . c-mode))
 
 ;; -------------------- Dev Ops --------------------
-(require-package 'dockerfile-mode)
-(require-package 'nix-mode)
+(package-install 'dockerfile-mode)
+(package-install 'nix-mode)
 
 ;; -------------------- Version tracking --------------------
-(require-package 'hl-todo)
+(package-install 'hl-todo)
 (global-hl-todo-mode)
 
-(require-package 'magit)
+(package-install 'magit)
 (global-set-key (kbd "C-x g") #'magit-status)
 
 ;; -------------------- Help --------------------
@@ -389,9 +400,7 @@ xdg-open."
 (add-hook 'org-mode-hook #'turn-on-flyspell)
 
 ;; -------------------- LaTeX --------------------
-(require-package 'auctex)
-(require-package 'auctex-latexmk)
-(auctex-latexmk-setup)
+(package-install 'auctex)
 
 (defun fill-sentences ()
   "Fills the current paragraph or region, starting each sentence on a new line."
@@ -429,13 +438,13 @@ xdg-open."
 ;; -------------------- Feed Reader --------------------
 (let ((feeds-file "~/feeds.el"))
   (when (file-exists-p feeds-file)
-    (require-package 'elfeed)
+    (package-install 'elfeed)
     (load-file feeds-file)
     (global-set-key (kbd "C-x w") 'elfeed)))
 
 ;; -------------------- Appearance --------------------
 ;; Zenburn theme
-(require-package 'zenburn-theme)
+(package-install 'zenburn-theme)
 
 ;; Use variable-pitch fonts for some headings and titles
 (setq zenburn-use-variable-pitch t)
@@ -471,7 +480,6 @@ xdg-open."
  '(TeX-auto-save nil)
  '(TeX-engine (quote luatex))
  '(TeX-parse-self t)
- '(auctex-latexmk-inherit-TeX-PDF-mode t)
  '(auto-revert-buffer-list-filter (quote magit-auto-revert-repository-buffer-p))
  '(backup-by-copying t)
  '(backup-directory-alist (\` (("." \, backup-d))))
@@ -497,7 +505,7 @@ xdg-open."
  '(custom-enabled-themes (quote (zenburn)))
  '(custom-safe-themes
    (quote
-    ("c82d24bfba431e8104219bfd8e90d47f1ad6b80a504a7900cbee002a8f04392f" default)))
+    ("a7051d761a713aaf5b893c90eaba27463c791cd75d7257d3a8e66b0c8c346e77" "c82d24bfba431e8104219bfd8e90d47f1ad6b80a504a7900cbee002a8f04392f" default)))
  '(custom-theme-directory themes-d)
  '(delete-by-moving-to-trash t)
  '(delete-old-versions t)
@@ -552,11 +560,12 @@ xdg-open."
  '(org-log-done (quote time))
  '(package-selected-packages
    (quote
-    (nix-shell editorconfig nix-mode yaml-mode elfeed bool-flip ssass-mode dockerfile-mode emojify rust-mode cuda-mode cmake-mode auctex-latexmk auctex modern-cpp-font-lock magit hl-todo web-mode markdown-mode olivetti company ibuffer-vc ibuffer-tramp)))
+    (auctex zenburn-theme elfeed yaml-mode web-mode ssass-mode rust-mode nix-mode modern-cpp-font-lock markdown-mode magit ibuffer-vc ibuffer-tramp hl-todo editorconfig dockerfile-mode cuda-mode company cmake-project cmake-mode bool-flip)))
  '(recentf-max-menu-items 25)
  '(recentf-mode t)
  '(remote-file-name-inhibit-cache 3600)
  '(ring-bell-function (quote ignore))
+ '(safe-local-variable-values (quote ((TeX-master . "main"))))
  '(savehist-mode t)
  '(scroll-bar-mode nil)
  '(sentence-end-double-space nil)
