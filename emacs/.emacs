@@ -249,6 +249,8 @@ There are two things you can do about this warning:
 (package-install 'editorconfig)
 (editorconfig-mode 1)
 
+(package-install 'haskell-mode)
+
 ;; -------------------- Dired --------------------
 ;; Use a replacement ls
 (setq ls-lisp-use-insert-directory-program nil)
@@ -434,7 +436,7 @@ xdg-open."
   (when (file-exists-p feeds-file)
     (package-install 'elfeed)
     (load-file feeds-file)
-    (global-set-key (kbd "C-x w") 'elfeed)))
+    (global-set-key (kbd "C-c w") 'elfeed)))
 
 ;; -------------------- Appearance --------------------
 ;; Zenburn theme
@@ -554,7 +556,7 @@ xdg-open."
  '(org-log-done (quote time))
  '(package-selected-packages
    (quote
-    (ws-butler auctex zenburn-theme elfeed yaml-mode web-mode ssass-mode rust-mode nix-mode modern-cpp-font-lock markdown-mode magit ibuffer-vc ibuffer-tramp hl-todo editorconfig dockerfile-mode cuda-mode company cmake-project cmake-mode bool-flip)))
+    (haskell-mode ws-butler auctex zenburn-theme elfeed yaml-mode web-mode ssass-mode rust-mode nix-mode modern-cpp-font-lock markdown-mode magit ibuffer-vc ibuffer-tramp hl-todo editorconfig dockerfile-mode cuda-mode company cmake-project cmake-mode bool-flip)))
  '(recentf-max-menu-items 25)
  '(recentf-mode t)
  '(remote-file-name-inhibit-cache 3600)
