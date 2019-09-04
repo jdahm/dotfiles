@@ -47,7 +47,9 @@ There are two things you can do about this warning:
     ;; For important compatibility libraries like cl-lib
     (add-to-list 'package-archives (cons "gnu" (concat proto "://elpa.gnu.org/packages/")))))
 (package-initialize)
-(package-refresh-contents)
+(unless package-archive-contents
+  (package-refresh-contents))
+
 
 ;; Load lisp from here
 (add-to-list 'load-path lisp-d)
@@ -534,7 +536,7 @@ xdg-open."
  '(ibuffer-use-other-window t)
  '(indent-tabs-mode nil)
  '(initial-scratch-message "")
- '(ispell-program-name "/usr/local/bin/aspell")
+ '(ispell-program-name "aspell")
  '(magit-blame-mode-lighter "🔥")
  '(magit-diff-refine-hunk t)
  '(markdown-command "multimarkdown")
