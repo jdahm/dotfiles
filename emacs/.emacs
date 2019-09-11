@@ -253,6 +253,9 @@ There are two things you can do about this warning:
 
 (package-install 'haskell-mode)
 
+(package-install 'dumb-jump)
+(add-hook 'prog-mode-hook #'dumb-jump-mode)
+
 ;; -------------------- Dired --------------------
 ;; Use a replacement ls
 (setq ls-lisp-use-insert-directory-program nil)
@@ -558,7 +561,7 @@ xdg-open."
  '(org-log-done (quote time))
  '(package-selected-packages
    (quote
-    (haskell-mode ws-butler auctex zenburn-theme elfeed yaml-mode web-mode ssass-mode rust-mode nix-mode modern-cpp-font-lock markdown-mode magit ibuffer-vc ibuffer-tramp hl-todo editorconfig dockerfile-mode cuda-mode company cmake-project cmake-mode bool-flip)))
+    (dumb-jump haskell-mode ws-butler auctex zenburn-theme elfeed yaml-mode web-mode ssass-mode rust-mode nix-mode modern-cpp-font-lock markdown-mode magit ibuffer-vc ibuffer-tramp hl-todo editorconfig dockerfile-mode cuda-mode company cmake-project cmake-mode bool-flip)))
  '(recentf-max-menu-items 25)
  '(recentf-mode t)
  '(remote-file-name-inhibit-cache 3600)
@@ -583,3 +586,5 @@ xdg-open."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'TeX-narrow-to-group 'disabled nil)
+(put 'LaTeX-narrow-to-environment 'disabled nil)
