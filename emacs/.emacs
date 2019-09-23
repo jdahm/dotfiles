@@ -474,6 +474,12 @@ xdg-open."
 ;; Enable disabled functions
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
+(put 'TeX-narrow-to-group 'disabled nil)
+(put 'LaTeX-narrow-to-environment 'disabled nil)
+
+(let ((local-file "~/.config/emacs/local.el"))
+  (when (file-exists-p local-file)
+    (load-file local-file)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -592,5 +598,3 @@ xdg-open."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-(put 'TeX-narrow-to-group 'disabled nil)
-(put 'LaTeX-narrow-to-environment 'disabled nil)
