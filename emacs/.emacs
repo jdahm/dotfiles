@@ -16,7 +16,6 @@
 
 (defconst lisp-d (expand-file-name "lisp/" user-emacs-directory))
 (defconst backup-d (expand-file-name "backups/" user-emacs-directory))
-(defconst themes-d (expand-file-name "themes/" user-emacs-directory))
 
 ;; -------------------- Package.el --------------------
 ;; Prefer newer versions of files
@@ -55,6 +54,8 @@ There are two things you can do about this warning:
 (add-to-list 'load-path lisp-d)
 
 ;; -------------------- Movement --------------------
+(package-install 'counsel)
+(counsel-mode 1)
 
 ;; List editing
 (global-set-key (kbd "C-M-o") #'up-list)
@@ -566,7 +567,7 @@ xdg-open."
  '(org-log-done (quote time))
  '(package-selected-packages
    (quote
-    (dumb-jump haskell-mode ws-butler auctex zenburn-theme elfeed yaml-mode web-mode ssass-mode rust-mode nix-mode modern-cpp-font-lock markdown-mode magit ibuffer-vc ibuffer-tramp hl-todo editorconfig dockerfile-mode cuda-mode company cmake-project cmake-mode bool-flip)))
+    (counsel dumb-jump haskell-mode ws-butler auctex zenburn-theme elfeed yaml-mode web-mode ssass-mode rust-mode nix-mode modern-cpp-font-lock markdown-mode magit ibuffer-vc ibuffer-tramp hl-todo editorconfig dockerfile-mode cuda-mode company cmake-project cmake-mode bool-flip)))
  '(recentf-max-menu-items 25)
  '(recentf-mode t)
  '(remote-file-name-inhibit-cache 3600)
