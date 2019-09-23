@@ -254,6 +254,11 @@ There are two things you can do about this warning:
 (package-install 'haskell-mode)
 
 (package-install 'dumb-jump)
+(define-key dumb-jump-mode-map (kbd "M-g o") #'dumb-jump-go-other-window)
+(define-key dumb-jump-mode-map (kbd "M-g j") #'dumb-jump-go)
+(define-key dumb-jump-mode-map (kbd "M-g i") #'dumb-jump-go-promp)
+(define-key dumb-jump-mode-map (kbd "M-g x") #'dumb-jump-go-perfer-external)
+(define-key dumb-jump-mode-map (kbd "M-g z") #'dumb-jump-go-prefer-external-other-window)
 (add-hook 'prog-mode-hook #'dumb-jump-mode)
 
 ;; -------------------- Dired --------------------
