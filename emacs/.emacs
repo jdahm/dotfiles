@@ -16,6 +16,7 @@
 
 (defconst lisp-d (expand-file-name "lisp/" user-emacs-directory))
 (defconst backup-d (expand-file-name "backups/" user-emacs-directory))
+(defconst themes-d (expand-file-name "themes/" user-emacs-directory))
 
 ;; -------------------- Package.el --------------------
 ;; Prefer newer versions of files
@@ -521,7 +522,7 @@ xdg-open."
  '(custom-enabled-themes (quote (zenburn)))
  '(custom-safe-themes
    (quote
-    ("a7051d761a713aaf5b893c90eaba27463c791cd75d7257d3a8e66b0c8c346e77" "c82d24bfba431e8104219bfd8e90d47f1ad6b80a504a7900cbee002a8f04392f" default)))
+    ("a7051d761a713aaf5b893c90eaba27463c791cd75d7257d3a8e66b0c8c346e77" default)))
  '(custom-theme-directory themes-d)
  '(delete-by-moving-to-trash t)
  '(delete-old-versions t)
