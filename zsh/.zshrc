@@ -1,18 +1,12 @@
 # Enable autocompletions
-autoload -Uz compinit
-
-typeset -i updated_at=$(date +'%j' -r ~/.zcompdump 2>/dev/null || stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)
-
-if [ $(date +'%j') != $updated_at ]; then
-  compinit -i
-else
-  compinit -C -i
-fi
-
+autoload -Uz compinit && compinit
 zmodload -i zsh/complist
 
+# Load bashcompinit for some old bash completions
+autoload bashcompinit && bashcompinit
+
 # Save history so we get auto suggestions
-HISTFILE=$HOME/.zsh_history
+HISTFILE=$HOME/.zsh/history
 HISTSIZE=10000
 SAVEHIST=$HISTSIZE
 
@@ -37,7 +31,7 @@ zstyle ':completion:::::' completer _expand _complete _ignored _approximate # en
 
 # Prompt
 fpath+=("$HOME/.zsh/pure")
-autoload -U promptinit; promptinit
+autoload -U promptinit && promptinit
 prompt pure
 
 # Other plugins
