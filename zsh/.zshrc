@@ -1,3 +1,8 @@
+# Return early if this is not interactive
+if [ $TERM = "dumb" ] || [[ ! -o interactive ]]; then
+    return
+fi
+
 # Enable autocompletions
 autoload -Uz compinit && compinit
 zmodload -i zsh/complist
