@@ -119,3 +119,7 @@ slprj/
 *.vrb
 *.xdy
 *.tdo
+
+# Pipenv
+Pipfile
+Pipfile.lock
