@@ -18,6 +18,9 @@
 (defconst backup-d (expand-file-name "backups/" user-emacs-directory))
 (defconst themes-d (expand-file-name "themes/" user-emacs-directory))
 
+;; Custom file
+(setq custom-file "~/.config/emacs/custom.el")
+
 ;; -------------------- Package.el --------------------
 ;; Prefer newer versions of files
 (setq load-prefer-newer t)
@@ -401,9 +404,6 @@ xdg-open."
               tramp-file-name-regexp))
 
 ;; Org
-(defconst jd-default-notes-file "~/Documents/todo.org")
-(defconst jd-diary-file "~/Documents/diary.org")
-
 (global-set-key (kbd "C-c l") #'org-store-link)
 (global-set-key (kbd "C-c c") #'org-capture)
 (global-set-key (kbd "C-c a") #'org-agenda)
@@ -481,124 +481,6 @@ xdg-open."
 (put 'TeX-narrow-to-group 'disabled nil)
 (put 'LaTeX-narrow-to-environment 'disabled nil)
 
-(let ((local-file "~/.config/emacs/local.el"))
-  (when (file-exists-p local-file)
-    (load-file local-file)))
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(LaTeX-command-style
-   (quote
-    (("" "%(PDF)%(latex) %(file-line-error) %(extraopts) -shell-escape %S%(PDFout)"))))
- '(TeX-PDF-mode t)
- '(TeX-auto-save nil)
- '(TeX-engine (quote luatex))
- '(TeX-parse-self t)
- '(auto-revert-buffer-list-filter (quote magit-auto-revert-repository-buffer-p))
- '(backup-by-copying t)
- '(backup-directory-alist (\` (("." \, backup-d))))
- '(beginend-global-mode t)
- '(blink-cursor-mode t)
- '(bury-successful-compilation-precompile-window-state t)
- '(bury-successful-compilation-save-windows t)
- '(c-default-style
-   (quote
-    ((java-mode . "java")
-     (awk-mode . "awk")
-     (other . "mybsd"))))
- '(column-number-mode t)
- '(comint-input-ignoredups t)
- '(comint-prompt-read-only t)
- '(comint-scroll-show-maximum-output nil)
- '(comint-scroll-to-bottom-on-input (quote all))
- '(company-backends
-   (quote
-    (company-capf company-dabbrev-code company-abbrev company-etags company-dabbrev)))
- '(compilation-message-face (quote default))
- '(compilation-scroll-output (quote first-error))
- '(custom-enabled-themes (quote (zenburn)))
- '(custom-safe-themes
-   (quote
-    ("a7051d761a713aaf5b893c90eaba27463c791cd75d7257d3a8e66b0c8c346e77" default)))
- '(custom-theme-directory themes-d)
- '(delete-by-moving-to-trash t)
- '(delete-old-versions t)
- '(ediff-cmp-options (quote ("-w")))
- '(ediff-split-window-function (quote split-window-horizontally))
- '(ediff-window-setup-function (quote ediff-setup-windows-plain))
- '(enable-remote-dir-locals t)
- '(fill-column 80)
- '(ibuffer-saved-filter-groups nil)
- '(ibuffer-saved-filters
-   (quote
-    (("only-files"
-      ((not mode . dired-mode)
-       (name . "^[^*]")))
-     ("gnus"
-      ((or
-        (mode . message-mode)
-        (mode . mail-mode)
-        (mode . gnus-group-mode)
-        (mode . gnus-summary-mode)
-        (mode . gnus-article-mode))))
-     ("programming"
-      ((or
-        (mode . emacs-lisp-mode)
-        (mode . cperl-mode)
-        (mode . c-mode)
-        (mode . java-mode)
-        (mode . idl-mode)
-        (mode . lisp-mode)))))))
- '(ibuffer-use-other-window t)
- '(indent-tabs-mode nil)
- '(initial-scratch-message "")
- '(ispell-program-name "aspell")
- '(magit-blame-mode-lighter "🔥")
- '(magit-diff-refine-hunk t)
- '(markdown-command "multimarkdown")
- '(midnight-mode t)
- '(org-agenda-files jd-default-notes-file)
- '(org-capture-templates
-   (quote
-    (("t" "Todo" entry
-      (file+headline "~/Documents/todo.org" "Tasks")
-      "* TODO %?
-  %i
-  %a")
-     ("l" "Log" entry
-      (file+olp+datetree "~/Documents/todo.org" "Log")
-      "* %?%i" :clock-in t :clock-keep t :tree-type week))))
- '(org-clock-idle-time 45)
- '(org-default-notes-file jd-default-notes-file)
- '(org-directory "~/org/")
- '(org-log-done (quote time))
- '(package-selected-packages
-   (quote
-    (column-enforce-mode counsel dumb-jump haskell-mode ws-butler auctex zenburn-theme elfeed yaml-mode web-mode ssass-mode rust-mode nix-mode modern-cpp-font-lock markdown-mode magit ibuffer-vc ibuffer-tramp hl-todo editorconfig dockerfile-mode cuda-mode company cmake-project cmake-mode bool-flip)))
- '(recentf-max-menu-items 25)
- '(recentf-mode t)
- '(remote-file-name-inhibit-cache 3600)
- '(ring-bell-function (quote ignore))
- '(safe-local-variable-values (quote ((TeX-master . "main"))))
- '(savehist-mode t)
- '(scroll-bar-mode nil)
- '(sentence-end-double-space nil)
- '(set-mark-command-repeat-pop t)
- '(show-paren-mode t)
- '(tool-bar-mode nil)
- '(tramp-completion-reread-directory-timeout 3600)
- '(tramp-connection-timeout 5)
- '(use-dialog-box nil)
- '(use-file-dialog nil)
- '(version-control t)
- '(visible-bell nil)
- '(winner-mode t))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;; -------------------- Customization file --------------------
+(when (file-exists-p custom-file)
+  (load-file custom-file))
