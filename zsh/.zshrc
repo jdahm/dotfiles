@@ -1,6 +1,12 @@
-# Return early if this is not interactive
-if [ $TERM = "dumb" ] || [[ ! -o interactive ]]; then
-    return
+# Disable features and return early if this is a dumb terminal
+if [[ "$TERM" == "dumb" ]]; then
+  unsetopt zle
+  unsetopt prompt_cr
+  unsetopt prompt_subst
+  unfunction precmd
+  unfunction preexec
+  PS1='$ '
+  return
 fi
 
 # Enable autocompletions
