@@ -45,10 +45,22 @@ fpath+=("$HOME/.zsh/pure")
 autoload -U promptinit && promptinit
 prompt pure
 
+alias restart-git-prompt="prompt_pure_async_init=0; async_stop_worker prompt_pure"
+
 # Other plugins
-source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOME/.zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+# source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $HOME/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
+# source $HOME/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
+source $HOME/.zsh/zsh-z/zsh-z.plugin.zsh
+source $HOME/.zsh/web-search/web_search.plugin.zsh
+
+# # history-substring-search
+# bindkey '^[[A' history-substring-search-up
+# bindkey '^[[B' history-substring-search-down
+
+# bindkey -M emacs '^P' history-substring-search-up
+# bindkey -M emacs '^N' history-substring-search-down
 
 # Source local config if exists
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
