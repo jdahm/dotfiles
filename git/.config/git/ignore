@@ -36,6 +36,7 @@ Session.vim
 # Python
 __pycache__/
 *.pyc
+.venv/
 
 # Tags
 TAGS
