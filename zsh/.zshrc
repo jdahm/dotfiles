@@ -9,8 +9,11 @@ if [[ "$TERM" == "dumb" ]]; then
   return
 fi
 
+# Completion
+fpath+=($HOME/.zsh/completion)
+
 # Enable autocompletions
-autoload -Uz compinit && compinit
+autoload -Uz compinit && compinit -i
 zmodload -i zsh/complist
 
 # Load bashcompinit for some old bash completions
