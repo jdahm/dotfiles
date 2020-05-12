@@ -181,6 +181,7 @@
 	snap = !git stash save 'snapshot: $(date)' && git stash apply 'stash@{0}'
 	bare = !sh -c 'git symbolic-ref HEAD refs/heads/$1 && git rm --cached -r . && git clean -xfd' -
 	whois = !sh -c 'git log -i -1 --author=\"$1\" --pretty=\"format:%an <%ae>\"' -
+    istracked = !sh -c 'git ls-files $1 --error-unmatch; echo $?' -
 	serve = daemon --reuseaddr --verbose --base-path=. --export-all ./.git
 	#############
 	behind = !git rev-list --left-only --count $(git bu)...HEAD
