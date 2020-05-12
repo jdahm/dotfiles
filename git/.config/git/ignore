@@ -124,3 +124,6 @@ slprj/
 # Pipenv
 Pipfile
 Pipfile.lock
+
+# Direnv
+.envrc
