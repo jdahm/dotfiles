@@ -127,3 +127,6 @@ Pipfile.lock
 
 # Direnv
 .envrc
+
+# Visual Studio Code
+.vscode/
