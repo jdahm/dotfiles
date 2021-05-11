@@ -1,4 +1,0 @@
-startup_message off
-term xterm-256color
-hardstatus alwayslastline '%{= KW}%H | %{= wW}%{-}%-Lw%{= bW}[%n%f %t]%{-}%+Lw'
-altscreen on

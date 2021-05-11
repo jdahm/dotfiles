@@ -1,0 +1,58 @@
+{
+    /* ~/Library/KeyBindings/DefaultKeyBinding.dict
+
+        See https://gist.github.com/zsimic/1367779, prefix cheatsheet:
+        Char Short Key
+        $    S-    Shift ⇧
+        ^    C-    CTRL ⌃
+        ~    O-    Option ⌥ (⊞ Win key position on PC)
+        @    M-    Command ⌘ (Alt position on PC)
+        #          Numeric Keypad
+    */
+
+    /*---- Navigation ----*/
+
+    /* Up/down is mostly for a nicer laptop navigation (no Home, PgUp etc keys) */
+    "~\Uf700"   = "pageUp:";                                        /* O-up         Page up */
+    "~$\Uf700"  = "pageUpAndModifySelection:";                      /* O-S-up       Select + page up */
+    "@\Uf700"   = "moveToBeginningOfDocument:";                     /* M-up         Beginning of document */
+    "@$\Uf700"  = "moveToBeginningOfDocumentAndModifySelection:";   /* M-S-up       Select to beginning of document */
+
+    "~\Uf701"   = "pageDown:";                                      /* O-down       Page down */
+    "~$\Uf701"  = "pageDownpAndModifySelection:";                   /* O-S-down     Select + page down */
+    "@\Uf701"   = "moveToEndOfDocument:";                           /* M-down       End of document */
+    "@$\Uf701"  = "moveToEndOfDocumentAndModifySelection:";         /* M-S-down     Select to end of document */
+
+    /* Windows defaults are more convenient */
+    "^\Uf702"   = "moveWordBackward:";                              /* C-left       Move word left */
+    "^$\Uf702"  = "moveWordBackwardAndModifySelection:";            /* C-S-left     Select word left */
+
+    "^\Uf703"   = "moveWordForward:";                               /* C-right      Move word right */
+    "^$\Uf703"  = "moveWordForwardAndModifySelection:";             /* C-S-right    Select word right */
+
+    "\Uf729"    = "moveToBeginningOfLine:";                         /* home         Beginning of line */
+    "$\Uf729"   = "moveToBeginningOfLineAndModifySelection:";       /* S-home       Select to beginning of line */
+    "^\Uf729"   = "moveToBeginningOfDocument:";                     /* C-home       Beginning of document */
+    "^$\Uf729"  = "moveToBeginningOfDocumentAndModifySelection:";   /* C-S-home     Select to beginning of document */
+
+    "\Uf72b"    = "moveToEndOfLine:";                               /* end          End of line */
+    "$\Uf72b"   = "moveToEndOfLineAndModifySelection:";             /* S-end        Select to end of line */
+    "^\Uf72b"   = "moveToEndOfDocument:";                           /* C-end        End of document */
+    "^$\Uf72b"  = "moveToEndOfDocumentAndModifySelection:";         /* C-S-end      Select to end of document */
+
+    "\Uf72c"    = "pageUp:";                                        /* PageUp       Page up */
+    "$\Uf72c"   = "pageUpAndModifySelection:";                      /* S-PageUp     Select + page up */
+    "@\Uf72c"   = "scrollPageUp:";                                  /* M-PageUp     Scroll page up */
+
+    "\Uf72d"    = "pageDown:";                                      /* PageDn       Page down */
+    "$\Uf72d"   = "pageDownAndModifySelection:";                    /* S-PageDn     Select + page down */
+    "@\Uf72d"   = "scrollPageDown:";                                /* M-PageDn     Scroll page down */
+
+    /*---- Editing ----*/
+
+    "^\U007f"   = "deleteWordBackward:";                            /* C-Del        Delete word backward */
+    "^\Uf728"   = "deleteWordForward:";                             /* C-FwdDel     Delete word forward */
+
+    "$\U000a"   = "insertLineBreak:";                               /* S-Ret        Line break */
+
+}
