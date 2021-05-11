@@ -87,6 +87,7 @@ in {
       "history-substring-search"
       "fasd"
       "archive"
+      "gpg"
     ];
     prezto.terminal.autoTitle = true;
     prezto.editor.keymap = "emacs";
