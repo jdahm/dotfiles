@@ -1,5 +1,7 @@
-{ pkgs, ... }: let
-  getEnvDefault = var: default: if builtins.getEnv var != "" then builtins.getEnv var else default;
+{ pkgs, ... }:
+let
+  getEnvDefault = var: default:
+    if builtins.getEnv var != "" then builtins.getEnv var else default;
 
   homeDirectory = builtins.getEnv "HOME";
   username = builtins.getEnv "USER";
@@ -28,6 +30,7 @@ in {
 
       nixfmt
 
+      ghc
       cabal-install
       stack
       cachix
