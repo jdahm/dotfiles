@@ -56,8 +56,6 @@ in {
     delta.enable = true;
     lfs.enable = true;
     ignores = [ "*~" ".DS_Store" ".vscode" ".direnv" ".envrc" "shell.nix" ];
-    signing.signByDefault = true;
-    signing.gpgPath = "gpg2";
     extraConfig = {
       core = { editor = "nano"; };
       url = { "git@github.com:" = { insteadOf = "https://github.com/"; }; };

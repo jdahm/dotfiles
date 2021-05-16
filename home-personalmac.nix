@@ -18,9 +18,6 @@ default-cache-ttl 18000
   home.file."Library/KeyBindings/DefaultKeyBinding.dict".source = ./mac-keybindings.dict;
   programs.git = {
     userName = "Johann Dahm";
-    userEmail = "johannd@vulcan.com";
-    signing.signByDefault = true;
-    signing.gpgPath = "gpg2";
-    signing.key = "C0767167AA9F7D22";
+    userEmail = "johann.dahm@gmail.com";
   };
 }
