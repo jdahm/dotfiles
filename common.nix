@@ -61,6 +61,7 @@ in {
       url = { "git@github.com:" = { insteadOf = "https://github.com/"; }; };
       pull = { rebase = true; };
       fetch = { prune = true; };
+      push = { default = "upstream"; };
     };
   };
 
