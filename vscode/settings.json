@@ -1,0 +1,39 @@
+{
+    "files.eol": "\n",
+    "editor.fontFamily": "Hack, Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontSize": 14,
+    "editor.cursorStyle": "block",
+    "search.smartCase": true,
+    "telemetry.enableTelemetry": false,
+    "telemetry.enableCrashReporter": false,
+    "editor.fontLigatures": true,
+    "files.trimTrailingWhitespace": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "diffEditor.renderIndicators": false,
+    "editor.renderWhitespace": "selection",
+    "[dockerfile]": {
+        "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+    },
+    "[cpp]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python"
+    },
+    "git.enableCommitSigning": true,
+    "python.languageServer": "Pylance",
+    "window.restoreWindows": "none",
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
+    "githubPullRequests.fileListLayout": "flat",
+    "workbench.colorTheme": "Atom One Dark",
+    "editor.multiCursorModifier": "ctrlCmd",
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    },
+    "workbench.editor.enablePreview": false
+}

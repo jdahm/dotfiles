@@ -1,1 +1,9 @@
+# Symbolic link
 home.nix
+
+# Backup files
+*~
+
+# Emacs files
+emacs.d/*
+!emacs.d/init.el

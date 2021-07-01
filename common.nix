@@ -1,5 +1,7 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 let
+  python = pkgs.python39.withPackages
+    (ps: [ ps.wheel ps.tox ps.setuptools ps.pip-tools ps.pipx ]);
   getEnvDefault = var: default:
     if builtins.getEnv var != "" then builtins.getEnv var else default;
 
@@ -35,6 +37,10 @@ in {
       stack
       cachix
 
+      cargo
+      rustc
+      rustfmt
+
       google-cloud-sdk
       tmux
 
@@ -42,7 +48,7 @@ in {
       htop
 
       emacs
-      vscode
+      # vscode
     ];
     sessionVariables = {
       EDITOR = editor;
@@ -103,7 +109,7 @@ in {
 
   programs.direnv = {
     enable = true;
-    enableNixDirenvIntegration = true;
+    nix-direnv.enable = true;
   };
 
   programs.gpg = {
@@ -114,5 +120,10 @@ in {
     };
   };
 
-  home.file.".emacs.d/init.el".source = ./init.el;
+  programs.exa = {
+    enable = true;
+    enableAliases = true;
+  };
+
+  home.file.".emacs.d".source = config.lib.file.mkOutOfStoreSymlink ./emacs.d;
 }
