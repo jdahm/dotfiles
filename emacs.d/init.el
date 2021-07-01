@@ -19,8 +19,9 @@
 (straight-use-package 'selectrum)
 (selectrum-mode +1)
 
-(add-hook 'kill-emacs-query-functions
-          'custom-prompt-customize-unsaved-options)
+(tool-bar-mode -1)
+
+(set-face-attribute 'default nil :height 140)
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
