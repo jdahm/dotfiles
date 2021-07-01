@@ -40,6 +40,8 @@ in {
       cargo
       rustc
       rustfmt
+      ripgrep
+      skim
 
       google-cloud-sdk
       tmux
