@@ -48,7 +48,7 @@ in {
       htop
 
       emacs
-      # vscode
+      vscode
     ];
     sessionVariables = {
       EDITOR = editor;

@@ -7,3 +7,8 @@ home.nix
 # Emacs files
 emacs.d/*
 !emacs.d/init.el
+
+# VSCode files
+vscode/*
+!vscode/settings.json
+!vscode/keybindings.json

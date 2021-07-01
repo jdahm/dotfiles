@@ -1,0 +1,93 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+        "key": "alt+.",
+        "command": "editor.action.revealDefinition",
+        "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+    },
+    {
+        "key": "f12",
+        "command": "-editor.action.revealDefinition",
+        "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+    },
+    {
+        "key": "shift+alt+/",
+        "command": "editor.action.goToReferences",
+        "when": "editorHasReferenceProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
+    },
+    {
+        "key": "shift+f12",
+        "command": "-editor.action.goToReferences",
+        "when": "editorHasReferenceProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
+    },
+    {
+        "key": "alt+o",
+        "command": "clangd.switchheadersource",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+cmd+o",
+        "command": "-clangd.switchheadersource",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+cmd+o",
+        "command": "lineBreakInsert",
+        "when": "textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+o",
+        "command": "-lineBreakInsert",
+        "when": "textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "alt+f",
+        "command": "cursorWordEndRight",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "alt+right",
+        "command": "-cursorWordEndRight",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "cmd+left",
+        "command": "cursorWordStartLeft",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "alt+left",
+        "command": "-cursorWordStartLeft",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "shift+alt+f",
+        "command": "cursorWordEndRightSelect",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "shift+alt+right",
+        "command": "-cursorWordEndRightSelect",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "alt+b",
+        "command": "cursorWordLeft",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "alt+left",
+        "command": "-cursorWordLeft",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "shift+alt+b",
+        "command": "cursorWordLeftSelect",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "shift+alt+left",
+        "command": "-cursorWordLeftSelect",
+        "when": "textInputFocus"
+    }
+]

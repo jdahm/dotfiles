@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 let nixProfileDir = (builtins.getEnv "HOME") + "/.nix-profile";
 in {
   # Let Home Manager install and manage itself.
@@ -23,7 +23,7 @@ in {
 
     alias ldd='otool -L' '';
 
-  home.file."Library/Application Support/Code/User/settings.json".source = ./vscode/settings.json;
+  home.file."Library/Application Support/Code/User".source = config.lib.file.mkOutOfStoreSymlink ./vscode;
 
   programs.git = {
     userName = "Johann Dahm";
