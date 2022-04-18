@@ -5,10 +5,9 @@
 
 source ~/.zsh/zsh-snap/znap.zsh  # Start Znap
 
-znap eval brew-shellenv '/opt/homebrew/bin/brew shellenv'
+HOMEBREW_PREFIX=/opt/homebrew
 path=($HOMEBREW_PREFIX/bin $HOME/bin $path[@])
 fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath[@])
-export PATH="$HOME/bin:/opt/homebrew/bin:$PATH"
 
 # `znap prompt` makes your prompt visible in just 15-40ms!
 znap prompt sindresorhus/pure
