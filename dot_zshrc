@@ -9,6 +9,9 @@ HOMEBREW_PREFIX=/opt/homebrew
 path=($HOMEBREW_PREFIX/bin $HOME/bin $path[@])
 fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath[@])
 
+# pyenv
+eval "$(pyenv init -)"
+
 # `znap prompt` makes your prompt visible in just 15-40ms!
 znap prompt sindresorhus/pure
 
