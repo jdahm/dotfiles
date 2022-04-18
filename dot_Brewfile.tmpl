@@ -29,7 +29,9 @@ cask "font-fira-code"
 cask "font-fira-code-nerd-font"
 
 cask "iterm2"
+{{- if eq .chezmoi.hostname "Johanns-Air" }}
 cask "google-chrome"
+{{- end }}
 cask "lastpass"
 cask "spotify"
 cask "element"
