@@ -1,0 +1,41 @@
+# Download Znap, if it's not there yet.
+[[ -f ~/.zsh/zsh-snap/znap.zsh ]] ||
+    git clone --depth 1 -- \
+        https://github.com/marlonrichert/zsh-snap.git ~/.zsh/zsh-snap
+
+source ~/.zsh/zsh-snap/znap.zsh  # Start Znap
+
+znap eval brew-shellenv '/opt/homebrew/bin/brew shellenv'
+path=($HOMEBREW_PREFIX/bin $HOME/bin $path[@])
+fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath[@])
+export PATH="$HOME/bin:/opt/homebrew/bin:$PATH"
+
+# `znap prompt` makes your prompt visible in just 15-40ms!
+znap prompt sindresorhus/pure
+
+# `znap source` automatically downloads and starts your plugins.
+# znap source marlonrichert/zsh-edit
+znap source marlonrichert/zsh-hist
+znap source marlonrichert/zcolors
+znap eval zcolors "zcolors ${(q)LS_COLORS}"
+
+znap source zsh-users/zsh-autosuggestions
+znap source zsh-users/zsh-syntax-highlighting
+
+# znap source marlonrichert/zsh-autocomplete
+# zstyle ':autocomplete:*' min-input 3
+# zstyle ':autocomplete:*' min-delay 0.5
+
+ZVM_INIT_MODE=sourcing
+ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
+ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
+znap source jeffreytse/zsh-vi-mode
+
+WORDCHARS=${WORDCHARS/\/}
+
+alias vim=nvim
+export EDITOR=nvim
+export VISUAL=nvim
+
+alias ls=exa
+

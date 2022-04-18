@@ -1,0 +1,53 @@
+[alias]
+	amend = "commit --amend --reuse-message=HEAD"
+	branches = "branch -a"
+	contributors = "shortlog --summary --numbered"
+	l = "log --pretty=oneline -n 20 --graph --abbrev-commit"
+	remotes = "remote -v"
+	s = "status -s"
+	tags = "tag -l"
+
+[core]
+	editor = "nvim"
+	pager = "delta"
+
+[fetch]
+	prune = true
+
+[filter "lfs"]
+	clean = "git-lfs clean -- %f"
+	process = "git-lfs filter-process"
+	required = true
+	smudge = "git-lfs smudge -- %f"
+
+[init]
+	defaultBranch = "main"
+
+[interactive]
+	diffFilter = "delta --color-only"
+
+[pull]
+	rebase = "merges"
+
+[push]
+	default = "simple"
+
+[url "git://gist.github.com/"]
+	insteadOf = "gist:"
+
+[url "git://github.com/"]
+	insteadOf = "github:"
+
+[url "git@gist.github.com:"]
+	insteadOf = "gst:"
+	pushInsteadOf = "gist:"
+
+[url "git@github.com:"]
+	pushInsteadOf = "github:"
+
+[url "git@github.com:github"]
+	insteadOf = "github:github"
+
+[user]
+	email = "johann.dahm@gmail.com"
+	name = "Johann Dahm"
