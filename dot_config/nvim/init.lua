@@ -31,6 +31,7 @@ map('i', 'jk', '<Esc>')
 
 map('n', '<leader>c', ':nohl<CR>')
 map('n', '<leader>s', ':w<CR>')
+map('n', '<leader>q', ':q<CR>')
 
 map('n', '<leader>tk', '<C-w>t<C-w>K')
 map('n', '<leader>th', '<C-w>t<C-w>H')
@@ -47,6 +48,10 @@ require('packer').startup(function()
   use {'wbthomason/packer.nvim'}
 
   use {'tpope/vim-sensible'}
+
+  use {'kana/vim-textobj-entire'}
+
+  use {'tpope/vim-sleuth'}
 
   use {'tpope/vim-fugitive'}
 
