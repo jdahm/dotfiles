@@ -21,6 +21,8 @@ brew "lastpass-cli"
 brew "go"
 brew "pyenv"
 
+brew "nvm"
+
 # Casks
 cask "font-hack"
 cask "font-hack-nerd-font"
