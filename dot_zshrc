@@ -6,7 +6,7 @@
 source ~/.zsh/zsh-snap/znap.zsh  # Start Znap
 
 HOMEBREW_PREFIX=/opt/homebrew
-path=($HOMEBREW_PREFIX/bin $HOME/bin $path[@])
+path=($HOMEBREW_PREFIX/bin $HOME/bin $HOME/go/bin $path[@])
 fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath[@])
 
 # pyenv
