@@ -31,7 +31,6 @@
 
 [push]
     default = "simple"
-    gpgSign = true
 
 [url "git://gist.github.com/"]
 	insteadOf = "gist:"
