@@ -18,6 +18,9 @@ brew "urlview"
 brew "gnupg"
 brew "lastpass-cli"
 
+brew "go"
+brew "pyenv"
+
 # Casks
 cask "font-hack"
 cask "font-hack-nerd-font"
