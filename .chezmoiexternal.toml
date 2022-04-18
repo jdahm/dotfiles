@@ -3,13 +3,7 @@
     url = "https://github.com/tmux-plugins/tpm"
     refreshPeriod = "168h"
 
-[".goenv"]
+[".nvm"]
     type = "git-repo"
-    url = "https://github.com/syndbg/goenv"
+    url = "https://github.com/nvm-sh/nvm"
     refreshPeriod = "168h"
-
-[".pyenv"]
-    type = "git-repo"
-    url = "https://github.com/pyenv/pyenv"
-    refreshPeriod = "168h"
-

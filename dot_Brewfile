@@ -20,8 +20,7 @@ brew "lastpass-cli"
 
 brew "go"
 brew "pyenv"
-
-brew "nvm"
+# nvm is managed through chezmoi
 
 # Casks
 cask "font-hack"
