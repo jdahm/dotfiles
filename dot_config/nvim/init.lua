@@ -65,7 +65,7 @@ require('packer').startup(function()
 
   use {'tpope/vim-endwise'}
 
-  use {'folke/which-key.nvim' config=function() require("which-key").setup {} end}
+  use {'folke/which-key.nvim'}
 
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 
