@@ -17,8 +17,6 @@ znap prompt sindresorhus/pure
 # znap source marlonrichert/zsh-edit
 znap source marlonrichert/zsh-hist
 znap source marlonrichert/zcolors
-znap eval zcolors "zcolors ${(q)LS_COLORS}"
-
 znap source zsh-users/zsh-autosuggestions
 znap source zsh-users/zsh-syntax-highlighting
 
