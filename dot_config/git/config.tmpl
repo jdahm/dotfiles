@@ -50,14 +50,16 @@
 
 [user]
 	email = "johann.dahm@gmail.com"
-    name = "Johann Dahm"
-    signingkey = "1D03C308"
+	name = "Johann Dahm"
+{{- if eq .chezmoi.hostname "Johanns-Air" }}
+	signingkey = "1D03C308"
 
 [commit]
-    gpgSign = true
+	gpgSign = true
 
 [tag]
-    gpgSign = true
+	gpgSign = true
+{{ end }}
 
 [color "status"]
 	branch = 14 normal
