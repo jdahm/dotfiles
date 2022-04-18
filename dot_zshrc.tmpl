@@ -21,6 +21,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# direnv
+eval "$(direnv hook zsh)"
+
 # `znap prompt` makes your prompt visible in just 15-40ms!
 znap prompt sindresorhus/pure
 
