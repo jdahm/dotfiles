@@ -53,7 +53,7 @@ require('packer').startup(function()
 
   use {'kana/vim-textobj-entire'}
 
-  use {'tpope/vim-sleuth'}
+  -- use {'tpope/vim-sleuth'}
 
   use {'tpope/vim-fugitive'}
 
@@ -67,11 +67,11 @@ require('packer').startup(function()
 
   use {'tpope/vim-endwise'}
 
-  use {'folke/which-key.nvim'}
+  -- use {'folke/which-key.nvim'}
 
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 
-  use {'ojroques/nvim-hardline'}
+  -- use {'ojroques/nvim-hardline'}
 
   use {'shaunsingh/nord.nvim'}
 
