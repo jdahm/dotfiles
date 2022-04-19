@@ -15,27 +15,20 @@ vim.opt.fixeol = true
 
 vim.g.mapleader = ','
 
-local function map(mode, lhs, rhs, opts)
-  local options = { noremap = true, silent = true }
-  if opts then
-    options = vim.tbl_extend('force', options, opts)
-  end
-  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
-end
+local opts = { noremap = true, silent = true }
+vim.api.nvim_set_keymap('', '<up>', '<nop>', opts)
+vim.api.nvim_set_keymap('', '<down>', '<nop>', opts)
+vim.api.nvim_set_keymap('', '<left>', '<nop>', opts)
+vim.api.nvim_set_keymap('', '<right>', '<nop>', opts)
 
-map('', '<up>', '<nop>')
-map('', '<down>', '<nop>')
-map('', '<left>', '<nop>')
-map('', '<right>', '<nop>')
+vim.api.nvim_set_keymap('i', 'jk', '<Esc>', opts)
 
-map('i', 'jk', '<Esc>')
+vim.api.nvim_set_keymap('n', '<leader>c', ':nohl<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>s', ':w<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>q', ':q<CR>', opts)
 
-map('n', '<leader>c', ':nohl<CR>')
-map('n', '<leader>s', ':w<CR>')
-map('n', '<leader>q', ':q<CR>')
-
-map('n', '<leader>tk', '<C-w>t<C-w>K')
-map('n', '<leader>th', '<C-w>t<C-w>H')
+vim.api.nvim_set_keymap('n', '<leader>tk', '<C-w>t<C-w>K', opts)
+vim.api.nvim_set_keymap('n', '<leader>th', '<C-w>t<C-w>H', opts)
 
 -- Plugins
 local fn = vim.fn
@@ -107,7 +100,6 @@ local nvim_lsp = require('lspconfig')
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = { noremap=true, silent=true }
 vim.api.nvim_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
 vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
 vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
@@ -138,14 +130,15 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', 'gopls', 'eslint' }
-for _, lsp in pairs(servers) do
+local servers = { pyright = {'pyright'}, gopls = {'gopls'}, eslint = {'eslint'} }
+for lsp, cmd in pairs(servers) do
   require('lspconfig')[lsp].setup {
     on_attach = on_attach,
     flags = {
       -- This will be the default in neovim 0.7+
       debounce_text_changes = 150,
-    }
+    },
+    cmd = cmd
   }
 end
 
