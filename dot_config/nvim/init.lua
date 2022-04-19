@@ -73,7 +73,8 @@ require('packer').startup(function()
 
   use {'ojroques/nvim-hardline'}
 
-  use {'shaunsingh/nord.nvim'}
+  -- use {'shaunsingh/nord.nvim'}
+  use {'sainnhe/everforest'}
 
   if packer_bootstrap then
     require('packer').sync()
@@ -82,7 +83,8 @@ end)
 
 require('hardline').setup {}
 
-vim.cmd[[colorscheme nord]]
+
+vim.cmd[[colorscheme everforest]]
 
 require 'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all"
