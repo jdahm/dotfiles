@@ -71,7 +71,7 @@ require('packer').startup(function()
 
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 
-  -- use {'ojroques/nvim-hardline'}
+  use {'ojroques/nvim-hardline'}
 
   use {'shaunsingh/nord.nvim'}
 
