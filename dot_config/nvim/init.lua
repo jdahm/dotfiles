@@ -5,6 +5,7 @@ vim.opt.wildmode = "longest:full,full"
 
 vim.opt.swapfile = false
 vim.opt.number = true
+vim.opt.relativenumber = true
 
 -- vim.opt.expandtab = true
 -- vim.opt.shiftwidth = 4
