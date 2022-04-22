@@ -46,4 +46,9 @@ for lsp, cmd in pairs(servers) do
   }
 end
 
+local fs = vim.api.nvim_create_augroup("FormatOnSave", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePre", {
+    command = "lua vim.lsp.buf.formatting_sync(nil,1000)",
+    group = fs,
+})
 
