@@ -33,6 +33,8 @@ vim.g.mapleader = ','
 
 vim.opt.path = vim.opt.path + '.,**'
 
+vim.opt.mouse = 'a'
+
 local opts = { noremap = true, silent = true }
 vim.api.nvim_set_keymap('', '<up>', '<nop>', opts)
 vim.api.nvim_set_keymap('', '<down>', '<nop>', opts)
