@@ -5,7 +5,23 @@ vim.opt.wildmode = "longest:full,full"
 
 vim.opt.swapfile = false
 vim.opt.number = true
-vim.opt.relativenumber = true
+
+-- Numbering
+num = vim.api.nvim_create_augroup("LineNumbering", { clear = true })
+
+vim.api.nvim_create_autocmd({"BufEnter", "FocusGained", "InsertLeave", "WinEnter"}, {
+  command = 'if &nu && mode() != "i" | set rnu   | endif',
+  group = num,
+})
+
+vim.api.nvim_create_autocmd({"BufLeave", "FocusLost", "InsertEnter", "WinLeave"}, {
+  command = 'if &nu                  | set nornu | endif',
+  group = num,
+})
+
+-- Trim trailing whitespace
+local ws = vim.api.nvim_create_augroup("TrimWhitespace", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e", group = ws })
 
 -- vim.opt.expandtab = true
 -- vim.opt.shiftwidth = 4
