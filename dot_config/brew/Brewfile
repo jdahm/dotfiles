@@ -18,6 +18,8 @@ brew "tmux"
 brew "wget"
 brew "urlview"
 
+brew "ripgrep"
+
 brew "gnupg"
 brew "pinentry-mac"
 brew "lastpass-cli"
@@ -26,9 +28,9 @@ brew "go"
 brew "pyenv"
 # nvm is managed through chezmoi
 
-brew "pyright"
 brew "gopls"
 brew "eslint"
+brew "stylua"
 
 brew "gcc"
 brew "llvm"
@@ -49,10 +51,7 @@ cask "font-hack-nerd-font"
 cask "font-fira-code"
 cask "font-fira-code-nerd-font"
 
-cask "alacritty"
-{{- if eq .chezmoi.hostname "Johanns-Air" }}
-cask "google-chrome"
-{{- end }}
+cask "kitty"
 cask "lastpass"
 cask "spotify"
 cask "element"

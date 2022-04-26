@@ -5,11 +5,9 @@
 
 source ~/.zsh/zsh-snap/znap.zsh  # Start Znap
 
-{{ if eq .chezmoi.hostname "Johanns-Air" }}
+
 HOMEBREW_PREFIX=/opt/homebrew
-{{ else }}
-HOMEBREW_PREFIX=/usr/local
-{{ end }}
+
 path=($HOMEBREW_PREFIX/bin $HOME/bin $HOME/go/bin $path[@])
 fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath[@])
 
@@ -41,6 +39,7 @@ znap prompt sindresorhus/pure
 
 # `znap source` automatically downloads and starts your plugins.
 znap source zsh-users/zsh-completions
+znap source agkozak/zsh-z
 znap source zsh-users/zsh-autosuggestions
 znap source zsh-users/zsh-syntax-highlighting
 
