@@ -9,11 +9,10 @@ if [ -f ~/.config/brew/path ]; then
   HOMEBREW_PATH=$(cat ~/.config/brew/path)
   path=($HOMEBREW_PATH/bin $path[@])
   fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath[@])
+  alias brew-update-all="cat ~/.config/brew/Brewfile* | brew bundle --file=-"
 fi
 
 path=($HOME/bin $HOME/go/bin $path[@])
-
-alias brew-update-all="cat ~/.config/brew/Brewfile* | brew bundle --file=-"
 
 # pyenv
 eval "$(pyenv init -)"
