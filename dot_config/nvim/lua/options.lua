@@ -9,3 +9,5 @@ vim.g.mapleader = " "
 
 -- Add current filepath to vim's path for :find
 vim.opt.path = vim.opt.path + ".,**"
+
+vim.opt.shell = "fish"
