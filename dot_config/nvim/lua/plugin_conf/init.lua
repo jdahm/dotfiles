@@ -1,6 +1,0 @@
-require "plugin_conf.hardline"
-require "plugin_conf.telescope"
-require "plugin_conf.gitsigns"
-require "plugin_conf.trouble"
-require "plugin_conf.treesitter"
-require "plugin_conf.lsp"
