@@ -1,13 +1,14 @@
 set -U fish_greeting
 if test -f ~/.config/brew/path
     set PATH (cat ~/.config/brew/path)/bin $PATH
-    alias brew-update-all="cat ~/.config/brew/Brewfile* | brew bundle --file=-"
 end
 
 set PATH $HOME/bin $PATH
 
 alias vim=nvim
 alias vi=nvim
+set -x EDITOR nvim
+set -x VISUAL nvim
 
 if status is-interactive
     if test -d (brew --prefix)"/share/fish/completions"
@@ -25,3 +26,5 @@ set --global hydro_color_git green
 set --global hydro_color_duration yellow
 set --global hydro_color_prompt blue
 set --global hydro_color_pwd magenta
+
+alias chezmoi-cd="cd (chezmoi source-path)"

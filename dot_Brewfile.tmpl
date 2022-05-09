@@ -2,6 +2,7 @@
 tap "homebrew/core"
 tap "homebrew/cask"
 tap "homebrew/cask-fonts"
+tap "homebrew/cask-drivers"
 
 # Brews
 brew "minikube"
@@ -63,3 +64,9 @@ cask "spotify"
 cask "element"
 cask "docker"
 cask "visual-studio-code"
+
+{{- if eq .chezmoi.hostname "Johanns-Air" }}
+cask "qmk-toolbox"
+cask "google-chrome"
+{{ end }}
+
