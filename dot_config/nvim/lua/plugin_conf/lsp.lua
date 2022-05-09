@@ -40,15 +40,18 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "pylsp", "gopls", "eslint", "rls" }
-for _, lsp in pairs(servers) do
-  nvim_lsp[lsp].setup {
-    on_attach = on_attach,
-    flags = {
-      -- This will be the default in neovim 0.7+
-      debounce_text_changes = 150,
-    },
-  }
+local servers = {
+  pylsp = { cmd = { "pylsp" }, settings = { plugins = { black = { enabled = true } } } },
+  gopls = { cmd = { "gopls" } },
+  eslint = { cmd = { "eslint" } },
+  rls = { cmd = { "rls" } },
+}
+for server, config in pairs(servers) do
+  if type(config) == "function" then
+    config = config()
+  end
+  config.on_attach = on_attach
+  nvim_lsp[server].setup(config)
 end
 
 -- local fs = vim.api.nvim_create_augroup("FormatOnSave", { clear = true })
@@ -63,6 +66,5 @@ require("null-ls").setup {
     require("null-ls").builtins.diagnostics.eslint,
     require("null-ls").builtins.completion.spell,
   },
+  on_attach = on_attach,
 }
-
-
