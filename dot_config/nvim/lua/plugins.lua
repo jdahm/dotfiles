@@ -42,6 +42,12 @@ require("packer").startup(function()
 
   use { "tpope/vim-dadbod" }
 
+  use { "alker0/chezmoi.vim" }
+
+  use { "gennaro-tedesco/nvim-peekup" }
+
+  use { "radenling/vim-dispatch-neovim", requires = { "tpope/vim-dispatch" } }
+
   use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
 
   use { "nvim-treesitter/nvim-treesitter-textobjects", run = ":TSUpdate" }
@@ -49,6 +55,8 @@ require("packer").startup(function()
   use { "neovim/nvim-lspconfig" }
 
   use { "jose-elias-alvarez/null-ls.nvim", requires = { "nvim-lua/plenary.nvim" } }
+
+  use { "fladson/vim-kitty" }
 
   use { "ojroques/nvim-hardline" }
 

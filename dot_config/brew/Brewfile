@@ -6,7 +6,6 @@ tap "homebrew/cask-fonts"
 # Brews
 brew "minikube"
 brew "neovim"
-brew "exa"
 brew "tree"
 brew "git"
 brew "git-crypt"
@@ -18,15 +17,22 @@ brew "tmux"
 brew "wget"
 brew "urlview"
 
-brew "ripgrep"
-
 brew "gnupg"
+
+brew "exa"
+brew "ripgrep"
+brew "fd"
+brew "procs"
+brew "dust"
+
+brew "fish"
+brew "fisher"
+
 brew "pinentry-mac"
 brew "lastpass-cli"
 
 brew "go"
 brew "pyenv"
-# nvm is managed through chezmoi
 
 brew "gopls"
 brew "eslint"
@@ -57,4 +63,3 @@ cask "spotify"
 cask "element"
 cask "docker"
 cask "visual-studio-code"
-cask "vimr"

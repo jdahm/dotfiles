@@ -9,10 +9,11 @@ if [ -f ~/.config/brew/path ]; then
   HOMEBREW_PATH=$(cat ~/.config/brew/path)
   path=($HOMEBREW_PATH/bin $path[@])
   fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath[@])
-  alias brew-update-all="cat ~/.config/brew/Brewfile* | brew bundle --file=-"
 fi
 
 path=($HOME/bin $HOME/go/bin $path[@])
+
+alias brew-update-all="cat ~/.config/brew/Brewfile* | brew bundle --cleanup --file=-"
 
 # pyenv
 eval "$(pyenv init -)"
@@ -50,12 +51,13 @@ znap source zsh-users/zsh-syntax-highlighting
 # zstyle ':autocomplete:*' min-input 3
 # zstyle ':autocomplete:*' min-delay 0.5
 
-ZVM_INIT_MODE=sourcing
-ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
-znap source jeffreytse/zsh-vi-mode
+# ZVM_INIT_MODE=sourcing
+# ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
+# znap source jeffreytse/zsh-vi-mode
 
 # WORDCHARS=${WORDCHARS/\/}
 
+alias vi=nvim
 alias vim=nvim
 export EDITOR=nvim
 export VISUAL=nvim

@@ -40,7 +40,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "pylsp", "gopls", "eslint" }
+local servers = { "pylsp", "gopls", "eslint", "rls" }
 for _, lsp in pairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -64,3 +64,5 @@ require("null-ls").setup {
     require("null-ls").builtins.completion.spell,
   },
 }
+
+
