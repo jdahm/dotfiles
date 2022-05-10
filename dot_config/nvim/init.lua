@@ -1,8 +1,4 @@
--- Neovim configuration
--- Requires 0.7+
-
 local install_path = vim.fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
-local opts = { noremap = true, silent = true }
 
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   vim.fn.execute("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
@@ -29,7 +25,12 @@ require("packer").startup(function(use)
 
   use "tpope/vim-unimpaired"
 
-  use "numToStr/Comment.nvim"
+  use {
+    "numToStr/Comment.nvim",
+    config = function()
+      require("Comment").setup {}
+    end,
+  }
 
   use "tpope/vim-endwise"
 
@@ -61,8 +62,17 @@ require("packer").startup(function(use)
 
   use { "folke/trouble.nvim", requires = { "kyazdani42/nvim-web-devicons" } }
 
+  use {
+    "folke/which-key.nvim",
+    config = function()
+      require("which-key").setup {}
+    end,
+  }
+
   use "lewis6991/gitsigns.nvim"
 end)
+
+local wk = require "which-key"
 
 require("gitsigns").setup {
   on_attach = function(bufnr)
@@ -112,6 +122,21 @@ require("gitsigns").setup {
     end)
     map("n", "<leader>td", gs.toggle_deleted)
 
+    wk.register({
+      h = {
+        name = "GitSigns",
+        s = { "stage hunk" },
+        r = { "reset hunk" },
+        S = { "stage buffer" },
+        u = { "undo stage hunk" },
+        R = { "reset buffer" },
+        p = { "preview hunk" },
+        b = { "git blame" },
+        d = { "diff this" },
+        D = { "diff with prev" },
+      },
+    }, { prefix = "<leader>" })
+
     -- Text object
     map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
   end,
@@ -124,7 +149,9 @@ vim.opt.clipboard = "unnamedplus"
 
 vim.opt.wildmode = "longest:full,full"
 
+vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 -- Add current filepath to vim's path for :find
 vim.opt.path = vim.opt.path + ".,**"
@@ -137,9 +164,9 @@ vim.keymap.set("", "<down>", "<nop>")
 vim.keymap.set("", "<left>", "<nop>")
 vim.keymap.set("", "<right>", "<nop>")
 
-vim.keymap.set("i", "jk", "<Esc>")
+vim.keymap.set("i", "zx", "<Esc>")
 
-vim.keymap.set("n", "<leader>c", ":nohl<CR>")
+vim.keymap.set("n", "<leader>g", ":nohl<CR>")
 vim.keymap.set("n", "<leader>s", ":w<CR>")
 vim.keymap.set("n", "<leader>q", ":q<CR>")
 
@@ -208,37 +235,42 @@ local lsp_config = require "lspconfig"
 -- Mappings
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
+wk.register({ e = { "LSP diagostics" } }, { prefix = "<leader>" })
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
 vim.keymap.set("n", "<leader>ts", vim.diagnostic.setloclist)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
+  local opts = { buffer = bufnr }
+
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(
-    bufnr,
-    "n",
-    "<leader>wl",
-    "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>",
-    opts
+  vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+  vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+  vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+  vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+  vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
+  vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts)
+  vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts)
+  vim.keymap.set("n", "<leader>wl", function()
+    vim.inspect(vim.lsp.buf.list_workspace_folders())
+  end, opts)
+  wk.register(
+    { w = { name = "LSP Workspaces" }, a = { "add folder" }, r = { "remove folder" }, l = { "list folders" } },
+    { prefix = "<leader>" }
   )
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>D", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>tf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+  vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
+  wk.register({ D = { "Show definition" } }, { prefix = "<leader>" })
+  vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+  vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+  vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+  vim.keymap.set("n", "<leader>cf", vim.lsp.buf.formatting, opts)
+  wk.register({ c = { name = "Code", a = { "action" }, f = { "format" } } }, { prefix = "<leader>" })
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
@@ -246,7 +278,12 @@ end
 require("lspconfig")["pylsp"].setup {
   on_attach = on_attach,
   cmd = { "pylsp" },
-  settings = { pylsp = { plugins = { black = { enabled = true } } } },
+  settings = {
+    configurationSources = { "black" },
+    pylsp = {
+      plugins = { black = { enabled = true }, pycodestyle = { enabled = false }, pyflakes = { enabled = false }, flake8 = { enabled = true } },
+    },
+  },
 }
 
 require("lspconfig")["gopls"].setup {
@@ -279,58 +316,57 @@ require("null-ls").setup {
   on_attach = on_attach,
 }
 
+-- Trouble.nvim
+require("trouble").setup {}
+vim.keymap.set("n", "<leader>xx", "<cmd>Trouble<cr>")
+vim.keymap.set("n", "<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>")
+vim.keymap.set("n", "<leader>xd", "<cmd>Trouble document_diagnostics<cr>")
+vim.keymap.set("n", "<leader>xl", "<cmd>Trouble loclist<cr>")
+vim.keymap.set("n", "<leader>xq", "<cmd>Trouble quickfix<cr>")
+vim.keymap.set("n", "gR", "<cmd>Trouble lsp_references<cr>")
+
+wk.register({
+  x = {
+    name = "Trouble",
+    x = { "enter" },
+    w = { "workspace diag." },
+    d = { "document diag." },
+    l = { "loclist" },
+    q = { "quickfix" },
+  },
+}, { prefix = "<leader>" })
+
 -- Telescope.nvim
+local trouble = require "trouble.providers.telescope"
+
 require("telescope").setup {
   defaults = {
-    -- Default configuration for telescope goes here:
-    -- config_key = value,
     mappings = {
       i = {
-        -- map actions.which_key to <C-h> (default: <C-/>)
-        -- actions.which_key shows the mappings for your picker,
-        -- e.g. git_{create, delete, ...}_branch for the git_branches picker
         ["<C-h>"] = "which_key",
+        ["<C-t>"] = trouble.open_with_trouble,
       },
+      n = { ["<C-t>"] = trouble.open_with_trouble },
     },
   },
-  pickers = {
-    -- Default configuration for builtin pickers goes here:
-    -- picker_name = {
-    --   picker_config_key = value,
-    --   ...
-    -- }
-    -- Now the picker_config_key will be applied every time you call this
-    -- builtin picker
-  },
-  extensions = {
-    -- Your extension configuration goes here:
-    -- extension_name = {
-    --   extension_config_key = value,
-    -- }
-    -- please take a look at the readme of the extension you want to configure
-  },
 }
-
--- Comment.nvim
-require("Comment").setup()
 
 vim.keymap.set("n", "<leader>ff", require("telescope.builtin").find_files)
 vim.keymap.set("n", "<leader>fg", require("telescope.builtin").live_grep)
 vim.keymap.set("n", "<leader>fb", require("telescope.builtin").buffers)
 vim.keymap.set("n", "<leader>fh", require("telescope.builtin").help_tags)
 
--- Trouble.nvim
-vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>Trouble<cr>", opts)
-vim.api.nvim_set_keymap("n", "<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>", opts)
-vim.api.nvim_set_keymap("n", "<leader>xd", "<cmd>Trouble document_diagnostics<cr>", opts)
-vim.api.nvim_set_keymap("n", "<leader>xl", "<cmd>Trouble loclist<cr>", opts)
-vim.api.nvim_set_keymap("n", "<leader>xq", "<cmd>Trouble quickfix<cr>", opts)
-vim.api.nvim_set_keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", opts)
-require("trouble").setup {}
+wk.register(
+  { f = { name = "Telescope", f = { "find files" }, g = { "grep" }, b = { "buffers" }, h = { "help tags" } } },
+  { prefix = "<leader>" }
+)
 
 -- Hardline
 require("hardline").setup { theme = "nord" }
 
+wk.register({ t = { name = "Toggle", b = { "Current line blame" }, s = { "Set loc list" } } }, { prefix = "<leader>" })
+
 -- Theme
 vim.cmd [[colorscheme nordfox]]
 
+-- vim: ts=2 sts=2 sw=2 et
