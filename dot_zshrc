@@ -13,7 +13,7 @@ fi
 
 path=($HOME/bin $HOME/go/bin $path[@])
 
-alias brew-update-all="cat ~/.config/brew/Brewfile* | brew bundle --cleanup --file=-"
+alias brew-update="brew bundle --cleanup --global"
 
 # pyenv
 eval "$(pyenv init -)"
@@ -38,37 +38,52 @@ setopt HIST_REDUCE_BLANKS  # remove unnecessary blanks
 setopt INC_APPEND_HISTORY_TIME  # append command to history file immediately after execution
 setopt EXTENDED_HISTORY  # record command start time
 
-# znap prompt sindresorhus/pure
-znap prompt reobin/typewritten
+autoload -U compinit; compinit
+zstyle ':completion:*' completer _extensions _complete _approximate
+zstyle ':completion:*' menu select
+zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
+zstyle ':completion:*:*:*:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
+zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
+zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
+zstyle ':completion:*' squeeze-slashes true
 
 # `znap source` automatically downloads and starts your plugins.
 znap source zsh-users/zsh-completions
-znap source agkozak/zsh-z
-znap source zsh-users/zsh-autosuggestions
+# znap source agkozak/zsh-z
+# znap source zsh-users/zsh-autosuggestions
 znap source zsh-users/zsh-syntax-highlighting
+znap source hlissner/zsh-autopair
 
 # znap source marlonrichert/zsh-autocomplete
 # zstyle ':autocomplete:*' min-input 3
 # zstyle ':autocomplete:*' min-delay 0.5
 
-# ZVM_INIT_MODE=sourcing
-# ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
+znap prompt reobin/typewritten
+
+# function zvm_config() {
+#   # ZVM_INIT_MODE=sourcing
+#   ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
+#   ZVM_VI_INSERT_ESCAPE_BINDKEY=zx
+# }
 # znap source jeffreytse/zsh-vi-mode
 
-# WORDCHARS=${WORDCHARS/\/}
+WORDCHARS=${WORDCHARS/\/}
+
+alias cat=bat
+alias ls=exa
 
 alias vi=nvim
 alias vim=nvim
 export EDITOR=nvim
 export VISUAL=nvim
 
-alias ls=exa
-alias cat=bat
+export PAGER=less
+
+alias chezmoi-cd="cd $(chezmoi source-path)"
 
 # Nix
-if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-fi
+export NIX_FILE=/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+[ -e $NIX_FILE ] && source $NIX_FILE
 
-# Fzf
+# FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
