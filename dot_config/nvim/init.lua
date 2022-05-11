@@ -232,10 +232,23 @@ require("nvim-treesitter.configs").setup {
 -- LSP
 local lsp_config = require "lspconfig"
 
+vim.g.diagnostics_visible = true
+function _G.toggle_diagnostics()
+  if vim.g.diagnostics_visible then
+    vim.g.diagnostics_visible = false
+    vim.diagnostic.disable()
+  else
+    vim.g.diagnostics_visible = true
+    vim.diagnostic.enable()
+  end
+end
+
+
 -- Mappings
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
-wk.register({ e = { "LSP diagostics" } }, { prefix = "<leader>" })
+vim.keymap.set("n", "<leader>lo", vim.diagnostic.open_float)
+vim.keymap.set("n", "<leader>tl", ":call v:lua.toggle_diagnostics()<CR>")
+wk.register({ e = { "LSP diagnostic float" } }, { prefix = "<leader>" })
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
 vim.keymap.set("n", "<leader>ts", vim.diagnostic.setloclist)
@@ -364,7 +377,7 @@ wk.register(
 -- Hardline
 require("hardline").setup { theme = "nord" }
 
-wk.register({ t = { name = "Toggle", b = { "Current line blame" }, s = { "Set loc list" } } }, { prefix = "<leader>" })
+wk.register({ t = { name = "Toggle", b = { "Current line blame" }, s = { "Set loc list" }, l = "Diagnostics" } }, { prefix = "<leader>" })
 
 -- Theme
 vim.cmd [[colorscheme nordfox]]

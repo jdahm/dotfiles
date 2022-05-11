@@ -1,0 +1,72 @@
+# Download Znap, if it's not there yet.
+[[ -f ~/.zsh/zsh-snap/znap.zsh ]] ||
+    git clone --depth 1 -- \
+        https://github.com/marlonrichert/zsh-snap.git ~/.zsh/zsh-snap
+
+source ~/.zsh/zsh-snap/znap.zsh  # Start Znap
+
+if [ -f ~/.config/brew/path ]; then
+  HOMEBREW_PATH=$(cat ~/.config/brew/path)
+  path=($HOMEBREW_PATH/bin $path[@])
+  fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath[@])
+fi
+
+path=($HOME/bin $HOME/go/bin $path[@])
+
+alias brew-update-all="cat ~/.config/brew/Brewfile* | brew bundle --cleanup --file=-"
+
+# pyenv
+eval "$(pyenv init -)"
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# direnv
+eval "$(direnv hook zsh)"
+
+# the detailed meaning of the below three variable can be found in `man zshparam`.
+export HISTFILE=~/.histfile
+export HISTSIZE=1000000   # the number of items for the internal history list
+export SAVEHIST=1000000   # maximum number of items for the history file
+
+# The meaning of these options can be found in man page of `zshoptions`.
+setopt HIST_IGNORE_ALL_DUPS  # do not put duplicated command into history list
+setopt HIST_SAVE_NO_DUPS  # do not save duplicated command
+setopt HIST_REDUCE_BLANKS  # remove unnecessary blanks
+setopt INC_APPEND_HISTORY_TIME  # append command to history file immediately after execution
+setopt EXTENDED_HISTORY  # record command start time
+
+# `znap prompt` makes your prompt visible in just 15-40ms!
+znap prompt sindresorhus/pure
+
+# `znap source` automatically downloads and starts your plugins.
+znap source zsh-users/zsh-completions
+znap source agkozak/zsh-z
+znap source zsh-users/zsh-autosuggestions
+znap source zsh-users/zsh-syntax-highlighting
+
+# znap source marlonrichert/zsh-autocomplete
+# zstyle ':autocomplete:*' min-input 3
+# zstyle ':autocomplete:*' min-delay 0.5
+
+# ZVM_INIT_MODE=sourcing
+# ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
+# znap source jeffreytse/zsh-vi-mode
+
+# WORDCHARS=${WORDCHARS/\/}
+
+alias vi=nvim
+alias vim=nvim
+export EDITOR=nvim
+export VISUAL=nvim
+
+alias ls=exa
+
+# Nix
+if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

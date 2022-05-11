@@ -28,3 +28,7 @@ set --global hydro_color_prompt blue
 set --global hydro_color_pwd magenta
 
 alias chezmoi-cd="cd (chezmoi source-path)"
+
+direnv hook fish | source
+# trigger direnv at prompt, and on every arrow-based directory change (default)
+set -g direnv_fish_mode eval_on_arrow

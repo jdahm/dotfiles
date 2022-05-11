@@ -3,3 +3,5 @@ jorgebucaran/hydro
 jorgebucaran/replay.fish@1.2.0
 jorgebucaran/autopair.fish@1.0.3
 jorgebucaran/nvm.fish@2.2.7
+jethrokuan/fzf
+lilyball/nix-env.fish
