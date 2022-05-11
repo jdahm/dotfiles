@@ -38,8 +38,6 @@ require("packer").startup(function(use)
 
   use "tpope/vim-dadbod"
 
-  use "alker0/chezmoi.vim"
-
   use "gennaro-tedesco/nvim-peekup"
 
   use { "radenling/vim-dispatch-neovim", requires = { "tpope/vim-dispatch" } }
@@ -53,6 +51,8 @@ require("packer").startup(function(use)
   use { "jose-elias-alvarez/null-ls.nvim", requires = "nvim-lua/plenary.nvim" }
 
   use "fladson/vim-kitty"
+
+  use "alker0/chezmoi.vim"
 
   use "ojroques/nvim-hardline"
 
@@ -70,6 +70,11 @@ require("packer").startup(function(use)
   }
 
   use "lewis6991/gitsigns.nvim"
+
+  use {
+    "luukvbaal/nnn.nvim",
+    config = function() require("nnn").setup() end
+  }
 end)
 
 local wk = require "which-key"
@@ -143,7 +148,7 @@ require("gitsigns").setup {
 }
 
 vim.opt.swapfile = false
-vim.opt.mouse = "a"
+vim.opt.mouse = ""
 vim.opt.clipboard = "unnamedplus"
 -- vim.opt.number = true
 
@@ -156,7 +161,7 @@ vim.g.maplocalleader = " "
 -- Add current filepath to vim's path for :find
 vim.opt.path = vim.opt.path + ".,**"
 
-vim.opt.shell = "fish"
+-- vim.opt.shell = "fish"
 
 local opts = { noremap = true, silent = true }
 vim.keymap.set("", "<up>", "<nop>")
@@ -164,7 +169,7 @@ vim.keymap.set("", "<down>", "<nop>")
 vim.keymap.set("", "<left>", "<nop>")
 vim.keymap.set("", "<right>", "<nop>")
 
-vim.keymap.set("i", "zx", "<Esc>")
+vim.keymap.set("i", "ii", "<Esc>")
 
 vim.keymap.set("n", "<leader>g", ":nohl<CR>")
 vim.keymap.set("n", "<leader>s", ":w<CR>")

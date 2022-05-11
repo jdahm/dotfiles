@@ -38,8 +38,8 @@ setopt HIST_REDUCE_BLANKS  # remove unnecessary blanks
 setopt INC_APPEND_HISTORY_TIME  # append command to history file immediately after execution
 setopt EXTENDED_HISTORY  # record command start time
 
-# `znap prompt` makes your prompt visible in just 15-40ms!
-znap prompt sindresorhus/pure
+# znap prompt sindresorhus/pure
+znap prompt reobin/typewritten
 
 # `znap source` automatically downloads and starts your plugins.
 znap source zsh-users/zsh-completions
@@ -63,10 +63,12 @@ export EDITOR=nvim
 export VISUAL=nvim
 
 alias ls=exa
+alias cat=bat
 
 # Nix
 if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
   . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
 fi
 
+# Fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
