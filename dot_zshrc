@@ -58,6 +58,7 @@ znap source hlissner/zsh-autopair
 # zstyle ':autocomplete:*' min-input 3
 # zstyle ':autocomplete:*' min-delay 0.5
 
+export TYPEWRITTEN_CURSOR=underscore
 znap prompt reobin/typewritten
 
 # function zvm_config() {
