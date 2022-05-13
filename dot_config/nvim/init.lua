@@ -25,6 +25,8 @@ require("packer").startup(function(use)
 
   use "tpope/vim-unimpaired"
 
+  use "tommcdo/vim-exchange"
+
   use {
     "numToStr/Comment.nvim",
     config = function()
@@ -73,7 +75,9 @@ require("packer").startup(function(use)
 
   use {
     "luukvbaal/nnn.nvim",
-    config = function() require("nnn").setup() end
+    config = function()
+      require("nnn").setup()
+    end,
   }
 end)
 
@@ -130,40 +134,41 @@ require("gitsigns").setup {
     wk.register({
       h = {
         name = "GitSigns",
-        s = { "stage hunk" },
-        r = { "reset hunk" },
-        S = { "stage buffer" },
-        u = { "undo stage hunk" },
-        R = { "reset buffer" },
-        p = { "preview hunk" },
-        b = { "git blame" },
-        d = { "diff this" },
-        D = { "diff with prev" },
+        s = { "Stage Hunk" },
+        r = { "Reset Hunk" },
+        S = { "Stage Buffer" },
+        u = { "Undo Stage Hunk" },
+        R = { "Reset Buffer" },
+        p = { "Preview Hunk" },
+        b = { "Git Blame" },
+        d = { "Diff This" },
+        d = { "Diff With Prev" },
       },
     }, { prefix = "<leader>" })
 
-    -- Text object
-    map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
+    -- text object
+    map({ "o", "x" }, "ih", ":<c-u>gitsigns select_hunk<cr>")
   end,
 }
 
 vim.opt.swapfile = false
 vim.opt.mouse = ""
 vim.opt.clipboard = "unnamedplus"
--- vim.opt.number = true
 
 vim.opt.wildmode = "longest:full,full"
 
-vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
+vim.keymap.set({ "n", "v" }, "<space>", "<nop>", { silent = true })
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- Add current filepath to vim's path for :find
+-- add current filepath to vim's path for :find
 vim.opt.path = vim.opt.path + ".,**"
 
 -- vim.opt.shell = "fish"
 
 local opts = { noremap = true, silent = true }
+
+-- Make me learn the proper keys
 vim.keymap.set("", "<up>", "<nop>")
 vim.keymap.set("", "<down>", "<nop>")
 vim.keymap.set("", "<left>", "<nop>")
@@ -171,33 +176,31 @@ vim.keymap.set("", "<right>", "<nop>")
 
 vim.keymap.set("i", "ii", "<Esc>")
 
-vim.keymap.set("n", "<leader>g", ":nohl<CR>")
+-- vim.keymap.set("n", "<esc>", ":nohl<CR>")
 vim.keymap.set("n", "<leader>s", ":w<CR>")
 vim.keymap.set("n", "<leader>q", ":q<CR>")
 
 vim.keymap.set("n", "<C-j>", ":bprev<CR>")
 vim.keymap.set("n", "<C-k>", ":bnext<CR>")
 
-vim.keymap.set("n", "<C-l>", ":nohlsearch<CR>")
-
 -- For terminal
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
 vim.keymap.set("t", "<C-v><Esc>", "<Esc>")
 
 -- Numbering
-num = vim.api.nvim_create_augroup("LineNumbering", { clear = true })
+-- num = vim.api.nvim_create_augroup("LineNumbering", { clear = true })
 
-vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave", "WinEnter" }, {
-  command = 'if &nu && mode() != "i" | set rnu   | endif',
-  group = num,
-  pattern = "*(.txt|.md|.rst)@<!",
-})
+-- vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave", "WinEnter" }, {
+--   command = 'if &nu && mode() != "i" | set rnu   | endif',
+--   group = num,
+--   pattern = "*(.txt|.md|.rst)@<!",
+-- })
 
-vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "WinLeave" }, {
-  command = "if &nu                  | set nornu | endif",
-  group = num,
-  pattern = "*(.txt|.md|.rst)@<!",
-})
+-- vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "WinLeave" }, {
+--   command = "if &nu                  | set nornu | endif",
+--   group = num,
+--   pattern = "*(.txt|.md|.rst)@<!",
+-- })
 
 -- Trim trailing whitespace
 local ws = vim.api.nvim_create_augroup("TrimWhitespace", { clear = true })
@@ -247,7 +250,6 @@ function _G.toggle_diagnostics()
     vim.diagnostic.enable()
   end
 end
-
 
 -- Mappings
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -299,7 +301,12 @@ require("lspconfig")["pylsp"].setup {
   settings = {
     configurationSources = { "black" },
     pylsp = {
-      plugins = { black = { enabled = true }, pycodestyle = { enabled = false }, pyflakes = { enabled = false }, flake8 = { enabled = true } },
+      plugins = {
+        black = { enabled = true },
+        pycodestyle = { enabled = false },
+        pyflakes = { enabled = false },
+        flake8 = { enabled = true },
+      },
     },
   },
 }
@@ -375,14 +382,33 @@ vim.keymap.set("n", "<leader>fb", require("telescope.builtin").buffers)
 vim.keymap.set("n", "<leader>fh", require("telescope.builtin").help_tags)
 
 wk.register(
-  { f = { name = "Telescope", f = { "find files" }, g = { "grep" }, b = { "buffers" }, h = { "help tags" } } },
+  { f = { name = "Telescope", f = { "Find Files" }, g = { "Grep" }, b = { "Buffers" }, h = { "Help Tags" } } },
   { prefix = "<leader>" }
 )
 
 -- Hardline
 require("hardline").setup { theme = "nord" }
 
-wk.register({ t = { name = "Toggle", b = { "Current line blame" }, s = { "Set loc list" }, l = "Diagnostics" } }, { prefix = "<leader>" })
+wk.register({
+  t = {
+    name = "Toggle",
+    b = { "Current Line Blame" },
+    s = { "Set Loc List" },
+    l = { "Diagnostics" },
+    d = { "Deleted Hunk" },
+  },
+}, { prefix = "<leader>" })
+
+wk.register(
+  {
+    D = { "Declarations" },
+    g = { "Definition" },
+    i = { "Implementation" },
+    r = { "References" },
+    R = { "References (Trouble)" },
+  },
+  { prefix = "g" }
+)
 
 -- Theme
 vim.cmd [[colorscheme nordfox]]
