@@ -5,28 +5,40 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 end
 
 require("packer").startup(function(use)
+  -- The package manager
   use "wbthomason/packer.nvim"
 
-  use "tpope/vim-sensible"
+  -- Sensible defaults
+  -- use "tpope/vim-sensible"
 
-  use "thinca/vim-visualstar"
-
+  -- Utilities for creating text objects
   use "kana/vim-textobj-user"
 
+  -- Allow '*' in visual mode to search for selection
+  use "thinca/vim-visualstar"
+
+  -- Defines 'ae' object for entire buffer
   use "kana/vim-textobj-entire"
 
+  -- Heuristically set 'shiftwidth' and 'expandtab'
   use "tpope/vim-sleuth"
 
+  -- Git wrapper
   use "tpope/vim-fugitive"
 
+  -- Enable repeating supported plugin maps with '.'
   use "tpope/vim-repeat"
 
+  -- Delete/change/add wrappers around text (braces, parens, quotes, etc.)
   use "tpope/vim-surround"
 
+  -- Bracket mappings
   use "tpope/vim-unimpaired"
 
+  -- Operator 'cx' to exchange motions
   use "tommcdo/vim-exchange"
 
+  -- Toggle comments
   use {
     "numToStr/Comment.nvim",
     config = function()
@@ -34,36 +46,66 @@ require("packer").startup(function(use)
     end,
   }
 
+  -- Insert block endings
   use "tpope/vim-endwise"
 
+  -- Automatically insert the closing brace, etc.
+  use { "windwp/nvim-autopairs", config = function() require('nvim-autopairs').setup{} end }
+
+  -- Granular project configuration
   use "tpope/vim-projectionist"
 
+  -- Modern database interface for vim
   use "tpope/vim-dadbod"
 
+  -- Show register content with `""`
   use "gennaro-tedesco/nvim-peekup"
 
+  -- Leverage the power of Vim's compiler plugins without being bound by synchronity
   use { "radenling/vim-dispatch-neovim", requires = { "tpope/vim-dispatch" } }
 
-  use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
-
-  use { "nvim-treesitter/nvim-treesitter-textobjects", run = ":TSUpdate" }
-
-  use "neovim/nvim-lspconfig"
-
-  use { "jose-elias-alvarez/null-ls.nvim", requires = "nvim-lua/plenary.nvim" }
-
-  use "fladson/vim-kitty"
-
-  use "alker0/chezmoi.vim"
-
-  use "ojroques/nvim-hardline"
-
-  use "EdenEast/nightfox.nvim"
-
+  -- Fuzzy finder over lists
   use { "nvim-telescope/telescope.nvim", requires = { "nvim-lua/plenary.nvim" } }
 
+  -- Diagnostics, references, telescope, quickfix, and location viewer
   use { "folke/trouble.nvim", requires = { "kyazdani42/nvim-web-devicons" } }
 
+  -- Treesitter configurations and abstraction layer
+  use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
+
+  -- Text objects based on treesitter
+  use { "nvim-treesitter/nvim-treesitter-textobjects", run = ":TSUpdate" }
+
+  -- Quickstart configurations for the Nvim LSP client
+  use "neovim/nvim-lspconfig"
+
+  -- Use language server to inject LSP diagnostics, code actions, and more
+  use { "jose-elias-alvarez/null-ls.nvim", requires = "nvim-lua/plenary.nvim" }
+
+  -- Kitty config syntax highlighting
+  use "fladson/vim-kitty"
+
+  -- Chezmoi config syntax highlighting
+  use "alker0/chezmoi.vim"
+
+  -- Statusline
+  use "ojroques/nvim-hardline"
+
+  -- Git indicators
+  use "lewis6991/gitsigns.nvim"
+
+  -- Colorscheme
+  use "EdenEast/nightfox.nvim"
+
+  -- File manager invoked with :NnnExplorer
+  use {
+    "luukvbaal/nnn.nvim",
+    config = function()
+      require("nnn").setup()
+    end,
+  }
+
+  -- Pop-ups to help remember keybindings
   use {
     "folke/which-key.nvim",
     config = function()
@@ -71,14 +113,6 @@ require("packer").startup(function(use)
     end,
   }
 
-  use "lewis6991/gitsigns.nvim"
-
-  use {
-    "luukvbaal/nnn.nvim",
-    config = function()
-      require("nnn").setup()
-    end,
-  }
 end)
 
 local wk = require "which-key"
@@ -174,7 +208,7 @@ vim.keymap.set("", "<down>", "<nop>")
 vim.keymap.set("", "<left>", "<nop>")
 vim.keymap.set("", "<right>", "<nop>")
 
-vim.keymap.set("i", "ii", "<Esc>")
+vim.keymap.set("i", "jk", "<Esc>")
 
 -- vim.keymap.set("n", "<esc>", ":nohl<CR>")
 vim.keymap.set("n", "<leader>s", ":w<CR>")
@@ -235,6 +269,11 @@ require("nvim-treesitter.configs").setup {
 
     additional_vim_regex_highlighting = false,
   },
+
+  keymaps = {
+    ["ab"] = "@block.outer",
+    ["ib"] = "@block.inner"
+  }
 }
 
 -- LSP
