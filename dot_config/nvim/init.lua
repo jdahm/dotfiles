@@ -214,9 +214,6 @@ vim.keymap.set("i", "jk", "<Esc>")
 vim.keymap.set("n", "<leader>s", ":w<CR>")
 vim.keymap.set("n", "<leader>q", ":q<CR>")
 
-vim.keymap.set("n", "<C-j>", ":bprev<CR>")
-vim.keymap.set("n", "<C-k>", ":bnext<CR>")
-
 -- For terminal
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
 vim.keymap.set("t", "<C-v><Esc>", "<Esc>")
