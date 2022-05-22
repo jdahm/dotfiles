@@ -8,7 +8,7 @@ require("packer").startup(function(use)
   -- The package manager
   use "wbthomason/packer.nvim"
 
-  -- Sensible defaults
+  -- Vim now has a set of sane defaults based on tpope/vim-sensible
   -- use "tpope/vim-sensible"
 
   -- Utilities for creating text objects
@@ -19,6 +19,9 @@ require("packer").startup(function(use)
 
   -- Defines 'ae' object for entire buffer
   use "kana/vim-textobj-entire"
+
+  -- Search for, substitute, and abbreviate multiple variants of a word
+  use "tpope/vim-abolish"
 
   -- Heuristically set 'shiftwidth' and 'expandtab'
   use "tpope/vim-sleuth"
@@ -50,7 +53,12 @@ require("packer").startup(function(use)
   use "tpope/vim-endwise"
 
   -- Automatically insert the closing brace, etc.
-  use { "windwp/nvim-autopairs", config = function() require('nvim-autopairs').setup{} end }
+  use {
+    "windwp/nvim-autopairs",
+    config = function()
+      require("nvim-autopairs").setup {}
+    end,
+  }
 
   -- Granular project configuration
   use "tpope/vim-projectionist"
@@ -58,23 +66,23 @@ require("packer").startup(function(use)
   -- Modern database interface for vim
   use "tpope/vim-dadbod"
 
-  -- Show register content with `""`
-  use "gennaro-tedesco/nvim-peekup"
-
   -- Leverage the power of Vim's compiler plugins without being bound by synchronity
-  use { "radenling/vim-dispatch-neovim", requires = { "tpope/vim-dispatch" } }
+  use { "radenling/vim-dispatch-neovim", requires = "tpope/vim-dispatch" }
 
   -- Fuzzy finder over lists
-  use { "nvim-telescope/telescope.nvim", requires = { "nvim-lua/plenary.nvim" } }
+  use { "nvim-telescope/telescope.nvim", requires = "nvim-lua/plenary.nvim" }
 
   -- Diagnostics, references, telescope, quickfix, and location viewer
-  use { "folke/trouble.nvim", requires = { "kyazdani42/nvim-web-devicons" } }
+  use {
+    "folke/trouble.nvim",
+    requires = "kyazdani42/nvim-web-devicons",
+    config = function()
+      require("trouble").setup {}
+    end,
+  }
 
   -- Treesitter configurations and abstraction layer
   use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
-
-  -- Text objects based on treesitter
-  use { "nvim-treesitter/nvim-treesitter-textobjects", run = ":TSUpdate" }
 
   -- Quickstart configurations for the Nvim LSP client
   use "neovim/nvim-lspconfig"
@@ -101,7 +109,7 @@ require("packer").startup(function(use)
   use {
     "luukvbaal/nnn.nvim",
     config = function()
-      require("nnn").setup()
+      require("nnn").setup {}
     end,
   }
 
@@ -112,78 +120,9 @@ require("packer").startup(function(use)
       require("which-key").setup {}
     end,
   }
-
 end)
 
 local wk = require "which-key"
-
-require("gitsigns").setup {
-  on_attach = function(bufnr)
-    local gs = package.loaded.gitsigns
-
-    local function map(mode, l, r, opts)
-      opts = opts or {}
-      opts.buffer = bufnr
-      vim.keymap.set(mode, l, r, opts)
-    end
-
-    -- Navigation
-    map("n", "]c", function()
-      if vim.wo.diff then
-        return "]c"
-      end
-      vim.schedule(function()
-        gs.next_hunk()
-      end)
-      return "<Ignore>"
-    end, { expr = true })
-
-    map("n", "[c", function()
-      if vim.wo.diff then
-        return "[c"
-      end
-      vim.schedule(function()
-        gs.prev_hunk()
-      end)
-      return "<Ignore>"
-    end, { expr = true })
-
-    -- Actions
-    map({ "n", "v" }, "<leader>hs", ":Gitsigns stage_hunk<CR>")
-    map({ "n", "v" }, "<leader>hr", ":Gitsigns reset_hunk<CR>")
-    map("n", "<leader>hS", gs.stage_buffer)
-    map("n", "<leader>hu", gs.undo_stage_hunk)
-    map("n", "<leader>hR", gs.reset_buffer)
-    map("n", "<leader>hp", gs.preview_hunk)
-    map("n", "<leader>hb", function()
-      gs.blame_line { full = true }
-    end)
-    map("n", "<leader>tb", gs.toggle_current_line_blame)
-    map("n", "<leader>hd", gs.diffthis)
-    map("n", "<leader>hD", function()
-      gs.diffthis "~"
-    end)
-    map("n", "<leader>td", gs.toggle_deleted)
-
-    wk.register({
-      h = {
-        name = "GitSigns",
-        s = { "Stage Hunk" },
-        r = { "Reset Hunk" },
-        S = { "Stage Buffer" },
-        u = { "Undo Stage Hunk" },
-        R = { "Reset Buffer" },
-        p = { "Preview Hunk" },
-        b = { "Git Blame" },
-        d = { "Diff This" },
-        d = { "Diff With Prev" },
-      },
-    }, { prefix = "<leader>" })
-
-    -- text object
-    map({ "o", "x" }, "ih", ":<c-u>gitsigns select_hunk<cr>")
-  end,
-}
 
 vim.opt.swapfile = false
 vim.opt.mouse = ""
@@ -200,8 +139,6 @@ vim.opt.path = vim.opt.path + ".,**"
 
 -- vim.opt.shell = "fish"
 
-local opts = { noremap = true, silent = true }
-
 -- Make me learn the proper keys
 vim.keymap.set("", "<up>", "<nop>")
 vim.keymap.set("", "<down>", "<nop>")
@@ -210,47 +147,49 @@ vim.keymap.set("", "<right>", "<nop>")
 
 vim.keymap.set("i", "jk", "<Esc>")
 
--- vim.keymap.set("n", "<esc>", ":nohl<CR>")
-vim.keymap.set("n", "<leader>s", ":w<CR>")
-vim.keymap.set("n", "<leader>q", ":q<CR>")
+wk.register({ s = { ":w<cr>", "save buffer" } }, { prefix = "<leader>" })
+wk.register({ q = { ":q<cr>" } }, { prefix = "<leader>" })
 
--- For terminal
-vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
-vim.keymap.set("t", "<C-v><Esc>", "<Esc>")
+-- -- For terminal
+-- vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
+-- vim.keymap.set("t", "<C-v><Esc>", "<Esc>")
 
--- Numbering
--- num = vim.api.nvim_create_augroup("LineNumbering", { clear = true })
+-- Telescope.nvim
+local trouble = require "trouble.providers.telescope"
 
--- vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave", "WinEnter" }, {
---   command = 'if &nu && mode() != "i" | set rnu   | endif',
---   group = num,
---   pattern = "*(.txt|.md|.rst)@<!",
--- })
+require("telescope").setup {
+  defaults = {
+    mappings = {
+      i = {
+        ["<C-h>"] = "which_key",
+        ["<C-t>"] = trouble.open_with_trouble,
+      },
+      n = { ["<C-t>"] = trouble.open_with_trouble },
+    },
+  },
+}
 
--- vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "WinLeave" }, {
---   command = "if &nu                  | set nornu | endif",
---   group = num,
---   pattern = "*(.txt|.md|.rst)@<!",
--- })
+wk.register({
+  f = {
+    name = "+telescope",
+    f = { "<cmd>Telescope find_files<cr>", "find files" },
+    g = { "<cmd>Telescope live_grep<cr>", "live grep" },
+    b = { "<cmd>Telescope buffers<cr>", "buffers" },
+    h = { "<cmd>Telescope help_tags<cr>", "help tags" },
+  },
+}, { prefix = "<leader>" })
 
--- Trim trailing whitespace
-local ws = vim.api.nvim_create_augroup("TrimWhitespace", { clear = true })
-vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e", group = ws })
-
--- -- Auto format on save
--- local fs = vim.api.nvim_create_augroup("FormatOnSave", { clear = true })
--- vim.api.nvim_create_autocmd("BufWritePre", {
---   command = "lua vim.lsp.buf.formatting_sync(nil,1000)",
---   group = fs,
--- })
-
--- Git commit message width
-local cm = vim.api.nvim_create_augroup("CommitMsg", { clear = true })
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "gitcommit",
-  command = "setlocal spell textwidth=72",
-  group = cm,
-})
+-- Trouble.nvim
+wk.register({
+  x = {
+    name = "+trouble",
+    x = { "<cmd>Trouble<cr>", "start" },
+    w = { "<cmd>Trouble workspace_diagnostics<cr>", "workspace diag" },
+    d = { "<cmd>Trouble document_diagnostics<cr>", "doc diag" },
+    l = { "<cmd>Trouble loclist<cr>", "loclist" },
+    q = { "<cmd>Trouble quickfix<cr>", "quickfix" },
+  },
+}, { prefix = "<leader>" })
 
 -- Treesitter
 require("nvim-treesitter.configs").setup {
@@ -267,66 +206,141 @@ require("nvim-treesitter.configs").setup {
     additional_vim_regex_highlighting = false,
   },
 
-  keymaps = {
-    ["ab"] = "@block.outer",
-    ["ib"] = "@block.inner"
-  }
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "gnn",
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
+    },
+  },
+}
+
+-- Git commit message width
+local cm = vim.api.nvim_create_augroup("CommitMsg", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "gitcommit",
+  command = "setlocal spell textwidth=72",
+  group = cm,
+})
+
+-- Trim trailing whitespace
+local ws = vim.api.nvim_create_augroup("TrimWhitespace", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e", group = ws })
+
+-- -- Auto format on save
+-- local fs = vim.api.nvim_create_augroup("FormatOnSave", { clear = true })
+-- vim.api.nvim_create_autocmd("BufWritePre", {
+--   command = "lua vim.lsp.buf.formatting_sync(nil,1000)",
+--   group = fs,
+-- })
+
+-- Gitsigns.nvim
+require("gitsigns").setup {
+  on_attach = function(bufnr)
+    -- local gs = package.loaded.gitsigns
+
+    -- Navigation
+    wk.register(
+      { c = { "&diff ? ']c' : '<cmd>Gitsigns next_hunk<cr>'", "gs: next hunk" } },
+      { prefix = "[", expr = true, buffer = bufnr }
+    )
+    wk.register(
+      { c = { "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<cr>'", "gs: prev hunk" } },
+      { prefix = "]", expr = true, buffer = bufnr }
+    )
+
+    wk.register({
+      h = {
+        name = "+gitsigns",
+        s = { ":Gitsigns stage_hunk<cr>", "stage hunk" },
+        r = { ":Gitsigns reset_hunk<cr>", "reset hunk" },
+        S = { "<cmd>Gitsigns stage_buffer<cr>", "stage buffer" },
+        u = { "<cmd>Gitsigns undo_stage_buffer<cr>", "undo stage hunk" },
+        R = { "<cmd>Gitsigns reset_buffer<cr>", "reset buffer" },
+        p = { "<cmd>Gitsigns preview_hunk<cr>", "preview hunk" },
+        b = { "<cmd>lua require'gitsigns'.blame_line{full=true}<cr>", "git blame" },
+        d = { "<cmd>Gitsigns diffthis<cr>", "diff this" },
+        D = { "<cmd>lua require'gitsigns'.diffthis('~')<cr>", "diff with prev" },
+      },
+      t = {
+        name = "+toggle",
+        b = { "<cmd>Gitsigns toggle_current_line_blame<cr>", "gs: toggle line blame" },
+        d = { "<cmd>Gitsigns toggle_deleted<cr>", "gs: toggle deleted" },
+      },
+    }, { prefix = "<leader>" })
+
+    -- text object
+    vim.keymap.set({ "o", "x" }, "ih", ":<c-u>gitsigns select_hunk<cr>", { buffer = bufnr })
+  end,
 }
 
 -- LSP
-local lsp_config = require "lspconfig"
+-- local lsp_config = require "lspconfig"
 
-vim.g.diagnostics_visible = true
-function _G.toggle_diagnostics()
-  if vim.g.diagnostics_visible then
-    vim.g.diagnostics_visible = false
-    vim.diagnostic.disable()
-  else
-    vim.g.diagnostics_visible = true
-    vim.diagnostic.enable()
-  end
-end
+-- vim.g.diagnostics_visible = true
+-- function _G.toggle_diagnostics()
+--   if vim.g.diagnostics_visible then
+--     vim.g.diagnostics_visible = false
+--     vim.diagnostic.disable()
+--   else
+--     vim.g.diagnostics_visible = true
+--     vim.diagnostic.enable()
+--   end
+-- end
 
 -- Mappings
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-vim.keymap.set("n", "<leader>lo", vim.diagnostic.open_float)
-vim.keymap.set("n", "<leader>tl", ":call v:lua.toggle_diagnostics()<CR>")
-wk.register({ e = { "LSP diagnostic float" } }, { prefix = "<leader>" })
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
-vim.keymap.set("n", "<leader>ts", vim.diagnostic.setloclist)
+wk.register({ e = { "<cmd>lua vim.diagnostic.open_float()<cr>", "lsp: open float" } }, { prefix = "<leader>" })
+wk.register({ d = { "<cmd>lua vim.diagnostic.goto_prev()<cr>", "lsp: prev diag" } }, { prefix = "[" })
+wk.register({ d = { "<cmd>lua vim.diagnostic.goto_next()<cr>", "lsp: next diag" } }, { prefix = "]" })
+wk.register(
+  { t = { name = "+toggle", s = { "<cmd>lua vim.diagnostic.setloclist()<cr>", "lsp: diag setloclist" } } },
+  { prefix = "<leader>" }
+)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(_, bufnr)
-  local opts = { buffer = bufnr }
-
+local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-  -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-  vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-  vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-  vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-  vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
-  vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts)
-  vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts)
-  vim.keymap.set("n", "<leader>wl", function()
-    vim.inspect(vim.lsp.buf.list_workspace_folders())
-  end, opts)
-  wk.register(
-    { w = { name = "LSP Workspaces" }, a = { "add folder" }, r = { "remove folder" }, l = { "list folders" } },
-    { prefix = "<leader>" }
-  )
-  vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
-  wk.register({ D = { "Show definition" } }, { prefix = "<leader>" })
-  vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-  vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-  vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-  vim.keymap.set("n", "<leader>cf", vim.lsp.buf.formatting, opts)
-  wk.register({ c = { name = "Code", a = { "action" }, f = { "format" } } }, { prefix = "<leader>" })
+  wk.register({ D = { "<cmd>lua vim.lsp.buf.declaration()<cr>", "lsp: buf decl" } }, { prefix = "g", buffer = bufnr })
+  if client.supports_method "textDocument/definition" then
+    wk.register({ d = { "<cmd>lua vim.lsp.buf.definition()<cr>", "lsp: buf def" } }, { prefix = "g", buffer = bufnr })
+  end
+  if client.supports_method "textDocument/hover" then
+    wk.register({ K = { "<cmd>lua vim.lsp.buf.hover()<cr>", "lsp: buf hover" } }, { buffer = bufnr })
+  end
+  if client.supports_method "textDocument/references" then
+    wk.register({ R = { "<cmd>Trouble lsp_references<cr>", "trouble: lsp references" } }, { prefix = "g" })
+  end
+  if client.supports_method "textDocument/implementation" then
+    wk.register(
+      { i = { "<cmd>lua vim.lsp.buf.implementation()<cr>", "lsp: buf impl" } },
+      { prefix = "g", buffer = bufnr }
+    )
+  end
+  wk.register({ ["<C-k>"] = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "lsp: sig help" } }, { buffer = bufnr })
+  wk.register({
+    w = {
+      a = { "<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>", "lsp: add workspace fldr" },
+      r = { "<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>", "lsp: remove workspace fldr" },
+      l = { "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>", "lsp: list workspace fldr" },
+    },
+  }, { prefix = "<leader>", buffer = bufnr })
+  wk.register({ D = { "<cmd>lua vim.lsp.buf.type_definition()<cr>", "lsp: type def" } }, { buffer = bufnr })
+  wk.register({
+    c = {
+      name = "+code",
+      r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "lsp: rename" },
+      a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "lsp: action" },
+      f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "lsp: format" },
+    },
+  }, { prefix = "<leader>", buffer = bufnr })
+  wk.register({ r = { "<cmd>lua vim.lsp.buf.references()<cr>", "lsp: refs" } }, { prefix = "g", buffer = bufnr })
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
@@ -362,12 +376,6 @@ require("lspconfig")["rls"].setup {
   cmd = { "rls" },
 }
 
--- local fs = vim.api.nvim_create_augroup("FormatOnSave", { clear = true })
--- vim.api.nvim_create_autocmd("BufWritePre", {
---     command = "lua vim.lsp.buf.formatting_sync(nil,1000)",
---     group = fs,
--- })
-
 require("null-ls").setup {
   sources = {
     require("null-ls").builtins.formatting.stylua,
@@ -377,74 +385,8 @@ require("null-ls").setup {
   on_attach = on_attach,
 }
 
--- Trouble.nvim
-require("trouble").setup {}
-vim.keymap.set("n", "<leader>xx", "<cmd>Trouble<cr>")
-vim.keymap.set("n", "<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>")
-vim.keymap.set("n", "<leader>xd", "<cmd>Trouble document_diagnostics<cr>")
-vim.keymap.set("n", "<leader>xl", "<cmd>Trouble loclist<cr>")
-vim.keymap.set("n", "<leader>xq", "<cmd>Trouble quickfix<cr>")
-vim.keymap.set("n", "gR", "<cmd>Trouble lsp_references<cr>")
-
-wk.register({
-  x = {
-    name = "Trouble",
-    x = { "enter" },
-    w = { "workspace diag." },
-    d = { "document diag." },
-    l = { "loclist" },
-    q = { "quickfix" },
-  },
-}, { prefix = "<leader>" })
-
--- Telescope.nvim
-local trouble = require "trouble.providers.telescope"
-
-require("telescope").setup {
-  defaults = {
-    mappings = {
-      i = {
-        ["<C-h>"] = "which_key",
-        ["<C-t>"] = trouble.open_with_trouble,
-      },
-      n = { ["<C-t>"] = trouble.open_with_trouble },
-    },
-  },
-}
-
-vim.keymap.set("n", "<leader>ff", require("telescope.builtin").find_files)
-vim.keymap.set("n", "<leader>fg", require("telescope.builtin").live_grep)
-vim.keymap.set("n", "<leader>fb", require("telescope.builtin").buffers)
-vim.keymap.set("n", "<leader>fh", require("telescope.builtin").help_tags)
-
-wk.register(
-  { f = { name = "Telescope", f = { "Find Files" }, g = { "Grep" }, b = { "Buffers" }, h = { "Help Tags" } } },
-  { prefix = "<leader>" }
-)
-
 -- Hardline
 require("hardline").setup { theme = "nord" }
-
-wk.register({
-  t = {
-    name = "Toggle",
-    b = { "Current Line Blame" },
-    s = { "Set Loc List" },
-    l = { "Diagnostics" },
-    d = { "Deleted Hunk" },
-  },
-}, { prefix = "<leader>" })
-
-wk.register(
-  {
-    D = { "Declarations" },
-    g = { "Definition" },
-    i = { "Implementation" },
-    r = { "References" },
-    R = { "References (Trouble)" },
-  },
-  { prefix = "g" }
-)
 
 -- Theme
 vim.cmd [[colorscheme nordfox]]

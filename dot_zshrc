@@ -58,7 +58,7 @@ znap source hlissner/zsh-autopair
 # zstyle ':autocomplete:*' min-input 3
 # zstyle ':autocomplete:*' min-delay 0.5
 
-export TYPEWRITTEN_CURSOR=underscore
+# export TYPEWRITTEN_CURSOR=underscore
 znap prompt reobin/typewritten
 
 # function zvm_config() {
@@ -81,6 +81,7 @@ export VISUAL=nvim
 export PAGER=less
 
 alias chezmoi-cd="cd $(chezmoi source-path)"
+alias coauth='printf "Co-authored-by: %s" "$(git log --pretty=format:"%an <%ae>" -1000 | sort | uniq | fzf)" | pbcopy'
 
 # Nix
 export NIX_FILE=/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
