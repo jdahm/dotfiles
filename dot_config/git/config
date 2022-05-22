@@ -1,24 +1,9 @@
-[alias]
-	amend = "commit --amend --reuse-message=HEAD"
-	branches = "branch -a"
-	contributors = "shortlog --summary --numbered"
-	l = "log --pretty=oneline -n 20 --graph --abbrev-commit"
-	remotes = "remote -v"
-	s = "status -s"
-	tags = "tag -l"
-
 [core]
 	editor = "nvim"
 	pager = "delta"
 
 [fetch]
 	prune = true
-
-[filter "lfs"]
-	clean = "git-lfs clean -- %f"
-	process = "git-lfs filter-process"
-	required = true
-	smudge = "git-lfs smudge -- %f"
 
 [init]
 	defaultBranch = "main"
@@ -32,22 +17,6 @@
 [push]
 	default = "simple"
 
-[url "git://gist.github.com/"]
-	insteadOf = "gist:"
-
-[url "git://github.com/"]
-	insteadOf = "github:"
-
-[url "git@gist.github.com:"]
-	insteadOf = "gst:"
-	pushInsteadOf = "gist:"
-
-[url "git@github.com:"]
-	pushInsteadOf = "github:"
-
-[url "git@github.com:github"]
-	insteadOf = "github:github"
-
 [user]
 	email = "johann.dahm@gmail.com"
 	name = "Johann Dahm"
@@ -56,7 +25,7 @@
 	branch = auto
 	diff = auto
 	status = auto
-        showbranch = auto
+	showbranch = auto
 	ui = true
 
 [color "branch"]
@@ -74,4 +43,50 @@
 	added = yellow
 	changed = green
 	untracked = cyan
+
+[url "git://gist.github.com/"]
+	insteadOf = "gist:"
+
+[url "git://github.com/"]
+	insteadOf = "github:"
+
+[url "git@gist.github.com:"]
+	insteadOf = "gst:"
+	pushInsteadOf = "gist:"
+
+[url "git@github.com:"]
+	pushInsteadOf = "github:"
+
+[url "git@github.com:github"]
+	insteadOf = "github:github"
+
+[alias]
+	st = status
+	br = branch
+	br = branch
+	cm = commit
+	co = checkout
+	re = restore
+	sw = switch
+	dif = diff
+	pus = push
+	pu = push
+	pick = cherry-pick
+	amend = commit --amend
+	authors-list = shortlog -e -s -n
+	authors-count = shortlog -s -n
+	cob = checkout -b
+	smartlog = log --graph --pretty=format:'commit: %C(bold red)%h%Creset %C(red)<%H>%Creset %C(bold magenta)%d %Creset%ndate: %C(bold yellow)%cd %Creset%C(yellow)%cr%Creset%nauthor: %C(bold blue)%an%Creset %C(blue)<%ae>%Creset%n%C(cyan)%s%n%Creset'
+	sl = !git smartlog
+	me = !git smartlog --author='Johann Dahm'
+	log-commit = log -1 --pretty=format:'commit: %C(bold red)%h%Creset %C(red)<%H>%Creset %C(bold magenta)%d %Creset%ndate: %C(bold yellow)%cd %Creset%C(yellow)%cr%Creset%nauthor: %C(bold blue)%an%Creset %C(blue)<%ae>%Creset%n%n%C(bold cyan)%s%n%n%C(cyan)%b%n%Creset'
+	logcm = !git log-commit
+	ls = log --oneline
+	nuke = reset --hard
+	purge = clean -fd
+	revertfile = "checkout --"
+	unstage = "reset HEAD --"
+	trim = "!f() { git branch | grep -v "main" | grep -v "master" | grep -v "^*" | xargs git branch -D; git remote prune origin; }; f"
+	uncommit = reset --soft HEAD^
+
 
