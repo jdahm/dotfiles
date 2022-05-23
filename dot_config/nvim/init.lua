@@ -33,7 +33,7 @@ require("packer").startup(function(use)
   use "tpope/vim-repeat"
 
   -- Delete/change/add wrappers around text (braces, parens, quotes, etc.)
-  use "tpope/vim-surround"
+  use "machakann/vim-sandwich"
 
   -- Bracket mappings
   use "tpope/vim-unimpaired"
@@ -148,7 +148,7 @@ vim.keymap.set("", "<right>", "<nop>")
 vim.keymap.set("i", "jk", "<Esc>")
 
 wk.register({ s = { ":w<cr>", "save buffer" } }, { prefix = "<leader>" })
-wk.register({ q = { ":q<cr>" } }, { prefix = "<leader>" })
+wk.register({ q = { ":q<cr>", "quit" } }, { prefix = "<leader>" })
 
 -- -- For terminal
 -- vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
