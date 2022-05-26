@@ -13,10 +13,8 @@ fi
 
 path=($HOME/bin $HOME/go/bin $path[@])
 
-alias brew-update="brew bundle --cleanup --global"
-
 # pyenv
-eval "$(pyenv init -)"
+(( $+commands[pyenv] )) && eval "$(pyenv init -)"
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
@@ -24,7 +22,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # direnv
-eval "$(direnv hook zsh)"
+(( $+commands[direnv] )) && eval "$(direnv hook zsh)"
 
 # the detailed meaning of the below three variable can be found in `man zshparam`.
 export HISTFILE=~/.histfile
@@ -70,18 +68,27 @@ znap prompt reobin/typewritten
 
 WORDCHARS=${WORDCHARS/\/}
 
-alias cat=bat
-alias ls=exa
+(( $+commands[bat] )) && alias cat=bat
+(( $+commands[exa] )) && alias ls=exa
 
-alias vi=nvim
-alias vim=nvim
-export EDITOR=nvim
-export VISUAL=nvim
+if (( $+commands[nvim] )); then
+    alias vi=nvim
+    alias vim=nvim
+    export EDITOR=nvim
+    export VISUAL=nvim
+fi
 
 export PAGER=less
 
-alias chezmoi-cd="cd $(chezmoi source-path)"
-alias coauth='printf "Co-authored-by: %s" "$(git log --pretty=format:"%an <%ae>" -1000 | sort | uniq | fzf)" | pbcopy'
+(( $+commands[chezmoi] )) && alias chezmoi-cd="cd $(chezmoi source-path)"
+(( $+commands[brew] )) && alias brew-update="brew bundle --cleanup --global"
+(( $+commands[pbcopy] )) && alias coauth='printf "Co-authored-by: %s" "$(git log --pretty=format:"%an <%ae>" -1000 | sort | uniq | fzf)" | pbcopy'
+
+if (( $+commands[kitty] )); then
+    alias hg="kitty +kitten hyperlinked_grep"
+    alias icat="kitty +kitten icat"
+    alias s="kitty +kitten ssh"
+fi
 
 # Nix
 export NIX_FILE=/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh

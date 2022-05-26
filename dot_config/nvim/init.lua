@@ -23,6 +23,9 @@ require("packer").startup(function(use)
   -- Git wrapper
   use "tpope/vim-fugitive"
 
+  -- GitHub extension for fugitive.vim
+  use "tpope/vim-rhubarb"
+
   -- Enable repeating supported plugin maps with '.'
   use "tpope/vim-repeat"
 
@@ -143,6 +146,8 @@ vim.keymap.set("", "<left>", "<nop>")
 vim.keymap.set("", "<right>", "<nop>")
 
 vim.keymap.set("i", "jk", "<Esc>")
+
+wk.register({ h = { l = { ":noh<cr>", "disable highlight"}}}, {prefix = "<leader>"})
 
 wk.register({ s = { ":w<cr>", "save buffer" } }, { prefix = "<leader>" })
 wk.register({ q = { ":q<cr>", "quit" } }, { prefix = "<leader>" })
