@@ -67,7 +67,13 @@ require("packer").startup(function(use)
   use { "radenling/vim-dispatch-neovim", requires = "tpope/vim-dispatch" }
 
   -- Fuzzy finder over lists
-  use { "nvim-telescope/telescope.nvim", requires = "nvim-lua/plenary.nvim" }
+  use { "junegunn/fzf", run = "./install --bin" }
+
+  use {
+    "ibhagwan/fzf-lua",
+    -- optional for icon support
+    requires = { "kyazdani42/nvim-web-devicons" },
+  }
 
   -- Diagnostics, references, telescope, quickfix, and location viewer
   use {
@@ -147,7 +153,7 @@ vim.keymap.set("", "<right>", "<nop>")
 
 vim.keymap.set("i", "jk", "<Esc>")
 
-wk.register({ h = { l = { ":noh<cr>", "disable highlight"}}}, {prefix = "<leader>"})
+wk.register({ h = { l = { ":noh<cr>", "disable highlight" } } }, { prefix = "<leader>" })
 
 wk.register({ s = { ":w<cr>", "save buffer" } }, { prefix = "<leader>" })
 wk.register({ q = { ":q<cr>", "quit" } }, { prefix = "<leader>" })
@@ -157,27 +163,39 @@ wk.register({ q = { ":q<cr>", "quit" } }, { prefix = "<leader>" })
 -- vim.keymap.set("t", "<C-v><Esc>", "<Esc>")
 
 -- Telescope.nvim
-local trouble = require "trouble.providers.telescope"
+-- local trouble = require "trouble.providers.telescope"
+-- require("telescope").setup {
+--   defaults = {
+--     mappings = {
+--       i = {
+--         ["<C-h>"] = "which_key",
+--         ["<C-t>"] = trouble.open_with_trouble,
+--       },
+--       n = { ["<C-t>"] = trouble.open_with_trouble },
+--     },
+--   },
+-- }
+--
+-- wk.register({
+--   f = {
+--     name = "+telescope",
+--     f = { "<cmd>Telescope find_files<cr>", "find files" },
+--     g = { "<cmd>Telescope live_grep<cr>", "live grep" },
+--     b = { "<cmd>Telescope buffers<cr>", "buffers" },
+--     h = { "<cmd>Telescope help_tags<cr>", "help tags" },
+--   },
+-- }, { prefix = "<leader>" })
 
-require("telescope").setup {
-  defaults = {
-    mappings = {
-      i = {
-        ["<C-h>"] = "which_key",
-        ["<C-t>"] = trouble.open_with_trouble,
-      },
-      n = { ["<C-t>"] = trouble.open_with_trouble },
-    },
-  },
-}
-
+-- fzf-lua
 wk.register({
   f = {
-    name = "+telescope",
-    f = { "<cmd>Telescope find_files<cr>", "find files" },
-    g = { "<cmd>Telescope live_grep<cr>", "live grep" },
-    b = { "<cmd>Telescope buffers<cr>", "buffers" },
-    h = { "<cmd>Telescope help_tags<cr>", "help tags" },
+    name = "+fzf",
+    f = { "<cmd>lua require('fzf-lua').files()<cr>", "find files" },
+    g = { "<cmd>lua require('fzf-lua').live_grep()<cr>", "live grep" },
+    b = { "<cmd>lua require('fzf-lua').buffers()<cr>", "buffers" },
+    q = { "<cmd>lua require('fzf-lua').quickfix()<cr>", "quickfix" },
+    v = { "<cmd>lua require('fzf-lua').git_files()<cr>", "git files" },
+    l = { "<cmd>lua require('fzf-lua').lines()<cr>", "lines" },
   },
 }, { prefix = "<leader>" })
 
