@@ -8,17 +8,11 @@ require("packer").startup(function(use)
   -- The package manager
   use "wbthomason/packer.nvim"
 
-  -- Vim now has a set of sane defaults based on tpope/vim-sensible
-  -- use "tpope/vim-sensible"
-
-  -- Utilities for creating text objects
-  use "kana/vim-textobj-user"
-
   -- Allow '*' in visual mode to search for selection
   use "thinca/vim-visualstar"
 
   -- Defines 'ae' object for entire buffer
-  use "kana/vim-textobj-entire"
+  use { "kana/vim-textobj-entire", requires = { "kana/vim-textobj-user" } }
 
   -- Search for, substitute, and abbreviate multiple variants of a word
   use "tpope/vim-abolish"
@@ -112,6 +106,9 @@ require("packer").startup(function(use)
       require("nnn").setup {}
     end,
   }
+
+  -- Helpers for UNIX
+  use "tpope/vim-eunuch"
 
   -- Pop-ups to help remember keybindings
   use {
@@ -216,6 +213,12 @@ require("nvim-treesitter.configs").setup {
     },
   },
 }
+
+-- Temporarily highlight yanked text
+vim.api.nvim_create_autocmd(
+  "TextYankPost",
+  { command = 'lua vim.highlight.on_yank{higroup="IncSearch", timeout=150, on_visual=false}' }
+)
 
 -- Git commit message width
 local cm = vim.api.nvim_create_augroup("CommitMsg", { clear = true })
