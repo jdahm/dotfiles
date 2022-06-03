@@ -8,6 +8,9 @@ require("packer").startup(function(use)
   -- The package manager
   use "wbthomason/packer.nvim"
 
+  -- Scratch buffers
+  use "idbrii/itchy.vim"
+
   -- Allow '*' in visual mode to search for selection
   use "thinca/vim-visualstar"
 
@@ -237,6 +240,12 @@ require("nvim-treesitter.configs").setup {
   },
 }
 
+-- Delete fugitive buffers
+vim.api.nvim_create_autocmd("BufReadPost", {
+  pattern = "fugitive://*",
+  command = "set bufhidden=delete",
+})
+
 -- Temporarily highlight yanked text
 vim.api.nvim_create_autocmd(
   "TextYankPost",
@@ -292,6 +301,7 @@ require("gitsigns").setup {
       },
       t = {
         name = "+toggle",
+        t = { ":call v:lua.toggle_diagnostics()<cr>", "lsp: toggle diagnostics" },
         b = { "<cmd>Gitsigns toggle_current_line_blame<cr>", "gs: toggle line blame" },
         d = { "<cmd>Gitsigns toggle_deleted<cr>", "gs: toggle deleted" },
       },
@@ -305,16 +315,16 @@ require("gitsigns").setup {
 -- LSP
 -- local lsp_config = require "lspconfig"
 
--- vim.g.diagnostics_visible = true
--- function _G.toggle_diagnostics()
---   if vim.g.diagnostics_visible then
---     vim.g.diagnostics_visible = false
---     vim.diagnostic.disable()
---   else
---     vim.g.diagnostics_visible = true
---     vim.diagnostic.enable()
---   end
--- end
+vim.g.diagnostics_visible = true
+function _G.toggle_diagnostics()
+  if vim.g.diagnostics_visible then
+    vim.g.diagnostics_visible = false
+    vim.diagnostic.disable()
+  else
+    vim.g.diagnostics_visible = true
+    vim.diagnostic.enable()
+  end
+end
 
 -- Mappings
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -341,7 +351,10 @@ local on_attach = function(client, bufnr)
     wk.register({ K = { "<cmd>lua vim.lsp.buf.hover()<cr>", "lsp: buf hover" } }, { buffer = bufnr })
   end
   if client.supports_method "textDocument/references" then
-    wk.register({ R = { "<cmd>Trouble lsp_references<cr>", "trouble: lsp references" } }, { prefix = "g" })
+    wk.register(
+      { R = { "<cmd>Trouble lsp_references<cr>", "trouble: lsp references" } },
+      { prefix = "g", buffer = bufnr }
+    )
   end
   if client.supports_method "textDocument/implementation" then
     wk.register(
@@ -382,6 +395,7 @@ require("lspconfig")["pylsp"].setup {
         pycodestyle = { enabled = false },
         pyflakes = { enabled = false },
         flake8 = { enabled = true },
+        mccabe = { enabled = false },
       },
     },
   },
