@@ -85,9 +85,15 @@ export PAGER=less
 (( $+commands[pbcopy] )) && alias coauth='printf "Co-authored-by: %s" "$(git log --pretty=format:"%an <%ae>" -1000 | sort | uniq | fzf)" | pbcopy'
 
 if (( $+commands[kitty] )); then
-    alias hg="kitty +kitten hyperlinked_grep"
     alias icat="kitty +kitten icat"
     alias s="kitty +kitten ssh"
+    alias hg="kitty +kitten hyperlinked_grep"
+fi
+
+if [[ -n $KITTY_WINDOW_ID ]]; then
+    alias e="edit-in-kitty"
+else
+    alias e=$EDITOR
 fi
 
 if (( $+commands[nnn] )); then

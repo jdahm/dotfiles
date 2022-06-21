@@ -8,6 +8,9 @@ require("packer").startup(function(use)
   -- The package manager
   use "wbthomason/packer.nvim"
 
+  -- Editor config
+  use "editorconfig/editorconfig-vim"
+
   -- Scratch buffers
   use "idbrii/itchy.vim"
 

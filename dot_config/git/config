@@ -56,12 +56,19 @@
 
 [url "git@github.com:"]
 	pushInsteadOf = "github:"
+	insteadOf = https://github.com/
 
 [url "git@github.com:github"]
 	insteadOf = "github:github"
 
+[delta]
+	side-by-side = true
+
+[merge]
+	conflictstyle = diff3
+
 [alias]
-	st = status
+	st = status -s
 	br = branch
 	br = branch
 	cm = commit
