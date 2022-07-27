@@ -1,3 +1,49 @@
+#
+# Startup
+#
+
+# not running interactively then bail
+[[ $- != *i* ]] && return
+
+#
+# ZSH Settings
+#
+setopt correct                                                  # Auto correct mistakes
+setopt extendedglob                                             # Extended globbing. Allows using regular expressions with *
+setopt nocaseglob                                               # Case insensitive globbing
+setopt rcexpandparam                                            # Array expension with parameters
+setopt nocheckjobs                                              # Don't warn about running processes when exiting
+setopt numericglobsort                                          # Sort filenames numerically when it makes sense
+setopt nobeep                                                   # No beep
+setopt share_history                                            # share history accross all sessions
+setopt appendhistory                                            # Immediately append history instead of overwriting
+setopt histignorealldups                                        # If a new command is a duplicate, remove the older one
+setopt autocd                                                   # if only directory path is entered, cd there.
+setopt auto_pushd
+setopt pushd_ignore_dups
+setopt pushdminus
+
+HISTFILE=~/.zhistory
+HISTSIZE=50000
+SAVEHIST=10000
+
+# Completion.
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'       # Case insensitive tab completion
+zstyle ':completion:*' rehash true                              # automatically find new executables in path
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"         # Colored completion (different colors for dirs/files/etc)
+zstyle ':completion:*' completer _expand _complete _ignored _approximate
+zstyle ':completion:*' menu select
+zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %p%s'
+zstyle ':completion:*:descriptions' format '%U%F{cyan}%d%f%u'
+
+# Speed up completions
+zstyle ':completion:*' accept-exact '*(N)'
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.cache/zcache
+
+# automatically load bash completion functions
+autoload -U +X bashcompinit && bashcompinit
+
 # Download Znap, if it's not there yet.
 [[ -f ~/.zsh/zsh-snap/znap.zsh ]] ||
     git clone --depth 1 -- \
@@ -23,27 +69,6 @@ export NVM_DIR="$HOME/.nvm"
 
 # direnv
 (( $+commands[direnv] )) && eval "$(direnv hook zsh)"
-
-# the detailed meaning of the below three variable can be found in `man zshparam`.
-export HISTFILE=~/.histfile
-export HISTSIZE=1000000   # the number of items for the internal history list
-export SAVEHIST=1000000   # maximum number of items for the history file
-
-# The meaning of these options can be found in man page of `zshoptions`.
-setopt HIST_IGNORE_ALL_DUPS  # do not put duplicated command into history list
-setopt HIST_SAVE_NO_DUPS  # do not save duplicated command
-setopt HIST_REDUCE_BLANKS  # remove unnecessary blanks
-setopt INC_APPEND_HISTORY_TIME  # append command to history file immediately after execution
-setopt EXTENDED_HISTORY  # record command start time
-
-autoload -U compinit; compinit
-zstyle ':completion:*' completer _extensions _complete _approximate
-zstyle ':completion:*' menu select
-zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
-zstyle ':completion:*:*:*:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
-zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
-zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
-zstyle ':completion:*' squeeze-slashes true
 
 # `znap source` automatically downloads and starts your plugins.
 znap source zsh-users/zsh-completions
