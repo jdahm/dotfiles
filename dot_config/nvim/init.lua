@@ -11,6 +11,9 @@ require("packer").startup(function(use)
   -- Editor config
   use "editorconfig/editorconfig-vim"
 
+  -- Intelligently reopen files at your last edit position
+  use "farmergreg/vim-lastplace"
+
   -- Scratch buffers
   use "idbrii/itchy.vim"
 

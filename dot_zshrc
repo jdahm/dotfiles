@@ -48,7 +48,7 @@ zstyle ':completion:*' squeeze-slashes true
 # `znap source` automatically downloads and starts your plugins.
 znap source zsh-users/zsh-completions
 # znap source agkozak/zsh-z
-# znap source zsh-users/zsh-autosuggestions
+znap source zsh-users/zsh-autosuggestions
 znap source zsh-users/zsh-syntax-highlighting
 znap source hlissner/zsh-autopair
 
@@ -57,7 +57,8 @@ znap source hlissner/zsh-autopair
 # zstyle ':autocomplete:*' min-delay 0.5
 
 # export TYPEWRITTEN_CURSOR=underscore
-znap prompt reobin/typewritten
+# znap prompt reobin/typewritten
+znap prompt sindresorhus/pure
 
 # function zvm_config() {
 #   # ZVM_INIT_MODE=sourcing
