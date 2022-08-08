@@ -4,3 +4,4 @@
 .direnv
 .envrc
 shell.nix
+.experiments/
