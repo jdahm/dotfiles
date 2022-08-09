@@ -28,8 +28,9 @@ if status is-interactive
     set --global hydro_color_pwd magenta
 
     alias chezmoi-cd="cd (chezmoi source-path)"
+    alias brew-update="brew bundle --cleanup --global"
 
-    # set fish_key_bindings fish_user_key_bindings
+    set fish_key_bindings fish_user_key_bindings
 end
 
 direnv hook fish | source
