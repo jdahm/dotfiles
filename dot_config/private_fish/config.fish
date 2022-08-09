@@ -29,21 +29,7 @@ if status is-interactive
 
     alias chezmoi-cd="cd (chezmoi source-path)"
 
-    function cd..
-        cd ..
-    end
-
-    function ..
-        cd ..
-    end
-
-    function sudo
-        if test "$argv" = !!
-            eval command sudo $history[1]
-        else
-            command sudo $argv
-        end
-    end
+    # set fish_key_bindings fish_user_key_bindings
 end
 
 direnv hook fish | source
