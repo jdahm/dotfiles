@@ -108,6 +108,9 @@ require("packer").startup(function(use)
   -- Chezmoi config syntax highlighting
   use "alker0/chezmoi.vim"
 
+  -- Fish syntax highlighting
+  use "khaveesh/vim-fish-syntax"
+
   -- Statusline
   use "ojroques/nvim-hardline"
 
