@@ -19,11 +19,12 @@ end
 # Local bin and lang executables
 set PATH $HOME/bin $HOME/go/bin $PATH
 
-# Set vi
-set -Ux EDITOR nvim
-set -Ux VISUAL nvim
-
-# set fish_key_bindings fish_user_key_bindings
+if command -qs nvim
+    alias vi=nvim
+    alias vim=nvim
+    set -Ux EDITOR nvim
+    set -Ux VISUAL nvim
+end
 
 # Hydro colors
 set --global hydro_color_git green
