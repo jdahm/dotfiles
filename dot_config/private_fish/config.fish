@@ -4,7 +4,7 @@ if test -f ~/.config/brew/path
     set PATH (cat ~/.config/brew/path)/bin $PATH
 end
 
-set PATH $HOME/bin $PATH
+set PATH $HOME/bin $HOME/go/bin $PATH
 
 if status is-interactive
     alias vim=nvim
@@ -29,6 +29,8 @@ if status is-interactive
 
     alias chezmoi-cd="cd (chezmoi source-path)"
     alias brew-update="brew bundle --cleanup --global"
+
+    alias s="kitty +kitten ssh"
 
     set fish_key_bindings fish_user_key_bindings
 end
