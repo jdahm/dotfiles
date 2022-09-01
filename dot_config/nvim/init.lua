@@ -274,7 +274,7 @@ local ws = vim.api.nvim_create_augroup("TrimWhitespace", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e", group = ws })
 
 -- Chezmoi apply after editing
-local ca = vim.api.nvim_create_augroup("ChezmoiApply", augroup_clear)
+local ca = vim.api.nvim_create_augroup("ChezmoiApply", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePost", {
 	pattern = vim.fn.expand("~/.local/share/chezmoi/") .. "*",
 	callback = function()
