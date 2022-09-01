@@ -81,7 +81,6 @@ require("packer").startup(function(use)
 	use({
 		"ibhagwan/fzf-lua",
 		-- optional for icon support
-		requires = { "kyazdani42/nvim-web-devicons" },
 	})
 
 	-- Diagnostics, references, telescope, quickfix, and location viewer
@@ -98,6 +97,9 @@ require("packer").startup(function(use)
 
 	-- Quickstart configurations for the Nvim LSP client
 	use("neovim/nvim-lspconfig")
+
+  -- Install LSP servers
+	use("williamboman/mason.nvim")
 
 	-- Use language server to inject LSP diagnostics, code actions, and more
 	use({ "jose-elias-alvarez/null-ls.nvim", requires = "nvim-lua/plenary.nvim" })
