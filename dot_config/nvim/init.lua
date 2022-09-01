@@ -277,7 +277,7 @@ vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e", group = 
 local ca = vim.api.nvim_create_augroup("ChezmoiApply", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePost", {
 	pattern = vim.fn.expand("~/.local/share/chezmoi/") .. "*",
-	callback = function()
+	callback = function(opts)
 		os.execute("chezmoi apply --source-path " .. opts.file)
 	end,
 	group = ca,
