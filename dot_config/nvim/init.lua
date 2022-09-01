@@ -98,8 +98,13 @@ require("packer").startup(function(use)
 	-- Quickstart configurations for the Nvim LSP client
 	use("neovim/nvim-lspconfig")
 
-  -- Install LSP servers
-	use("williamboman/mason.nvim")
+	-- Install LSP servers
+	use({
+		"williamboman/mason.nvim",
+		config = function()
+			require("mason").setup()
+		end,
+	})
 
 	-- Use language server to inject LSP diagnostics, code actions, and more
 	use({ "jose-elias-alvarez/null-ls.nvim", requires = "nvim-lua/plenary.nvim" })
