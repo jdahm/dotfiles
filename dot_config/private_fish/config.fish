@@ -48,6 +48,3 @@ if test -n "$KITTY_WINDOW_ID"
 else
     alias e=$EDITOR
 end
-
-# Gnupg
-set -gx GPG_TTY (tty)
