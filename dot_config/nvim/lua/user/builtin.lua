@@ -15,7 +15,7 @@ local options = {
     signcolumn = "yes",
 
     -- Autocomplete options
-    completeopt = "menu,menuone,noselect",
+    completeopt = "menuone,noinsert,noselect",
 }
 
 for k, v in pairs(options) do
@@ -29,8 +29,8 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Insert --
--- Press jk fast to exit insert mode
-vim.keymap.set("i", "jk", "<Esc>")
+-- -- Press jk fast to exit insert mode
+-- vim.keymap.set("i", "jk", "<Esc>")
 
 -- Visual --
 -- Stay in indent mode
