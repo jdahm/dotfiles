@@ -44,6 +44,15 @@ packer.startup(function(use)
         end,
     })
 
+    use({
+        "max397574/better-escape.nvim",
+        config = function()
+            require("better_escape").setup({
+                mapping = { "jk", "jj", "hd" }, -- a table with mappings to use
+            })
+        end,
+    })
+
     ------- Editor Settings --------
 
     -- Editor config
@@ -134,10 +143,7 @@ packer.startup(function(use)
     use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
 
     -- Text objects for treesitter
-    use({"nvim-treesitter/nvim-treesitter-textobjects"})
-
-    -- Rainbow parens
-    use({"p00f/nvim-ts-rainbow"})
+    use({ "nvim-treesitter/nvim-treesitter-textobjects" })
 
     ------- UI Theme --------
 
@@ -152,6 +158,9 @@ packer.startup(function(use)
 
     -- Colorscheme
     use("EdenEast/nightfox.nvim")
+
+    -- Rainbow parens
+    use({ "p00f/nvim-ts-rainbow" })
 
     ------- Wrappers --------
 
@@ -206,6 +215,13 @@ packer.startup(function(use)
         requires = "kyazdani42/nvim-web-devicons",
         config = function()
             require("trouble").setup({})
+        end,
+    })
+
+    use({
+        "ray-x/go.nvim",
+        config = function()
+            require("go").setup()
         end,
     })
 
