@@ -77,7 +77,7 @@
 	sw = switch
 	dif = diff
 	pus = push
-	pu = push
+	pu = pull
 	pick = cherry-pick
 	amend = commit --amend
 	authors-list = shortlog -e -s -n
