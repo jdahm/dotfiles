@@ -95,8 +95,9 @@ cask "rectangle"
 cask "1password-cli"
 cask "karabiner-elements"
 
-{{- if eq .location "basil" }}
+{{- if ne .location "thyme" }}
 cask "qmk-toolbox"
 cask "google-chrome"
+cask "slack"
 {{ end }}
 
