@@ -202,9 +202,11 @@ packer.startup(function(use)
     use("hrsh7th/cmp-path")
     use("hrsh7th/cmp-nvim-lsp")
     use("hrsh7th/cmp-nvim-lua")
-    use("hrsh7th/vim-vsnip")
-    use("hrsh7th/cmp-vsnip")
+    use({ "L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*" })
     use("onsails/lspkind.nvim")
+    use("saadparwaiz1/cmp_luasnip")
+    use("rafamadriz/friendly-snippets")
+
 
     -- Leverage the power of Vim's compiler plugins without being bound by synchronity
     use({ "radenling/vim-dispatch-neovim", requires = "tpope/vim-dispatch" })
