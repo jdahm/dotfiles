@@ -16,6 +16,7 @@ local options = {
 
     -- Autocomplete options
     completeopt = "menuone,noinsert,noselect",
+
 }
 
 for k, v in pairs(options) do
@@ -24,6 +25,9 @@ end
 
 -- add current filepath to vim's path for :find
 vim.opt.path:append(".,**")
+
+-- Turn on folding in Markdown mode
+vim.g.markdown_folding = 1
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
