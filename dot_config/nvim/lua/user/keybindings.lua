@@ -1,15 +1,19 @@
 local wk = require("which-key")
 
--- fzf-lua
+-- Telescope
 wk.register({
     f = {
-        name = "+fzf",
-        f = { "<cmd>lua require('fzf-lua').files()<cr>", "find files" },
-        g = { "<cmd>lua require('fzf-lua').live_grep()<cr>", "live grep" },
-        b = { "<cmd>lua require('fzf-lua').buffers()<cr>", "buffers" },
-        q = { "<cmd>lua require('fzf-lua').quickfix()<cr>", "quickfix" },
-        v = { "<cmd>lua require('fzf-lua').git_files()<cr>", "git files" },
-        l = { "<cmd>lua require('fzf-lua').lines()<cr>", "lines" },
+        name = "+telescope",
+        f = { "<cmd>lua require('telescope.builtin').find_files()<cr>", "find files" },
+        g = { "<cmd>lua require('telescope.builtin').live_grep()<cr>", "live grep" },
+        b = { "<cmd>lua require('telescope.builtin').buffers()<cr>", "buffers" },
+        q = { "<cmd>lua require('telescope.builtin').quickfix()<cr>", "quickfix" },
+        h = { "<cmd>lua require('telescope.builtin').help_tags()<cr>", "help" },
+        v = { "<cmd>lua require('telescope.builtin').git_files()<cr>", "git files" },
+        s = { "<cmd>lua require('telescope.builtin').git_stash()<cr>", "git stashes" },
+        c = { "<cmd>lua require('telescope.builtin').git_commit()<cr>", "git commits" },
+        r = { "<cmd>lua require('telescope.builtin').git_branches()<cr>", "git branches" },
+        o = { "<cmd>lua require('telescope.builtin').oldfiles()<cr>", "old files" },
     },
 }, { prefix = "<leader>" })
 
