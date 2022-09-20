@@ -15,8 +15,7 @@ local options = {
     signcolumn = "yes",
 
     -- Autocomplete options
-    completeopt = "menuone,noinsert,noselect",
-
+    completeopt = "menu,menuone,noselect",
 }
 
 for k, v in pairs(options) do
