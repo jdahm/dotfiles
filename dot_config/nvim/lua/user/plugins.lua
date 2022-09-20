@@ -143,12 +143,12 @@ packer.startup(function(use)
     use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
 
     -- Text objects for treesitter
-    use({ "nvim-treesitter/nvim-treesitter-textobjects" })
+    use("nvim-treesitter/nvim-treesitter-textobjects")
 
     ------- UI Theme --------
 
     -- Statusline
-    use("ojroques/nvim-hardline")
+    use({ "nvim-lualine/lualine.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true } })
 
     -- Git indicators
     use("lewis6991/gitsigns.nvim")
@@ -181,7 +181,8 @@ packer.startup(function(use)
 
     -- Fuzzy finder over lists
     use({
-        "nvim-telescope/telescope.nvim", branch = "0.1.x",
+        "nvim-telescope/telescope.nvim",
+        branch = "0.1.x",
         requires = { "nvim-lua/plenary.nvim" },
     })
 
@@ -206,7 +207,6 @@ packer.startup(function(use)
     use("onsails/lspkind.nvim")
     use("saadparwaiz1/cmp_luasnip")
     use("rafamadriz/friendly-snippets")
-
 
     -- Leverage the power of Vim's compiler plugins without being bound by synchronity
     use({ "radenling/vim-dispatch-neovim", requires = "tpope/vim-dispatch" })
