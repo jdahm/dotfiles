@@ -1,10 +1,10 @@
-require('mason').setup()
+require("mason").setup()
 require("mason-lspconfig").setup({
-  -- A list of servers to automatically install if they're not already installed. Example: { "rust_analyzer@nightly", "sumneko_lua" }
-  -- This setting has no relation with the `automatic_installation` setting.
-  ensure_installed = { "gopls", "pylsp", "rust_analyzer", "eslint", "tsserver", "terraformls", "sumneko_lua" },
+    -- A list of servers to automatically install if they're not already installed. Example: { "rust_analyzer@nightly", "sumneko_lua" }
+    -- This setting has no relation with the `automatic_installation` setting.
+    ensure_installed = { "gopls", "pylsp", "rust_analyzer", "eslint", "tsserver", "terraformls", "sumneko_lua" },
 
-  automatic_installation = true
+    automatic_installation = true,
 })
 
 local wk = require("which-key")
@@ -15,84 +15,83 @@ wk.register({ e = { "<cmd>lua vim.diagnostic.open_float()<cr>", "lsp: open float
 wk.register({ d = { "<cmd>lua vim.diagnostic.goto_prev()<cr>", "lsp: prev diag" } }, { prefix = "[" })
 wk.register({ d = { "<cmd>lua vim.diagnostic.goto_next()<cr>", "lsp: next diag" } }, { prefix = "]" })
 wk.register(
-  { t = { name = "+toggle", s = { "<cmd>lua vim.diagnostic.setloclist()<cr>", "lsp: diag setloclist" } } },
-  { prefix = "<leader>" }
+    { t = { name = "+toggle", s = { "<cmd>lua vim.diagnostic.setloclist()<cr>", "lsp: diag setloclist" } } },
+    { prefix = "<leader>" }
 )
 
-local lsp_defaults = {
-  flags = {
-    debounce_text_changes = 150,
-  },
-  capabilities = require('cmp_nvim_lsp').update_capabilities(
-    vim.lsp.protocol.make_client_capabilities()
-  ),
-  on_attach = function(client, bufnr)
-
+lsp_keybindings = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     wk.register({ D = { "<cmd>lua vim.lsp.buf.declaration()<cr>", "lsp: buf decl" } }, { prefix = "g", buffer = bufnr })
     if client.supports_method("textDocument/definition") then
-      wk.register(
-        { d = { "<cmd>lua vim.lsp.buf.definition()<cr>", "lsp: buf def" } },
-        { prefix = "g", buffer = bufnr }
-      )
+        wk.register(
+            { d = { "<cmd>lua vim.lsp.buf.definition()<cr>", "lsp: buf def" } },
+            { prefix = "g", buffer = bufnr }
+        )
     end
     if client.supports_method("textDocument/hover") then
-      wk.register({ K = { "<cmd>lua vim.lsp.buf.hover()<cr>", "lsp: buf hover" } }, { buffer = bufnr })
+        wk.register({ K = { "<cmd>lua vim.lsp.buf.hover()<cr>", "lsp: buf hover" } }, { buffer = bufnr })
     end
     if client.supports_method("textDocument/references") then
-      wk.register(
-        { R = { "<cmd>Trouble lsp_references<cr>", "trouble: lsp references" } },
-        { prefix = "g", buffer = bufnr }
-      )
+        wk.register(
+            { R = { "<cmd>Trouble lsp_references<cr>", "trouble: lsp references" } },
+            { prefix = "g", buffer = bufnr }
+        )
     end
     if client.supports_method("textDocument/implementation") then
-      wk.register(
-        { i = { "<cmd>lua vim.lsp.buf.implementation()<cr>", "lsp: buf impl" } },
-        { prefix = "g", buffer = bufnr }
-      )
+        wk.register(
+            { i = { "<cmd>lua vim.lsp.buf.implementation()<cr>", "lsp: buf impl" } },
+            { prefix = "g", buffer = bufnr }
+        )
     end
     wk.register({ ["<C-k>"] = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "lsp: sig help" } }, { buffer = bufnr })
     wk.register({
-      w = {
-        a = { "<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>", "lsp: add workspace fldr" },
-        r = { "<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>", "lsp: remove workspace fldr" },
-        l = {
-          "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>",
-          "lsp: list workspace fldr",
+        w = {
+            a = { "<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>", "lsp: add workspace fldr" },
+            r = { "<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>", "lsp: remove workspace fldr" },
+            l = {
+                "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>",
+                "lsp: list workspace fldr",
+            },
         },
-      },
     }, { prefix = "<leader>", buffer = bufnr })
     wk.register({ D = { "<cmd>lua vim.lsp.buf.type_definition()<cr>", "lsp: type def" } }, { buffer = bufnr })
     wk.register({
-      c = {
-        name = "+code",
-        r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "lsp: rename" },
-        a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "lsp: action" },
-        f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "lsp: format" },
-      },
+        c = {
+            name = "+code",
+            r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "lsp: rename" },
+            a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "lsp: action" },
+            f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "lsp: format" },
+        },
     }, { prefix = "<leader>", buffer = bufnr })
     wk.register({ r = { "<cmd>lua vim.lsp.buf.references()<cr>", "lsp: refs" } }, { prefix = "g", buffer = bufnr })
     -- vim.api.nvim_exec_autocmds('User', {pattern = 'LspAttached'})
-  end
+end
+
+local lsp_defaults = {
+    flags = {
+        debounce_text_changes = 150,
+    },
+    capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 }
 
-local lspconfig = require('lspconfig')
+local lspconfig = require("lspconfig")
 
-lspconfig.util.default_config = vim.tbl_deep_extend(
-  'force',
-  lspconfig.util.default_config,
-  lsp_defaults
-)
+lspconfig.util.default_config = vim.tbl_deep_extend("force", lspconfig.util.default_config, lsp_defaults)
 
 lspconfig.gopls.setup({})
 lspconfig.pylsp.setup({})
 lspconfig.rust_analyzer.setup({})
 lspconfig.eslint.setup({})
 lspconfig.terraformls.setup({})
-lspconfig.sumneko_lua.setup({})
+lspconfig.sumneko_lua.setup({
+    on_attach = function(client, bufnr)
+        lsp_keybindings(client, bufnr)
+        client.resolved_capabilities.document_formatting = false
+    end,
+})
 
 -- vim.api.nvim_create_autocmd('User', {
 --   pattern = 'LspAttached',
@@ -145,3 +144,10 @@ lspconfig.sumneko_lua.setup({})
 --   end
 -- })
 
+require("null-ls").setup({
+    sources = {
+        require("null-ls").builtins.formatting.stylua,
+        require("null-ls").builtins.diagnostics.eslint,
+        require("null-ls").builtins.completion.spell,
+    },
+})
