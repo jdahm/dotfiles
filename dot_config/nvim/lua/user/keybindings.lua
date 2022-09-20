@@ -30,3 +30,13 @@ wk.register(
     { b = { name = "+buffers", d = { ":Bdelete<cr>", "delete" }, w = { ":Bwipeout<cr>", "wipeout" } } },
     { prefix = "<leader>" }
 )
+
+require("telescope").setup({
+    defaults = {
+        mappings = {
+            i = {
+                ["<C-h>"] = "which_key",
+            },
+        },
+    },
+})
