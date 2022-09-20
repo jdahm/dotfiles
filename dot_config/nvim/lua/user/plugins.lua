@@ -181,8 +181,8 @@ packer.startup(function(use)
 
     -- Fuzzy finder over lists
     use({
-        "ibhagwan/fzf-lua",
-        requires = { "kyazdani42/nvim-web-devicons" },
+        "nvim-telescope/telescope.nvim", branch = "0.1.x",
+        requires = { "nvim-lua/plenary.nvim" },
     })
 
     -- File manager invoked with :NnnExplorer
