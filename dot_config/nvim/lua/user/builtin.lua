@@ -16,6 +16,8 @@ local options = {
 
     -- Autocomplete options
     completeopt = "menu,menuone,noselect",
+
+    showmode = false,
 }
 
 for k, v in pairs(options) do

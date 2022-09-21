@@ -1,10 +1,20 @@
 local wk = require("which-key")
 
 -- Telescope
+require("telescope").setup({
+    defaults = {
+        mappings = {
+            i = {
+                ["<C-h>"] = "which_key",
+            },
+        },
+    },
+})
+
 wk.register({
     f = {
         name = "+telescope",
-        f = { "<cmd>lua require('telescope.builtin').find_files()<cr>", "find files" },
+        f = { "<cmd>lua require('telescope.builtin').find_files({hidden=true})<cr>", "find files" },
         g = { "<cmd>lua require('telescope.builtin').live_grep()<cr>", "live grep" },
         b = { "<cmd>lua require('telescope.builtin').buffers()<cr>", "buffers" },
         q = { "<cmd>lua require('telescope.builtin').quickfix()<cr>", "quickfix" },
@@ -31,12 +41,3 @@ wk.register(
     { prefix = "<leader>" }
 )
 
-require("telescope").setup({
-    defaults = {
-        mappings = {
-            i = {
-                ["<C-h>"] = "which_key",
-            },
-        },
-    },
-})
