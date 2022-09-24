@@ -7,8 +7,8 @@ local options = {
     -- use system clipboard by default
     clipboard = "unnamedplus",
 
-    -- disable mouse support so we use of the keyboard
-    mouse = "",
+    -- enable the mouse, but discourage it ;-)
+    mouse = "a",
 
     -- set the default shell
     shell = "fish",
