@@ -98,6 +98,9 @@ packer.startup(function(use)
 
     ------- Text Objects --------
 
+    -- Improves built-in text objects and adds a few more
+    use("wellle/targets.vim")
+
     -- Defines 'ae' object for entire buffer
     use({ "kana/vim-textobj-entire", requires = { "kana/vim-textobj-user" } })
 
@@ -334,6 +337,7 @@ require("which-key").register({
         d = { ":TroubleToggle document_diagnostics<cr>", "document diagnostics" },
         l = { ":TroubleToggle loclist<cr>", "loclist" },
         q = { ":TroubleToggle quickfix<cr>", "quickfix" },
+        t = { ":TroubleTodo", "todos" },
     },
 }, { prefix = "<leader>" })
 
@@ -349,12 +353,17 @@ require("telescope").setup({
             n = { ["<C-t>"] = trouble.open_with_trouble },
         },
     },
+    pickers = {
+        find_files = {
+            find_command = { "rg", "--files", "--hidden", "-g", "!.git" },
+        },
+    },
 })
 
 require("which-key").register({
     f = {
         name = "+telescope",
-        f = { "<cmd>lua require('telescope.builtin').find_files({hidden=true})<cr>", "find files" },
+        f = { "<cmd>lua require('telescope.builtin').find_files()<cr>", "find files" },
         g = { "<cmd>lua require('telescope.builtin').live_grep()<cr>", "live grep" },
         b = { "<cmd>lua require('telescope.builtin').buffers()<cr>", "buffers" },
         q = { "<cmd>lua require('telescope.builtin').quickfix()<cr>", "quickfix" },
@@ -364,6 +373,7 @@ require("which-key").register({
         c = { "<cmd>lua require('telescope.builtin').git_commit()<cr>", "git commits" },
         r = { "<cmd>lua require('telescope.builtin').git_branches()<cr>", "git branches" },
         o = { "<cmd>lua require('telescope.builtin').oldfiles()<cr>", "old files" },
+        t = { "<cmd>TodoTelescope<cr>", "todos" },
     },
 }, { prefix = "<leader>" })
 
