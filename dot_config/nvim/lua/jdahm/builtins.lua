@@ -22,6 +22,8 @@ wk.register({
 -- <Esc> returns to normal mode in terminal buffers
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
 
+-- {"BufReadPost,FileReadPost", "*", "normal zR"}
+
 -- Temporarily highlight yanked text
 vim.api.nvim_create_autocmd(
     "TextYankPost",
@@ -39,3 +41,7 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Trim trailing whitespace
 local ws = vim.api.nvim_create_augroup("TrimWhitespace", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e", group = ws })
+
+-- Open folds by default
+-- This is superseded by setting vim.opt.foldlevelstart=99
+-- vim.api.nvim_create_autocmd("BufEnter", { pattern = "*", command = "normal zR" })
