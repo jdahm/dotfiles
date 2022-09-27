@@ -16,15 +16,14 @@ function M.plugins(use)
     -- A snazzy bufferline
     use({ "akinsho/bufferline.nvim", tag = "v2.*", requires = "kyazdani42/nvim-web-devicons" })
 
-    -- Using Nnn in wrappers.lua
-    -- -- A file explorer tree
-    -- use({
-    --     "kyazdani42/nvim-tree.lua",
-    --     requires = { "kyazdani42/nvim-web-devicons" },
-    --     config = function()
-    --         require("nvim-tree").setup()
-    --     end,
-    -- })
+    -- A file explorer tree
+    use({
+        "kyazdani42/nvim-tree.lua",
+        requires = { "kyazdani42/nvim-web-devicons" },
+        config = function()
+            require("nvim-tree").setup()
+        end,
+    })
 end
 
 function M.setup()
@@ -52,15 +51,15 @@ function M.setup()
         },
     })
 
-    -- require("which-key").register({
-    --     e = {
-    --         name = "+tree",
-    --         t = { ":NvimTreeToggle<cr>", "toggle" },
-    --         f = { ":NvimTreeFocus<cr>", "focus" },
-    --         w = { ":NvimTreeFindFile<cr>", "find file" },
-    --         c = { ":NvimTreeCollapse<cr>", "collapse" },
-    --     },
-    -- }, { prefix = "<leader>" })
+    require("which-key").register({
+        e = {
+            name = "+tree",
+            t = { ":NvimTreeToggle<cr>", "toggle" },
+            f = { ":NvimTreeFocus<cr>", "focus" },
+            w = { ":NvimTreeFindFile<cr>", "find file" },
+            c = { ":NvimTreeCollapse<cr>", "collapse" },
+        },
+    }, { prefix = "<leader>" })
 end
 
 return M
