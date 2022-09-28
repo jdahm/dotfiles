@@ -2,4 +2,6 @@ github.com/josharian/impl@latest
 github.com/vektra/mockery/v2@latest
 github.com/kyleconroy/sqlc/cmd/sqlc@latest
 github.com/segmentio/golines@latest
+github.com/carlmjohnson/pomodoro@latest
+
 
