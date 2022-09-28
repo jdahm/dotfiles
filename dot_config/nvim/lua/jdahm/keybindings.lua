@@ -50,10 +50,10 @@ function M.setup()
     vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
 
     -- Navigate windows with alt-{hjkl}
-    vim.keymap.set("n", "<A-h>", "<C-w>h", { noremap = true, silent = true })
-    vim.keymap.set("n", "<A-j>", "<C-w>j", { noremap = true, silent = true })
-    vim.keymap.set("n", "<A-k>", "<C-w>k", { noremap = true, silent = true })
-    vim.keymap.set("n", "<A-l>", "<C-w>l", { noremap = true, silent = true })
+    vim.keymap.set("n", "<A-Left>", "<C-w>h", { noremap = true, silent = true })
+    vim.keymap.set("n", "<A-Down>", "<C-w>j", { noremap = true, silent = true })
+    vim.keymap.set("n", "<A-Up>", "<C-w>k", { noremap = true, silent = true })
+    vim.keymap.set("n", "<A-Right>", "<C-w>l", { noremap = true, silent = true })
 end
 
 return M
