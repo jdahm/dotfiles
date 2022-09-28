@@ -106,6 +106,7 @@ function M.setup()
         ["typescript-language-server"] = "tsserver",
         ["terraformls"] = "terraformls",
         ["lua-language-server"] = "sumneko_lua",
+        ["yaml_language_server"] = "yamlls",
     }
 
     require("mason-lspconfig").setup({
