@@ -3,14 +3,20 @@ local M = {}
 function M.plugins(use)
     -- Completion
     use("hrsh7th/nvim-cmp")
+    use({ "L3MON4D3/LuaSnip", tag = "v1.*" })
+    use("saadparwaiz1/cmp_luasnip")
+
     use("hrsh7th/cmp-buffer")
     use("hrsh7th/cmp-path")
+    use("f3fora/cmp-spell")
     use("hrsh7th/cmp-nvim-lsp")
     use("hrsh7th/cmp-nvim-lua")
-    use({ "L3MON4D3/LuaSnip", tag = "v1.*" })
-    use("onsails/lspkind.nvim")
-    use("saadparwaiz1/cmp_luasnip")
+
+    -- A set of snippets
     use("rafamadriz/friendly-snippets")
+
+    -- vscode-like pictograms for neovim lsp completion items
+    use("onsails/lspkind.nvim")
 end
 
 function M.setup()
@@ -30,10 +36,10 @@ function M.setup()
                 luasnip.lsp_expand(args.body)
             end,
         },
-        completion = {
-            autocomplete = false,
-            reason = cmp.ContextReason.Auto,
-        },
+        -- completion = {
+        --     autocomplete = false,
+        --     reason = cmp.ContextReason.Auto,
+        -- },
         mapping = cmp.mapping.preset.insert({
             ["<C-d>"] = cmp.mapping.scroll_docs(-4),
             ["<C-f>"] = cmp.mapping.scroll_docs(4),
@@ -66,9 +72,9 @@ function M.setup()
             return not (context.in_treesitter_capture("comment") == true or context.in_syntax_group("Comment"))
         end,
         sources = cmp.config.sources({
-            { name = "path", keyword_length = 3 },
-            { name = "nvim_lsp", keyword_length = 3 },
-            { name = "buffer", keyword_length = 5 },
+            { name = "path" },
+            { name = "nvim_lsp" },
+            { name = "buffer" },
             { name = "luasnip" },
         }, { { name = "buffer" } }),
         formatting = {
@@ -88,13 +94,13 @@ function M.setup()
     })
 
     -- Set configuration for specific filetype.
-    -- cmp.setup.filetype("gitcommit", {
-    --     sources = cmp.config.sources({
-    --         { name = "cmp_git" }, -- You can specify the `cmp_git` source if you were installed it.
-    --     }, {
-    --         { name = "buffer" },
-    --     }),
-    -- })
+    cmp.setup.filetype("markdown", {
+        sources = cmp.config.sources({
+            { name = "spell" },
+        }, {
+            { name = "buffer" },
+        }),
+    })
 
     -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline("/", {
@@ -114,5 +120,16 @@ function M.setup()
         }),
     })
 end
+
+local function fn(args)
+    return "## " .. os.date("%A %b %d, %Y")
+end
+
+require("luasnip").add_snippets("markdown", {
+    require("luasnip").snippet("standup", {
+        require("luasnip").function_node(fn, {}),
+        require("luasnip").insert_node(0),
+    }),
+})
 
 return M
