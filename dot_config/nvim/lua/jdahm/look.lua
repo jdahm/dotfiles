@@ -21,7 +21,7 @@ function M.plugins(use)
         "kyazdani42/nvim-tree.lua",
         requires = { "kyazdani42/nvim-web-devicons" },
         config = function()
-            require("nvim-tree").setup({ open_on_setup = true, open_on_setup_file = true })
+            require("nvim-tree").setup({ open_on_setup = true })
         end,
     })
 end
