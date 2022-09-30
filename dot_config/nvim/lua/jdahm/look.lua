@@ -40,6 +40,8 @@ function M.setup()
 
     vim.cmd("colorscheme nordfox")
 
+    vim.highlight.create('Comment', {cterm='italic', gui='italic'}, false)
+
     require("bufferline").setup({
         options = {
             show_buffer_close_icons = false,
