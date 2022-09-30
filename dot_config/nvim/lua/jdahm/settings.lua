@@ -41,7 +41,7 @@ function M.setup()
     )
 
     require("which-key").register(
-        { b = { name = "+buffers", d = { ":Bdelete<cr>", "delete" }, w = { ":Bwipeout<cr>", "wipeout" } } },
+        { z = { ":Bdelete<cr>", "delete" } },
         { prefix = "<leader>" }
     )
 end
