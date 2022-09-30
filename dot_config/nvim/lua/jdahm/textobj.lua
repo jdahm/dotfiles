@@ -33,8 +33,8 @@ function M.plugins(use)
     -- Sort with 'gs'
     use("christoomey/vim-sort-motion")
 
-    -- -- Align with gl, gL
-    -- use("https://github.com/tommcdo/vim-lion")
+    -- Align with gl, gL
+    use("https://github.com/tommcdo/vim-lion")
 end
 
 function M.setup() end
