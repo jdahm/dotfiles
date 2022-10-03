@@ -40,7 +40,7 @@ function M.setup()
             ["<C-Space>"] = cmp.mapping.complete(),
             ["<CR>"] = cmp.mapping.confirm({
                 behavior = cmp.ConfirmBehavior.Replace,
-                select = true,
+                select = false,
             }),
             ["<Tab>"] = cmp.mapping(function(fallback)
                 if cmp.visible() then
@@ -88,13 +88,10 @@ function M.setup()
     })
 
     -- Set configuration for specific filetype.
-    -- cmp.setup.filetype("gitcommit", {
-    --     sources = cmp.config.sources({
-    --         { name = "cmp_git" }, -- You can specify the `cmp_git` source if you were installed it.
-    --     }, {
-    --         { name = "buffer" },
-    --     }),
-    -- })
+    cmp.setup.filetype("markdown", {
+        -- Disable by removing all sources
+        sources = cmp.config.sources({}, {}),
+    })
 
     -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
     cmp.setup.cmdline("/", {
