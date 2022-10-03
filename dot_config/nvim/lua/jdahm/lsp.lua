@@ -1,7 +1,6 @@
 local M = {}
 
 function M.plugins(use)
-    ------- LSP --------
     use("williamboman/mason.nvim")
     use("williamboman/mason-lspconfig.nvim")
     use("neovim/nvim-lspconfig")
@@ -84,7 +83,7 @@ function M.setup()
                 name = "+code",
                 r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "lsp: rename" },
                 a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "lsp: action" },
-                f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "lsp: format" },
+                f = { "<cmd>lua vim.lsp.buf.format()<cr>", "lsp: format" },
             },
         }, { prefix = "<leader>", buffer = bufnr })
         wk.register({ r = { "<cmd>lua vim.lsp.buf.references()<cr>", "lsp: refs" } }, { prefix = "g", buffer = bufnr })
@@ -123,8 +122,8 @@ function M.setup()
                 on_attach = function(client, bufnr)
                     lsp_keybindings(client, bufnr)
                     if ({ pylsp = "", sumneko_lua = "" })[lsp] ~= nil then
-                        client.resolved_capabilities.document_formatting = false
-                        client.resolved_capabilities.document_range_formatting = false
+                        client.server_capabilities.document_formatting = false
+                        client.server_capabilities.document_range_formatting = false
                     end
                 end,
             }

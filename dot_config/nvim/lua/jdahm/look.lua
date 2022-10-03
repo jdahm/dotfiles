@@ -21,7 +21,7 @@ function M.plugins(use)
         "kyazdani42/nvim-tree.lua",
         requires = { "kyazdani42/nvim-web-devicons" },
         config = function()
-            require("nvim-tree").setup({ open_on_setup = true })
+            require("nvim-tree").setup({})
         end,
     })
 end
@@ -36,11 +36,11 @@ function M.setup()
     -- Skip intro message
     vim.opt.shortmess = vim.opt.shortmess + "I"
 
+    vim.opt.ch = 0
+
     require("hardline").setup({ theme = "nord" })
 
     vim.cmd("colorscheme nordfox")
-
-    vim.highlight.create('Comment', {cterm='italic', gui='italic'}, false)
 
     require("bufferline").setup({
         options = {
