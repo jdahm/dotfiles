@@ -36,7 +36,8 @@ function M.setup()
     -- Skip intro message
     vim.opt.shortmess = vim.opt.shortmess + "I"
 
-    vim.opt.ch = 0
+    -- I want to enable this in the future, but it currently doesn't work well
+    -- vim.opt.ch = 0
 
     require("hardline").setup({ theme = "nord" })
 
