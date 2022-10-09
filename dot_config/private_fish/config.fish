@@ -26,16 +26,6 @@ if command -qs nvim
     set -Ux VISUAL nvim
 end
 
-# vi keybindings
-fish_vi_key_bindings
-bind -M insert -m default jk backward-char force-repaint
-
-# for accepting autosuggestions in vi mode
-# https://github.com/fish-shell/fish-shell/issues/3541#issuecomment-260001906
-for mode in insert default visual
-    bind -M $mode \cf forward-char
-end
-
 # bind / in default mode to reverse_isearch from PatrickF1/fzf.fish
 bind -M default / __fzf_reverse_isearch
 
