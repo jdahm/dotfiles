@@ -26,9 +26,6 @@ if command -qs nvim
     set -Ux VISUAL nvim
 end
 
-# bind / in default mode to reverse_isearch from PatrickF1/fzf.fish
-bind -M default / __fzf_reverse_isearch
-
 # Hydro colors
 set --global hydro_color_git green
 set --global hydro_color_duration yellow
