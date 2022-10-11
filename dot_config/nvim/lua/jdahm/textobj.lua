@@ -34,9 +34,12 @@ function M.plugins(use)
     use("christoomey/vim-sort-motion")
 
     -- Align with gl, gL
-    use("https://github.com/tommcdo/vim-lion")
+    use("junegunn/vim-easy-align")
+    -- use("tommcdo/vim-lion")
 end
 
-function M.setup() end
+function M.setup()
+    vim.keymap.set({ "n", "x" }, "ga", "<Plug>(EasyAlign)", { noremap = true, silent = true })
+end
 
 return M
