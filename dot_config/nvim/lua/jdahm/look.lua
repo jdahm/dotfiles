@@ -13,8 +13,8 @@ function M.plugins(use)
     -- Rainbow parens
     use("p00f/nvim-ts-rainbow")
 
-    -- A snazzy bufferline
-    use({ "akinsho/bufferline.nvim", tag = "v2.*", requires = "kyazdani42/nvim-web-devicons" })
+    -- -- A snazzy bufferline
+    -- use({ "akinsho/bufferline.nvim", tag = "v2.*", requires = "kyazdani42/nvim-web-devicons" })
 
     -- A file explorer tree
     use({
@@ -43,16 +43,16 @@ function M.setup()
 
     vim.cmd("colorscheme nordfox")
 
-    require("bufferline").setup({
-        options = {
-            show_buffer_close_icons = false,
-            show_close_icon = false,
-            separator_style = "slant",
-            -- numbers = "ordinal",
-            max_name_length = 40,
-            offsets = { { filetype = "NvimTree", text = "File Explorer", text_align = "center" } },
-        },
-    })
+    -- require("bufferline").setup({
+    --     options = {
+    --         show_buffer_close_icons = false,
+    --         show_close_icon = false,
+    --         separator_style = "slant",
+    --         -- numbers = "ordinal",
+    --         max_name_length = 40,
+    --         offsets = { { filetype = "NvimTree", text = "File Explorer", text_align = "center" } },
+    --     },
+    -- })
 
     require("which-key").register({
         e = {
