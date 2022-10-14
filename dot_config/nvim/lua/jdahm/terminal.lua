@@ -57,7 +57,29 @@ function M.setup()
         lazygit:toggle()
     end
 
-    require("which-key").register({ g = { ":lua Lazygit_toggle()<cr>", "lazygit" } }, { prefix = "<leader>" })
+    local lazydocker = Terminal:new({
+        cmd = "lazydocker",
+        -- dir = "git_dir",
+        direction = "float",
+        float_opts = {
+            border = "double",
+        },
+        -- function to run on opening the terminal
+        on_open = function(term)
+            vim.cmd("startinsert!")
+            vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
+        end,
+        -- function to run on closing the terminal
+        on_close = function(term)
+            vim.cmd("startinsert!")
+        end,
+    })
+
+    function Lazydocker_toggle()
+        lazydocker:toggle()
+    end
+
+    require("which-key").register({ p = { name = "+program", g = { ":lua Lazygit_toggle()<cr>", "lazygit" }, d = { ":lua Lazydocker_toggle()<cr>", "lazydocker" } } }, { prefix = "<leader>" })
 end
 
 return M
