@@ -49,7 +49,7 @@ function M.setup()
     -- <Esc> returns to normal mode in terminal buffers
     vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
 
-    -- Navigate windows with alt-{hjkl}
+    -- Navigate windows with alt + arrow keys
     vim.keymap.set("n", "<A-Left>", "<C-w>h", { noremap = true, silent = true })
     vim.keymap.set("n", "<A-Down>", "<C-w>j", { noremap = true, silent = true })
     vim.keymap.set("n", "<A-Up>", "<C-w>k", { noremap = true, silent = true })
