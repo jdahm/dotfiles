@@ -7,6 +7,8 @@ function M.plugins(use)
 
     -- Use language server to inject LSP diagnostics, code actions, and more
     use({ "jose-elias-alvarez/null-ls.nvim", requires = "nvim-lua/plenary.nvim" })
+
+    use("WhoIsSethDaniel/toggle-lsp-diagnostics.nvim")
 end
 
 function M.setup()
@@ -28,10 +30,15 @@ function M.setup()
     wk.register({ d = { "<cmd>lua vim.diagnostic.goto_prev()<cr>", "lsp: prev diag" } }, { prefix = "[" })
     wk.register({ d = { "<cmd>lua vim.diagnostic.goto_next()<cr>", "lsp: next diag" } }, { prefix = "]" })
     -- NOTE: <leader>ts is currently used to set spelling, <leader>xl shows loclist in trouble.nvim
-    -- wk.register(
-    --     { t = { name = "+toggle", s = { "<cmd>lua vim.diagnostic.setloclist()<cr>", "lsp: diag setloclist" } } },
-    --     { prefix = "<leader>" }
-    -- )
+    wk.register(
+        { t = { name = "+toggle",
+            l = { name = "+diag",
+                u = { "<Plug>(toggle-lsp-diag-underline)", "wrap" }, s = { "<Plug>(toggle-lsp-diag-signs)", "signs" },
+                v = { "<Plug>(toggle-lsp-diag-vtext)", "virtual text" },
+                p = { "<Plug>(toggle-lsp-diag-update_in_insert)", "update in insert" },
+                d = { "<Plug>(toggle-lsp-diag)", "diag" } } } },
+        { prefix = "<leader>" }
+    )
 
     local lsp_keybindings = function(client, bufnr)
         -- Enable completion triggered by <c-x><c-o>
@@ -106,6 +113,10 @@ function M.setup()
         ["terraformls"] = "terraformls",
         ["lua-language-server"] = "sumneko_lua",
         ["yaml_language_server"] = "yamlls",
+
+        -- DAP adapters
+        ["delve"] = "",
+        ["go-debug-adapter"] = "",
     }
 
     require("mason-lspconfig").setup({
