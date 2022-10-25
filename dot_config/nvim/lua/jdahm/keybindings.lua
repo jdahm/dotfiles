@@ -14,7 +14,7 @@ function M.plugins(use)
         "max397574/better-escape.nvim",
         config = function()
             require("better_escape").setup({
-                mapping = { "jk", "jj", "hd" }, -- a table with mappings to use
+                mapping = { "jk", "hd" }, -- a table with mappings to use
             })
         end,
     })
@@ -35,25 +35,26 @@ function M.setup()
     wk.register({ s = { ":w<cr>", "save buffer" } }, { prefix = "<leader>" })
     wk.register({ q = { ":q<cr>", "quit" } }, { prefix = "<leader>" })
 
-    wk.register({
-        t = {
-            name = "+toggle",
-            w = { ":set wrap!<cr>", "wrap" },
-            l = { ":set cursorline!<cr>", "cursorline" },
-            c = { ":set cursorcolumn!<cr>", "cursorcolumn" },
-            n = { ":set number!<cr>", "number" },
-            s = { ":set spell!<cr>", "spell" },
-        },
-    }, { prefix = "<leader>" })
+    -- These are given by tpope/vim-unimpared on 'yo*'
+    -- wk.register({
+    --     t = {
+    --         name = "+toggle",
+    --         w = { ":set wrap!<cr>", "wrap" },
+    --         l = { ":set cursorline!<cr>", "cursorline" },
+    --         c = { ":set cursorcolumn!<cr>", "cursorcolumn" },
+    --         n = { ":set number!<cr>", "number" },
+    --         s = { ":set spell!<cr>", "spell" },
+    --     },
+    -- }, { prefix = "<leader>" })
 
     -- <Esc> returns to normal mode in terminal buffers
     vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true, silent = true })
 
-    -- Navigate windows with alt + arrow keys
-    vim.keymap.set("n", "<A-Left>", "<C-w>h", { noremap = true, silent = true })
-    vim.keymap.set("n", "<A-Down>", "<C-w>j", { noremap = true, silent = true })
-    vim.keymap.set("n", "<A-Up>", "<C-w>k", { noremap = true, silent = true })
-    vim.keymap.set("n", "<A-Right>", "<C-w>l", { noremap = true, silent = true })
+    -- Navigate windows with alt-{hjkl}
+    vim.keymap.set("n", "<A-h>", "<C-w>h", { noremap = true, silent = true })
+    vim.keymap.set("n", "<A-j>", "<C-w>j", { noremap = true, silent = true })
+    vim.keymap.set("n", "<A-k>", "<C-w>k", { noremap = true, silent = true })
+    vim.keymap.set("n", "<A-l>", "<C-w>l", { noremap = true, silent = true })
 end
 
 return M
