@@ -27,10 +27,10 @@ function M.setup()
     vim.opt.swapfile = false
 
     -- use system clipboard by default
-    vim.opt.clipboard = "unnamedplus"
+    -- vim.opt.clipboard = "unnamedplus"
 
     -- enable the mouse, but discourage it ;-)
-    vim.opt.mouse = "a"
+    vim.opt.mouse = ""
 
     -- add current filepath to vim's path for :find
     vim.opt.path:append(".,**")
