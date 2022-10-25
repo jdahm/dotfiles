@@ -23,6 +23,7 @@ M.modules = prefix_entries("jdahm.", {
     "lsp",
     "diagnostics",
     "cmp",
+    "dap",
 })
 
 -- disable some plugins that are distributed with vim
