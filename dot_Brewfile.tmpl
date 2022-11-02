@@ -77,7 +77,6 @@ brew "ddgr"
 # Colorize logfiles and command output
 brew "grc"
 
-
 # Tool for glamorous shell scripts
 brew "gum"
 
@@ -87,10 +86,8 @@ brew "glow"
 # The SSH directory
 brew "wishlist"
 
-
 # GNU Pretty Good Privacy (PGP) package
 brew "gnupg"
-
 
 # Modern replacement for 'ls'
 brew "exa"
@@ -140,10 +137,8 @@ brew "gotop"
 # Simple command-line notebook for programmers
 brew "dnote"
 
-
 # Object-relational database system
 brew "postgresql@14"
-
 
 # Pinentry for GPG on Mac
 brew "pinentry-mac"
@@ -151,23 +146,14 @@ brew "pinentry-mac"
 # LastPass command-line interface tool
 brew "lastpass-cli"
 
-
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
 
 # Python version management
 brew "pyenv"
 
-# JavaScript package manager
-brew "yarn"
-
-# Toolkit to work with swagger for golang
-brew "go-swagger"
-
-
 # Code formatter for JavaScript, CSS, JSON, GraphQL, Markdown, YAML
 brew "prettier"
-
 
 # GNU compiler collection
 brew "gcc"
@@ -177,13 +163,6 @@ brew "llvm"
 
 # Cross-platform make
 brew "cmake"
-
-# LLVM's OpenMP runtime library
-brew "libomp"
-
-# High performance message passing library
-brew "open-mpi"
-
 
 # Collection of portable C++ source libraries
 brew "boost"
@@ -203,17 +182,14 @@ brew "xz"
 # General-purpose lossless data-compression library
 brew "zlib"
 
-
 # Run a Kubernetes cluster locally
 brew "minikube"
 
 # Tools and libraries to manipulate images in many formats
 brew "imagemagick"
 
-
 # Pinentry for GPG on Mac
 brew "pinentry-mac"
-
 
 # Casks
 cask "font-jetbrains-mono-nerd-font"
@@ -224,21 +200,18 @@ cask "font-cascadia-mono"
 cask "font-cascadia-code"
 
 cask "spotify"
-cask "lastpass"
-cask "element"
 
 cask "kitty"
 cask "docker"
 cask "visual-studio-code"
-cask "neovide"
 cask "google-cloud-sdk"
-cask "rectangle"
-cask "kaleidoscope"
 cask "chrysalis"
 
 cask "1password-cli"
 
 {{- if ne .location "thyme" }}
+cask "lastpass"
+cask "element"
 cask "qmk-toolbox"
 cask "google-chrome"
 cask "slack"
