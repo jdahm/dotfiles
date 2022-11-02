@@ -2,10 +2,24 @@
 
 My dotfiles are currently managed with [chezmoi](https://www.chezmoi.io/).
 
+To get chezmoi, run
+
+```shell
+$ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply $GITHUB_USERNAME
+```
+
 ## Installation
 
-After installing chezmoi and running `chezmoi apply`, also run
+By default MacOS has zsh as the default terminal.
+To change that, run
 
+```shell
+$ echo $(which fish) | sudo tee -a /etc/shells
+$ chsh -s $(which fish)
+```
+
+By default the plugins will not be installed.
+To install them through `fisher`, run
 ```shell
 $ cat ~/.config/fish/fish_plugins | fisher install
 ```
