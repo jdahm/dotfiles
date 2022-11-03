@@ -7,4 +7,7 @@ end
 
 set long_desc (brew info $argv[1] --json | jq -r ".[0].desc")
 
-string trim -c \n $long_desc
+string trim $long_desc
+
+#
+Minimal, todo.txt-focused editor
