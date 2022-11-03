@@ -207,9 +207,11 @@ cask "visual-studio-code"
 cask "google-cloud-sdk"
 cask "chrysalis"
 
+{{- if eq .location "thyme" }}
 cask "1password-cli"
+{{ end }}
 
-{{- if ne .location "thyme" }}
+{{- if eq .location "basil" }}
 cask "lastpass"
 cask "element"
 cask "qmk-toolbox"
