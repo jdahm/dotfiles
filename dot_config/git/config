@@ -1,5 +1,5 @@
 [core]
-	editor = "nvim"
+	editor = "code --wait"
 	pager = "delta"
 
 [fetch]
