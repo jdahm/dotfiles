@@ -32,6 +32,9 @@ set --global hydro_color_duration yellow
 set --global hydro_color_prompt blue
 set --global hydro_color_pwd magenta
 
+# Sponge
+set sponge_purge_only_on_exit true
+
 # Direnv
 direnv hook fish | source
 
