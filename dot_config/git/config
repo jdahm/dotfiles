@@ -1,6 +1,5 @@
 [core]
 	editor = "code --wait"
-	pager = "delta"
 
 [fetch]
 	prune = true
@@ -20,6 +19,18 @@
 [user]
 	email = "johann.dahm@gmail.com"
 	name = "Johann Dahm"
+
+[diff]
+	tool = vscode
+
+[merge]
+	tool = vscode
+
+[difftool "vscode"]
+	cmd = code-insiders --wait --diff $LOCAL $REMOTE
+
+[mergetool "vscode"]
+	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 
 [color]
 	branch = auto
@@ -56,12 +67,6 @@
 
 [url "git@github.com:github"]
 	insteadOf = "github:github"
-
-[delta]
-	side-by-side = true
-
-[merge]
-	conflictstyle = diff3
 
 [alias]
 	st = status -s
