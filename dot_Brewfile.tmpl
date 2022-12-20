@@ -177,8 +177,11 @@ brew "pinentry-mac"
 # Kubernetes package manager
 brew "helm"
 
-#
+# Configurable static site generator
 brew "hugo"
+
+# End-to-end encryption software
+brew "keybase"
 
 # Casks
 cask "font-jetbrains-mono-nerd-font"
@@ -196,9 +199,8 @@ cask "visual-studio-code"
 cask "google-cloud-sdk"
 cask "chrysalis"
 
-{{- if eq .location "thyme" }}
+cask "1password"
 cask "1password-cli"
-{{ end }}
 
 {{- if eq .location "basil" }}
 cask "lastpass"
