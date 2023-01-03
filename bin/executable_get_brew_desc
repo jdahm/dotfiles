@@ -1,8 +1,18 @@
 #!/usr/bin/env fish
 
 if test (count $argv) -ne 1
- echo "USAGE: get_brew_desc.sh <pkg>"
- exit 1
+    echo "USAGE: get_brew_desc <pkg>"
+    exit 1
 end
 
-brew info $argv[1] --json | jq -r ".[0].desc"
+formula_desc=(brew info $argv[1] --json=v2 | jq -r "formulae[0].desc")
+if test "$formula_desc" != "nil"
+    echo $formula_desc
+    exit
+end
+
+cask_desc=(brew info $argv[1] --json=v2 | jq -r "casks[0].desc")
+if test "$cask_desc" != "nil"
+    echo $cask_desc
+    exit
+end
