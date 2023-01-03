@@ -178,8 +178,6 @@ brew "yarn"
 
 brew "awscli"
 
-brew "ansible"
-
 # Casks
 cask "font-jetbrains-mono-nerd-font"
 cask "font-source-code-pro"
@@ -201,6 +199,8 @@ cask "goland"
 
 cask "authy"
 
+# Machine-Specific
+
 {{- if eq .location "basil" }}
 cask "element"
 cask "qmk-toolbox"
@@ -209,5 +209,7 @@ cask "slack"
 {{ end }}
 
 {{- if eq .location "thyme" }}
+brew "ansible"
 cask "1password"
+
 {{ end }}
