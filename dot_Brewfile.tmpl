@@ -139,17 +139,11 @@ brew "abduco"
 # Terminal based graphical activity monitor inspired by gtop and vtop
 brew "gotop"
 
-# Simple command-line notebook for programmers
-brew "dnote"
-
 # Object-relational database system
-brew "postgresql@14"
+brew "postgresql@15"
 
 # Pinentry for GPG on Mac
 brew "pinentry-mac"
-
-# LastPass command-line interface tool
-brew "lastpass-cli"
 
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
@@ -183,11 +177,14 @@ brew "hugo"
 
 brew "yarn"
 
+brew "awscli"
+
+brew "miniconda"
+
 # Casks
 cask "font-jetbrains-mono-nerd-font"
 cask "font-source-code-pro"
 cask "font-hack-nerd-font"
-cask "font-victor-mono"
 cask "font-cascadia-mono"
 cask "font-cascadia-code"
 
@@ -204,10 +201,12 @@ cask "goland"
 cask "authy"
 
 {{- if eq .location "basil" }}
-cask "lastpass"
 cask "element"
 cask "qmk-toolbox"
 cask "google-chrome"
 cask "slack"
 {{ end }}
 
+{{- if eq .location "thyme" }}
+cask "1password"
+{{ end }}
