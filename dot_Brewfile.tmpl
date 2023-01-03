@@ -141,14 +141,8 @@ brew "gotop"
 # Simple command-line notebook for programmers
 brew "dnote"
 
-# Object-relational database system
-brew "postgresql@14"
-
 # Pinentry for GPG on Mac
 brew "pinentry-mac"
-
-# LastPass command-line interface tool
-brew "lastpass-cli"
 
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
@@ -180,9 +174,6 @@ brew "helm"
 # Configurable static site generator
 brew "hugo"
 
-# End-to-end encryption software
-brew "keybase"
-
 # Casks
 cask "font-jetbrains-mono-nerd-font"
 cask "font-source-code-pro"
@@ -192,22 +183,29 @@ cask "font-cascadia-mono"
 cask "font-cascadia-code"
 
 cask "spotify"
+cask "authy"
 
 cask "kitty"
 cask "docker"
-cask "visual-studio-code"
 cask "google-cloud-sdk"
 cask "chrysalis"
 
+cask "visual-studio-code"
 cask "goland"
 
-cask "authy"
+# Machine-Specific
 
 {{- if eq .location "basil" }}
-cask "lastpass"
 cask "element"
 cask "qmk-toolbox"
 cask "google-chrome"
 cask "slack"
 {{ end }}
 
+{{- if eq .location "thyme"}}
+# Automate deployment, configuration, and upgrading
+brew "ansible"
+
+# Object-relational database system
+brew "postgresql@14"
+{{ end }}
