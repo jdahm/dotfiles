@@ -5,14 +5,16 @@ if test (count $argv) -ne 1
     exit 1
 end
 
-formula_desc=(brew info $argv[1] --json=v2 | jq -r "formulae[0].desc")
-if test "$formula_desc" != "nil"
+set pkg $argv[1]
+
+set formula_desc (brew info $pkg --json=v2 | jq -r ".formulae[0].desc")
+if test "$formula_desc" != "null"
     echo $formula_desc
     exit
 end
 
-cask_desc=(brew info $argv[1] --json=v2 | jq -r "casks[0].desc")
-if test "$cask_desc" != "nil"
+set cask_desc (brew info $pkg --json=v2 | jq -r ".casks[0].desc")
+if test "$cask_desc" != "null"
     echo $cask_desc
     exit
 end
