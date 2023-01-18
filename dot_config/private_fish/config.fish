@@ -16,10 +16,8 @@ if command -qs brew
     end
 end
 
-fish_add_path $(brew --prefix)/opt/postgresql@15/bin
-
 # Local bin and lang executables
-set PATH $HOME/bin $HOME/go/bin $PATH
+fish_add_path $HOME/bin $HOME/go/bin $(brew --prefix)/opt/postgresql@15/bin
 
 if command -qs nvim
     alias vi=nvim
