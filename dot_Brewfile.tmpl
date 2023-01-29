@@ -191,17 +191,13 @@ cask "font-cascadia-mono"
 cask "font-cascadia-code"
 
 cask "spotify"
-
 cask "kitty"
 cask "docker"
 cask "visual-studio-code"
 cask "google-cloud-sdk"
 cask "chrysalis"
 
-cask "miniconda"
-
-cask "goland"
-
+cask "slack"
 cask "authy"
 
 # Machine-Specific
@@ -210,11 +206,11 @@ cask "authy"
 cask "element"
 cask "qmk-toolbox"
 cask "google-chrome"
-cask "slack"
 {{ end }}
 
 {{- if eq .location "thyme" }}
 brew "ansible"
 cask "1password"
-
+cask "goland"
+cask "miniconda"
 {{ end }}
