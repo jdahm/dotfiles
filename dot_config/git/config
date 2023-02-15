@@ -1,5 +1,5 @@
 [core]
-	editor = "nano"
+	editor = "vim"
 
 [fetch]
 	prune = true
@@ -19,18 +19,6 @@
 [user]
 	email = "johann.dahm@gmail.com"
 	name = "Johann Dahm"
-
-[diff]
-	tool = vscode
-
-[merge]
-	tool = vscode
-
-[difftool "vscode"]
-	cmd = code-insiders --wait --diff $LOCAL $REMOTE
-
-[mergetool "vscode"]
-	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 
 [color]
 	branch = auto
