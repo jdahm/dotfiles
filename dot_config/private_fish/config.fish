@@ -51,3 +51,7 @@ if test -n "$KITTY_WINDOW_ID"
 else
     alias e=$EDITOR
 end
+
+function getmessh
+infocmp -a xterm-kitty | ssh $argv[1] tic -x -o \~/.terminfo /dev/stdin
+end
