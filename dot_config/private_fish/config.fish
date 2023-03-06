@@ -19,11 +19,9 @@ end
 # Local bin and lang executables
 fish_add_path $HOME/bin $HOME/go/bin $(brew --prefix)/opt/postgresql@15/bin
 
-if command -qs nvim
-    alias vi=nvim
-    alias vim=nvim
-    set -Ux EDITOR nvim
-    set -Ux VISUAL nvim
+if command -qs vim
+    set -Ux EDITOR vim
+    set -Ux VISUAL vim
 end
 
 # Hydro colors
