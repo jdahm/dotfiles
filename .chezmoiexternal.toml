@@ -1,4 +1,16 @@
-[".nvm"]
+[".vim/pack/tpope/start/sensible"]
     type = "git-repo"
-    url = "https://github.com/nvm-sh/nvm"
+    url = "https://tpope.io/vim/sensible.git"
+    refreshPeriod = "168h"
+[".vim/pack/tpope/start/abolish"]
+    type = "git-repo"
+    url = "https://tpope.io/vim/abolish.git"
+    refreshPeriod = "168h"
+[".vim/pack/tpope/start/unimpaired"]
+    type = "git-repo"
+    url = "https://tpope.io/vim/unimpaired.git"
+    refreshPeriod = "168h"
+[".vim/pack/tpope/start/repeat"]
+    type = "git-repo"
+    url = "https://tpope.io/vim/repeat.git"
     refreshPeriod = "168h"
