@@ -14,3 +14,12 @@
     type = "git-repo"
     url = "https://tpope.io/vim/repeat.git"
     refreshPeriod = "168h"
+[".vim/pack/tpope/start/fugitive"]
+    type = "git-repo"
+    url = "https://tpope.io/vim/fugitive.git"
+    refreshPeriod = "168h"
+[".vim/pack/tpope/start/rhubarb"]
+    type = "git-repo"
+    url = "https://tpope.io/vim/rhubarb.git"
+    refreshPeriod = "168h"
+

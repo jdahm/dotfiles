@@ -1,7 +1,1 @@
-" esc in insert & visual mode
-inoremap jk <esc>
-vnoremap jk <esc>
-
-" esc in command mode
-cnoremap jk <C-C>
-
+source ~/.vimrc
