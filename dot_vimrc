@@ -10,3 +10,10 @@ inoremap jk <esc>
 
 " shorten timeout after 'j'
 set timeoutlen=300
+
+let mapleader = "\<Space>"
+
+map <leader>e :bufdo e!<CR>
+map <leader>w :write<CR>
+map <leader>q :quit<CR>
+map <leader>b :bdelete<CR>
