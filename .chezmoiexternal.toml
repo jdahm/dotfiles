@@ -22,4 +22,8 @@
     type = "git-repo"
     url = "https://tpope.io/vim/rhubarb.git"
     refreshPeriod = "168h"
+[".vim/pack/tpope/start/surround"]
+    type = "git-repo"
+    url = "https://tpope.io/vim/surround.git"
+    refreshPeriod = "168h"
 
