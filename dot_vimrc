@@ -2,11 +2,11 @@
 "
 
 " esc in insert & visual mode
-inoremap jk <esc>
+inoremap kj <esc>
 
 " esc in visual and command mode
-" vnoremap jk <esc>
-" cnoremap jk <C-C>
+" vnoremap kj <esc>
+" cnoremap kj <C-C>
 
 " shorten timeout after 'j'
 set timeoutlen=300
