@@ -59,7 +59,6 @@
 [alias]
 	st = status -s
 	br = branch
-	br = branch
 	cm = commit
 	co = checkout
 	re = restore
