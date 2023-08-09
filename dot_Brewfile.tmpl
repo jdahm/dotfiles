@@ -28,7 +28,8 @@ brew "fzf" # Command-line fuzzy finder written in Go
 brew "vim" # Vi 'workalike' with many additional features
 brew "neovim" # Vi 'workalike' with many additional features
 brew "helix" # Post-modern modal text editor
-brew "kakoune"
+brew "kakoune" # Selection-based modal text editor
+
 
 brew "lazygit" # Simple terminal UI for git commands
 brew "lazydocker" # Lazier way to manage everything docker
@@ -89,14 +90,12 @@ brew "go-task" # Task is a task runner/build tool that aims to be simpler and ea
 brew "sqlc" # Generate type safe Go from SQL
 brew "golangci-lint" # Fast linters runner for Go
 # brew "mockery" # Mock code autogenerator for Golang
-brew "kind"
-brew "kubebuilder"
+brew "kind" # Run local Kubernetes cluster in Docker
 
-brew "jsonnet"
-
-brew "pyenv"
-
-brew "terraform"
+brew "kubebuilder" # SDK for building Kubernetes APIs using CRDs
+brew "jsonnet" # Domain specific configuration language for defining JSON data
+brew "pyenv" # Python version management
+brew "terraform" # Tool to build, change, and version infrastructure
 
 # Casks
 cask "font-jetbrains-mono-nerd-font" # Developer targeted fonts with a high number of glyphs
@@ -120,16 +119,16 @@ cask "kitty" # GPU-accelerated cross-platform terminal emulator and multiplexer
 # Machine-Specific
 
 {{- if eq .location "basil" }}
-cask "element"
-cask "qmk-toolbox"
-cask "google-chrome"
-cask "slack"
+cask "element" # Matrix collaboration client
+cask "qmk-toolbox" # Toolbox companion for QMK Firmware
+cask "google-chrome" # Web browser
+cask "slack" # Team communication and collaboration software
 {{ end }}
 
 {{- if eq .location "thyme" }}
 cask "1password" # Password manager that keeps all passwords secure behind one password
 cask "goland" # Go (golang) IDE
 cask "miniconda" # Minimal installer for conda
-cask "tableplus"
-cask "jetbrains-gateway"
+cask "tableplus" # Native GUI tool for relational databases
+cask "jetbrains-gateway" # Remote development gateway by Jetbrains
 {{ end }}
