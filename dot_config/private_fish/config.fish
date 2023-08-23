@@ -38,6 +38,10 @@ direnv hook fish | source
 
 alias chezmoi-cd="cd (chezmoi source-path)"
 
+# Pyenv
+
+pyenv init - | source
+
 # Kitty
 alias s="kitty +kitten ssh"
 alias icat="kitty +kitten icat"
@@ -49,6 +53,9 @@ if test -n "$KITTY_WINDOW_ID"
 else
     alias e=$EDITOR
 end
+
+# SSH
+fish_ssh_agent
 
 function getmessh
 infocmp -a xterm-kitty | ssh $argv[1] tic -x -o \~/.terminfo /dev/stdin
