@@ -1,17 +1,6 @@
 " @jdahm's vimrc
 "
 
-call plug#begin()
-
-Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
-Plug 'tpope/vim-surround'
-call plug#end()
-
 " esc in insert & visual mode
 inoremap kj <esc>
 
