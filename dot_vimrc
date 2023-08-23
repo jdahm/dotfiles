@@ -1,0 +1,30 @@
+" @jdahm's vimrc
+"
+
+call plug#begin()
+
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-surround'
+call plug#end()
+
+" esc in insert & visual mode
+inoremap kj <esc>
+
+" esc in visual and command mode
+" vnoremap kj <esc>
+" cnoremap kj <C-C>
+
+" shorten timeout after 'j'
+set timeoutlen=300
+
+let mapleader = "\<Space>"
+
+map <leader>e :bufdo e!<CR>
+map <leader>w :write<CR>
+map <leader>q :quit<CR>
+map <leader>b :bdelete<CR>

@@ -1,5 +1,5 @@
 [core]
-	editor = "code --wait"
+	editor = "vim"
 
 [fetch]
 	prune = true
@@ -15,22 +15,11 @@
 
 [push]
 	default = "simple"
+	autoSetupRemote = true
 
 [user]
 	email = "johann.dahm@gmail.com"
 	name = "Johann Dahm"
-
-[diff]
-	tool = vscode
-
-[merge]
-	tool = vscode
-
-[difftool "vscode"]
-	cmd = code-insiders --wait --diff $LOCAL $REMOTE
-
-[mergetool "vscode"]
-	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 
 [color]
 	branch = auto
@@ -70,7 +59,6 @@
 
 [alias]
 	st = status -s
-	br = branch
 	br = branch
 	cm = commit
 	co = checkout
