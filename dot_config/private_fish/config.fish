@@ -33,16 +33,18 @@ set --global hydro_color_pwd magenta
 # Sponge
 set sponge_purge_only_on_exit true
 
-# Direnv
+# direnv
 direnv hook fish | source
 
 alias chezmoi-cd="cd (chezmoi source-path)"
 
-# Pyenv
-
+# pyenv
 pyenv init - | source
 
-# Kitty
+# tfenv
+fish_add_path $HOME/.tfenv/bin
+
+# kitty
 alias s="kitty +kitten ssh"
 alias icat="kitty +kitten icat"
 alias hg="kitty +kitten hyperlinked_grep"
@@ -53,7 +55,7 @@ else
     alias e=$EDITOR
 end
 
-# SSH
+# ssh
 fish_ssh_agent
 
 function getmessh
