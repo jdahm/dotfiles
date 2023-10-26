@@ -45,7 +45,6 @@ pyenv init - | source
 # Kitty
 alias s="kitty +kitten ssh"
 alias icat="kitty +kitten icat"
-alias s="kitty +kitten ssh"
 alias hg="kitty +kitten hyperlinked_grep"
 
 if test -n "$KITTY_WINDOW_ID"
