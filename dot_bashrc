@@ -20,7 +20,7 @@ if which exa >/dev/null; then
 	alias ll="exa --git-ignore --git -l --group"
 	alias la="exa --git -la"
 else
-	alias ls="ls --color=always"
+	# alias ls="ls --color=always"
 	alias ll="ls -l"
 	alias la="ls -lA"
 fi
