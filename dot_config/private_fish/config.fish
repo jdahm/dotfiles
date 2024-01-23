@@ -55,9 +55,6 @@ else
     alias e=$EDITOR
 end
 
-# ssh
-fish_ssh_agent
-
 function getmessh
 infocmp -a xterm-kitty | ssh $argv[1] tic -x -o \~/.terminfo /dev/stdin
 end
