@@ -2,13 +2,13 @@
 "
 
 call plug#begin('~/.vim/plugged')
-Plug 'tpope/sensible'
-Plug 'tpope/abolish'
-Plug 'tpope/surround'
-Plug 'tpope/unimpaired'
-Plug 'tpope/repeat'
-Plug 'tpope/fugitive'
-Plug 'tpope/rhubarb'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 call plug#end()
 
 
