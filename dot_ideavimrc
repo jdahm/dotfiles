@@ -1,9 +1,0 @@
-" Plugins
-set surround
-set textobj-entire
-set commentary
-set exchange
-
-source ~/.vimrc
-
-set incsearch
