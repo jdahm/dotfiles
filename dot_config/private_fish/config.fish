@@ -55,8 +55,8 @@ else
     alias e=$EDITOR
 end
 
-# ssh
-fish_ssh_agent
+# Google Cloud
+source "$(brew --prefix)/share/google-cloud-sdk/path.fish.inc"
 
 function getmessh
 infocmp -a xterm-kitty | ssh $argv[1] tic -x -o \~/.terminfo /dev/stdin
