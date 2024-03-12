@@ -13,7 +13,7 @@ call plug#end()
 
 
 " esc in insert & visual mode
-inoremap kj <esc>
+inoremap ,n <esc>
 
 " esc in visual and command mode
 " vnoremap kj <esc>
