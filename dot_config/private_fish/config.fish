@@ -16,8 +16,8 @@ if command -qs brew
     end
 end
 
-# Local bin and lang executables
-fish_add_path $HOME/bin $HOME/go/bin $(brew --prefix)/opt/postgresql@15/bin
+# Set PATH
+fish_add_path $HOME/bin $HOME/go/bin /usr/local/bin $(brew --prefix)/opt/postgresql@15/bin 
 
 if command -qs vim
     set -Ux EDITOR vim
