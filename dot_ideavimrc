@@ -1,6 +1,8 @@
 " Plugins
 set surround
 set textobj-entire
+set textobj-indent
+set vim-paragraph-motion
 set commentary
 set exchange
 
