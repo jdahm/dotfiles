@@ -24,15 +24,18 @@ brew "fish" # User-friendly command-line shell for UNIX-like operating systems
 brew "fisher" # Plugin manager for the Fish shell
 brew "nushell" # Modern shell for the GitHub era
 brew "fzf" # Command-line fuzzy finder written in Go
-brew "elvish"
+brew "elvish" # Friendly and expressive shell
+
 
 brew "vim" # Vi 'workalike' with many additional features
 brew "neovim" # Vi 'workalike' with many additional features
 brew "helix" # Post-modern modal text editor
 brew "kakoune" # Selection-based modal text editor
 
-brew "grpcurl"
-brew "act"
+brew "grpcurl" # Like cURL, but for gRPC
+
+brew "act" # Run your GitHub Actions locally
+
 
 brew "lazygit" # Simple terminal UI for git commands
 brew "lazydocker" # Lazier way to manage everything docker
@@ -41,7 +44,8 @@ brew "git-crypt" # Enable transparent encryption/decryption of files in a git re
 brew "git-lfs" # Git extension for versioning large files
 brew "git-delta" # Syntax-highlighting pager for git and diff output
 brew "gh" # GitHub command-line tool
-brew "ghq"
+brew "ghq" # Remote repository management made easy
+
 brew "pinentry-mac" # Pinentry for GPG on Mac
 
 brew "direnv" # Load/unload environment variables based on $PWD
@@ -62,9 +66,12 @@ brew "procs" # Modern replacement for ps written by Rust
 brew "dust" # More intuitive version of du in rust
 brew "ripgrep" # Search tool like grep and The Silver Searcher
 brew "fd" # Simple, fast and user-friendly alternative to find
-brew "pwgen"
-brew "viddy"
-brew "circumflex"
+brew "pwgen" # Password generator
+
+brew "viddy" # Modern watch command
+
+brew "circumflex" # Hacker News in your terminal
+
 
 brew "graphviz" # Graph visualization software from AT&T and Bell Labs
 
@@ -97,12 +104,14 @@ brew "go-task" # Task is a task runner/build tool that aims to be simpler and ea
 brew "sqlc" # Generate type safe Go from SQL
 brew "golangci-lint" # Fast linters runner for Go
 brew "kind" # Run local Kubernetes cluster in Docker
-brew "protobuf"
+brew "protobuf" # Protocol buffers (Google's data interchange format)
+
 
 brew "kubebuilder" # SDK for building Kubernetes APIs using CRDs
 brew "jsonnet" # Domain specific configuration language for defining JSON data
 brew "pyenv" # Python version management
-brew "tfenv"
+brew "tfenv" # Terraform version manager inspired by rbenv
+
 
 # Casks
 cask "font-jetbrains-mono-nerd-font" # Developer targeted fonts with a high number of glyphs
@@ -120,11 +129,14 @@ cask "github" # Desktop client for GitHub repositories
 cask "rectangle" # Move and resize windows using keyboard shortcuts or snap areas
 
 cask "kitty" # GPU-accelerated cross-platform terminal emulator and multiplexer
-cask "wezterm"
+cask "wezterm" # GPU-accelerated cross-platform terminal emulator and multiplexer
 
-cask "keybase"
 
-cask "tailscale"
+cask "keybase" # End-to-end encryption software
+
+
+cask "tailscale" # Mesh VPN based on Wireguard
+
 cask "goland" # Go (golang) IDE
 
 # Machine-Specific
@@ -138,9 +150,11 @@ cask "slack" # Team communication and collaboration software
 
 {{- if eq .location "thyme" }}
 cask "1password" # Password manager that keeps all passwords secure behind one password
-cask "1password-cli"
+cask "1password-cli" # Command-line interface for 1Password
+
 cask "miniconda" # Minimal installer for conda
 cask "tableplus" # Native GUI tool for relational databases
 cask "jetbrains-gateway" # Remote development gateway by Jetbrains
-cask "pritunl"
+cask "pritunl" # OpenVPN client
+
 {{ end }}
