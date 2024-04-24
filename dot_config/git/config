@@ -101,4 +101,4 @@
 [gpg]
 	program = /opt/homebrew/bin/gpg
 [ghq]
-	root = ~/code
+	root = ~/dev
