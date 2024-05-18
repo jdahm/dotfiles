@@ -2,7 +2,7 @@
 "
 
 " esc in insert & visual mode
-inoremap jk <esc>
+inoremap kj <esc>
 
 " esc in visual and command mode
 " vnoremap kj <esc>

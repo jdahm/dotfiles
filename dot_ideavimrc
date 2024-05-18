@@ -6,6 +6,7 @@ set argtextobj
 set vim-paragraph-motion
 set commentary
 set exchange
+set NERDTree
 
 source ~/.vimrc
 
