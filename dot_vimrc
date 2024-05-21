@@ -11,6 +11,10 @@ inoremap kj <esc>
 " shorten timeout after 'j'
 set timeoutlen=300
 
+" Disable mouse
+set mouse=
+set ttymouse=
+
 let mapleader = "\<Space>"
 
 map <leader>e :bufdo e!<CR>
