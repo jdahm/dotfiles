@@ -21,3 +21,6 @@ map <leader>e :bufdo e!<CR>
 map <leader>w :write<CR>
 map <leader>q :quit<CR>
 map <leader>b :bdelete<CR>
+
+" Don't treat numbers that start with 0 as octal for inc/dec operations
+set nrformats-=octal
