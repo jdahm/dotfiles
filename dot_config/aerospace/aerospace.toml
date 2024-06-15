@@ -46,12 +46,12 @@ key-mapping.preset = 'qwerty'
 #                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-inner.horizontal = 0
-inner.vertical =   0
-outer.left =       0
-outer.bottom =     0
-outer.top =        0
-outer.right =      0
+inner.horizontal = 4
+inner.vertical =   4
+outer.left =       2
+outer.bottom =     2
+outer.top =        2
+outer.right =      2
 
 # See https://nikitabobko.github.io/AeroSpace/guide#exec-env-vars
 [exec]                   # Again, you don't need to copy all config sections to your config.
@@ -81,7 +81,7 @@ PATH = '/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}'
 
 # You can uncomment this line to open up terminal with alt + enter shortcut
 # See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
-# alt-enter = 'exec-and-forget open -n /System/Applications/Utilities/Terminal.app'
+alt-shift-enter = 'exec-and-forget open -n /Applications/Wezterm.app'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
 alt-slash = 'layout tiles horizontal vertical'
@@ -113,28 +113,28 @@ alt-6 = 'workspace 6'
 alt-7 = 'workspace 7'
 alt-8 = 'workspace 8'
 alt-9 = 'workspace 9'
-alt-a = 'workspace A' # In your config, you can drop workspace bindings that you don't need
-alt-b = 'workspace B'
-alt-c = 'workspace C'
-alt-d = 'workspace D'
-alt-e = 'workspace E'
-alt-f = 'workspace F'
-alt-g = 'workspace G'
-alt-i = 'workspace I'
-alt-m = 'workspace M'
-alt-n = 'workspace N'
-alt-o = 'workspace O'
-alt-p = 'workspace P'
-alt-q = 'workspace Q'
-alt-r = 'workspace R'
-alt-s = 'workspace S'
-alt-t = 'workspace T'
-alt-u = 'workspace U'
-alt-v = 'workspace V'
-alt-w = 'workspace W'
-alt-x = 'workspace X'
-alt-y = 'workspace Y'
-alt-z = 'workspace Z'
+# alt-a = 'workspace A' # In your config, you can drop workspace bindings that you don't need
+# alt-b = 'workspace B'
+# alt-c = 'workspace C'
+# alt-d = 'workspace D'
+# alt-e = 'workspace E'
+# alt-f = 'workspace F'
+# alt-g = 'workspace G'
+# alt-i = 'workspace I'
+# alt-m = 'workspace M'
+# alt-n = 'workspace N'
+# alt-o = 'workspace O'
+# alt-p = 'workspace P'
+# alt-q = 'workspace Q'
+# alt-r = 'workspace R'
+# alt-s = 'workspace S'
+# alt-t = 'workspace T'
+# alt-u = 'workspace U'
+# alt-v = 'workspace V'
+# alt-w = 'workspace W'
+# alt-x = 'workspace X'
+# alt-y = 'workspace Y'
+# alt-z = 'workspace Z'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 alt-shift-1 = 'move-node-to-workspace 1'
