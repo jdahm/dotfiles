@@ -85,3 +85,5 @@ fi
 # Ubuntu already had an "fd" package, so the one I'd like to use is called "fdfind".
 ! which fdfind >/dev/null || alias fd=fdfind
 
+
+source /Users/jdahm/.config/broot/launcher/bash/br
