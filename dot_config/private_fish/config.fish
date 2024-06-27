@@ -1,6 +1,6 @@
 set -U fish_greeting
 
-# Homebrew
+# Bootstrap homebrew
 if test -f ~/.config/brew/path
     set PATH (cat ~/.config/brew/path)/bin $PATH
     alias brew-update="brew bundle --cleanup --global"
@@ -14,6 +14,8 @@ if command -qs brew
     if test -d (brew --prefix)"/share/fish/vendor_completions.d"
        set -gx fish_complete_path $fish_complete_path (brew --prefix)/share/fish/vendor_completions.d
     end
+
+    source "$(brew --prefix)/share/google-cloud-sdk/path.fish.inc"
 end
 
 # Set PATH
@@ -36,28 +38,12 @@ set sponge_purge_only_on_exit true
 # direnv
 direnv hook fish | source
 
-alias chezmoi-cd="cd (chezmoi source-path)"
+if command -qs chezmoi
+    alias chezmoi-cd="cd (chezmoi source-path)"
+end
 
 # pyenv
 pyenv init - | source
 
 # tfenv
 fish_add_path $HOME/.tfenv/bin
-
-# kitty
-alias s="kitty +kitten ssh"
-alias icat="kitty +kitten icat"
-alias hg="kitty +kitten hyperlinked_grep"
-
-if test -n "$KITTY_WINDOW_ID"
-    alias e="edit-in-kitty"
-else
-    alias e=$EDITOR
-end
-
-# Google Cloud
-source "$(brew --prefix)/share/google-cloud-sdk/path.fish.inc"
-
-function getmessh
-infocmp -a xterm-kitty | ssh $argv[1] tic -x -o \~/.terminfo /dev/stdin
-end
