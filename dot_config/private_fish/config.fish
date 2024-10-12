@@ -2,8 +2,8 @@ set -U fish_greeting
 
 # Bootstrap homebrew
 if test -f ~/.config/brew/path
-    set PATH (cat ~/.config/brew/path)/bin $PATH
-    alias brew-update="brew bundle --cleanup --global"
+    fish_add_path -p (cat ~/.config/brew/path)/bin
+    abbr --add brew-update brew bundle --cleanup --global
 end
 
 if command -qs brew
@@ -39,7 +39,7 @@ set sponge_purge_only_on_exit true
 direnv hook fish | source
 
 if command -qs chezmoi
-    alias chezmoi-cd="cd (chezmoi source-path)"
+    abbr chezmoi-cd cd (chezmoi source-path)
 end
 
 # pyenv
