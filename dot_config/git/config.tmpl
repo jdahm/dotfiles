@@ -18,7 +18,13 @@
 	autoSetupRemote = true
 
 [user]
+{{ if eq .location "thyme" }}
+	email = "johannd@allenai.org"
+	signingkey = "0199F8B9F7A2BADE"
+{{ else if eq .location "basil" }}
 	email = "johann.dahm@gmail.com"
+{{ else }}
+{{ end }}
 	name = "Johann Dahm"
 
 [color]
