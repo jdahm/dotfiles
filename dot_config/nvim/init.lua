@@ -129,6 +129,12 @@ require("lazy").setup({
   "numtostr/comment.nvim", -- Commenting plugin
   "tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
 
+  { -- Text objects
+    "chrisgrieser/nvim-various-textobjs",
+    event = "UIEnter",
+    opts = { useDefaultKeymaps = true },
+  },
+
   {
     "rebelot/kanagawa.nvim",
     lazy = false,
