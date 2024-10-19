@@ -21,10 +21,14 @@ end
 # Set PATH
 fish_add_path $HOME/bin $HOME/go/bin /usr/local/bin $(brew --prefix)/opt/postgresql@15/bin 
 
-if command -qs vim
-    set -Ux EDITOR vim
-    set -Ux VISUAL vim
+# Editor
+if command -qs nvim
+    set -Ux EDITOR nvim
+    set -Ux VISUAL nvim
+    # alias vim to nvim
+    abbr --add vim nvim
 end
+
 
 # Hydro colors
 set --global hydro_color_git green
@@ -38,8 +42,9 @@ set sponge_purge_only_on_exit true
 # direnv
 direnv hook fish | source
 
+# chezmoi
 if command -qs chezmoi
-    abbr chezmoi-cd cd (chezmoi source-path)
+    abbr --add chezmoi-cd cd (chezmoi source-path)
 end
 
 # pyenv
