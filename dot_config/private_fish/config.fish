@@ -26,7 +26,7 @@ if command -qs nvim
     set -Ux EDITOR nvim
     set -Ux VISUAL nvim
     # alias vim to nvim
-    abbr --add vim nvim
+    abbr --add --position command vim nvim
 end
 
 
