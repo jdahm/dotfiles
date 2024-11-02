@@ -29,7 +29,6 @@ if command -qs nvim
     abbr --add --position command e nvim
 end
 
-
 # Hydro colors
 set --global hydro_color_git green
 set --global hydro_color_duration yellow
@@ -52,3 +51,8 @@ pyenv init - | source
 
 # tfenv
 fish_add_path $HOME/.tfenv/bin
+
+# Kitty
+if command -qs kitten
+    abbr --add --position command s kitten ssh
+end
