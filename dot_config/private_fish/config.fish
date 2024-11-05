@@ -3,7 +3,7 @@ set -U fish_greeting
 # Bootstrap homebrew
 if test -f ~/.config/brew/path
     fish_add_path -p (cat ~/.config/brew/path)/bin
-    abbr --add brew-update brew bundle --cleanup --global
+    abbr --add brew-update brew bundle --global
 end
 
 if command -qs brew
@@ -15,17 +15,16 @@ if command -qs brew
        set -gx fish_complete_path $fish_complete_path (brew --prefix)/share/fish/vendor_completions.d
     end
 
-    source "$(brew --prefix)/share/google-cloud-sdk/path.fish.inc"
+    source (brew --prefix)"/share/google-cloud-sdk/path.fish.inc"
 end
 
 # Set PATH
-fish_add_path $HOME/bin $HOME/go/bin /usr/local/bin $(brew --prefix)/opt/postgresql@15/bin 
+fish_add_path $HOME/bin $HOME/go/bin /usr/local/bin (brew --prefix)/opt/postgresql@15/bin 
 
 # Editor
 if command -qs nvim
     set -Ux EDITOR nvim
     set -Ux VISUAL nvim
-    # alias vim to nvim
     abbr --add --position command e nvim
 end
 
