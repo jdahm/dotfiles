@@ -126,15 +126,11 @@ cask "github" # Desktop client for GitHub repositories
 
 cask "kitty"
 cask "wezterm"
-
 cask "gitbutler"
-
 cask "firefox"
-
 cask "gimp"
 
 # Machine-Specific
-
 {{- if eq .location "basil" }}
 cask "element" # Matrix collaboration client
 cask "qmk-toolbox" # Toolbox companion for QMK Firmware
@@ -142,15 +138,13 @@ cask "google-chrome" # Web browser
 cask "slack" # Team communication and collaboration software
 cask "tailscale" # Mesh VPN based on Wireguard
 cask "goland" # Go (golang) IDE
-{{ end }}
+{{- end }}
 
 {{- if eq .location "thyme" }}
 cask "1password" # Password manager that keeps all passwords secure behind one password
 cask "1password-cli" # Command-line interface for 1Password
-
 cask "miniconda" # Minimal installer for conda
 cask "tableplus" # Native GUI tool for relational databases
 cask "jetbrains-gateway" # Remote development gateway by Jetbrains
-cask "pritunl" # OpenVPN client
 cask "intellij-idea"
-{{ end }}
+{{- end }}
