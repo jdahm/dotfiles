@@ -1,7 +1,7 @@
 return {
   { -- Autocompletion
     "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
+    lazy = false,
     dependencies = {
       -- Snippet Engine & its associated nvim-cmp source
       {
@@ -15,6 +15,8 @@ return {
       --  into multiple repos for maintenance purposes.
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-path",
+      "petertriho/cmp-git",
+      -- "windwp/nvim-autopairs",
       {
         "zbirenbaum/copilot.lua",
         cmd = "Copilot",
@@ -38,7 +40,6 @@ return {
       luasnip.config.setup({})
 
       local function toggle_autocomplete()
-        local cmp = require("cmp")
         local current_setting = cmp.get_config().completion.autocomplete
         if current_setting and #current_setting > 0 then
           cmp.setup({ completion = { autocomplete = false } })
@@ -57,13 +58,37 @@ return {
         { noremap = true, silent = true, desc = "[T]oggle [C]ompletion" }
       )
 
+      local function toggle_copilot()
+        local sources = cmp.get_config().sources
+        for i = 1, #sources do
+          if sources[i].name == "copilot" then
+            table.remove(sources, i)
+            cmp.setup.buffer({ sources = sources })
+            vim.notify("GitHub Copilot disabled")
+            return
+          end
+        end
+        table.insert(sources, { name = "copilot" })
+        cmp.setup.buffer({ sources = sources })
+        vim.notify("GitHub Copilot enabled")
+      end
+
+      vim.api.nvim_create_user_command("CmpToggleCopilot", toggle_copilot, {})
+      vim.api.nvim_set_keymap(
+        "n",
+        "<leader>tg",
+        ":CmpToggleCopilot<CR>",
+        { noremap = true, silent = true, desc = "[T]oggle [G]itHub Copilot" }
+      )
+
       cmp.setup({
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body)
           end,
         },
-        completion = { completeopt = "menu,menuone,noinsert" },
+        -- Disable autocomplete and use custom function below with delay.
+        completion = { autocomplete = false, completeopt = "menu,menuone,noinsert" },
 
         -- For an understanding of why these mappings were
         -- chosen, you will need to read `:help ins-completion`
@@ -122,7 +147,49 @@ return {
           { name = "nvim_lsp" },
           { name = "path" },
           { name = "luasnip" },
+          { name = "git" },
         },
+      })
+
+      local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+      cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+
+      local completionDelay = 750
+      local timer = nil
+
+      function _G.setAutoCompleteDelay(delay)
+        completionDelay = delay
+      end
+
+      function _G.getAutoCompleteDelay()
+        return completionDelay
+      end
+
+      vim.api.nvim_create_autocmd({ "TextChangedI", "CmdlineChanged" }, {
+        pattern = "*",
+        callback = function()
+          local line = vim.api.nvim_get_current_line()
+          local cursor = vim.api.nvim_win_get_cursor(0)[2]
+
+          local current = string.sub(line, cursor, cursor + 1)
+          if current == "." or current == "," or current == " " then
+            require("cmp").close()
+          end
+
+          if timer then
+            vim.loop.timer_stop(timer)
+            timer = nil
+          end
+
+          timer = vim.loop.new_timer()
+          timer:start(
+            _G.getAutoCompleteDelay(),
+            0,
+            vim.schedule_wrap(function()
+              cmp.complete({ reason = cmp.ContextReason.Auto })
+            end)
+          )
+        end,
       })
     end,
   },

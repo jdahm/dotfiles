@@ -1,8 +1,6 @@
 -- Sources:
 -- * https://github.com/max397574/omega-nvim
-
--- Enable experimental loader.
-vim.loader.enable()
+-- * https://www.josean.com/posts/neovim-linting-and-formatting
 
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used).
 vim.g.mapleader = ","

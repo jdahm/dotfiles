@@ -11,11 +11,11 @@ autocmd("TextYankPost", {
   end,
 })
 
-local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
-autocmd("BufWritePre", {
-  pattern = "*.go",
+autocmd("CmdlineLeave", {
+  group = vim.api.nvim_create_augroup("CmdLine", {}),
   callback = function()
-    require("go.format").gofmt()
+    vim.fn.timer_start(5000, function()
+      print(" ")
+    end)
   end,
-  group = format_sync_grp,
 })

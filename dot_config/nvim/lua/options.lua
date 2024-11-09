@@ -1,12 +1,12 @@
 -- Use nerd fonts.
 vim.g.have_nerd_font = true
 
--- Make line numbers default
-vim.opt.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
+-- -- Make line numbers default
+-- vim.opt.number = true
+-- -- You can also add relative line numbers, to help with jumping.
+-- --  Experiment for yourself to see if you like it!
 -- vim.opt.relativenumber = true
-
+--
 -- Enable mouse mode
 vim.opt.mouse = "a"
 
@@ -41,8 +41,8 @@ vim.opt.inccommand = "split"
 
 vim.opt.wildmode = "longest,list"
 
--- Show which line your cursor is on
-vim.opt.cursorline = true
+-- -- Show which line your cursor is on
+-- vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 0
