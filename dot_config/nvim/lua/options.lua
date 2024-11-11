@@ -46,3 +46,5 @@ vim.opt.wildmode = "longest,list"
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 0
+
+vim.opt.completeopt = "longest,menuone"
