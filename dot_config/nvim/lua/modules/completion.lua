@@ -30,13 +30,8 @@ return {
         end
         copilot_on = not copilot_on
       end, { nargs = 0 })
+      vim.keymap.set("n", "<leader>tc", ":CopilotToggle<CR>", { desc = "[T]oggle [C]opilot" })
     end,
-    keys = {
-      {
-        "<leader>tc",
-        ":CopilotToggle<CR>",
-      },
-    },
   },
   {
     "L3MON4D3/LuaSnip",
