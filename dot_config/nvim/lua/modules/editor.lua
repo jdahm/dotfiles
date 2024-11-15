@@ -2,7 +2,6 @@ return {
   "tpope/vim-repeat", -- enable repeating supported plugin maps with "."
   "tpope/vim-unimpaired", -- Pairs of handy bracket mappings
   "tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
-  "tpope/vim-unimpaired",
   "tpope/vim-eunuch",
   {
     "folke/trouble.nvim",

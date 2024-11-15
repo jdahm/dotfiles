@@ -69,13 +69,24 @@ return {
       { "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
     },
     opts = {
+      defaults = {},
+      pickers = {
+        find_files = {
+          -- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.
+          find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+        },
+        live_grep = { additional_args = { "--hidden", "--glob", "!**/.git/*", "--glob", "!**/node_modules/*" } },
+        grep_string = { additional_args = { "--hidden", "--glob", "!**/.git/*", "--glob", "!**/node_modules/*" } },
+      },
+
       extensions = {
         ["ui-select"] = {
           require("telescope.themes").get_dropdown(),
         },
       },
     },
-    config = function()
+    config = function(_, opts)
+      require("telescope").setup(opts)
       -- Two important keymaps to use while in Telescope are:
       --  - Insert mode: <c-/>
       --  - Normal mode: ?
@@ -123,13 +134,18 @@ return {
         })
       end, { desc = "[S]earch [/] in Open Files" })
 
+      vim.keymap.set("n", "<leader>ff", function()
+        require("telescope").extensions.file_browser.file_browser()
+      end, { desc = "[F]ind [F]ile" })
+
+      vim.keymap.set("n", "<leader>fb", function()
+        require("telescope").extensions.file_browser.file_browser({ path = "%:p:h", select_buffer = true })
+      end, { desc = "[F]ind [B]uffer" })
+
       -- Shortcut for searching your Neovim configuration files
       vim.keymap.set("n", "<leader>sn", function()
         builtin.find_files({ cwd = vim.fn.stdpath("config") })
       end, { desc = "[S]earch [N]eovim files" })
-      vim.keymap.set("n", "<leader>ff", function()
-        require("telescope").extensions.file_browser.file_browser()
-      end, { desc = "[F]ind [F]ile" })
     end,
   },
   {

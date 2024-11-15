@@ -13,7 +13,14 @@ return {
       },
     },
   },
-  { "almo7aya/openingh.nvim" },
+  {
+    "almo7aya/openingh.nvim",
+    keys = {
+      { "<leader>ogr", ":OpenInGHRepo<CR>", desc = "[O]pen in [G]H [R]epo" },
+      { "<leader>ogf", ":OpenInGHFile<CR>", desc = "[O]pen in [G]H [F]ile" },
+      { "<leader>ogl", ":OpenInGHFileLines<CR>", mode = { "n", "v" }, desc = "[O]pen in [G]H File [L]ines" },
+    },
+  },
   {
     "lewis6991/gitsigns.nvim",
     event = { "BufEnter" },

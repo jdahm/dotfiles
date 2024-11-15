@@ -24,7 +24,7 @@ require("lazy").setup({
     { import = "modules" },
   },
   defaults = {
-    lazy = true,
+    lazy = false,
     version = false,
   },
 })
