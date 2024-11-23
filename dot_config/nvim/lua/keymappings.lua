@@ -2,13 +2,7 @@ vim.keymap.set("i", "kj", "<esc>", { desc = "Remap escape in insert mode" })
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
-vim.keymap.set(
-  "n",
-  "<leader>ts",
-  ":set hlsearch!<CR>",
-  { desc = "[T]oggle [S]earch highlights" },
-  { noremap = true, silent = true }
-)
+vim.keymap.set("n", "<leader>ts", ":set hlsearch!<CR>", { desc = "[T]oggle [S]earch highlights" })
 
 vim.keymap.set("n", "0", function()
   local line = vim.fn.getline(vim.fn.line(".") --[[@as string]]) --[[@as string]]
@@ -52,13 +46,7 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 vim.keymap.set("n", "<leader>W", ":write<CR>", { desc = "Write current buffer to disk" })
 vim.keymap.set("n", "<leader>Q", ":quit<CR>", { desc = "Write current buffer to disk" })
 
-vim.keymap.set(
-  "n",
-  "<leader>tw",
-  ":set list!<CR>",
-  { desc = "[T]oggle [w]hitespace" },
-  { noremap = true, silent = true }
-)
+vim.keymap.set("n", "<leader>tw", ":set list!<CR>", { desc = "[T]oggle [W]hitespace" })
 
 -- Buffer management
-vim.keymap.set("n", "<leader>bd", ":bd<CR>", { desc = "[B]uffer [D]elete" }, { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>bd", ":bd<CR>", { desc = "[B]uffer [D]elete" })

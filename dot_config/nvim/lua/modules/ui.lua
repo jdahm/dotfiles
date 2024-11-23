@@ -63,7 +63,8 @@ return {
           return vim.fn.executable("make") == 1
         end,
       },
-      { "nvim-telescope/telescope-ui-select.nvim" },
+      "nvim-telescope/telescope-ui-select.nvim",
+      "benfowler/telescope-luasnip.nvim",
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
       { "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
@@ -87,6 +88,7 @@ return {
     },
     config = function(_, opts)
       require("telescope").setup(opts)
+
       -- Two important keymaps to use while in Telescope are:
       --  - Insert mode: <c-/>
       --  - Normal mode: ?
@@ -99,8 +101,9 @@ return {
       -- See `:help telescope` and `:help telescope.setup()`
 
       -- Enable Telescope extensions if they are installed
-      pcall(require("telescope").load_extension, "fzf")
-      pcall(require("telescope").load_extension, "ui-select")
+      require("telescope").load_extension("fzf")
+      require("telescope").load_extension("ui-select")
+      require("telescope").load_extension("luasnip")
 
       -- See `:help telescope.builtin`
       local builtin = require("telescope.builtin")
@@ -115,6 +118,12 @@ return {
       vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
       vim.keymap.set("n", "<leader>bl", builtin.buffers, { desc = "[B]uffer [L]ist" })
+      vim.keymap.set(
+        "n",
+        "<leader>sl",
+        require("telescope").extensions.luasnip.luasnip,
+        { desc = "[S]earch [L]uasnippets" }
+      )
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set("n", "<leader>/", function()

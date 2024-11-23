@@ -17,7 +17,12 @@ return {
       -- If you're wondering about lsp vs treesitter, you can check out the wonderfully
       -- and elegantly composed help section, `:help lsp-vs-treesitter`
 
-      vim.diagnostic.config({ update_in_insert = true })
+      vim.diagnostic.config({
+        -- Updates the in-line diagnostics as you type.
+        -- update_in_insert = true
+        virtual_text = false,
+        underline = true,
+      })
 
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
@@ -31,9 +36,6 @@ return {
             mode = mode or "n"
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
           end
-
-          -- Autocomplete.
-          map("<C-Space>", "<C-x><C-o>", "Autocomplete", "i")
 
           local builtin = require("telescope.builtin")
           -- Jump to the definition of the word under your cursor.
@@ -75,7 +77,11 @@ return {
 
           map("<leader>td", function()
             vim.diagnostic.enable(not vim.diagnostic.is_enabled())
-          end, "[T]oggle [D]iagnostics")
+          end, "[T]oggle [D]iagnostic")
+
+          map("<C-k>", function()
+            vim.diagnostic.open_float()
+          end, "[T]oggle Diagnostic [F]loat", "n")
 
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
