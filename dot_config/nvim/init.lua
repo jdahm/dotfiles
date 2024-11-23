@@ -23,6 +23,9 @@ require("lazy").setup({
   spec = {
     { import = "modules" },
   },
+  change_detection = {
+    notify = false,
+  },
   defaults = {
     lazy = false,
     version = false,
