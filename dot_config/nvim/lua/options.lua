@@ -48,3 +48,5 @@ vim.opt.wildmode = "longest,list"
 vim.opt.scrolloff = 0
 
 vim.opt.completeopt = "longest,menuone"
+
+vim.opt.shell = "fish -l"

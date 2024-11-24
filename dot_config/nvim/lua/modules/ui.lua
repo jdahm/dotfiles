@@ -4,7 +4,15 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd([[colorscheme kanagawa-wave]])
+      local current_scheme = 1
+      vim.api.nvim_create_user_command("SwitchColorscheme", function()
+        local schemes = { "kanagawa-wave", "kanagawa-lotus" }
+        current_scheme = current_scheme % #schemes + 1
+        vim.cmd("colorscheme " .. schemes[current_scheme])
+      end, {})
+      -- Call SwitchColorscheme once to initialize the theme
+      vim.cmd("SwitchColorscheme")
+      vim.keymap.set("n", "<leader>ct", ":SwitchColorscheme<CR>", { desc = "[C]olorscheme [T]oggle" })
     end,
   },
   {

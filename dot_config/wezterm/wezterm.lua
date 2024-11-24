@@ -19,8 +19,80 @@ config.native_macos_fullscreen_mode = true
 config.default_prog = { "/opt/homebrew/bin/fish", "-l" }
 
 config.force_reverse_video_cursor = true
--- config.color_scheme = "Afterglow"
-config.colors = {
+
+local kanawanga_light = {
+	foreground = "#545464",
+	background = "#f2ecbc",
+
+	cursor_bg = "#43436c",
+	cursor_fg = "#43436c",
+	cursor_border = "#43436c",
+
+	selection_fg = "#43436c",
+	selection_bg = "#9fb5c9",
+
+	scrollbar_thumb = "#b5cbd2",
+	split = "#b5cbd2",
+
+	ansi = {
+		"#1F1F28",
+		"#c84053",
+		"#6f894e",
+		"#77713f",
+		"#4d699b",
+		"#b35b79",
+		"#597b75",
+		"#545464",
+	},
+
+	brights = {
+		"#8a8980",
+		"#d7474b",
+		"#6e915f",
+		"#836f4a",
+		"#6693bf",
+		"#624c83",
+		"#5e857a",
+		"#43436c",
+	},
+
+	indexed = {
+		[16] = "#e98a00", -- extended color 1
+		[17] = "#e82424", -- extended color 2
+	},
+
+	tab_bar = {
+		background = "#e4d794",
+
+		active_tab = {
+			bg_color = "#b35b79",
+			fg_color = "#f2ecbc",
+		},
+
+		inactive_tab = {
+			bg_color = "#a6a69c",
+			fg_color = "#f2ecbc",
+		},
+
+		inactive_tab_hover = {
+			bg_color = "#9fb5c9",
+			fg_color = "#43436c",
+			italic = true,
+		},
+
+		new_tab = {
+			bg_color = "#b35b79",
+			fg_color = "#f2ecbc",
+		},
+
+		new_tab_hover = {
+			bg_color = "#9fb5c9",
+			fg_color = "#43436c",
+			italic = true,
+		},
+	},
+}
+local kanawanga_dark = {
 	foreground = "#dcd7ba",
 	background = "#1f1f28",
 
@@ -38,6 +110,17 @@ config.colors = {
 	brights = { "#727169", "#e82424", "#98bb6c", "#e6c384", "#7fb4ca", "#938aa9", "#7aa89f", "#dcd7ba" },
 	indexed = { [16] = "#ffa066", [17] = "#ff5d62" },
 }
+
+local current_scheme = 1
+local function themeCycler(window, _)
+	local schemes = { kanawanga_dark, kanawanga_light }
+	local overrides = window:get_config_overrides() or {}
+	current_scheme = current_scheme % #schemes + 1
+	overrides.colors = schemes[current_scheme]
+	window:set_config_overrides(overrides)
+end
+config.colors = kanawanga_dark
+
 -- kanagawa-dragon colorscheme:
 -- colors = {
 -- 	foreground = "#c5c9c5",
@@ -151,6 +234,12 @@ config.keys = {
 		mods = "LEADER",
 		-- Present a list of existing workspaces
 		action = wezterm.action.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }),
+	},
+	{
+		key = "c",
+		mods = "LEADER",
+		-- Cycle themes
+		action = wezterm.action_callback(themeCycler),
 	},
 }
 
