@@ -4,7 +4,7 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-      local current_scheme = 1
+      local current_scheme = 0
       vim.api.nvim_create_user_command("SwitchColorscheme", function()
         local schemes = { "kanagawa-wave", "kanagawa-lotus" }
         current_scheme = current_scheme % #schemes + 1
