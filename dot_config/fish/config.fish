@@ -28,13 +28,13 @@ if command -qs nvim
     abbr --add --position command e nvim
 end
 
-# Hydro colors
+# hydro colors
 set --global hydro_color_git green
 set --global hydro_color_duration yellow
 set --global hydro_color_prompt blue
 set --global hydro_color_pwd magenta
 
-# Sponge
+# sponge
 set sponge_purge_only_on_exit true
 
 # direnv
@@ -60,3 +60,5 @@ end
 mcfly init fish | source
 set -gx MCFLY_KEY_SCHEME vim
 
+# Set theme
+yes | fish_config theme choose kanagawa
