@@ -55,10 +55,3 @@ fish_add_path $HOME/.tfenv/bin
 if command -qs kitten
     abbr --add --position command s kitten ssh
 end
-
-# mcfly
-mcfly init fish | source
-set -gx MCFLY_KEY_SCHEME vim
-
-# Set theme
-yes | fish_config theme choose kanagawa
