@@ -11,6 +11,7 @@ return {
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { "j-hui/fidget.nvim", opts = {} },
       "nvim-telescope/telescope.nvim",
+      "ray-x/lsp_signature.nvim",
     },
     lazy = false,
     config = function()
@@ -113,6 +114,8 @@ return {
               end,
             })
           end
+
+          require("lsp_signature").on_attach({ hint_enable = false }, event.buf)
 
           vim.api.nvim_create_autocmd({ "CursorHold" }, {
             pattern = "*",

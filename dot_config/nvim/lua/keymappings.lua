@@ -4,17 +4,17 @@ vim.keymap.set("i", "kj", "<esc>", { desc = "Remap escape in insert mode" })
 --  See `:help hlsearch`
 vim.keymap.set("n", "<leader>ts", ":set hlsearch!<CR>", { desc = "[T]oggle [S]earch highlights" })
 
-vim.keymap.set("n", "0", function()
-  local line = vim.fn.getline(vim.fn.line(".") --[[@as string]]) --[[@as string]]
-  if line:gsub("%s*", "") == "" then
-    return "0"
-  end
-  if vim.fn.match(line, [[\S]]) == (vim.fn.col(".") - 1) then
-    return "0"
-  else
-    return "^"
-  end
-end, { expr = true, desc = "Goto Beginning of text, then line" })
+-- vim.keymap.set("n", "0", function()
+--   local line = vim.fn.getline(vim.fn.line(".") --[[@as string]]) --[[@as string]]
+--   if line:gsub("%s*", "") == "" then
+--     return "0"
+--   end
+--   if vim.fn.match(line, [[\S]]) == (vim.fn.col(".") - 1) then
+--     return "0"
+--   else
+--     return "^"
+--   end
+-- end, { expr = true, desc = "Goto Beginning of text, then line" })
 
 -- Diagnostic keymaps
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })

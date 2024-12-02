@@ -1,6 +1,7 @@
 -- Sources:
 -- * https://github.com/max397574/omega-nvim
 -- * https://www.josean.com/posts/neovim-linting-and-formatting
+-- * https://jdhao.github.io/2021/12/31/using_nvim_after_three_years/
 
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used).
 vim.g.mapleader = ","
