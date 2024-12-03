@@ -79,8 +79,6 @@ brew "gotop" # Terminal based graphical activity monitor inspired by gtop and vt
 brew "postgresql@15" # Object-relational database system
 brew "pinentry-mac" # Pinentry for GPG on Mac
 
-brew "rust"
-
 brew "prettier" # Code formatter for JavaScript, CSS, JSON, GraphQL, Markdown, YAML
 
 brew "sqlite3" # Command-line interface for SQLite
@@ -133,6 +131,8 @@ cask "firefox"
 cask "gimp"
 cask "tableplus" # Native GUI tool for relational databases
 
+cask "jetbrains-toolbox"
+
 # Machine-Specific
 {{- if eq .location "basil" }}
 cask "element" # Matrix collaboration client
@@ -140,15 +140,12 @@ cask "qmk-toolbox" # Toolbox companion for QMK Firmware
 cask "google-chrome" # Web browser
 cask "slack" # Team communication and collaboration software
 cask "tailscale" # Mesh VPN based on Wireguard
-cask "goland" # Go (golang) IDE
 {{- end }}
 
 {{- if eq .location "thyme" }}
 cask "1password" # Password manager that keeps all passwords secure behind one password
 cask "1password-cli" # Command-line interface for 1Password
 cask "miniconda" # Minimal installer for conda
-cask "jetbrains-gateway" # Remote development gateway by Jetbrains
-cask "intellij-idea"
 cask "aerospace"
 brew "clang-format"
 {{- end }}

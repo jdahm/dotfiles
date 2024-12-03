@@ -176,6 +176,7 @@ return {
   },
   {
     "gelguy/wilder.nvim",
+    event = "CmdlineEnter",
     opts = {
       modes = { ":", "/", "?" },
       enable_cmdline_enter = false,
