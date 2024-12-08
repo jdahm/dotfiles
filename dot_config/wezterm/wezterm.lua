@@ -8,7 +8,7 @@ local projects = require("projects")
 -- This will hold the configuration.
 local config = wezterm.config_builder()
 
-config.font = wezterm.font("Monaspace Neon")
+config.font = wezterm.font("Jetbrains Mono")
 config.font_size = 16.0
 config.scrollback_lines = 5000
 config.line_height = 1.0
