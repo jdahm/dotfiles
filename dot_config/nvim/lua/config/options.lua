@@ -4,3 +4,5 @@
 vim.o.shell = "/opt/homebrew/bin/fish -l"
 
 vim.g.ai_cmp = true
+
+vim.opt.mouse = ""
