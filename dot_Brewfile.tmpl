@@ -113,8 +113,6 @@ brew "stylua"
 
 brew "openjdk"
 
-brew "tailscale"
-
 # Casks
 cask "font-jetbrains-mono" # Developer targeted fonts with a high number of glyphs
 cask "font-hack" # Developer targeted fonts with a high number of glyphs
@@ -145,6 +143,8 @@ cask "qmk-toolbox" # Toolbox companion for QMK Firmware
 cask "google-chrome" # Web browser
 cask "slack" # Team communication and collaboration software
 cask "tailscale" # Mesh VPN based on Wireguard
+{{- else }}
+brew "tailscale"
 {{- end }}
 
 {{- if eq .location "thyme" }}
