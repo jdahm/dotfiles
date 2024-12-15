@@ -3,11 +3,9 @@
 -- Add any additional options here
 vim.o.shell = "/opt/homebrew/bin/fish -l"
 
-vim.g.ai_cmp = true
-
-vim.opt.mouse = ""
-
-vim.opt.mousescroll = "ver:0,hor:0"
+-- vim.g.ai_cmp = false
 
 -- Setting vim.opt.list = false will disable all whitespace characters.
 -- vim.opt.list = false
+
+-- vim.b.autoformat = false -- buffer-local
