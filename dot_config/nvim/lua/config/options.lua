@@ -3,7 +3,9 @@
 -- Add any additional options here
 vim.o.shell = "/opt/homebrew/bin/fish -l"
 
--- vim.g.ai_cmp = false
+vim.g.snacks_animate = false
+
+vim.g.ai_cmp = true
 
 -- Setting vim.opt.list = false will disable all whitespace characters.
 -- vim.opt.list = false
