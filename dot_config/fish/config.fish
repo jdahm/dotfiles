@@ -12,14 +12,14 @@ if command -qs brew
     end
 
     if test -d (brew --prefix)"/share/fish/vendor_completions.d"
-       set -gx fish_complete_path $fish_complete_path (brew --prefix)/share/fish/vendor_completions.d
+        set -gx fish_complete_path $fish_complete_path (brew --prefix)/share/fish/vendor_completions.d
     end
 
     source (brew --prefix)"/share/google-cloud-sdk/path.fish.inc"
 end
 
 # Set PATH
-fish_add_path $HOME/bin $HOME/go/bin /usr/local/bin (brew --prefix)/opt/postgresql@15/bin 
+fish_add_path $HOME/bin $HOME/go/bin /usr/local/bin (brew --prefix)/opt/postgresql@15/bin
 
 # Editor
 if command -qs nvim
@@ -54,4 +54,5 @@ fish_add_path $HOME/.tfenv/bin
 # Kitty
 if command -qs kitten
     abbr --add --position command s kitten ssh
+    abbr --add icat kitty +kitten icat --align=left
 end

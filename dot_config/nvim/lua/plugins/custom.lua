@@ -20,7 +20,7 @@ return {
     },
   },
 
-  -- Set indentation settings automatically
+  -- Automatic intendentation settings
   "tpope/vim-sleuth",
 
   -- Disable inlay hints by default. Enable with <header>uh.
@@ -33,35 +33,11 @@ return {
     },
   },
 
-  -- Disable ghost text
-  {
-    "saghen/blink.cmp",
-    opts = {
-      completion = {
-        documentation = {
-          ghost_text = {
-            enabled = false,
-          },
-        },
-      },
-    },
-  },
-
   -- Lower timeout for formatting.
   {
     "stevearc/conform.nvim",
     opts = {
       timeout_ms = 500,
-    },
-  },
-
-  -- Add kanawanga theme.
-  "rebelot/kanagawa.nvim",
-
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "kanagawa-wave",
     },
   },
 }
