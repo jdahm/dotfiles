@@ -24,3 +24,20 @@ map <leader>b :bdelete<CR>
 
 " Don't treat numbers that start with 0 as octal for inc/dec operations
 set nrformats-=octal
+
+call plug#begin()
+
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-repeat'
+
+Plug 'justinmk/vim-sneak'
+Plug 'vim-scripts/argtextobj.vim'
+Plug 'tommcdo/vim-exchange'
+Plug 'kana/vim-textobj-entire'
+Plug 'machakann/vim-highlightedyank'
+
+call plug#end()
+
