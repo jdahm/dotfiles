@@ -1,0 +1,17 @@
+source ~/.vimrc
+
+set ideajoin
+
+" actions
+nmap <leader>h <action>(PreviousTab)
+nmap <leader>l <action>(NextTab)
+nmap <leader>bd <action>(CloseEditor)
+nmap <leader>i <action>(Generate)
+nmap <leader>f <action>(ShowNavBar)
+nmap <leader>v <action>(Vcs.QuickListPopupAction)
+" nmap <leader>m <action>(Git.Menu)
+nmap <leader>s <action>(QuickChangeScheme)
+nmap <leader>/ <action>(ShowErrorDescription)
+nmap <leader>e <action>(GotoNextError)
+nmap <leader>z <action>(ToggleZenMode)
+nmap <leader>p <action>(TogglePresentationMode)
