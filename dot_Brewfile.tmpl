@@ -17,7 +17,8 @@ brew "tldr" # Simplified and community-driven man pages
 brew "tree" # Display directories as trees (with optional color/HTML output)
 brew "git" # Distributed revision control system
 brew "wget" # Internet file retriever
-brew "align"
+brew "align" # Text column alignment filter
+
 
 brew "trash" # CLI tool that moves files or folder to the trash
 
@@ -54,7 +55,8 @@ brew "grc" # Colorize logfiles and command output
 brew "gum" # Tool for glamorous shell scripts
 brew "glow" # Render markdown on the CLI
 brew "wishlist" # The SSH directory
-brew "vhs"
+brew "vhs" # Your CLI home video recorder
+
 
 brew "exa" # Modern replacement for 'ls'
 brew "bat" # Clone of cat(1) with syntax highlighting and Git integration
@@ -65,9 +67,11 @@ brew "ripgrep" # Search tool like grep and The Silver Searcher
 brew "fd" # Simple, fast and user-friendly alternative to find
 brew "pwgen" # Password generator
 
-brew "rustup"
+brew "rustup" # Rust toolchain installer
 
-brew "hey"
+
+brew "hey" # HTTP load generator, ApacheBench (ab) replacement
+
 brew "viddy" # Modern watch command
 brew "circumflex" # Hacker News in your terminal
 
@@ -101,7 +105,8 @@ brew "go" # Open source programming language to build simple/reliable/efficient 
 brew "go-task" # Task is a task runner/build tool that aims to be simpler and easier to use
 brew "sqlc" # Generate type safe Go from SQL
 brew "golangci-lint" # Fast linters runner for Go
-brew "mage"
+brew "mage" # Make/rake-like build tool using Go
+
 
 brew "kind" # Run local Kubernetes cluster in Docker
 brew "protobuf" # Protocol buffers (Google's data interchange format)
@@ -111,9 +116,9 @@ brew "jsonnet" # Domain specific configuration language for defining JSON data
 brew "pyenv" # Python version management
 brew "tfenv" # Terraform version manager inspired by rbenv
 
-brew "stylua"
+brew "stylua" # Opinionated Lua code formatter
+brew "openjdk" # Development kit for the Java programming language
 
-brew "openjdk"
 
 # Casks
 cask "font-jetbrains-mono" # Developer targeted fonts with a high number of glyphs
@@ -126,17 +131,14 @@ cask "docker" # App to build and share containerized applications and microservi
 cask "visual-studio-code" # Open-source code editor
 cask "google-cloud-sdk" # Set of tools to manage resources and applications hosted on Google Cloud
 cask "chrysalis" # Graphical configurator for Kaleidoscope-powered keyboards
-
 cask "github" # Desktop client for GitHub repositories
-cask "gitbutler"
-
-cask "kitty"
-cask "wezterm"
-cask "firefox"
-cask "gimp"
+cask "kitty" # GPU-based terminal emulator
+cask "firefox" # Web browser
+cask "gimp" # Free and open-source image editor
 cask "tableplus" # Native GUI tool for relational databases
-
-cask "jetbrains-toolbox"
+cask "zed" # Multiplayer code editor
+cask "jetbrains-toolbox" # JetBrains tools manager
+cask "tailscale" # Mesh VPN based on WireGuard
 
 # Machine-Specific
 {{- if eq .location "basil" }}
@@ -144,16 +146,13 @@ cask "element" # Matrix collaboration client
 cask "qmk-toolbox" # Toolbox companion for QMK Firmware
 cask "google-chrome" # Web browser
 cask "slack" # Team communication and collaboration software
-cask "tailscale" # Mesh VPN based on Wireguard
-cask "steam"
-{{- else }}
-brew "tailscale"
+cask "steam" # Video game digital distribution service
 {{- end }}
 
 {{- if eq .location "thyme" }}
 cask "1password" # Password manager that keeps all passwords secure behind one password
 cask "1password-cli" # Command-line interface for 1Password
 cask "miniconda" # Minimal installer for conda
-cask "aerospace"
-brew "clang-format"
+cask "aerospace" # AeroSpace is an i3-like tiling window manager for macOS
+brew "clang-format" # Formatting tools for C, C++, Obj-C, Java, JavaScript, TypeScript
 {{- end }}
