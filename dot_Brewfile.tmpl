@@ -139,7 +139,6 @@ cask "gimp" # Free and open-source image editor
 cask "tableplus" # Native GUI tool for relational databases
 cask "zed" # Multiplayer code editor
 cask "jetbrains-toolbox" # JetBrains tools manager
-cask "tailscale" # Mesh VPN based on WireGuard
 
 # Machine-Specific
 {{- if eq .location "basil" }}
@@ -148,6 +147,7 @@ cask "qmk-toolbox" # Toolbox companion for QMK Firmware
 cask "google-chrome" # Web browser
 cask "slack" # Team communication and collaboration software
 cask "steam" # Video game digital distribution service
+cask "tailscale" # Mesh VPN based on WireGuard
 {{- end }}
 
 {{- if eq .location "thyme" }}
