@@ -10,53 +10,56 @@ if test -f ~/.config/brew/path
     abbr --add brew-update brew bundle --global
 end
 
-if command -qs brew
-    if test -d (brew --prefix)"/share/fish/completions"
-        set -gx fish_complete_path $fish_complete_path (brew --prefix)/share/fish/completions
-    end
-
-    if test -d (brew --prefix)"/share/fish/vendor_completions.d"
-        set -gx fish_complete_path $fish_complete_path (brew --prefix)/share/fish/vendor_completions.d
-    end
-
-    source (brew --prefix)"/share/google-cloud-sdk/path.fish.inc"
-end
 
 # Set PATH
 fish_add_path $HOME/bin $HOME/go/bin /usr/local/bin (brew --prefix)/opt/postgresql@15/bin
 
-# Editor
-set -Ux EDITOR vim
-set -Ux VISUAL vim
-abbr --add --position command e vim
+if status is-interactive
+    if command -qs brew
+        if test -d (brew --prefix)"/share/fish/completions"
+        set -gx fish_complete_path $fish_complete_path (brew --prefix)/share/fish/completions
+        end
+        if test -d (brew --prefix)"/share/fish/vendor_completions.d"
+        set -gx fish_complete_path $fish_complete_path (brew --prefix)/share/fish/vendor_completions.d
+        end
+        source (brew --prefix)"/share/google-cloud-sdk/path.fish.inc"
+    end
+    
+    # Editor
+    set -Ux EDITOR vim
+    set -Ux VISUAL vim
+    abbr --add --position command e vim
 
-# hydro colors
-set --global hydro_color_git green
-set --global hydro_color_duration yellow
-set --global hydro_color_prompt blue
-set --global hydro_color_pwd magenta
+    # hydro colors
+    set --global hydro_color_git green
+    set --global hydro_color_duration yellow
+    set --global hydro_color_prompt blue
+    set --global hydro_color_pwd magenta
 
-# sponge
-set sponge_purge_only_on_exit true
+    # sponge
+    set sponge_purge_only_on_exit true
 
-# direnv
-direnv hook fish | source
+    # direnv
+    if command -qs direnv
+        direnv hook fish | source
+    end
 
-# chezmoi
-if command -qs chezmoi
-    abbr --add chezmoi-cd cd (chezmoi source-path)
-end
+    if command -qs chezmoi
+        abbr --add chezmoi-cd cd (chezmoi source-path)
+    end
 
-# pyenv
-set -Ux PYENV_ROOT $HOME/.pyenv
-fish_add_path $PYENV_ROOT/bin
-pyenv init - | source
+    if command -qs pyenv
+        set -Ux PYENV_ROOT $HOME/.pyenv
+        fish_add_path $PYENV_ROOT/bin
+        pyenv init - | source
+    end
 
-# tfenv
-fish_add_path $HOME/.tfenv/bin
+    if command -qs tfenv
+        fish_add_path $HOME/.tfenv/bin
+    end
 
-# Kitty
-if command -qs kitten
-    abbr --add --position command s kitten ssh
-    abbr --add icat kitty +kitten icat --align=left
+    if command -qs kitten
+        abbr --add --position command s kitten ssh
+        abbr --add icat kitty +kitten icat --align=left
+    end
 end
