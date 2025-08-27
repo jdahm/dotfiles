@@ -26,11 +26,9 @@ end
 fish_add_path $HOME/bin $HOME/go/bin /usr/local/bin (brew --prefix)/opt/postgresql@15/bin
 
 # Editor
-if command -qs nvim
-    set -Ux EDITOR nvim
-    set -Ux VISUAL nvim
-    abbr --add --position command e nvim
-end
+set -Ux EDITOR vim
+set -Ux VISUAL vim
+abbr --add --position command e vim
 
 # hydro colors
 set --global hydro_color_git green
