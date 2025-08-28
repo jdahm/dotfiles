@@ -62,4 +62,9 @@ if status is-interactive
         abbr --add --position command s kitten ssh
         abbr --add icat kitty +kitten icat --align=left
     end
+
+    if test -d  $HOME/Library/Application\ Support/JetBrains/Toolbox/scripts
+	fish_add_path $HOME/Library/Application\ Support/JetBrains/Toolbox/scripts
+    end
 end
+
