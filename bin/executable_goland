@@ -1,2 +1,0 @@
-#!/bin/sh
-/Applications/GoLand.app/Contents/MacOS/goland $@ > /dev/null 2>&1 &
