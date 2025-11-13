@@ -1,0 +1,227 @@
+{ config, pkgs, lib, primaryUser, ... }:
+
+{
+  # Home Manager needs a bit of information about you and the paths it should
+  # manage.
+  home.username = primaryUser.handle;
+  home.homeDirectory = "/Users/${primaryUser.handle}";
+
+  # This value determines the Home Manager release that your configuration is
+  # compatible with. This helps avoid breakage when a new Home Manager release
+  # introduces backwards incompatible changes.
+  #
+  # You should not change this value, even if you update Home Manager. If you do
+  # want to update the value, then make sure to first check the Home Manager
+  # release notes.
+  home.stateVersion = "25.05"; # Please read the comment before changing.
+
+  # The home.packages option allows you to install Nix packages into your
+  # environment.
+  home.packages = [
+    # # Adds the 'hello' command to your environment. It prints a friendly
+    # # "Hello, world!" when run.
+    # pkgs.hello
+    pkgs.tldr
+    pkgs.git
+    pkgs.helix
+    pkgs.vim
+
+    pkgs.just
+    pkgs.eza
+    pkgs.jq
+    pkgs.yq
+
+    pkgs.ghq
+
+    pkgs.jetbrains-mono
+
+    pkgs.spotify
+
+    # # It is sometimes useful to fine-tune packages, for example, by applying
+    # # overrides. You can do that directly here, just don't forget the
+    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
+    # # fonts?
+    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+
+    # # You can also create simple shell scripts directly inside your
+    # # configuration. For example, this adds a command 'my-hello' to your
+    # # environment:
+    # (pkgs.writeShellScriptBin "my-hello" ''
+    #   echo "Hello, ${config.home.username}!"
+    # '')
+  ];
+
+  # Home Manager is pretty good at managing dotfiles. The primary way to manage
+  # plain files is through 'home.file'.
+  home.file = {
+    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
+    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
+    # # symlink to the Nix store copy.
+    # ".screenrc".source = dotfiles/screenrc;
+
+    # # You can also set the file content immediately.
+    # ".gradle/gradle.properties".text = ''
+    #   org.gradle.console=verbose
+    #   org.gradle.daemon.idletimeout=3600000
+    # '';
+  };
+
+  # Home Manager can also manage your environment variables through
+  # 'home.sessionVariables'. These will be explicitly sourced when using a
+  # shell provided by Home Manager. If you don't want to manage your shell
+  # through Home Manager then you have to manually source 'hm-session-vars.sh'
+  # located at either
+  #
+  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+  #
+  # or
+  #
+  #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
+  #
+  # or
+  #
+  #  /etc/profiles/per-user/johannd/etc/profile.d/hm-session-vars.sh
+  #
+  home.sessionVariables = {
+    # EDITOR = "emacs";
+  };
+
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
+
+  programs.fish = {
+  enable = true;
+  plugins = [
+    {
+      name = "hydro";
+      src = pkgs.fetchFromGitHub {
+        owner = "jorgebucaran";
+        repo = "hydro";
+        rev = "75ab7168a35358b3d08eeefad4ff0dd306bd80d4";
+        sha256 = "QYq4sU41/iKvDUczWLYRGqDQpVASF/+6brJJ8IxypjE=";
+      };
+    }
+    {
+      name = "done";
+      src = pkgs.fetchFromGitHub {
+        owner = "franciscolourenco";
+        repo = "done";
+        rev = "0bfe402753681f705a482694fcaf20c2bfc6deb7";
+        sha256 = "MdcZUDRtNJdiyo2l9o5ma7nAX84xEJbGFhAVhK+Zm1w=";
+      };
+    }
+    {
+      name = "autopair.fish";
+      src = pkgs.fetchFromGitHub {
+        owner = "jorgebucaran";
+        repo = "autopair.fish";
+        rev = "4d1752ff5b39819ab58d7337c69220342e9de0e2";
+        sha256 = "MdcZUDRtNJdiyo2l9o5ma7nAX84xEJbGFhAVhK+Zm1w=";
+      };
+    }
+    {
+      name = "spark.fish";
+      src = pkgs.fetchFromGitHub {
+        owner = "jorgebucaran";
+        repo = "spark.fish";
+        rev = "90a60573ec8a8ecb741a861e0bfca2362f297e5f";
+        sha256 = "MdcZUDRtNJdiyo2l9o5ma7nAX84xEJbGFhAVhK+Zm1w=";
+      };
+    }
+    {
+      name = "sponge";
+      src = pkgs.fetchFromGitHub {
+        owner = "meaningful-ooo";
+        repo = "sponge";
+        rev = "384299545104d5256648cee9d8b117aaa9a6d7be";
+        sha256 = "MdcZUDRtNJdiyo2l9o5ma7nAX84xEJbGFhAVhK+Zm1w=";
+      };
+    }
+    ];
+    shellInitLast = ''
+      set --global hydro_color_git green
+      set --global hydro_color_duration yellow
+      set --global hydro_color_prompt blue
+      set --global hydro_color_pwd magenta
+
+      set sponge_purge_only_on_exit true
+    '';
+  };
+
+  programs.gh = {
+  enable = true;
+  extensions = [ pkgs.gh-poi ];
+  settings = {
+    git_protocol = "https";
+    prompt = "enabled";
+    aliases = {
+      co = "pr checkout";
+      pv = "pr view";
+    };
+  };
+  };
+
+  programs.gpg.enable = true;
+
+  services.gpg-agent = {
+    enable = true;
+    pinentry.package = pkgs.pinentry_mac;
+  };
+
+  programs.go.enable = true;
+
+  programs.helix.enable = true;
+
+  programs.git = {
+    enable = true;
+    delta.enable = true;
+    ignores = [
+      "*~"
+      ".DS_Store"
+      ".vscode"
+      ".direnv"
+      ".envrc"
+      "shell.nix"
+      ".experiments/"
+      ".idea/"
+    ];
+    lfs.enable = true;
+    userEmail = primaryUser.email;
+    userName = primaryUser.name;
+    signing = {
+      format = "openpgp";
+      signByDefault = true;
+    };
+    extraConfig = {
+      ghq = {
+        root = "~/dev";
+      };
+    };
+  };
+
+  programs.jujutsu.enable = true;
+
+  programs.kitty = {
+    enable = true;
+    shellIntegration.mode = "enabled";
+    font = {
+      name = "Monaspace Neon";
+      package = pkgs.monaspace;
+      size = 16;
+    };
+    settings = {
+      fish_greeting = "";
+      macos_option_as_alt = "yes";
+      macos_quit_when_last_window_closed = "yes";
+      tab_bar_edge = "bottom";
+      tab_bar_style = "powerline";
+      tab_powerline_style = "round"; # angled, slanted, round
+      allow_remote_control = "yes";
+    };
+    keybindings = {
+      "f1" = "new_window_with_cwd";
+      "f2" = "launch --cwd=current $EDITOR .";
+    };
+    themeFile = "nord";
+  };
+}

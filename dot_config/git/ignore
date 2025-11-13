@@ -1,8 +1,0 @@
-*~
-.DS_Store
-.vscode
-.direnv
-.envrc
-shell.nix
-.experiments/
-.idea/
