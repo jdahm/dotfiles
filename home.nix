@@ -1,6 +1,8 @@
-{ config, pkgs, lib, primaryUser, ... }:
-
 {
+  pkgs,
+  primaryUser,
+  ...
+}: {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = primaryUser.handle;
@@ -33,9 +35,20 @@
 
     pkgs.ghq
 
+    pkgs.google-cloud-sdk
+
+    pkgs.postgresql
+
     pkgs.jetbrains-mono
 
     pkgs.spotify
+
+    # Language servers
+    pkgs.nixd
+    pkgs.alejandra
+
+    pkgs.gopls
+    pkgs.delve
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -90,55 +103,31 @@
   programs.home-manager.enable = true;
 
   programs.fish = {
-  enable = true;
-  plugins = [
-    {
-      name = "hydro";
-      src = pkgs.fetchFromGitHub {
-        owner = "jorgebucaran";
-        repo = "hydro";
-        rev = "75ab7168a35358b3d08eeefad4ff0dd306bd80d4";
-        sha256 = "QYq4sU41/iKvDUczWLYRGqDQpVASF/+6brJJ8IxypjE=";
-      };
-    }
-    {
-      name = "done";
-      src = pkgs.fetchFromGitHub {
-        owner = "franciscolourenco";
-        repo = "done";
-        rev = "0bfe402753681f705a482694fcaf20c2bfc6deb7";
-        sha256 = "MdcZUDRtNJdiyo2l9o5ma7nAX84xEJbGFhAVhK+Zm1w=";
-      };
-    }
-    {
-      name = "autopair.fish";
-      src = pkgs.fetchFromGitHub {
-        owner = "jorgebucaran";
-        repo = "autopair.fish";
-        rev = "4d1752ff5b39819ab58d7337c69220342e9de0e2";
-        sha256 = "MdcZUDRtNJdiyo2l9o5ma7nAX84xEJbGFhAVhK+Zm1w=";
-      };
-    }
-    {
-      name = "spark.fish";
-      src = pkgs.fetchFromGitHub {
-        owner = "jorgebucaran";
-        repo = "spark.fish";
-        rev = "90a60573ec8a8ecb741a861e0bfca2362f297e5f";
-        sha256 = "MdcZUDRtNJdiyo2l9o5ma7nAX84xEJbGFhAVhK+Zm1w=";
-      };
-    }
-    {
-      name = "sponge";
-      src = pkgs.fetchFromGitHub {
-        owner = "meaningful-ooo";
-        repo = "sponge";
-        rev = "384299545104d5256648cee9d8b117aaa9a6d7be";
-        sha256 = "MdcZUDRtNJdiyo2l9o5ma7nAX84xEJbGFhAVhK+Zm1w=";
-      };
-    }
+    enable = true;
+    preferAbbrs = true;
+    plugins = [
+      {
+        name = "hydro";
+        inherit (pkgs.fishPlugins.hydro) src;
+      }
+      {
+        name = "done";
+        inherit (pkgs.fishPlugins.done) src;
+      }
+      {
+        name = "autopair";
+        inherit (pkgs.fishPlugins.autopair) src;
+      }
+      {
+        name = "spark";
+        inherit (pkgs.fishPlugins.spark) src;
+      }
+      {
+        name = "sponge";
+        inherit (pkgs.fishPlugins.sponge) src;
+      }
     ];
-    shellInitLast = ''
+    shellInit = ''
       set --global hydro_color_git green
       set --global hydro_color_duration yellow
       set --global hydro_color_prompt blue
@@ -149,16 +138,16 @@
   };
 
   programs.gh = {
-  enable = true;
-  extensions = [ pkgs.gh-poi ];
-  settings = {
-    git_protocol = "https";
-    prompt = "enabled";
-    aliases = {
-      co = "pr checkout";
-      pv = "pr view";
+    enable = true;
+    extensions = [pkgs.gh-poi];
+    settings = {
+      git_protocol = "https";
+      prompt = "enabled";
+      aliases = {
+        co = "pr checkout";
+        pv = "pr view";
+      };
     };
-  };
   };
 
   programs.gpg.enable = true;
@@ -201,6 +190,16 @@
 
   programs.jujutsu.enable = true;
 
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    config = {
+      global = {
+        load_dotenv = true;
+      };
+    };
+  };
+
   programs.kitty = {
     enable = true;
     shellIntegration.mode = "enabled";
@@ -217,6 +216,7 @@
       tab_bar_style = "powerline";
       tab_powerline_style = "round"; # angled, slanted, round
       allow_remote_control = "yes";
+      shell = "${pkgs.fish}/bin/fish --login";
     };
     keybindings = {
       "f1" = "new_window_with_cwd";
