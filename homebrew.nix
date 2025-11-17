@@ -2,7 +2,7 @@
   homebrew = {
     enable = true;
     casks = [
-      "zed"
+      # "zed"
       "claude-code"
       "claude"
       "google-chrome"

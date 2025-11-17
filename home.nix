@@ -1,6 +1,8 @@
 {
+  inputs,
   pkgs,
   primaryUser,
+  config,
   ...
 }: {
   # Home Manager needs a bit of information about you and the paths it should
@@ -36,7 +38,6 @@
     pkgs.ghq
 
     pkgs.google-cloud-sdk
-
     pkgs.postgresql
 
     pkgs.jetbrains-mono
@@ -106,10 +107,10 @@
     enable = true;
     preferAbbrs = true;
     plugins = [
-      {
-        name = "hydro";
-        inherit (pkgs.fishPlugins.hydro) src;
-      }
+      # {
+      #   name = "hydro";
+      #   inherit (pkgs.fishPlugins.hydro) src;
+      # }
       {
         name = "done";
         inherit (pkgs.fishPlugins.done) src;
@@ -134,7 +135,30 @@
       set --global hydro_color_pwd magenta
 
       set sponge_purge_only_on_exit true
+
+      fish_add_path -p $HOME/bin
     '';
+  };
+
+  programs.starship = {
+    enable = true;
+    enableTransience = true;
+    settings = {
+      nix_shell = {
+        impure_msg = "";
+      };
+      gcloud = {
+        disabled = false;
+        detect_env_vars = ["GOOGLE_CLOUD" "GCLOUD"];
+      };
+      kubernetes = {
+        disabled = false;
+        detect_env_vars = ["GOOGLE_CLOUD" "GCLOUD"];
+      };
+      sudo = {
+        disabled = false;
+      };
+    };
   };
 
   programs.gh = {
@@ -160,6 +184,15 @@
   programs.go.enable = true;
 
   programs.helix.enable = true;
+
+  programs.zed-editor = {
+    enable = true;
+  };
+
+  # Zed needs a fish symlink.
+  home.file."bin/fish".source = "${pkgs.fish}/bin/fish";
+  home.file.".config/zed/settings.json".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dev/github.com/jdahm/dotfiles/.config/zed/settings.json";
+  home.file.".config/zed/keymap.json".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dev/github.com/jdahm/dotfiles/.config/zed/keymap.json";
 
   programs.git = {
     enable = true;
@@ -188,7 +221,15 @@
     };
   };
 
-  programs.jujutsu.enable = true;
+  programs.jujutsu = {
+    enable = true;
+    settings = {
+      user = {
+        name = primaryUser.name;
+        email = primaryUser.email;
+      };
+    };
+  };
 
   programs.direnv = {
     enable = true;
@@ -204,7 +245,7 @@
     enable = true;
     shellIntegration.mode = "enabled";
     font = {
-      name = "Monaspace Neon";
+      name = "Monaspace Argon";
       package = pkgs.monaspace;
       size = 16;
     };
@@ -216,6 +257,7 @@
       tab_bar_style = "powerline";
       tab_powerline_style = "round"; # angled, slanted, round
       allow_remote_control = "yes";
+      modify_font = "cell_height 110%";
       shell = "${pkgs.fish}/bin/fish --login";
     };
     keybindings = {

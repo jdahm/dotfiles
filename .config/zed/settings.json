@@ -1,0 +1,93 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
+{
+  "snippet_sort_order": "inline",
+  "auto_signature_help": true,
+  "diagnostics": {
+    "inline": {
+      "enabled": false
+    }
+  },
+  "buffer_line_height": "comfortable",
+  "buffer_font_family": "Monaspace Argon",
+  "base_keymap": "JetBrains",
+  "edit_predictions": {
+    "disabled_globs": []
+  },
+  "show_signature_help_after_edits": true,
+  "completions": {
+    "lsp_fetch_timeout_ms": 25
+  },
+  "preferred_line_length": 90,
+  "soft_wrap": "none",
+  "vim_mode": true,
+  "ui_font_size": 16.0,
+  "buffer_font_size": 16.0,
+  "terminal": {
+    "font_size": 16.0,
+    "option_as_meta": true,
+    "shell": {
+      "with_arguments": {
+        "program": "/etc/profiles/per-user/jdahm/bin/fish",
+        "args": ["--login"]
+      }
+    },
+    "detect_venv": {
+      "on": {
+        // Default directories to search for virtual environments, relative
+        // to the current working directory. We recommend overriding this
+        // in your project's settings, rather than globally.
+        "directories": [".venv", "venv"],
+        // Can also be `csh`, `fish`, and `nushell`
+        "activate_script": "default"
+      }
+    }
+  },
+  "lsp": {
+    "nixd": {
+      "settings": {
+        // "diagnostic": {
+        //   "suppress": ["sema-extra-with"]
+        // },
+        "formatting": {
+          "command": ["alejandra", "--quiet", "--"]
+        }
+      }
+    },
+    "gopls": {
+      "initialization_options": {
+        "hints": {
+          "assignVariableTypes": true,
+          "compositeLiteralFields": true,
+          "compositeLiteralTypes": true,
+          "constantValues": true,
+          "functionTypeParameters": true,
+          "parameterNames": true,
+          "rangeVariableTypes": true
+        }
+      }
+    }
+  },
+  "languages": {
+    "Go": {
+      "inlay_hints": {
+        "show_background": false,
+        "enabled": false
+      }
+    },
+    "Nix": {
+      "language_servers": ["nixd", "!nil"]
+    }
+  },
+  "autosave": {
+    "after_delay": {
+      "milliseconds": 1000
+    }
+  }
+}
