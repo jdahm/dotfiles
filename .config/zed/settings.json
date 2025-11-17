@@ -34,7 +34,7 @@
     "option_as_meta": true,
     "shell": {
       "with_arguments": {
-        "program": "/etc/profiles/per-user/jdahm/bin/fish",
+        "program": "fish",
         "args": ["--login"]
       }
     },
