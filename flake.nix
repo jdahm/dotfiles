@@ -33,6 +33,8 @@
     self,
     nix-darwin,
     home-manager,
+    nixpkgs,
+    nixpkgs-unstable,
   }: {
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#basil
