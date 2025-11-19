@@ -2,13 +2,13 @@
   homebrew = {
     enable = true;
     casks = [
-      # "zed"
-      "claude-code"
-      "claude"
+      #"zed"
+      #"claude-code"
+      #"claude"
       "google-chrome"
       "jetbrains-toolbox"
-      "docker-desktop"
-      "tableplus"
+      #"docker-desktop"
+      #"tableplus"
     ];
   };
 }

@@ -1,13 +1,13 @@
 # Sources:
 # - https://github.com/HestHub/nixos
 # - https://github.com/evantravers/dotfiles
-# - https://github.com/evantravers/dotfiles
 # - https://github.com/dustinlyons/nixos-config
 {
   description = "Nix configuration";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/release-25.05";
@@ -33,7 +33,6 @@
     self,
     nix-darwin,
     home-manager,
-    nixpkgs,
   }: {
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#basil

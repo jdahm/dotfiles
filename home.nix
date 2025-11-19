@@ -22,34 +22,54 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
-    pkgs.tldr
-    pkgs.git
+    # Text Editors
     pkgs.helix
     pkgs.vim
 
-    pkgs.just
-    pkgs.eza
-    pkgs.jq
-    pkgs.yq
+    # Version Control
+    pkgs.git
+    pkgs.ghq # Repository manager that follows GitHub's directory structure
 
-    pkgs.ghq
+    # Shell Utilities
+    pkgs.tldr # Simplified man pages
+    pkgs.just # Command runner (like make but better)
+    pkgs.eza # Modern replacement for ls
 
+    # Data Processing
+    pkgs.jq # JSON processor
+    pkgs.yq # YAML/XML/TOML processor
+
+    # Cloud & Infrastructure
     pkgs.google-cloud-sdk
-    pkgs.postgresql
 
+    # Databases
+    pkgs.postgresql
+    pkgs.tableplus # Database GUI client
+
+    # Containers
+    pkgs.docker
+    pkgs.docker-compose
+    pkgs.kubectx
+
+    # Fonts
     pkgs.jetbrains-mono
 
+    # Entertainment
     pkgs.spotify
 
-    # Language servers
-    pkgs.nixd
-    pkgs.alejandra
+    # Development Tools
+    pkgs.claude-code # AI-powered code editor
 
-    pkgs.gopls
-    pkgs.delve
+    # Nix Language Tools
+    pkgs.nixd # Nix language server
+    pkgs.alejandra # Nix code formatter
+
+    # Go Development
+    pkgs.gopls # Go language server
+    pkgs.delve # Go debugger
+
+    # Rust Development
+    pkgs.rust-analyzer
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -183,14 +203,17 @@
 
   programs.go.enable = true;
 
-  programs.helix.enable = true;
+  programs.helix = {
+    enable = true;
+    package = pkgs.unstable.helix;
+  };
 
   programs.zed-editor = {
     enable = true;
+    package = pkgs.unstable.zed-editor;
   };
 
-  # Zed needs a fish symlink.
-  home.file."bin/fish".source = "${pkgs.fish}/bin/fish";
+  # Mutable configuration for zed-editor.
   home.file.".config/zed/settings.json".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dev/github.com/jdahm/dotfiles/.config/zed/settings.json";
   home.file.".config/zed/keymap.json".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dev/github.com/jdahm/dotfiles/.config/zed/keymap.json";
 
@@ -215,6 +238,9 @@
       signByDefault = true;
     };
     extraConfig = {
+      push = {
+        autoSetupRemote = true;
+      };
       ghq = {
         root = "~/dev";
       };
