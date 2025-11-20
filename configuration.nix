@@ -73,7 +73,13 @@
       app = "/System/Applications/Passwords.app";
     }
     {
-      app = "${pkgs.kitty}/Applications/Kitty.app/";
+      app = "${pkgs.kitty}/Applications/Kitty.app";
+    }
+    {
+      app = "/Applications/Zed.app";
+    }
+    {
+      app = "${pkgs.tableplus}/Applications/TablePlus.app";
     }
   ];
 }

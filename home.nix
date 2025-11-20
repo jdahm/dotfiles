@@ -23,7 +23,6 @@
   # environment.
   home.packages = [
     # Text Editors
-    pkgs.helix
     pkgs.vim
 
     # Version Control
@@ -58,7 +57,7 @@
     pkgs.spotify
 
     # Development Tools
-    pkgs.claude-code # AI-powered code editor
+    pkgs.unstable.claude-code # AI-powered code editor
 
     # Nix Language Tools
     pkgs.nixd # Nix language server

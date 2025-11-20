@@ -35,7 +35,7 @@
     "option_as_meta": true,
     "shell": {
       "with_arguments": {
-        "program": "fish",
+        "program": "/etc/profiles/per-user/johannd/bin/fish",
         "args": ["--login"]
       }
     },
