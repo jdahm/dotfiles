@@ -1,10 +1,7 @@
 # Taps
 tap "homebrew/cask-fonts"
-tap "homebrew/cask-drivers"
 tap "homebrew/services"
 tap "charmbracelet/tap"
-tap "go-task/tap"
-tap "koekeishiya/formulae"
 
 # Formulae
 
@@ -24,17 +21,14 @@ brew "trash" # CLI tool that moves files or folder to the trash
 brew "fish" # User-friendly command-line shell for UNIX-like operating systems
 brew "fisher" # Plugin manager for the Fish shell
 brew "nushell" # Modern shell for the GitHub era
-brew "fzf" # Command-line fuzzy finder written in Go
-brew "elvish" # Friendly and expressive shell
+brew "starship"
 
-brew "neovim" # Vi 'workalike' with many additional features
 brew "helix" # Post-modern modal text editor
 
 brew "grpcurl" # Like cURL, but for gRPC
 brew "act" # Run your GitHub Actions locally
 
 brew "lazygit" # Simple terminal UI for git commands
-brew "lazydocker" # Lazier way to manage everything docker
 
 brew "git-crypt" # Enable transparent encryption/decryption of files in a git repo
 brew "git-lfs" # Git extension for versioning large files
@@ -60,7 +54,6 @@ brew "temporal"
 
 brew "eza"
 brew "bat" # Clone of cat(1) with syntax highlighting and Git integration
-brew "broot" # New way to see and navigate directory trees
 brew "procs" # Modern replacement for ps written by Rust
 brew "dust" # More intuitive version of du in rust
 brew "ripgrep" # Search tool like grep and The Silver Searcher
@@ -82,8 +75,6 @@ brew "jq" # Lightweight and flexible command-line JSON processor
 brew "yq" # Process YAML, JSON, XML, CSV and properties documents from the CLI
 
 brew "httpie" # User-friendly cURL replacement (command-line HTTP client)
-brew "abduco" # Provides session management: i.e. separate programs from terminals
-brew "gotop" # Terminal based graphical activity monitor inspired by gtop and vtop
 brew "postgresql@15" # Object-relational database system
 brew "pinentry-mac" # Pinentry for GPG on Mac
 
@@ -105,7 +96,6 @@ brew "ansifilter" # Strip or convert ANSI codes into HTML, (La)Tex, RTF, or BBCo
 brew "go" # Open source programming language to build simple/reliable/efficient software
 brew "go-task" # Task is a task runner/build tool that aims to be simpler and easier to use
 brew "sqlc" # Generate type safe Go from SQL
-brew "mage" # Make/rake-like build tool using Go
 
 brew "kind" # Run local Kubernetes cluster in Docker
 brew "protobuf" # Protocol buffers (Google's data interchange format)
@@ -118,9 +108,6 @@ brew "tfenv" # Terraform version manager inspired by rbenv
 brew "stylua" # Opinionated Lua code formatter
 brew "openjdk" # Development kit for the Java programming language
 
-brew "yabai"
-brew "skhd"
-
 # Casks
 cask "font-jetbrains-mono" # Developer targeted fonts with a high number of glyphs
 cask "font-hack" # Developer targeted fonts with a high number of glyphs
@@ -129,13 +116,8 @@ cask "font-source-code-pro"
 
 cask "spotify" # Music streaming service
 cask "docker" # App to build and share containerized applications and microservices
-cask "visual-studio-code" # Open-source code editor
 cask "google-cloud-sdk" # Set of tools to manage resources and applications hosted on Google Cloud
-cask "chrysalis" # Graphical configurator for Kaleidoscope-powered keyboards
-cask "github" # Desktop client for GitHub repositories
 cask "kitty" # GPU-based terminal emulator
-cask "firefox" # Web browser
-cask "gimp" # Free and open-source image editor
 cask "tableplus" # Native GUI tool for relational databases
 cask "zed" # Multiplayer code editor
 cask "jetbrains-toolbox" # JetBrains tools manager

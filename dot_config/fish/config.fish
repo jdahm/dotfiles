@@ -10,7 +10,6 @@ if test -f ~/.config/brew/path
     abbr --add brew-update brew bundle --global
 end
 
-
 # Set PATH
 fish_add_path $HOME/bin $HOME/go/bin /usr/local/bin (brew --prefix)/opt/postgresql@15/bin
 
@@ -24,17 +23,11 @@ if status is-interactive
         end
         source (brew --prefix)"/share/google-cloud-sdk/path.fish.inc"
     end
-    
-    # Editor
-    set -Ux EDITOR vim
-    set -Ux VISUAL vim
-    abbr --add --position command e vim
 
-    # hydro colors
-    set --global hydro_color_git green
-    set --global hydro_color_duration yellow
-    set --global hydro_color_prompt blue
-    set --global hydro_color_pwd magenta
+    # Editor
+    set -Ux EDITOR hx
+    set -Ux VISUAL hx
+    abbr --add --position command e hx
 
     # sponge
     set sponge_purge_only_on_exit true
@@ -58,6 +51,14 @@ if status is-interactive
         fish_add_path $HOME/.tfenv/bin
     end
 
+    if command -qs starship
+        starship init fish | source
+    end
+
+    if command -qs eza
+	    abbr --add ls eza
+    end
+
     if command -qs kitten
         abbr --add --position command s kitten ssh
         abbr --add icat kitty +kitten icat --align=left
@@ -67,4 +68,3 @@ if status is-interactive
 	fish_add_path $HOME/Library/Application\ Support/JetBrains/Toolbox/scripts
     end
 end
-
