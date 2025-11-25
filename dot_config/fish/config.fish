@@ -1,7 +1,3 @@
-# if status is-interactive
-#     # Commands to run in interactive sessions can go here
-# end
-
 set -U fish_greeting
 
 # Bootstrap homebrew
@@ -53,10 +49,11 @@ if status is-interactive
 
     if command -qs starship
         starship init fish | source
+        enable_transience
     end
 
     if command -qs eza
-	    abbr --add ls eza
+        abbr --add ls eza
     end
 
     if command -qs kitten
@@ -65,6 +62,7 @@ if status is-interactive
     end
 
     if test -d  $HOME/Library/Application\ Support/JetBrains/Toolbox/scripts
-	fish_add_path $HOME/Library/Application\ Support/JetBrains/Toolbox/scripts
+        fish_add_path $HOME/Library/Application\ Support/JetBrains/Toolbox/scripts
     end
+
 end

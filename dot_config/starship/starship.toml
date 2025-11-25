@@ -1,0 +1,10 @@
+[gcloud]
+disabled = false
+detect_env_vars = ["GOOGLE_CLOUD" "GCLOUD"]
+
+[kubernetes]
+disabled = false
+detect_env_vars = ["KUBERNETES"]
+
+[sudo]
+disabled = false
