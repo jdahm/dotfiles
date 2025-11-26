@@ -41,6 +41,10 @@ if status is-interactive
         abbr --add ls eza
     end
 
+    if command -qs zoxide
+        zoxide init fish | source
+    end
+
     if command -qs kitten
         abbr --add --position command s kitten ssh
         abbr --add icat kitty +kitten icat --align=left

@@ -1,39 +1,21 @@
-# Dotfiles
+# Dotfiles Configuration with Chezmoi
 
-My dotfiles are currently managed with [chezmoi](https://www.chezmoi.io/).
+This repository contains my personal dotfiles managed by [chezmoi](https://www.chezmoi.io/). It includes configuration for development tools, shell environments, and various applications.
 
-To get chezmoi, run
+## Quick Start
 
-```shell
-$ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply $GITHUB_USERNAME
+**Option 1: One-liner (Recommended)**
+```bash
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply $GITHUB_USERNAME
 ```
 
-## Installation
+Replace `$GITHUB_USERNAME` with your actual GitHub username.
 
-By default MacOS has zsh as the default terminal.
-To change that, run
+**Answer the prompts** (for both options):
+   - **Email**: Your email address (used for Git configuration)
+   - **Location**: Choose between `basil` or `thyme` (determines machine-specific packages)
 
-```shell
-$ echo $(which fish) | sudo tee -a /etc/shells
-$ chsh -s $(which fish)
-```
-
-By default the plugins will not be installed.
-To install them through `fisher`, run
-```shell
-$ cat ~/.config/fish/fish_plugins | fisher install
-```
-
-## MacOS Keyboard Mapping
-
-https://gist.github.com/buckleyc/ce6f2325d1ff2f6e5ed8742f97491e80
-
-```
-hidutil property --set '{"UserKeyMapping":[{ "HIDKeyboardModifierMappingSrc": 0x70000002A, "HIDKeyboardModifierMappingDst": 0x700000029},{ "HIDKeyboardModifierMappingSrc": 0x700000039, "HIDKeyboardModifierMappingDst": 0x70000002A}]}'
-```
-
-And, to reset the bindings:
-
-```
-hidutil property --set '{"UserKeyMapping":[]}'
-```
+**Install Homebrew packages**:
+   ```bash
+   brew bundle --file ~/.Brewfile
+   ```
