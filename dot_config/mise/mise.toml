@@ -1,2 +1,3 @@
 [settings]
 env_file = ".env"
+go_set_gobin = false

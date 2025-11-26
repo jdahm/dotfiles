@@ -96,9 +96,12 @@ brew "ansifilter" # Strip or convert ANSI codes into HTML, (La)Tex, RTF, or BBCo
 
 brew "go" # Open source programming language to build simple/reliable/efficient software
 brew "sqlc" # Generate type safe Go from SQL
-brew "mise"
 brew "kind" # Run local Kubernetes cluster in Docker
 brew "protobuf" # Protocol buffers (Google's data interchange format)
+brew "gopls"
+brew "rust-analyzer"
+
+brew "mise"
 
 brew "kubebuilder" # SDK for building Kubernetes APIs using CRDs
 brew "jsonnet" # Domain specific configuration language for defining JSON data
@@ -122,11 +125,11 @@ cask "tableplus" # Native GUI tool for relational databases
 cask "zed" # Multiplayer code editor
 cask "jetbrains-toolbox" # JetBrains tools manager
 
-cask "stats"
-
 cask "claude"
 cask "claude-code"
 cask "chatgpt"
+
+cask "colemak-dh"
 
 # Machine-Specific
 {{- if eq .location "basil" }}

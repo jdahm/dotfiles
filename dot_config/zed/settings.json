@@ -7,6 +7,15 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "helix_mode": true,
+  "agent": {
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "claude-sonnet-4"
+    },
+    "model_parameters": [],
+    "use_modifier_to_send": true
+  },
   "agent_ui_font_size": 16.0,
   "snippet_sort_order": "inline",
   "auto_signature_help": true,
@@ -51,16 +60,6 @@
     }
   },
   "lsp": {
-    "nixd": {
-      "settings": {
-        // "diagnostic": {
-        //   "suppress": ["sema-extra-with"]
-        // },
-        "formatting": {
-          "command": ["alejandra", "--quiet", "--"]
-        }
-      }
-    },
     "gopls": {
       "initialization_options": {
         "hints": {
@@ -81,14 +80,11 @@
         "show_background": false,
         "enabled": false
       }
-    },
-    "Nix": {
-      "language_servers": ["nixd", "!nil"]
     }
   },
   "autosave": {
     "after_delay": {
-      "milliseconds": 1000
+      "milliseconds": 10000
     }
   }
 }
