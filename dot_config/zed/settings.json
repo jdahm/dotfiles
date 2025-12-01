@@ -32,7 +32,7 @@
   },
   "show_signature_help_after_edits": true,
   "completions": {
-    "lsp_fetch_timeout_ms": 25
+    "lsp_fetch_timeout_ms": 300
   },
   "preferred_line_length": 90,
   "soft_wrap": "none",
