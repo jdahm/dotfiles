@@ -7,7 +7,7 @@ if test -f ~/.config/brew/path
 end
 
 # Set PATH
-fish_add_path $HOME/bin $HOME/go/bin /usr/local/bin (brew --prefix)/opt/postgresql@15/bin
+fish_add_path $HOME/bin $HOME/.cargo/bin $HOME/go/bin /usr/local/bin (brew --prefix)/opt/postgresql@15/bin
 
 if status is-interactive
     if command -qs brew
@@ -19,6 +19,9 @@ if status is-interactive
         end
         source (brew --prefix)"/share/google-cloud-sdk/path.fish.inc"
     end
+
+    # Colors
+    set -Ux fish_color_command blue
 
     # Editor
     set -Ux EDITOR hx
