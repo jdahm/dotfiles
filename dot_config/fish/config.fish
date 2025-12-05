@@ -35,11 +35,6 @@ if status is-interactive
         abbr --add chezmoi-cd cd (chezmoi source-path)
     end
 
-    if command -qs starship
-        starship init fish | source
-        enable_transience
-    end
-
     if command -qs eza
         abbr --add ls eza
     end
