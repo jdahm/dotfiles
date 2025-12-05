@@ -7,7 +7,13 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
-  "helix_mode": true,
+  "project_panel": {
+    "git_status": true
+  },
+  "git_panel": {
+    "button": true
+  },
+  "helix_mode": false,
   "agent": {
     "default_model": {
       "provider": "copilot_chat",
@@ -75,6 +81,9 @@
     }
   },
   "languages": {
+    "Proto": {
+      "format_on_save": "off"
+    },
     "Go": {
       "inlay_hints": {
         "show_background": false,
