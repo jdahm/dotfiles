@@ -21,6 +21,7 @@ if status is-interactive
     end
 
     set -U fish_transient_prompt 1
+    set -U pure_show_prefix_root_prompt true
 
     # Colors
     set -Ux fish_color_command blue
