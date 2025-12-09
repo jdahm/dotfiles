@@ -20,6 +20,8 @@ if status is-interactive
         source (brew --prefix)"/share/google-cloud-sdk/path.fish.inc"
     end
 
+    set -U fish_transient_prompt 1
+
     # Colors
     set -Ux fish_color_command blue
 
