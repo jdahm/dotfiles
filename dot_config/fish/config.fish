@@ -26,9 +26,9 @@ if status is-interactive
     set -Ux fish_color_command blue
 
     # Editor
-    set -Ux EDITOR hx
-    set -Ux VISUAL hx
-    abbr --add --position command e hx
+    set -Ux EDITOR vim
+    set -Ux VISUAL vim
+    abbr --add --position command e vim
 
     # sponge
     set sponge_purge_only_on_exit true
