@@ -1,9 +1,6 @@
-set -U fish_greeting
-
 # Bootstrap homebrew
 if test -f ~/.config/brew/path
     fish_add_path -p (cat ~/.config/brew/path)/bin
-    abbr --add brew-update brew bundle --global
 end
 
 # Set PATH
@@ -11,6 +8,7 @@ fish_add_path $HOME/bin $HOME/.cargo/bin $HOME/go/bin /usr/local/bin (brew --pre
 
 if status is-interactive
     if command -qs brew
+        abbr --add brew-update brew bundle --global
         if test -d (brew --prefix)"/share/fish/completions"
             set -gx fish_complete_path $fish_complete_path (brew --prefix)/share/fish/completions
         end
@@ -18,6 +16,10 @@ if status is-interactive
             set -gx fish_complete_path $fish_complete_path (brew --prefix)/share/fish/vendor_completions.d
         end
         source (brew --prefix)"/share/google-cloud-sdk/path.fish.inc"
+    end
+
+    function fish_greeting
+        _pure_check_for_new_release
     end
 
     set -U fish_transient_prompt 1
