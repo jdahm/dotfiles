@@ -47,6 +47,10 @@ if status is-interactive
         zoxide init fish | source
     end
 
+    if command -qs mise
+        mise activate fish | source
+    end
+
     if command -qs kitten
         abbr --add --position command s kitten ssh
         abbr --add icat kitty +kitten icat --align=left
