@@ -24,15 +24,12 @@ if status is-interactive
 
     set -U fish_transient_prompt 1
 
-    # Colors
     set -Ux fish_color_command blue
 
-    # Editor
     set -Ux EDITOR vim
     set -Ux VISUAL vim
     abbr --add --position command e vim
 
-    # sponge
     set sponge_purge_only_on_exit true
 
     if command -qs chezmoi
@@ -45,10 +42,6 @@ if status is-interactive
 
     if command -qs zoxide
         zoxide init fish | source
-    end
-
-    if command -qs mise
-        mise activate fish | source
     end
 
     if command -qs kitten
