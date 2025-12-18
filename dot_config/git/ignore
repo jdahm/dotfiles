@@ -9,3 +9,4 @@ shell.nix
 .claude/
 .venv/
 .mise.local.toml
+.env
