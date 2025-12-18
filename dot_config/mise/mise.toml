@@ -3,4 +3,3 @@ env_file = ".env"
 # The following ensures we use a global GOBIN ($GOPATH/bin and GOPATH defaults to $HOME/go) but
 # Use the compiler version specified by mise.
 go_set_gobin = false
-go_set_goroot = true
