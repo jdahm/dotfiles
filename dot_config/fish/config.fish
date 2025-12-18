@@ -23,14 +23,14 @@ if status is-interactive
     end
 
     set -U fish_transient_prompt 1
+    set -U fish_color_command blue
 
-    set -Ux fish_color_command blue
+    set -U sponge_purge_only_on_exit true
+    set -U pure_enable_virtualenv false
 
     set -Ux EDITOR vim
     set -Ux VISUAL vim
     abbr --add --position command e vim
-
-    set sponge_purge_only_on_exit true
 
     if command -qs chezmoi
         abbr --add chezmoi-cd cd (chezmoi source-path)
