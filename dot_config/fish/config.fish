@@ -32,6 +32,10 @@ if status is-interactive
     set -Ux VISUAL vim
     abbr --add --position command e vim
 
+    # GPG agent
+    # I used to need this. TODO look into what this does.
+    #set -gx GPG_TTY (tty)
+
     if command -qs chezmoi
         abbr --add chezmoi-cd cd (chezmoi source-path)
     end
