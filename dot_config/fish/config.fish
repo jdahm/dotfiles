@@ -4,7 +4,7 @@ if test -f ~/.config/brew/path
 end
 
 # Set PATH
-fish_add_path $HOME/bin $HOME/.amp/bin $HOME/.cargo/bin $HOME/go/bin /usr/local/bin (brew --prefix)/opt/postgresql@15/bin
+fish_add_path $HOME/bin $HOME/.local/bin $HOME/.amp/bin $HOME/.cargo/bin $HOME/go/bin /usr/local/bin (brew --prefix)/opt/postgresql@15/bin
 
 if status is-interactive
     if command -qs brew
