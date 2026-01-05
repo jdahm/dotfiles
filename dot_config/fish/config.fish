@@ -4,7 +4,7 @@ if test -f ~/.config/brew/path
 end
 
 # Set PATH
-fish_add_path $HOME/bin $HOME/.cargo/bin $HOME/go/bin /usr/local/bin (brew --prefix)/opt/postgresql@15/bin
+fish_add_path $HOME/bin $HOME/.amp/bin $HOME/.cargo/bin $HOME/go/bin /usr/local/bin (brew --prefix)/opt/postgresql@15/bin
 
 if status is-interactive
     if command -qs brew
@@ -22,14 +22,14 @@ if status is-interactive
         _pure_check_for_new_release
     end
 
-    set -U fish_transient_prompt 1
-    set -U fish_color_command blue
+    set -g fish_transient_prompt 1
+    set -g fish_color_command blue
 
-    set -U sponge_purge_only_on_exit true
-    set -U pure_enable_virtualenv false
+    set -g sponge_purge_only_on_exit true
+    set -g pure_enable_virtualenv false
 
-    set -Ux EDITOR vim
-    set -Ux VISUAL vim
+    set -gx EDITOR vim
+    set -gx VISUAL vim
     abbr --add --position command e vim
 
     # GPG agent

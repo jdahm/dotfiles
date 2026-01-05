@@ -36,7 +36,6 @@ brew "git-lfs" # Git extension for versioning large files
 brew "git-delta" # Syntax-highlighting pager for git and diff output
 brew "gh" # GitHub command-line tool
 brew "ghq" # Remote repository management made easy
-brew "jj"
 
 brew "pinentry-mac" # Pinentry for GPG on Mac
 
@@ -60,13 +59,11 @@ brew "dust" # More intuitive version of du in rust
 brew "ripgrep" # Search tool like grep and The Silver Searcher
 brew "fd" # Simple, fast and user-friendly alternative to find
 brew "pwgen" # Password generator
-brew "similar"
 brew "numbat"
 brew "just"
+brew "hey" # HTTP load generator, ApacheBench (ab) replacement
 
 brew "rustup" # Rust toolchain installer
-
-brew "hey" # HTTP load generator, ApacheBench (ab) replacement
 
 brew "viddy" # Modern watch command
 brew "circumflex" # Hacker News in your terminal
@@ -96,9 +93,9 @@ brew "awscli" # Official Amazon AWS command-line interface
 brew "ansifilter" # Strip or convert ANSI codes into HTML, (La)Tex, RTF, or BBCode
 
 brew "go" # Open source programming language to build simple/reliable/efficient software
-brew "sqlc" # Generate type safe Go from SQL
+brew "buf"
 brew "kind" # Run local Kubernetes cluster in Docker
-brew "protobuf" # Protocol buffers (Google's data interchange format)
+
 brew "gopls"
 brew "rust-analyzer"
 
@@ -114,37 +111,33 @@ brew "openjdk" # Development kit for the Java programming language
 
 # Casks
 cask "font-jetbrains-mono" # Developer targeted fonts with a high number of glyphs
-cask "font-cascadia-code"
-cask "font-maple-mono"
 
 cask "spotify" # Music streaming service
-cask "docker" # App to build and share containerized applications and microservices
-cask "google-cloud-sdk" # Set of tools to manage resources and applications hosted on Google Cloud
+cask "docker-desktop" # App to build and share containerized applications and microservices
+cask "gcloud-cli" # Set of tools to manage resources and applications hosted on Google Cloud
 cask "kitty" # GPU-based terminal emulator
 cask "tableplus" # Native GUI tool for relational databases
 cask "zed" # Multiplayer code editor
 cask "jetbrains-toolbox" # JetBrains tools manager
+cask "ghostty"
 
-cask "claude"
 cask "claude-code"
+cask "claude"
 cask "chatgpt"
 
 cask "colemak-dh"
 
-# Machine-Specific
-{{- if eq .location "basil" }}
-cask "element" # Matrix collaboration client
-cask "qmk-toolbox" # Toolbox companion for QMK Firmware
 cask "google-chrome" # Web browser
-cask "slack" # Team communication and collaboration software
-cask "steam" # Video game digital distribution service
-cask "tailscale" # Mesh VPN based on WireGuard
-{{- end }}
 
-{{- if eq .location "thyme" }}
 cask "1password" # Password manager that keeps all passwords secure behind one password
 cask "1password-cli" # Command-line interface for 1Password
-cask "google-chrome" # Web browser
-cask "miniconda" # Minimal installer for conda
-brew "clang-format" # Formatting tools for C, C++, Obj-C, Java, JavaScript, TypeScript
+
+# Machine-Specific
+{{- if eq .location "basil" }}
+cask "qmk-toolbox" # Toolbox companion for QMK Firmware
+cask "raspberry-pi-imager"
+cask "slack" # Team communication and collaboration software
+cask "steam" # Video game digital distribution service
+cask "tailscale-app" # Mesh VPN based on WireGuard
+brew "protobuf"
 {{- end }}
