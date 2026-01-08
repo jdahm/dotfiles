@@ -22,11 +22,13 @@ if status is-interactive
         _pure_check_for_new_release
     end
 
-    set -g fish_transient_prompt 1
     set -g fish_color_command blue
 
     set -g sponge_purge_only_on_exit true
-    set -g pure_enable_virtualenv false
+
+    # Settings for "pure" prompt
+    #set -g fish_transient_prompt 1
+    #set -g pure_enable_virtualenv false
 
     set -gx EDITOR vim
     set -gx VISUAL vim
@@ -46,6 +48,11 @@ if status is-interactive
 
     if command -qs zoxide
         zoxide init fish | source
+    end
+
+    if command -qs starship
+        starship init fish | source
+	enable_transience
     end
 
     if command -qs kitten
