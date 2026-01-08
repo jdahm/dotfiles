@@ -18,9 +18,9 @@ if status is-interactive
         source (brew --prefix)"/share/google-cloud-sdk/path.fish.inc"
     end
 
-    function fish_greeting
-        _pure_check_for_new_release
-    end
+    # function fish_greeting
+    #     _pure_check_for_new_release
+    # end
 
     set -g fish_color_command blue
 
