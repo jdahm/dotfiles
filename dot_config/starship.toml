@@ -11,3 +11,6 @@ disabled = false
 
 [buf]
 disabled = true
+
+[mise]
+disabled = false
