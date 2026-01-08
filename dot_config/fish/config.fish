@@ -7,6 +7,8 @@ end
 fish_add_path $HOME/bin $HOME/.local/bin $HOME/.amp/bin $HOME/.cargo/bin $HOME/go/bin /usr/local/bin (brew --prefix)/opt/postgresql@15/bin
 
 if status is-interactive
+    set -U fish_greeting "🐟"
+
     if command -qs brew
         abbr --add brew-update brew bundle --global
         if test -d (brew --prefix)"/share/fish/completions"
