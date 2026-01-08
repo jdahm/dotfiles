@@ -8,3 +8,6 @@ detect_env_vars = ["KUBERNETES"]
 
 [sudo]
 disabled = false
+
+[buf]
+disabled = true
