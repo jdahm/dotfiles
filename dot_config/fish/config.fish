@@ -1,13 +1,14 @@
+# Set PATH
+fish_add_path $HOME/.local/bin $HOME/.amp/bin $HOME/.cargo/bin $HOME/go/bin /usr/local/bin
+
 # Bootstrap homebrew
 if test -f ~/.config/brew/path
     fish_add_path -p (cat ~/.config/brew/path)/bin
+    fish_add_path (brew --prefix)/opt/postgresql@15/bin
 end
 
-# Set PATH
-fish_add_path $HOME/bin $HOME/.local/bin $HOME/.amp/bin $HOME/.cargo/bin $HOME/go/bin /usr/local/bin (brew --prefix)/opt/postgresql@15/bin
-
 if status is-interactive
-    set -U fish_greeting "🐟"
+    set -g fish_greeting
 
     if command -qs brew
         abbr --add brew-update brew bundle --global
@@ -20,17 +21,15 @@ if status is-interactive
         source (brew --prefix)"/share/google-cloud-sdk/path.fish.inc"
     end
 
-    # function fish_greeting
-    #     _pure_check_for_new_release
-    # end
-
     set -g fish_color_command blue
-
     set -g sponge_purge_only_on_exit true
 
     # Settings for "pure" prompt
     #set -g fish_transient_prompt 1
     #set -g pure_enable_virtualenv false
+    # function fish_greeting
+    #     _pure_check_for_new_release
+    # end
 
     set -gx EDITOR vim
     set -gx VISUAL vim
@@ -65,5 +64,4 @@ if status is-interactive
     if test -d $HOME/Library/Application\ Support/JetBrains/Toolbox/scripts
         fish_add_path $HOME/Library/Application\ Support/JetBrains/Toolbox/scripts
     end
-
 end
