@@ -25,11 +25,11 @@ if status is-interactive
     set -g sponge_purge_only_on_exit true
 
     # Settings for "pure" prompt
-    #set -g fish_transient_prompt 1
-    #set -g pure_enable_virtualenv false
-    # function fish_greeting
-    #     _pure_check_for_new_release
-    # end
+    set -g fish_transient_prompt 1
+    set -g pure_enable_virtualenv false
+    function fish_greeting
+        _pure_check_for_new_release
+    end
 
     set -gx EDITOR vim
     set -gx VISUAL vim
