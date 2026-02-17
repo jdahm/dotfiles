@@ -51,10 +51,9 @@ if status is-interactive
         zoxide init fish | source
     end
 
-    # if command -qs starship
-    #     starship init fish | source
-	# enable_transience
-    # end
+    if command -qs cargo
+        source "$HOME/.cargo/env.fish"
+    end
 
     if command -qs kitten
         abbr --add --position command s kitten ssh
