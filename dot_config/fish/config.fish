@@ -31,9 +31,9 @@ if status is-interactive
         _pure_check_for_new_release
     end
 
-    set -gx EDITOR vim
-    set -gx VISUAL vim
-    abbr --add --position command e vim
+    set -gx EDITOR hx
+    set -gx VISUAL hx
+    abbr --add --position command e hx
 
     # GPG agent
     # I used to need this. TODO look into what this does.
@@ -44,7 +44,11 @@ if status is-interactive
     end
 
     if command -qs eza
-        abbr --add ls eza
+	abbr --add l eza
+	abbr --add ll eza -l --header --icons
+	abbr --add la eza -la --header --icons
+	abbr --add tree eza --tree
+	abbr --add lsize eza -lah --sort=size --reverse
     end
 
     if command -qs zoxide
