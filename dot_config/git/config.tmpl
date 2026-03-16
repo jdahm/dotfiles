@@ -92,7 +92,23 @@
 	unstage = "reset HEAD --"
 	trim = "!f() { git branch | grep -v "main" | grep -v "master" | grep -v "^*" | xargs git branch -D; git remote prune origin; }; f"
 	uncommit = reset --soft HEAD^
-
+    append = town append
+    compress = town compress
+    contribute = town contribute
+    diff-parent = town diff-parent
+    down = town down
+    hack = town hack
+    delete = town delete
+    observe = town observe
+    park = town park
+    prepend = town prepend
+    propose = town propose
+    rename = town rename
+    repo = town repo
+    set-parent = town set-parent
+    ship = town ship
+    sync = town sync
+    up = town up
 
 [filter "lfs"]
 	required = true
