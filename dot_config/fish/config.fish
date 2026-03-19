@@ -2,10 +2,8 @@
 fish_add_path $HOME/.local/bin $HOME/.amp/bin $HOME/.cargo/bin $HOME/go/bin /usr/local/bin
 
 # Bootstrap homebrew
-if test -f ~/.config/brew/path
-    fish_add_path -p (cat ~/.config/brew/path)/bin
-    fish_add_path (brew --prefix)/opt/postgresql@15/bin
-end
+/opt/homebrew/bin/brew shellenv | source
+fish_add_path (brew --prefix)/opt/postgresql@15/bin
 
 if status is-interactive
     set -g fish_greeting
@@ -44,11 +42,11 @@ if status is-interactive
     end
 
     if command -qs eza
-	abbr --add l eza
-	abbr --add ll eza -l --header --icons
-	abbr --add la eza -la --header --icons
-	abbr --add tree eza --tree
-	abbr --add lsize eza -lah --sort=size --reverse
+        abbr --add l eza
+        abbr --add ll eza -l --header --icons
+        abbr --add la eza -la --header --icons
+        abbr --add tree eza --tree
+        abbr --add lsize eza -lah --sort=size --reverse
     end
 
     if command -qs zoxide

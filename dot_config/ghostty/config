@@ -1,0 +1,3 @@
+notify-on-command-finish = unfocused
+shell-integration = detect
+command = /opt/homebrew/bin/fish
