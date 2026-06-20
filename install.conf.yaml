@@ -17,6 +17,8 @@
     ~/.config/fish/config.fish: fish/config.fish
     ~/.config/fish/fish_plugins: fish/fish_plugins
     ~/.config/fish/functions/lsbr.fish: fish/functions/lsbr.fish
+    ~/.config/git/config: git/config
+    ~/.config/git/ignore: git/ignore
     # ~/.config/emacs/init.el: config/emacs/init.el
     # ~/.config/emacs/early-init.el: config/emacs/early-init.el
 
