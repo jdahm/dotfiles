@@ -1,0 +1,7 @@
+theme = "autumn"
+
+[keys.normal]
+Z = {Q = ":quit!", Z = ":write-quit!"}
+
+[keys.insert]
+k = { j = "normal_mode" }

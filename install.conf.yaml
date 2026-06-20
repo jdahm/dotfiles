@@ -1,0 +1,23 @@
+- defaults:
+    link:
+      relink: true
+
+- clean: ['~']
+
+- link:
+    ~/.config/ghostty/config: ghostty
+    ~/.config/helix/config.toml: helix.toml
+    ~/.config/jj/config.toml: jj.toml
+    ~/.config/mise/mise.toml: mise.toml
+    ~/.config/starship.toml: starship.toml
+    ~/.Brewfile: Brewfile
+    ~/.config/zed/keymap.json: zed/keymap.json
+    ~/.config/zed/settings.json: zed/settings.json
+    ~/.gnupg/gpg-agent.conf: gnupg/gpg-agent.conf  # only on macos
+    ~/.config/fish/config.fish: fish/config.fish
+    ~/.config/fish/fish_plugins: fish/fish_plugins
+    ~/.config/fish/functions/lsbr.fish: fish/functions/lsbr.fish
+    # ~/.config/emacs/init.el: config/emacs/init.el
+    # ~/.config/emacs/early-init.el: config/emacs/early-init.el
+
+# note: run fish_plugins installer

@@ -1,7 +1,6 @@
 # Taps
 tap "homebrew/cask-fonts"
 tap "homebrew/services"
-tap "charmbracelet/tap"
 
 # Formulae
 
@@ -45,10 +44,13 @@ brew "gron" # Make JSON greppable
 brew "ddgr" # DuckDuckGo from the terminal
 brew "grc" # Colorize logfiles and command output
 
-brew "gum" # Tool for glamorous shell scripts
-brew "glow" # Render markdown on the CLI
-brew "wishlist" # The SSH directory
-brew "vhs" # Your CLI home video recorder
+brew "sem-cli"
+
+brew "charmbracelet/tap/gum" # Tool for glamorous shell scripts
+brew "charmbracelet/tap/glow" # Render markdown on the CLI
+brew "charmbracelet/tap/wishlist" # The SSH directory
+brew "charmbracelet/tap/vhs" # Your CLI home video recorder
+brew "charmbracelet/tap/crush"
 
 brew "temporal"
 
@@ -65,6 +67,7 @@ brew "hey" # HTTP load generator, ApacheBench (ab) replacement
 
 brew "rustup" # Rust toolchain installer
 
+brew "uv"
 brew "viddy" # Modern watch command
 brew "circumflex" # Hacker News in your terminal
 
@@ -108,6 +111,8 @@ brew "tfenv" # Terraform version manager inspired by rbenv
 
 brew "stylua" # Opinionated Lua code formatter
 brew "openjdk" # Development kit for the Java programming language
+
+brew "ollama"
 
 # Casks
 cask "font-jetbrains-mono" # Developer targeted fonts with a high number of glyphs
