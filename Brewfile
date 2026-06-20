@@ -97,22 +97,16 @@ brew "ansifilter" # Strip or convert ANSI codes into HTML, (La)Tex, RTF, or BBCo
 
 brew "go" # Open source programming language to build simple/reliable/efficient software
 brew "buf"
-brew "kind" # Run local Kubernetes cluster in Docker
+#brew "kind" # Run local Kubernetes cluster in Docker
 
 brew "gopls"
 brew "rust-analyzer"
 
 brew "mise"
 
-brew "kubebuilder" # SDK for building Kubernetes APIs using CRDs
 brew "jsonnet" # Domain specific configuration language for defining JSON data
-brew "pyenv" # Python version management
-brew "tfenv" # Terraform version manager inspired by rbenv
 
-brew "stylua" # Opinionated Lua code formatter
-brew "openjdk" # Development kit for the Java programming language
-
-brew "ollama"
+#brew "ollama"
 
 # Casks
 cask "font-jetbrains-mono" # Developer targeted fonts with a high number of glyphs
@@ -120,30 +114,27 @@ cask "font-jetbrains-mono" # Developer targeted fonts with a high number of glyp
 cask "spotify" # Music streaming service
 cask "docker-desktop" # App to build and share containerized applications and microservices
 cask "gcloud-cli" # Set of tools to manage resources and applications hosted on Google Cloud
-cask "kitty" # GPU-based terminal emulator
+#cask "kitty" # GPU-based terminal emulator
 cask "tableplus" # Native GUI tool for relational databases
 cask "zed" # Multiplayer code editor
 cask "jetbrains-toolbox" # JetBrains tools manager
 cask "ghostty"
 
 cask "claude-code"
-cask "claude"
-cask "chatgpt"
+#cask "claude"
+#cask "chatgpt"
 
-cask "colemak-dh"
+#cask "colemak-dh"
 
 cask "google-chrome" # Web browser
 
-cask "1password" # Password manager that keeps all passwords secure behind one password
-cask "1password-cli" # Command-line interface for 1Password
+#cask "1password" # Password manager that keeps all passwords secure behind one password
+#cask "1password-cli" # Command-line interface for 1Password
 
-# Machine-Specific
-{{- if eq .location "basil" }}
-cask "qmk-toolbox" # Toolbox companion for QMK Firmware
+#cask "qmk-toolbox" # Toolbox companion for QMK Firmware
 cask "raspberry-pi-imager"
 cask "slack" # Team communication and collaboration software
 cask "steam" # Video game digital distribution service
 cask "tailscale-app" # Mesh VPN based on WireGuard
 brew "protobuf"
 brew "supabase/tap/supabase"
-{{- end }}
