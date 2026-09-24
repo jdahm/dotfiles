@@ -10,3 +10,4 @@ shell.nix
 .venv/
 .mise.local.toml
 .env
+git-town.toml

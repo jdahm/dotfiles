@@ -23,3 +23,6 @@
     # ~/.config/emacs/early-init.el: config/emacs/early-init.el
 
 # note: run fish_plugins installer
+
+- shell:
+  - [curl -fsSL https://claude.ai/install.sh | bash]

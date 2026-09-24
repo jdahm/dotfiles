@@ -84,9 +84,16 @@
     ship = town ship
     sync = town sync
     up = town up
+    continue = town continue
 
 [gpg]
 	program = /opt/homebrew/bin/gpg
 
 [include]
 	path = "~/.config/git/identity"
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

@@ -1,11 +1,8 @@
-# Taps
-tap "homebrew/cask-fonts"
-tap "homebrew/services"
-
 # Formulae
 
 brew "coreutils" # GNU File, Shell, and Text utilities
 brew "readline" # Library for command-line editing
+brew "bash"
 brew "gnu-sed" # GNU implementation of the famous stream editor
 brew "gawk" # GNU awk utility
 brew "gnupg" # GNU Pretty Good Privacy (PGP) package
@@ -22,19 +19,11 @@ brew "fisher" # Plugin manager for the Fish shell
 brew "nushell" # Modern shell for the GitHub era
 brew "starship"
 
-brew "helix" # Post-modern modal text editor
-
-brew "grpcurl" # Like cURL, but for gRPC
-brew "act" # Run your GitHub Actions locally
-
-brew "lazygit" # Simple terminal UI for git commands
-
 brew "git-town"
 brew "git-crypt" # Enable transparent encryption/decryption of files in a git repo
 brew "git-lfs" # Git extension for versioning large files
 brew "git-delta" # Syntax-highlighting pager for git and diff output
 brew "gh" # GitHub command-line tool
-brew "ghq" # Remote repository management made easy
 
 brew "pinentry-mac" # Pinentry for GPG on Mac
 
@@ -46,13 +35,10 @@ brew "grc" # Colorize logfiles and command output
 
 brew "sem-cli"
 
-brew "charmbracelet/tap/gum" # Tool for glamorous shell scripts
-brew "charmbracelet/tap/glow" # Render markdown on the CLI
-brew "charmbracelet/tap/wishlist" # The SSH directory
-brew "charmbracelet/tap/vhs" # Your CLI home video recorder
-brew "charmbracelet/tap/crush"
-
-brew "temporal"
+brew "gum" # Tool for glamorous shell scripts
+brew "glow" # Render markdown on the CLI
+brew "wishlist" # The SSH directory
+brew "vhs" # Your CLI home video recorder
 
 brew "eza"
 brew "bat" # Clone of cat(1) with syntax highlighting and Git integration
@@ -88,10 +74,8 @@ brew "minikube" # Run a Kubernetes cluster locally
 brew "kubectx" # Tool that can switch between kubectl contexts easily and create aliases
 
 brew "imagemagick" # Tools and libraries to manipulate images in many formats
-brew "helm" # Kubernetes package manager
 
 brew "hugo" # Configurable static site generator
-brew "yarn" # JavaScript package manager
 brew "awscli" # Official Amazon AWS command-line interface
 brew "ansifilter" # Strip or convert ANSI codes into HTML, (La)Tex, RTF, or BBCode
 
@@ -101,40 +85,43 @@ brew "buf"
 
 brew "gopls"
 brew "rust-analyzer"
-
+brew "typescript-language-server"
+brew "docker-language-server"
+brew "dockerfmt"
 brew "mise"
 
-brew "jsonnet" # Domain specific configuration language for defining JSON data
+brew "neonctl"
 
+#brew "jsonnet" # Domain specific configuration language for defining JSON data
 #brew "ollama"
+
+brew "llvm"
+brew "lld"
 
 # Casks
 cask "font-jetbrains-mono" # Developer targeted fonts with a high number of glyphs
-
+cask "font-monaspace"
 cask "spotify" # Music streaming service
 cask "docker-desktop" # App to build and share containerized applications and microservices
-cask "gcloud-cli" # Set of tools to manage resources and applications hosted on Google Cloud
-#cask "kitty" # GPU-based terminal emulator
-cask "tableplus" # Native GUI tool for relational databases
 cask "zed" # Multiplayer code editor
-cask "jetbrains-toolbox" # JetBrains tools manager
+#cask "jetbrains-toolbox" # JetBrains tools manager
 cask "ghostty"
 
-cask "claude-code"
-#cask "claude"
+cask "claude"
 #cask "chatgpt"
 
 #cask "colemak-dh"
 
+cask "linear"
 cask "google-chrome" # Web browser
-
-#cask "1password" # Password manager that keeps all passwords secure behind one password
-#cask "1password-cli" # Command-line interface for 1Password
-
+cask "obsidian"
+cask "1password" # Password manager that keeps all passwords secure behind one password
+cask "1password-cli" # Command-line interface for 1Password
+cask "openvpn-connect"
 #cask "qmk-toolbox" # Toolbox companion for QMK Firmware
-cask "raspberry-pi-imager"
+#cask "raspberry-pi-imager"
 cask "slack" # Team communication and collaboration software
-cask "steam" # Video game digital distribution service
-cask "tailscale-app" # Mesh VPN based on WireGuard
-brew "protobuf"
-brew "supabase/tap/supabase"
+#cask "steam" # Video game digital distribution service
+#cask "tailscale-app" # Mesh VPN based on WireGuard
+#brew "protobuf"
+#brew "supabase/tap/supabase"
