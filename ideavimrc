@@ -34,10 +34,12 @@ nnoremap <Esc> :nohlsearch<CR>
 
 " Code navigation
 nmap gd <Action>(GotoDeclaration)
-" grr and gri follow Neovim's defaults, so Vim's own gi and gr still work
+" The gr keys follow Neovim's defaults, so Vim's own gi and gr still work
 nmap grr <Action>(FindUsages)
 nmap gri <Action>(GotoImplementation)
-nmap gy <Action>(GotoTypeDeclaration)
+nmap grt <Action>(GotoTypeDeclaration)
+nmap grn <Action>(RenameElement)
+nmap gra <Action>(ShowIntentionActions)
 nmap [d <Action>(GotoPreviousError)
 nmap ]d <Action>(GotoNextError)
 nmap [c <Action>(VcsShowPrevChangeMarker)
