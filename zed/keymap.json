@@ -9,7 +9,7 @@
   {
     "context": "Editor && vim_mode == insert",
     "bindings": {
-      "k j": ["workspace::SendKeystrokes", "escape"]
+      "j k": ["workspace::SendKeystrokes", "escape"]
     }
   }
 ]
