@@ -34,8 +34,9 @@ nnoremap <Esc> :nohlsearch<CR>
 
 " Code navigation
 nmap gd <Action>(GotoDeclaration)
-nmap gi <Action>(GotoImplementation)
-nmap gr <Action>(FindUsages)
+" grr and gri follow Neovim's defaults, so Vim's own gi and gr still work
+nmap grr <Action>(FindUsages)
+nmap gri <Action>(GotoImplementation)
 nmap gy <Action>(GotoTypeDeclaration)
 nmap [d <Action>(GotoPreviousError)
 nmap ]d <Action>(GotoNextError)
