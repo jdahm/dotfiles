@@ -24,6 +24,11 @@ set timeoutlen=2000
 " Let Vim own these instead of the IDE (C-o is "Override Methods" by default)
 sethandler <C-o> a:vim
 sethandler <C-i> a:vim
+sethandler <C-v> a:vim
+sethandler <C-f> a:vim
+sethandler <C-b> a:vim
+sethandler <C-a> a:vim
+sethandler <C-k> a:vim
 
 " Jump through the IDE's navigation history, across files
 nmap <C-o> <Action>(Back)
