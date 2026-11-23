@@ -7,11 +7,13 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "helix_mode": false,
   "cli_default_open_behavior": "existing_window",
-  "diff_view_style": "split",
+  "diff_view_style": "unified",
   "agent_servers": {
     "claude-acp": {
       "default_config_options": {
+        "ultracode": false,
         "model": "default"
       },
       "type": "registry"
@@ -23,18 +25,9 @@
   "git_panel": {
     "button": true,
   },
-  "helix_mode": true,
-  "agent": {
-    "default_model": {
-      "provider": "copilot_chat",
-      "model": "claude-sonnet-4",
-    },
-    "model_parameters": [],
-    "use_modifier_to_send": true,
-  },
   "agent_ui_font_size": 16.0,
   "snippet_sort_order": "inline",
-  "auto_signature_help": true,
+  "auto_signature_help": false,
   "diagnostics": {
     "inline": {
       "enabled": false,
@@ -42,7 +35,7 @@
   },
   "buffer_line_height": "comfortable",
   "buffer_font_family": "Monaspace Argon",
-  "base_keymap": "VSCode",
+  "base_keymap": "Zed",
   "edit_predictions": {
     "disabled_globs": [],
   },
@@ -89,16 +82,36 @@
         },
       },
     },
+    "rust-analyzer": {
+      "initialization_options": {
+        "check": { "command": "clippy" },
+        // Separate target dir so the LSP doesn't block terminal cargo on the build lock.
+        "cargo": { "targetDir": true },
+      },
+    },
   },
   "languages": {
     "Proto": {
       "format_on_save": "off",
     },
     "Go": {
+      "formatter": [
+        { "code_action": "source.organizeImports" },
+        { "language_server": { "name": "gopls" } },
+      ],
       "inlay_hints": {
         "show_background": false,
         "enabled": false,
       },
+    },
+    "Python": {
+      "language_servers": ["ty", "ruff", "!basedpyright", "!pyright", "!pylsp", "..."],
+      "formatter": [
+        { "code_action": "source.organizeImports.ruff" },
+        { "code_action": "source.fixAll.ruff" },
+        { "language_server": { "name": "ruff" } },
+      ],
+      "tasks": { "variables": { "TEST_RUNNER": "pytest" } },
     },
   },
   "autosave": {
