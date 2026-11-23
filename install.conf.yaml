@@ -11,6 +11,8 @@
     ~/.config/mise/mise.toml: mise.toml
     ~/.config/starship.toml: starship.toml
     ~/.Brewfile: Brewfile
+    ~/.ideavimrc: ideavimrc
+    ~/.vimrc: vimrc
     ~/.config/zed/keymap.json: zed/keymap.json
     ~/.config/zed/settings.json: zed/settings.json
     ~/.gnupg/gpg-agent.conf: gnupg/gpg-agent.conf  # only on macos

@@ -1,0 +1,135 @@
+" Shared settings live in ~/.vimrc
+source ~/.vimrc
+
+" IDE-only options
+set idearefactormode=keep
+set ideajoin
+" Paste through the IDE so it adds imports and reformats
+set clipboard+=ideaput
+
+" Bundled extensions (no extra plugin install needed)
+set surround           " ys/cs/ds
+set commentary         " gc / gcc
+set argtextobj         " ia / aa
+set textobj-entire     " ie / ae
+set highlightedyank
+set exchange           " cx
+
+" Which-Key (needs the "Which-Key" plugin from the Marketplace)
+set which-key
+" Wait 2 seconds for the next key, so there is time to read the popup.
+" notimeout would wait forever, which also holds back a typed j (see jk in ~/.vimrc)
+set timeoutlen=2000
+
+" Let Vim own these instead of the IDE (C-o is "Override Methods" by default)
+sethandler <C-o> a:vim
+sethandler <C-i> a:vim
+
+" Jump through the IDE's navigation history, across files
+nmap <C-o> <Action>(Back)
+nmap <C-i> <Action>(Forward)
+
+" Clear search highlight
+nnoremap <Esc> :nohlsearch<CR>
+
+" Code navigation
+nmap gd <Action>(GotoDeclaration)
+nmap gi <Action>(GotoImplementation)
+nmap gr <Action>(FindUsages)
+nmap gy <Action>(GotoTypeDeclaration)
+nmap [d <Action>(GotoPreviousError)
+nmap ]d <Action>(GotoNextError)
+nmap [c <Action>(VcsShowPrevChangeMarker)
+nmap ]c <Action>(VcsShowNextChangeMarker)
+
+" Leader actions. Each label line names the key in the Which-Key popup.
+
+" Single keys
+nmap <leader>/ <Action>(FindInPath)
+let g:WhichKeyDesc_search = "<leader>/ Find in path"
+nmap <leader>s <Action>(FileStructurePopup)
+let g:WhichKeyDesc_s = "<leader>s File structure"
+nmap <leader>r <Action>(RenameElement)
+let g:WhichKeyDesc_r = "<leader>r Rename"
+nmap <leader>a <Action>(ShowIntentionActions)
+let g:WhichKeyDesc_a = "<leader>a Intention actions"
+nmap <leader>e <Action>(ShowErrorDescription)
+let g:WhichKeyDesc_e = "<leader>e Show error"
+nmap <leader>k <Action>(QuickJavaDoc)
+let g:WhichKeyDesc_k = "<leader>k Quick docs"
+nmap <leader>l <Action>(ReformatCode)
+let g:WhichKeyDesc_l = "<leader>l Reformat code"
+
+" Find
+let g:WhichKeyDesc_find = "<leader>f Find"
+nmap <leader>ff <Action>(GotoFile)
+let g:WhichKeyDesc_find_file = "<leader>ff File"
+nmap <leader>fa <Action>(GotoAction)
+let g:WhichKeyDesc_find_action = "<leader>fa Action"
+nmap <leader>fr <Action>(RecentFiles)
+let g:WhichKeyDesc_find_recent = "<leader>fr Recent files"
+nmap <leader>fc <Action>(GotoClass)
+let g:WhichKeyDesc_find_class = "<leader>fc Class"
+nmap <leader>fs <Action>(GotoSymbol)
+let g:WhichKeyDesc_find_symbol = "<leader>fs Symbol"
+
+" Code
+let g:WhichKeyDesc_code = "<leader>c Code"
+nmap <leader>co <Action>(OptimizeImports)
+let g:WhichKeyDesc_code_imports = "<leader>co Optimize imports"
+nmap <leader>cg <Action>(Generate)
+let g:WhichKeyDesc_code_generate = "<leader>cg Generate"
+nmap <leader>cr <Action>(Refactorings.QuickListPopupAction)
+let g:WhichKeyDesc_code_refactor = "<leader>cr Refactor menu"
+nmap <leader>cm <Action>(ExtractMethod)
+let g:WhichKeyDesc_code_method = "<leader>cm Extract method"
+nmap <leader>cv <Action>(IntroduceVariable)
+let g:WhichKeyDesc_code_variable = "<leader>cv Introduce variable"
+nmap <leader>cw <Action>(SurroundWith)
+let g:WhichKeyDesc_code_surround = "<leader>cw Surround with"
+
+" Run and debug
+let g:WhichKeyDesc_debug = "<leader>d Run/debug"
+nmap <leader>dr <Action>(RunClass)
+let g:WhichKeyDesc_debug_run = "<leader>dr Run"
+nmap <leader>dd <Action>(DebugClass)
+let g:WhichKeyDesc_debug_debug = "<leader>dd Debug"
+nmap <leader>dl <Action>(Rerun)
+let g:WhichKeyDesc_debug_rerun = "<leader>dl Rerun last"
+nmap <leader>ds <Action>(Stop)
+let g:WhichKeyDesc_debug_stop = "<leader>ds Stop"
+nmap <leader>db <Action>(ToggleLineBreakpoint)
+let g:WhichKeyDesc_debug_breakpoint = "<leader>db Toggle breakpoint"
+nmap <leader>dt <Action>(GotoTest)
+let g:WhichKeyDesc_debug_test = "<leader>dt Go to test"
+
+" Git
+let g:WhichKeyDesc_git = "<leader>g Git"
+nmap <leader>gb <Action>(Annotate)
+let g:WhichKeyDesc_git_blame = "<leader>gb Blame"
+nmap <leader>gh <Action>(Vcs.ShowTabbedFileHistory)
+let g:WhichKeyDesc_git_history = "<leader>gh File history"
+nmap <leader>gu <Action>(Vcs.RollbackChangedLines)
+let g:WhichKeyDesc_git_undo = "<leader>gu Undo change"
+nmap <leader>gc <Action>(ActivateCommitToolWindow)
+let g:WhichKeyDesc_git_commit = "<leader>gc Commit"
+nmap <leader>gB <Action>(Git.Branches)
+let g:WhichKeyDesc_git_branches = "<leader>gB Branches"
+
+" Windows and tabs
+let g:WhichKeyDesc_window = "<leader>w Windows"
+nmap <leader>wv <Action>(SplitVertically)
+let g:WhichKeyDesc_window_split = "<leader>wv Split"
+nmap <leader>wc <Action>(CloseAllEditorsButActive)
+let g:WhichKeyDesc_window_close = "<leader>wc Close other tabs"
+nmap <leader>wu <Action>(ReopenClosedTab)
+let g:WhichKeyDesc_window_reopen = "<leader>wu Reopen closed tab"
+nmap <leader>wh <Action>(HideAllWindows)
+let g:WhichKeyDesc_window_hide = "<leader>wh Hide tool windows"
+nmap <leader>wp <Action>(SelectInProjectView)
+let g:WhichKeyDesc_window_project = "<leader>wp Show in project"
+
+" Config
+let g:WhichKeyDesc_vim = "<leader>v Vim config"
+nmap <leader>vr :source ~/.ideavimrc<CR>
+let g:WhichKeyDesc_vim_reload = "<leader>vr Reload config"
