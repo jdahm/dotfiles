@@ -5,4 +5,3 @@ font-size = 16
 font-family = "Monaspace Argon Regular"
 shell-integration-features = ssh-env,ssh-terminfo
 copy-on-select = clipboard
-selection-clear-on-copy = true
