@@ -104,7 +104,7 @@ cask "font-monaspace"
 cask "spotify" # Music streaming service
 cask "docker-desktop" # App to build and share containerized applications and microservices
 cask "zed" # Multiplayer code editor
-#cask "jetbrains-toolbox" # JetBrains tools manager
+cask "jetbrains-toolbox" # JetBrains tools manager
 cask "ghostty"
 
 cask "claude"
