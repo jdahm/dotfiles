@@ -61,8 +61,9 @@ if status is-interactive
         abbr --add lsize eza -lah --sort=size --reverse
     end
 
+    # cd works as usual, and jumps to a frequently used folder when the path doesn't exist
     if command -qs zoxide
-        zoxide init fish | source
+        zoxide init fish --cmd cd | source
     end
 
     if command -qs direnv
