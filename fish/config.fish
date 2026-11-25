@@ -99,6 +99,14 @@ if status is-interactive
         direnv hook fish | source
     end
 
+    # Ctrl-R searches history with atuin. Up arrow stays fish's own prefix search.
+    # atuin runs before and after every command, so put its real folder on PATH
+    # instead of going through the mise shim each time.
+    if command -qs mise; and set -l atuin (mise which atuin 2>/dev/null)
+        fish_add_path --path --move (path dirname $atuin)
+        atuin init fish --disable-up-arrow | source
+    end
+
     if test -f ~/.config/fish/local.fish
         source ~/.config/fish/local.fish
     end

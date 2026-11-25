@@ -1,0 +1,23 @@
+# Set up to feel like fish's own Ctrl-R history search: a short list under
+# the prompt, Enter puts the command on the line to edit, Esc restores what
+# you had typed. Up arrow stays fish's prefix search (see fish/config.fish).
+
+# Draw a few lines under the prompt instead of taking over the screen
+inline_height = 15
+style = "compact"
+show_help = false
+show_tabs = false
+show_preview = false
+invert = false
+
+# Match anywhere in the command, like fish's history search
+search_mode = "fulltext"
+filter_mode = "global"
+
+# Enter puts the command on the command line instead of running it
+enter_accept = false
+# Esc goes back to what was on the command line before Ctrl-R
+exit_mode = "return-original"
+
+# mise keeps atuin up to date
+update_check = false

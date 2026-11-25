@@ -29,6 +29,7 @@ hyperfine = "latest"
 tealdeer = "latest"
 yazi = "latest"
 difftastic = "latest"
+atuin = "latest"
 
 awscli = "latest"
 kubectl = "latest"
