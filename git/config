@@ -1,6 +1,3 @@
-[core]
-	editor = "hx"
-
 [fetch]
 	prune = true
 
@@ -85,9 +82,6 @@
     sync = town sync
     up = town up
     continue = town continue
-
-[gpg]
-	program = /opt/homebrew/bin/gpg
 
 [include]
 	path = "~/.config/git/identity"

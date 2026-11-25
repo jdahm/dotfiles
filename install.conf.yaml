@@ -6,17 +6,12 @@
 - clean: ['~']
 
 - link:
-    ~/.config/ghostty/config: ghostty
     ~/.config/helix/config.toml: helix.toml
     ~/.config/jj/config.toml: jj.toml
     ~/.config/mise/mise.toml: mise.toml
     ~/.config/starship.toml: starship.toml
-    ~/.Brewfile: Brewfile
     ~/.ideavimrc: ideavimrc
     ~/.vimrc: vimrc
-    ~/.config/zed/keymap.json: zed/keymap.json
-    ~/.config/zed/settings.json: zed/settings.json
-    ~/.gnupg/gpg-agent.conf: gnupg/gpg-agent.conf  # only on macos
     ~/.config/fish/config.fish: fish/config.fish
     ~/.config/fish/fish_plugins: fish/fish_plugins
     ~/.config/fish/functions/lsbr.fish: fish/functions/lsbr.fish
@@ -24,6 +19,24 @@
     ~/.config/git/ignore: git/ignore
     # ~/.config/emacs/init.el: config/emacs/init.el
     # ~/.config/emacs/early-init.el: config/emacs/early-init.el
+
+# These are only used on macOS
+- link:
+    ~/.Brewfile:
+      path: Brewfile
+      if: '[ "$(uname)" = Darwin ]'
+    ~/.config/ghostty/config:
+      path: ghostty
+      if: '[ "$(uname)" = Darwin ]'
+    ~/.config/zed/keymap.json:
+      path: zed/keymap.json
+      if: '[ "$(uname)" = Darwin ]'
+    ~/.config/zed/settings.json:
+      path: zed/settings.json
+      if: '[ "$(uname)" = Darwin ]'
+    ~/.gnupg/gpg-agent.conf:
+      path: gnupg/gpg-agent.conf
+      if: '[ "$(uname)" = Darwin ]'
 
 # note: run fish_plugins installer
 # note: run ./install-helix.sh to build Helix from source

@@ -1,11 +1,18 @@
-/opt/homebrew/bin/brew shellenv | source
+# Homebrew is only used on macOS
+if test -x /opt/homebrew/bin/brew
+    /opt/homebrew/bin/brew shellenv | source
+end
 
 # PATH is set outside the interactive block so scripts and fish -c get it too.
 # fish_add_path skips folders that don't exist.
 fish_add_path $HOME/.local/bin $HOME/.amp/bin $HOME/.cargo/bin $HOME/go/bin /usr/local/bin
-# rustup and libpq are keg-only, so cargo, rustc, psql and pg_dump aren't linked into the brew prefix
-fish_add_path $HOMEBREW_PREFIX/opt/rustup/bin $HOMEBREW_PREFIX/opt/libpq/bin
-fish_add_path $HOME/Library/Application\ Support/JetBrains/Toolbox/scripts
+if set -q HOMEBREW_PREFIX
+    # rustup and libpq are keg-only, so cargo, rustc, psql and pg_dump aren't linked into the brew prefix
+    fish_add_path $HOMEBREW_PREFIX/opt/rustup/bin $HOMEBREW_PREFIX/opt/libpq/bin
+end
+if test (uname) = Darwin
+    fish_add_path $HOME/Library/Application\ Support/JetBrains/Toolbox/scripts
+end
 
 if command -qs hx
     set -gx EDITOR hx
@@ -19,11 +26,18 @@ if status is-interactive
     # Settings for the "pure" prompt
     set -g fish_transient_prompt 1
     set -g pure_enable_virtualenv false
-    function fish_greeting
-        _pure_check_for_new_release
+    # pure is installed by fisher, which hasn't run yet on a new machine
+    if functions -q _pure_check_for_new_release
+        function fish_greeting
+            _pure_check_for_new_release
+        end
+    else
+        set -g fish_greeting
     end
 
-    abbr --add brew-update brew bundle --global
+    if command -qs brew
+        abbr --add brew-update brew bundle --global
+    end
 
     if command -qs hx
         abbr --add --position command e hx
