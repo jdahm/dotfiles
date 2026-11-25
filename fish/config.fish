@@ -1,6 +1,7 @@
 # Bootstrap homebrew
 /opt/homebrew/bin/brew shellenv | source
-fish_add_path (brew --prefix)/opt/postgresql@15/bin
+# libpq is keg-only, so its psql and pg_dump aren't linked into the brew prefix
+fish_add_path (brew --prefix)/opt/libpq/bin
 
 # Set PATH
 fish_add_path $HOME/.local/bin $HOME/.amp/bin $HOME/.cargo/bin $HOME/go/bin /usr/local/bin
