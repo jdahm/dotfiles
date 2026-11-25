@@ -31,8 +31,11 @@ if status is-interactive
 
     set -g fish_greeting
 
-    if command -qs starship
-        starship init fish | source
+    # starship and zoxide run at every shell start, so ask mise for the installed
+    # binary instead of using the shim. A shim exists even when its version isn't
+    # installed yet, and calling it then prints errors or starts an install.
+    if command -qs mise; and set -l starship (mise which starship 2>/dev/null)
+        $starship init fish | source
         # Collapse earlier prompts to a bare ❯ so scrollback stays readable
         function starship_transient_prompt_func
             set_color magenta
@@ -62,8 +65,8 @@ if status is-interactive
     end
 
     # cd works as usual, and jumps to a frequently used folder when the path doesn't exist
-    if command -qs zoxide
-        zoxide init fish --cmd cd | source
+    if command -qs mise; and set -l zoxide (mise which zoxide 2>/dev/null)
+        $zoxide init fish --cmd cd | source
     end
 
     if command -qs direnv
