@@ -25,6 +25,7 @@
     # ~/.config/emacs/early-init.el: config/emacs/early-init.el
 
 # note: run fish_plugins installer
+# note: run ./install-helix.sh to build Helix from source
 
 - shell:
   - [curl -fsSL https://claude.ai/install.sh | bash]
