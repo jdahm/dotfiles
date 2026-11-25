@@ -5,6 +5,12 @@ fish_add_path (brew --prefix)/opt/postgresql@15/bin
 # Set PATH
 fish_add_path $HOME/.local/bin $HOME/.amp/bin $HOME/.cargo/bin $HOME/go/bin /usr/local/bin
 
+# Set outside the interactive block so scripts and fish -c get it too
+if command -qs hx
+    set -gx EDITOR hx
+    set -gx VISUAL hx
+end
+
 if status is-interactive
     set -g fish_greeting
 
@@ -29,8 +35,6 @@ if status is-interactive
     end
 
     if command -qs hx
-        set -gx EDITOR hx
-        set -gx VISUAL hx
         abbr --add --position command e hx
     end
 
