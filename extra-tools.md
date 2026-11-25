@@ -30,7 +30,6 @@ Install one with the command next to it.
 | Tool | What it does | Install |
 |---|---|---|
 | gum | Prompts, spinners and menus for shell scripts | `brew install gum` |
-| glow | Render Markdown in the terminal | `brew install glow` |
 | vhs | Record terminal sessions as GIFs from a script | `brew install vhs` |
 | wishlist | One menu for all your SSH hosts | `brew install wishlist` |
 
