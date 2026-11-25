@@ -1,4 +1,4 @@
-# Only used on macOS. Command-line tools live in mise.toml, and tools with
+# Only used on macOS. Command-line tools live in mise/config.toml, and tools with
 # their own installers (rustup, uv, mise, harlequin, ansible) in
 # install.conf.yaml, so they work on Linux too.
 # Tools I've used and might want again are in extra-tools.md.

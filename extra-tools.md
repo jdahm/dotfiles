@@ -39,7 +39,6 @@ Install one with the command next to it.
 | Tool | What it does | Install |
 |---|---|---|
 | nushell | Shell built around structured data | `brew install nushell` |
-| starship | Cross-shell prompt (config is in `starship.toml`) | `brew install starship` |
 
 ## HTTP
 

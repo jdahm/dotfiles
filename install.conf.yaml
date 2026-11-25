@@ -6,12 +6,12 @@
 - clean: ['~']
 
 - link:
-    ~/.config/helix/config.toml: helix.toml
-    ~/.config/jj/config.toml: jj.toml
-    ~/.config/mise/mise.toml: mise.toml
-    ~/.config/starship.toml: starship.toml
-    ~/.ideavimrc: ideavimrc
-    ~/.vimrc: vimrc
+    ~/.config/helix/config.toml: helix/config.toml
+    ~/.config/jj/config.toml: jj/config.toml
+    ~/.config/mise/config.toml: mise/config.toml
+    ~/.config/starship.toml: starship/starship.toml
+    ~/.vimrc: vim/vimrc
+    ~/.ideavimrc: ideavim/ideavimrc
     ~/.config/fish/config.fish: fish/config.fish
     ~/.config/fish/fish_plugins: fish/fish_plugins
     ~/.config/fish/functions/lsbr.fish: fish/functions/lsbr.fish
@@ -23,10 +23,10 @@
 # These are only used on macOS
 - link:
     ~/.Brewfile:
-      path: Brewfile
+      path: homebrew/Brewfile
       if: '[ "$(uname)" = Darwin ]'
     ~/.config/ghostty/config:
-      path: ghostty
+      path: ghostty/config
       if: '[ "$(uname)" = Darwin ]'
     ~/.config/zed/keymap.json:
       path: zed/keymap.json
@@ -39,7 +39,7 @@
       if: '[ "$(uname)" = Darwin ]'
 
 # note: run fish_plugins installer
-# note: run ./install-helix.sh to build Helix from source
+# note: run helix/install.sh to build Helix from source
 
 # Tools with their own installers, so they work the same on macOS and Linux.
 # Each step skips tools that are already installed; update them with
@@ -53,6 +53,6 @@
     description: Installing uv
   - command: test -x ~/.local/bin/mise || curl -fsSL https://mise.run | sh
     description: Installing mise
-  - [~/.local/bin/mise install --yes, Installing tools from mise.toml]
+  - [~/.local/bin/mise install --yes, Installing tools from mise/config.toml]
   - ['~/.local/bin/uv tool install "harlequin[postgres]"', Installing harlequin]
   - [~/.local/bin/uv tool install ansible --with-executables-from ansible-core, Installing ansible]
