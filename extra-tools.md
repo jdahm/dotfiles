@@ -7,10 +7,7 @@ Install one with the command next to it.
 
 | Tool | What it does | Install |
 |---|---|---|
-| bat | `cat` with syntax highlighting and Git integration | `brew install bat` |
-| fd | Simple, fast alternative to `find` | `brew install fd` |
 | procs | Modern replacement for `ps` | `brew install procs` |
-| dust | More intuitive `du` | `brew install dust` |
 | viddy | Modern `watch` | `brew install viddy` |
 | trash | Move files to the macOS Trash instead of deleting them | `brew install trash` |
 | align | Line up text in columns | `brew install align` |
@@ -18,7 +15,6 @@ Install one with the command next to it.
 | gron | Make JSON greppable | `brew install gron` |
 | urlview | Pick a URL out of text and open it | `brew install urlview` |
 | ansifilter | Strip ANSI codes or convert them to HTML, LaTeX, RTF | `brew install ansifilter` |
-| tlrc | `tldr` client: short, example-first man pages | `brew install tlrc` |
 | numbat | Calculator language with units | `brew install numbat` |
 | pwgen | Password generator | `brew install pwgen` |
 | wget | Download files | `brew install wget` |
