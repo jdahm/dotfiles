@@ -7,8 +7,8 @@ end
 # fish_add_path skips folders that don't exist.
 fish_add_path $HOME/.local/bin $HOME/.amp/bin $HOME/.cargo/bin $HOME/go/bin /usr/local/bin
 if set -q HOMEBREW_PREFIX
-    # rustup and libpq are keg-only, so cargo, rustc, psql and pg_dump aren't linked into the brew prefix
-    fish_add_path $HOMEBREW_PREFIX/opt/rustup/bin $HOMEBREW_PREFIX/opt/libpq/bin
+    # libpq is keg-only, so its psql and pg_dump aren't linked into the brew prefix
+    fish_add_path $HOMEBREW_PREFIX/opt/libpq/bin
 end
 if test (uname) = Darwin
     fish_add_path $HOME/Library/Application\ Support/JetBrains/Toolbox/scripts

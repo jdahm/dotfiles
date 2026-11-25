@@ -1,3 +1,5 @@
+# Only used on macOS. Tools with their own installers (rustup, uv, mise,
+# harlequin, ansible) are in install.conf.yaml so they work on Linux too.
 # Tools I've used and might want again are in extra-tools.md.
 
 # Formulae
@@ -32,18 +34,13 @@ brew "kubectx" # Tool that can switch between kubectl contexts easily and create
 brew "helm" # Kubernetes package manager
 brew "k9s" # Kubernetes CLI To Manage Your Clusters In Style!
 brew "opentofu" # Drop-in replacement for Terraform. Infrastructure as Code Tool
-brew "ansible" # Automate deployment, configuration, and upgrading
 brew "vercel" # Vercel CLI
 
-brew "rustup" # Rust toolchain installer
 brew "go" # Open source programming language to build simple/reliable/efficient software
-brew "uv"
-brew "mise"
 brew "prettier" # Code formatter for JavaScript, CSS, JSON, GraphQL, Markdown, YAML
 
 # Language servers for Helix, which doesn't download its own
 brew "gopls"
-brew "rust-analyzer"
 brew "typescript-language-server"
 brew "docker-language-server"
 brew "marksman" # Language Server Protocol for Markdown

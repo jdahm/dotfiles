@@ -41,6 +41,17 @@
 # note: run fish_plugins installer
 # note: run ./install-helix.sh to build Helix from source
 
+# Tools with their own installers, so they work the same on macOS and Linux.
+# Each step skips tools that are already installed; update them with
+# rustup update, uv self update, mise self-update and uv tool upgrade --all.
 - shell:
   - [curl -fsSL https://claude.ai/install.sh | bash]
-  - ['uv tool install "harlequin[postgres]"', Installing harlequin]
+  - command: test -x ~/.cargo/bin/rustup || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
+    description: Installing rustup
+  - [~/.cargo/bin/rustup component add rust-analyzer, Installing rust-analyzer]
+  - command: test -x ~/.local/bin/uv || curl -LsSf https://astral.sh/uv/install.sh | env UV_NO_MODIFY_PATH=1 sh
+    description: Installing uv
+  - command: test -x ~/.local/bin/mise || curl -fsSL https://mise.run | sh
+    description: Installing mise
+  - ['~/.local/bin/uv tool install "harlequin[postgres]"', Installing harlequin]
+  - [~/.local/bin/uv tool install ansible --with-executables-from ansible-core, Installing ansible]
