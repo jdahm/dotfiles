@@ -56,6 +56,32 @@ if status is-interactive
         abbr --add --position command e hx
     end
 
+    # Rust replacements: type the classic name, get the new tool
+    if command -qs bat
+        abbr --add cat bat --paging=never
+        # Colored man pages
+        set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
+    end
+    command -qs fd; and abbr --add f fd
+    command -qs dust; and abbr --add du dust
+    command -qs btm; and abbr --add top btm
+
+    abbr --add k kubectl
+    abbr --add kg kubectl get
+    abbr --add kgp kubectl get pods
+    abbr --add kd kubectl describe
+    abbr --add kl kubectl logs -f
+    abbr --add kctx kubectx
+    abbr --add kns kubens
+
+    abbr --add g git
+    abbr --add gs git status -s
+    abbr --add gd git diff
+    abbr --add gc git commit
+    abbr --add gsw git switch
+
+    abbr --add uvr uv run
+
     if command -qs eza
         abbr --add l eza
         abbr --add ll eza -l --header --icons
