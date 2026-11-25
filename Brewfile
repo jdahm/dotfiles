@@ -20,7 +20,7 @@ brew "direnv" # Load/unload environment variables based on $PWD
 brew "libpq" # Postgres C API library (psql, pg_dump and friends)
 
 # Casks
-cask "font-monaspace"
+cask "font-jetbrains-mono-nerd-font" # JetBrains Mono with Nerd Font icons, for eza --icons
 cask "ghostty"
 cask "zed" # Multiplayer code editor
 cask "jetbrains-toolbox" # JetBrains tools manager

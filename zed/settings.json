@@ -34,7 +34,7 @@
     },
   },
   "buffer_line_height": "comfortable",
-  "buffer_font_family": "Monaspace Argon",
+  "buffer_font_family": "JetBrainsMono Nerd Font",
   "base_keymap": "Zed",
   "edit_predictions": {
     "disabled_globs": [],

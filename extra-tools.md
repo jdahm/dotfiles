@@ -87,7 +87,7 @@ Install one with the command next to it.
 
 | App | Install |
 |---|---|
-| JetBrains Mono font | `brew install --cask font-jetbrains-mono` |
+| Monaspace fonts (Argon, Neon, Xenon, Radon, Krypton) | `brew install --cask font-monaspace` |
 | ChatGPT | `brew install --cask chatgpt` |
 | Tailscale | `brew install --cask tailscale-app` |
 | Colemak-DH keyboard layout | `brew install --cask colemak-dh` |
