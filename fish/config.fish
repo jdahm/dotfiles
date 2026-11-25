@@ -29,16 +29,20 @@ if status is-interactive
     set -g fish_color_command blue
     set -g sponge_purge_only_on_exit true
 
-    # Settings for the "pure" prompt
-    set -g fish_transient_prompt 1
-    set -g pure_enable_virtualenv false
-    # pure is installed by fisher, which hasn't run yet on a new machine
-    if functions -q _pure_check_for_new_release
-        function fish_greeting
-            _pure_check_for_new_release
+    set -g fish_greeting
+
+    if command -qs starship
+        starship init fish | source
+        # Collapse earlier prompts to a bare ❯ so scrollback stays readable
+        function starship_transient_prompt_func
+            set_color magenta
+            echo -n '❯ '
+            set_color normal
         end
-    else
-        set -g fish_greeting
+        # Earlier prompts drop the right side
+        function starship_transient_rprompt_func
+        end
+        enable_transience
     end
 
     if command -qs brew

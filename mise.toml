@@ -15,6 +15,7 @@ just = "latest"
 ripgrep = "latest"
 eza = "latest"
 zoxide = "latest"
+starship = "latest"
 
 awscli = "latest"
 kubectl = "latest"

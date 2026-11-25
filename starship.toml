@@ -1,13 +1,35 @@
-[gcloud]
-disabled = false
-detect_env_vars = ["GOOGLE_CLOUD", "GCLOUD"]
+# Only the modules listed here run, which keeps the prompt fast in big repos.
+# $username and $hostname only show over SSH. fish hides the right prompt
+# when the command you're typing reaches it.
+format = "$username$hostname$directory$git_branch$git_state$git_status$character"
+right_format = "$kubernetes$aws$cmd_duration$jobs"
+# git status in a big repo like ElastiCore can pass the default 500 ms on a cold cache
+command_timeout = 1000
+
+[character]
+success_symbol = "[❯](magenta)"
+error_symbol = "[❯](red)"
+
+[directory]
+truncation_length = 4
+truncate_to_repo = false
+
+[git_branch]
+format = "[$branch]($style) "
+style = "bright-black"
+
+[git_status]
+style = "cyan"
 
 [kubernetes]
 disabled = false
-detect_env_vars = ["KUBERNETES"]
+format = "[⎈ $context( \\($namespace\\))]($style) "
+style = "blue"
 
-[sudo]
-disabled = false
+[aws]
+format = "[aws $profile( $region)]($style) "
+style = "yellow"
 
-[buf]
-disabled = true
+[cmd_duration]
+min_time = 5000
+style = "yellow"
