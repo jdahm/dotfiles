@@ -1,128 +1,67 @@
+# Tools I've used and might want again are in extra-tools.md.
+
 # Formulae
 
-brew "coreutils" # GNU File, Shell, and Text utilities
-brew "readline" # Library for command-line editing
-brew "bash"
-brew "gnu-sed" # GNU implementation of the famous stream editor
-brew "gawk" # GNU awk utility
-brew "gnupg" # GNU Pretty Good Privacy (PGP) package
-brew "tldr" # Simplified and community-driven man pages
 brew "git" # Distributed revision control system
-brew "wget" # Internet file retriever
-brew "align" # Text column alignment filter
-brew "zoxide"
-
-brew "trash" # CLI tool that moves files or folder to the trash
-
-brew "fish" # User-friendly command-line shell for UNIX-like operating systems
-brew "fisher" # Plugin manager for the Fish shell
-brew "nushell" # Modern shell for the GitHub era
-brew "starship"
-
 brew "git-town"
-brew "git-crypt" # Enable transparent encryption/decryption of files in a git repo
 brew "git-lfs" # Git extension for versioning large files
 brew "git-delta" # Syntax-highlighting pager for git and diff output
 brew "gh" # GitHub command-line tool
 
+brew "gnupg" # GNU Pretty Good Privacy (PGP) package
 brew "pinentry-mac" # Pinentry for GPG on Mac
 
-brew "urlview" # URL extractor/launcher
-brew "gron" # Make JSON greppable
-
-brew "ddgr" # DuckDuckGo from the terminal
-brew "grc" # Colorize logfiles and command output
-
-brew "sem-cli"
-
-brew "gum" # Tool for glamorous shell scripts
-brew "glow" # Render markdown on the CLI
-brew "wishlist" # The SSH directory
-brew "vhs" # Your CLI home video recorder
-
+brew "fish" # User-friendly command-line shell for UNIX-like operating systems
+brew "fisher" # Plugin manager for the Fish shell
+brew "bash"
+brew "gawk" # GNU awk utility
+brew "direnv" # Load/unload environment variables based on $PWD
+brew "zoxide"
 brew "eza"
-brew "bat" # Clone of cat(1) with syntax highlighting and Git integration
-brew "procs" # Modern replacement for ps written by Rust
-brew "dust" # More intuitive version of du in rust
 brew "ripgrep" # Search tool like grep and The Silver Searcher
-brew "fd" # Simple, fast and user-friendly alternative to find
-brew "pwgen" # Password generator
-brew "numbat"
 brew "just"
-brew "hey" # HTTP load generator, ApacheBench (ab) replacement
-
-brew "rustup" # Rust toolchain installer
-
-brew "uv"
-brew "viddy" # Modern watch command
-brew "circumflex" # Hacker News in your terminal
-
-brew "graphviz" # Graph visualization software from AT&T and Bell Labs
-
 brew "jq" # Lightweight and flexible command-line JSON processor
 brew "yq" # Process YAML, JSON, XML, CSV and properties documents from the CLI
 
-brew "httpie" # User-friendly cURL replacement (command-line HTTP client)
 brew "libpq" # Postgres C API library (psql, pg_dump and friends)
-brew "pinentry-mac" # Pinentry for GPG on Mac
+brew "neonctl"
 
+brew "awscli" # Official Amazon AWS command-line interface
+brew "kubernetes-cli" # Kubernetes command-line interface
+brew "kubectx" # Tool that can switch between kubectl contexts easily and create aliases
+brew "helm" # Kubernetes package manager
+brew "k9s" # Kubernetes CLI To Manage Your Clusters In Style!
+brew "opentofu" # Drop-in replacement for Terraform. Infrastructure as Code Tool
+brew "ansible" # Automate deployment, configuration, and upgrading
+brew "vercel" # Vercel CLI
+
+brew "rustup" # Rust toolchain installer
+brew "go" # Open source programming language to build simple/reliable/efficient software
+brew "uv"
+brew "mise"
 brew "prettier" # Code formatter for JavaScript, CSS, JSON, GraphQL, Markdown, YAML
 
-brew "sqlite3" # Command-line interface for SQLite
-brew "xz" # General-purpose data compression with high compression ratio
-brew "minikube" # Run a Kubernetes cluster locally
-brew "kubectx" # Tool that can switch between kubectl contexts easily and create aliases
-
-brew "imagemagick" # Tools and libraries to manipulate images in many formats
-
-brew "hugo" # Configurable static site generator
-brew "awscli" # Official Amazon AWS command-line interface
-brew "ansifilter" # Strip or convert ANSI codes into HTML, (La)Tex, RTF, or BBCode
-
-brew "go" # Open source programming language to build simple/reliable/efficient software
-brew "buf"
-#brew "kind" # Run local Kubernetes cluster in Docker
-
+# Language servers for Helix, which doesn't download its own
 brew "gopls"
 brew "rust-analyzer"
 brew "typescript-language-server"
 brew "docker-language-server"
-brew "dockerfmt"
-brew "mise"
-
-brew "neonctl"
-
-#brew "jsonnet" # Domain specific configuration language for defining JSON data
-#brew "ollama"
-
-brew "llvm"
-brew "lld"
+brew "marksman" # Language Server Protocol for Markdown
 
 # Casks
-cask "font-jetbrains-mono" # Developer targeted fonts with a high number of glyphs
 cask "font-monaspace"
-cask "spotify" # Music streaming service
-cask "docker-desktop" # App to build and share containerized applications and microservices
+cask "ghostty"
 cask "zed" # Multiplayer code editor
 cask "jetbrains-toolbox" # JetBrains tools manager
 cask "temurin" # JDK from the Eclipse Foundation
-cask "ghostty"
+cask "docker-desktop" # App to build and share containerized applications and microservices
 
 cask "claude"
-#cask "chatgpt"
-
-#cask "colemak-dh"
-
 cask "linear"
+cask "slack" # Team communication and collaboration software
 cask "google-chrome" # Web browser
 cask "obsidian"
 cask "1password" # Password manager that keeps all passwords secure behind one password
 cask "1password-cli" # Command-line interface for 1Password
 cask "openvpn-connect"
-#cask "qmk-toolbox" # Toolbox companion for QMK Firmware
-#cask "raspberry-pi-imager"
-cask "slack" # Team communication and collaboration software
-#cask "steam" # Video game digital distribution service
-#cask "tailscale-app" # Mesh VPN based on WireGuard
-#brew "protobuf"
-#brew "supabase/tap/supabase"
+cask "spotify" # Music streaming service
