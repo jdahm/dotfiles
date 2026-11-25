@@ -29,3 +29,4 @@
 
 - shell:
   - [curl -fsSL https://claude.ai/install.sh | bash]
+  - ['uv tool install "harlequin[postgres]"', Installing harlequin]
