@@ -13,6 +13,10 @@ end
 if test (uname) = Darwin
     fish_add_path $HOME/Library/Application\ Support/JetBrains/Toolbox/scripts
 end
+# Tools from mise.toml, through shims. This goes last so the shims come first in PATH.
+if command -qs mise
+    mise activate fish --shims | source
+end
 
 if command -qs hx
     set -gx EDITOR hx

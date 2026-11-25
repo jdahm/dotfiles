@@ -1,3 +1,38 @@
+# Command-line tools for macOS and Linux. They're on PATH through mise's shims
+# (see fish/config.fish). Install with `mise install`, update with `mise upgrade`.
+# Projects that need a specific version pin it in their own mise.toml.
+[tools]
+go = "latest"
+node = "latest"
+
+gh = "latest"
+git-town = "latest"
+delta = "latest"
+
+jq = "latest"
+yq = "latest"
+just = "latest"
+ripgrep = "latest"
+eza = "latest"
+zoxide = "latest"
+
+awscli = "latest"
+kubectl = "latest"
+kubectx = "latest"
+helm = "latest"
+k9s = "latest"
+opentofu = "latest"
+neonctl = "latest"
+"npm:vercel" = "latest"
+"npm:prettier" = "latest"
+
+# Language servers for Helix, which doesn't download its own
+"go:golang.org/x/tools/gopls" = "latest"
+"npm:typescript-language-server" = "latest"
+"npm:typescript" = "latest"
+"github:docker/docker-language-server" = "latest"
+marksman = "latest"
+
 [settings]
 env_file = ".env"
 # The following ensures we use a global GOBIN ($GOPATH/bin and GOPATH defaults to $HOME/go) but

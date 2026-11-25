@@ -43,7 +43,7 @@
 
 # Tools with their own installers, so they work the same on macOS and Linux.
 # Each step skips tools that are already installed; update them with
-# rustup update, uv self update, mise self-update and uv tool upgrade --all.
+# rustup update, uv self update, mise self-update, mise upgrade and uv tool upgrade --all.
 - shell:
   - [curl -fsSL https://claude.ai/install.sh | bash]
   - command: test -x ~/.cargo/bin/rustup || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
@@ -53,5 +53,6 @@
     description: Installing uv
   - command: test -x ~/.local/bin/mise || curl -fsSL https://mise.run | sh
     description: Installing mise
+  - [~/.local/bin/mise install --yes, Installing tools from mise.toml]
   - ['~/.local/bin/uv tool install "harlequin[postgres]"', Installing harlequin]
   - [~/.local/bin/uv tool install ansible --with-executables-from ansible-core, Installing ansible]

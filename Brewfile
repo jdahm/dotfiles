@@ -1,14 +1,12 @@
-# Only used on macOS. Tools with their own installers (rustup, uv, mise,
-# harlequin, ansible) are in install.conf.yaml so they work on Linux too.
+# Only used on macOS. Command-line tools live in mise.toml, and tools with
+# their own installers (rustup, uv, mise, harlequin, ansible) in
+# install.conf.yaml, so they work on Linux too.
 # Tools I've used and might want again are in extra-tools.md.
 
 # Formulae
 
 brew "git" # Distributed revision control system
-brew "git-town"
 brew "git-lfs" # Git extension for versioning large files
-brew "git-delta" # Syntax-highlighting pager for git and diff output
-brew "gh" # GitHub command-line tool
 
 brew "gnupg" # GNU Pretty Good Privacy (PGP) package
 brew "pinentry-mac" # Pinentry for GPG on Mac
@@ -18,32 +16,8 @@ brew "fisher" # Plugin manager for the Fish shell
 brew "bash"
 brew "gawk" # GNU awk utility
 brew "direnv" # Load/unload environment variables based on $PWD
-brew "zoxide"
-brew "eza"
-brew "ripgrep" # Search tool like grep and The Silver Searcher
-brew "just"
-brew "jq" # Lightweight and flexible command-line JSON processor
-brew "yq" # Process YAML, JSON, XML, CSV and properties documents from the CLI
 
 brew "libpq" # Postgres C API library (psql, pg_dump and friends)
-brew "neonctl"
-
-brew "awscli" # Official Amazon AWS command-line interface
-brew "kubernetes-cli" # Kubernetes command-line interface
-brew "kubectx" # Tool that can switch between kubectl contexts easily and create aliases
-brew "helm" # Kubernetes package manager
-brew "k9s" # Kubernetes CLI To Manage Your Clusters In Style!
-brew "opentofu" # Drop-in replacement for Terraform. Infrastructure as Code Tool
-brew "vercel" # Vercel CLI
-
-brew "go" # Open source programming language to build simple/reliable/efficient software
-brew "prettier" # Code formatter for JavaScript, CSS, JSON, GraphQL, Markdown, YAML
-
-# Language servers for Helix, which doesn't download its own
-brew "gopls"
-brew "typescript-language-server"
-brew "docker-language-server"
-brew "marksman" # Language Server Protocol for Markdown
 
 # Casks
 cask "font-monaspace"
