@@ -4,14 +4,16 @@ if test -x /opt/homebrew/bin/brew
 end
 
 # PATH is set outside the interactive block so scripts and fish -c get it too.
+# --path changes PATH for this session only, instead of saving to the universal
+# fish_user_paths, so removing a line here removes the folder from PATH.
 # fish_add_path skips folders that don't exist.
-fish_add_path $HOME/.local/bin $HOME/.amp/bin $HOME/.cargo/bin $HOME/go/bin /usr/local/bin
+fish_add_path --path $HOME/.local/bin $HOME/.amp/bin $HOME/.cargo/bin $HOME/go/bin /usr/local/bin
 if set -q HOMEBREW_PREFIX
     # libpq is keg-only, so its psql and pg_dump aren't linked into the brew prefix
-    fish_add_path $HOMEBREW_PREFIX/opt/libpq/bin
+    fish_add_path --path $HOMEBREW_PREFIX/opt/libpq/bin
 end
 if test (uname) = Darwin
-    fish_add_path $HOME/Library/Application\ Support/JetBrains/Toolbox/scripts
+    fish_add_path --path $HOME/Library/Application\ Support/JetBrains/Toolbox/scripts
 end
 # Tools from mise.toml, through shims. This goes last so the shims come first in PATH.
 if command -qs mise
