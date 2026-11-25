@@ -34,5 +34,6 @@ cask "google-chrome" # Web browser
 cask "obsidian"
 cask "1password" # Password manager that keeps all passwords secure behind one password
 cask "1password-cli" # Command-line interface for 1Password
+cask "session-manager-plugin" # AWS CLI plugin for aws ssm start-session
 cask "openvpn-connect"
 cask "spotify" # Music streaming service
