@@ -43,7 +43,7 @@ Then finish by hand:
 | Source | What | Update with |
 |---|---|---|
 | `mise/config.toml` | most command-line tools (go, node, gh, jq, kubectl, …) | `mise upgrade` |
-| Their own installers, in `install.conf.yaml` | rustup, uv, mise, Claude Code | `rustup update`, `uv self update`, `mise self-update` |
+| Their own installers, in `install.conf.yaml` | rustup, uv, mise, Claude Code | `rustup update`, `uv self update`, `mise self-update`, `claude update` |
 | uv | Harlequin, Ansible | `uv tool upgrade --all` |
 | `homebrew/Brewfile` (macOS only) | apps, fonts, and a few formulae like git, fish and libpq | `brew bundle --global` |
 | `helix/install.sh` | Helix, built from source | change the commit in the script and rerun it |

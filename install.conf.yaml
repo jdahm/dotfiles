@@ -45,9 +45,11 @@
 
 # Tools with their own installers, so they work the same on macOS and Linux.
 # Each step skips tools that are already installed; update them with
-# rustup update, uv self update, mise self-update, mise upgrade and uv tool upgrade --all.
+# claude update, rustup update, uv self update, mise self-update, mise upgrade
+# and uv tool upgrade --all.
 - shell:
-  - [curl -fsSL https://claude.ai/install.sh | bash]
+  - command: test -x ~/.local/bin/claude || curl -fsSL https://claude.ai/install.sh | bash
+    description: Installing Claude Code
   - command: test -x ~/.cargo/bin/rustup || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
     description: Installing rustup
   - [~/.cargo/bin/rustup component add rust-analyzer, Installing rust-analyzer]
