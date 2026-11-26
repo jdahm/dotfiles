@@ -1,0 +1,21 @@
+# Additions to Helix's built-in languages.toml. Run `hx --health <language>`
+# to see which language servers and formatters Helix finds.
+
+[language-server.rust-analyzer.config]
+check.command = "clippy"
+# Separate target dir so the LSP doesn't block terminal cargo on the build lock.
+cargo.targetDir = true
+
+[[language]]
+name = "go"
+code-actions-on-save = ["source.organizeImports"]
+
+# ty and ruff are already the first two Python servers. Ruff does the formatting.
+[[language]]
+name = "python"
+auto-format = true
+code-actions-on-save = ["source.organizeImports", "source.fixAll"]
+
+[[language]]
+name = "toml"
+auto-format = true

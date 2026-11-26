@@ -52,6 +52,13 @@ neonctl = "latest"
 "npm:typescript" = "latest"
 "github:docker/docker-language-server" = "latest"
 marksman = "latest"
+ruff = "latest"
+ty = "latest"
+taplo = "latest"
+"npm:yaml-language-server" = "latest"
+"npm:vscode-langservers-extracted" = "latest"
+"npm:bash-language-server" = "latest"
+"npm:fish-lsp" = "latest"
 
 [settings]
 env_file = ".env"

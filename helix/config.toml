@@ -1,5 +1,13 @@
 theme = "autumn"
 
+[editor]
+rulers = [90]
+text-width = 90
+
+# Save when switching away from Helix, like Zed's autosave.
+[editor.auto-save]
+focus-lost = true
+
 [keys.normal]
 Z = {Q = ":quit!", Z = ":write-quit!"}
 

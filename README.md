@@ -60,7 +60,7 @@ The top level only holds the installer, its config and the docs.
 |---|---|
 | `fish/` | `~/.config/fish/` |
 | `git/` | `~/.config/git/` |
-| `helix/` | `~/.config/helix/config.toml` (and `install.sh` builds Helix) |
+| `helix/` | `~/.config/helix/config.toml` and `languages.toml` (and `install.sh` builds Helix) |
 | `mise/` | `~/.config/mise/config.toml` |
 | `starship/` | `~/.config/starship.toml` |
 | `atuin/` | `~/.config/atuin/config.toml` |
