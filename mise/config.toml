@@ -31,6 +31,10 @@ yazi = "latest"
 difftastic = "latest"
 atuin = "latest"
 
+# Coding agents
+pi = "latest"
+codex = "latest"
+
 awscli = "latest"
 kubectl = "latest"
 kubectx = "latest"
