@@ -24,19 +24,14 @@ cd ~/dotfiles
 Then finish by hand:
 
 1. On macOS, install the apps and remaining formulae: `brew bundle --global`. If it stops at rexdiff, run `brew trust rednafi/rexdiff` and run it again. Then run `rexdiff install`, which writes `~/.config/rex/rexdiff_toggle.lua`.
-2. Install the fish plugins in `fish/fish_plugins`. Homebrew installs fisher on macOS. On Linux, install it first:
-   ```fish
-   curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update
-   ```
-   On macOS, just run `fisher update`.
-3. Build Helix: `helix/install.sh`. It builds a pinned commit from source.
-4. Add your git name and email to `~/.config/git/identity`, which `git/config` includes:
+2. Build Helix: `helix/install.sh`. It builds a pinned commit from source.
+3. Add your git name and email to `~/.config/git/identity`, which `git/config` includes:
    ```ini
    [user]
    	name = Your Name
    	email = you@example.com
    ```
-5. In Rex, set the terminal font to JetBrainsMono Nerd Font (Settings › Terminal › Typography). Rex keeps it in the app, not in a file.
+4. In Rex, set the terminal font to JetBrainsMono Nerd Font (Settings › Terminal › Typography). Rex keeps it in the app, not in a file.
 
 ## Where tools come from
 

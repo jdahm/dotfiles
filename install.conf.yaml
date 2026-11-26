@@ -14,7 +14,6 @@
     ~/.vimrc: vim/vimrc
     ~/.ideavimrc: ideavim/ideavimrc
     ~/.config/fish/config.fish: fish/config.fish
-    ~/.config/fish/fish_plugins: fish/fish_plugins
     ~/.config/fish/functions/lsbr.fish: fish/functions/lsbr.fish
     ~/.config/fish/functions/y.fish: fish/functions/y.fish
     ~/.config/atuin/config.toml: atuin/config.toml
@@ -47,7 +46,6 @@
       path: rex/rexdiff.lua
       if: '[ "$(uname)" = Darwin ]'
 
-# note: run fish_plugins installer
 # note: run helix/install.sh to build Helix from source
 
 # Tools with their own installers, so they work the same on macOS and Linux.

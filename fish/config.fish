@@ -27,7 +27,6 @@ end
 
 if status is-interactive
     set -g fish_color_command blue
-    set -g sponge_purge_only_on_exit true
 
     set -g fish_greeting
 

@@ -12,7 +12,6 @@ brew "gnupg" # GNU Pretty Good Privacy (PGP) package
 brew "pinentry-mac" # Pinentry for GPG on Mac
 
 brew "fish" # User-friendly command-line shell for UNIX-like operating systems
-brew "fisher" # Plugin manager for the Fish shell
 brew "bash"
 brew "gawk" # GNU awk utility
 brew "direnv" # Load/unload environment variables based on $PWD
