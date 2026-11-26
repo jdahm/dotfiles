@@ -23,7 +23,7 @@ cd ~/dotfiles
 
 Then finish by hand:
 
-1. On macOS, install the apps and remaining formulae: `brew bundle --global`.
+1. On macOS, install the apps and remaining formulae: `brew bundle --global`. If it stops at rexdiff, run `brew trust rednafi/rexdiff` and run it again. Then run `rexdiff install`, which writes `~/.config/rex/rexdiff_toggle.lua`.
 2. Install the fish plugins in `fish/fish_plugins`. Homebrew installs fisher on macOS. On Linux, install it first:
    ```fish
    curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update
@@ -70,6 +70,7 @@ The top level only holds the installer, its config and the docs.
 | `ghostty/` | `~/.config/ghostty/config` (macOS only) |
 | `zed/` | `~/.config/zed/` (macOS only) |
 | `gnupg/` | `~/.gnupg/gpg-agent.conf` (macOS only) |
+| `rex/` | `~/.config/rex/init.lua` and `rexdiff.lua` (macOS only) |
 | `emacs/` | not linked |
 
 Machine-specific fish config goes in `~/.config/fish/local.fish`, which `config.fish` sources if it exists.

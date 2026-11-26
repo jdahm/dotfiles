@@ -37,3 +37,7 @@ cask "1password-cli" # Command-line interface for 1Password
 cask "session-manager-plugin" # AWS CLI plugin for aws ssm start-session
 cask "openvpn-connect"
 cask "spotify" # Music streaming service
+
+# Shows a coding agent's diff in a Rex pane. Run `rexdiff install` after installing.
+tap "rednafi/rexdiff", "https://github.com/rednafi/rexdiff"
+cask "rexdiff"

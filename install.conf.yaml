@@ -40,6 +40,12 @@
     ~/.gnupg/gpg-agent.conf:
       path: gnupg/gpg-agent.conf
       if: '[ "$(uname)" = Darwin ]'
+    ~/.config/rex/init.lua:
+      path: rex/init.lua
+      if: '[ "$(uname)" = Darwin ]'
+    ~/.config/rex/rexdiff.lua:
+      path: rex/rexdiff.lua
+      if: '[ "$(uname)" = Darwin ]'
 
 # note: run fish_plugins installer
 # note: run helix/install.sh to build Helix from source
