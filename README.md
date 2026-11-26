@@ -63,6 +63,7 @@ The top level only holds the installer, its config and the docs.
 | `helix/` | `~/.config/helix/config.toml` (and `install.sh` builds Helix) |
 | `mise/` | `~/.config/mise/config.toml` |
 | `starship/` | `~/.config/starship.toml` |
+| `atuin/` | `~/.config/atuin/config.toml` |
 | `jj/` | `~/.config/jj/config.toml` |
 | `vim/`, `ideavim/` | `~/.vimrc`, `~/.ideavimrc` |
 | `homebrew/` | `~/.Brewfile` (macOS only) |
